@@ -42,7 +42,7 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -217,12 +217,9 @@ const categoryMetadata: Record<
 };
 
 // Note: generateMetadata moved to layout.tsx or a separate server component
-// Client components cannot export generateMetadata
-
-export default function CategoryPage({
-  params,
-}: { params: { name: string } }) {
-  const slug = decodeURIComponent(params.name);
+export default function CategoryPage() {
+  const params = useParams<{ name: string }>();
+  const slug = decodeURIComponent(params?.name ?? '');
   const slugToName: Record<string, string> = {
     business: '商务汇报',
     education: '教育培训',
