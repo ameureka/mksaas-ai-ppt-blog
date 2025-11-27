@@ -144,6 +144,34 @@ database: drizzleAdapter(getDb, {
 - 移除任何不在官方文档中的配置选项
 - 参考 [Better Auth Drizzle Adapter 文档](https://www.better-auth.com/docs/adapters/drizzle) 获取正确的配置
 
+---
+
+### Vercel 构建错误 - params 类型 / turbopack 警告
+
+#### 错误信息
+```
+Type error: Type '{ params: { name: string; }; }' does not satisfy the constraint 'PageProps'.
+Types of property 'params' are incompatible.
+Type '{ name: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+```
+同时提示：
+```
+Invalid next.config.ts options detected:
+Unrecognized key(s) in object: 'turbopack'
+```
+
+#### 错误原因
+- 客户端页面 `src/app/[locale]/(marketing)/ppt/category/[name]/page.tsx` 使用了服务端页面的 `PageProps` 形态，`params` 类型与 Next.js 预期不符。
+- 构建链路中某插件注入了非官方配置 `turbopack`，Next.js 15 不认该字段。
+
+#### 解决方案
+- 在页面中改用 `useParams<{ name: string }>()` 获取路由参数，移除不兼容的 props 声明。
+- 在 `next.config.ts` 组合插件后，对结果做兜底清理：如果存在 `turbopack` 字段则删除，避免无效配置告警。
+
+#### 相关文件
+- `src/app/[locale]/(marketing)/ppt/category/[name]/page.tsx`
+- `next.config.ts`
+
 #### 相关提交
 - `fix: Remove unsupported useMigrations option from drizzleAdapter`
 

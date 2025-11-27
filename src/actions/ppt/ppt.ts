@@ -55,7 +55,7 @@ const buildWhere = (params?: PPTListParams) => {
     );
   }
 
-  if (params.category && params.category !== 'all') {
+  if (params.category) {
     conditions.push(eq(pptTable.category, params.category));
   }
 
@@ -155,9 +155,11 @@ export async function getPPTs(
 export async function getPPTById(id: string): Promise<ServerActionResult<PPT>> {
   try {
     const db = await getDb();
-    const row = await db.query.ppt.findFirst({
-      where: eq(pptTable.id, id),
-    });
+    const [row] = await db
+      .select()
+      .from(pptTable)
+      .where(eq(pptTable.id, id))
+      .limit(1);
     if (!row) {
       return errorResult('PPT not found', 'NOT_FOUND');
     }

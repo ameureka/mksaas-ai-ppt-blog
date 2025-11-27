@@ -67,6 +67,9 @@ export interface CreatePPTInput {
   description?: string;
   file_url: string;
   preview_url?: string;
+  author?: string;
+  slides_count?: number;
+  status?: PPTStatus;
 }
 
 export interface UpdatePPTInput {
@@ -74,4 +77,8 @@ export interface UpdatePPTInput {
   category?: PPTCategory;
   description?: string;
   status?: PPTStatus;
+  author?: string;
+  file_url?: string;
+  preview_url?: string;
+  slides_count?: number;
 }

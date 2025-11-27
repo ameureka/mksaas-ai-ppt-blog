@@ -157,4 +157,12 @@ const withNextIntl = createNextIntlPlugin();
  */
 const withMDX = createMDX();
 
-export default withMDX(withNextIntl(nextConfig));
+const config = withMDX(withNextIntl(nextConfig));
+
+// Remove unsupported keys that may be injected by plugins (e.g. turbopack)
+if ('turbopack' in (config as any)) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-delete
+  delete (config as any).turbopack;
+}
+
+export default config;

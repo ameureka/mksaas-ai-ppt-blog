@@ -13,6 +13,36 @@ import {
 } from './types';
 
 /**
+ * No-op mail provider for local/dev when no provider key is configured.
+ * Logs and pretends success so flows (e.g., signup) don't crash during development.
+ */
+class NoopMailProvider implements MailProvider {
+  public getProviderName() {
+    return 'noop';
+  }
+
+  public async sendTemplate(
+    params: SendTemplateParams
+  ): Promise<{ success: boolean; messageId?: string; error?: unknown }> {
+    console.warn(
+      '[mail] Noop provider in use; template email not sent',
+      params.template
+    );
+    return { success: true, messageId: 'noop-template' };
+  }
+
+  public async sendRawEmail(
+    params: SendRawEmailParams
+  ): Promise<{ success: boolean; messageId?: string; error?: unknown }> {
+    console.warn('[mail] Noop provider in use; raw email not sent', {
+      to: params.to,
+      subject: params.subject,
+    });
+    return { success: true, messageId: 'noop-raw' };
+  }
+}
+
+/**
  * Global mail provider instance
  */
 let mailProvider: MailProvider | null = null;
@@ -36,7 +66,14 @@ export const getMailProvider = (): MailProvider => {
 export const initializeMailProvider = (): MailProvider => {
   if (!mailProvider) {
     if (websiteConfig.mail.provider === 'resend') {
-      mailProvider = new ResendProvider();
+      if (!process.env.RESEND_API_KEY || !websiteConfig.mail.fromEmail) {
+        console.warn(
+          '[mail] RESEND_API_KEY or fromEmail not set; using NoopMailProvider (emails will not be sent).'
+        );
+        mailProvider = new NoopMailProvider();
+      } else {
+        mailProvider = new ResendProvider();
+      }
     } else {
       throw new Error(
         `Unsupported mail provider: ${websiteConfig.mail.provider}`
