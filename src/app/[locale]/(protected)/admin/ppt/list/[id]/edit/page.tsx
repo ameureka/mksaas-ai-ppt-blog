@@ -1,9 +1,9 @@
 'use client';
 
+import { getPPTById } from '@/actions/ppt';
 import { PPTEditForm } from '@/components/ppt/admin/ppt-edit-form';
 import { adminTexts } from '@/lib/constants/ppt-i18n';
 import { AdminRoutes } from '@/lib/constants/ppt-routes';
-import { mockPPTs } from '@/lib/ppt/mock-data/ppts';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -12,11 +12,13 @@ export default async function PPTEditPage({
   params,
 }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const ppt = mockPPTs.find((p) => p.id === id);
+  const result = await getPPTById(id);
 
-  if (!ppt) {
+  if (!result.success || !result.data) {
     notFound();
   }
+
+  const ppt = result.data;
 
   return (
     <div className="flex-1 overflow-auto p-6">

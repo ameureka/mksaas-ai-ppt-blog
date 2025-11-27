@@ -98,3 +98,7 @@ vo-ui-code-pro/
 *.backup
 *.tmp
 *.temp
+
+
+# 敏感配置文件
+环境变量配置文件-vercel.md

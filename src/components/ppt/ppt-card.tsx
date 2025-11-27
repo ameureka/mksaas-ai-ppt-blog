@@ -16,21 +16,17 @@ import { Download, Eye, Globe } from 'lucide-react';
 interface PPT {
   id: string;
   title: string;
-  tags: string[];
+  category: string;
   downloads: number;
   views: number;
-  language: string;
-  previewUrl: string;
-  pages: number;
-  category: string;
+  // Support both DTO and legacy fields
+  tags?: string[];
+  language?: string;
+  preview_url?: string;
+  previewUrl?: string;
+  slides_count?: number;
+  pages?: number;
   isAd?: boolean;
-  // Optional fields for compatibility
-  subcategory?: string;
-  thumbnail?: string;
-  rating?: number;
-  reviewCount?: number;
-  price?: number;
-  slides?: number;
 }
 
 interface PPTCardProps {
@@ -54,20 +50,26 @@ export function PPTCard({ ppt, onDownload }: PPTCardProps) {
     );
   }
 
+  // Normalize fields
+  const previewUrl = ppt.preview_url || ppt.previewUrl || '/placeholder.svg';
+  const pages = ppt.slides_count || ppt.pages || 0;
+  const tags = ppt.tags || [];
+  const language = ppt.language || '中文';
+
   return (
     <Card className="group overflow-hidden transition-all hover:shadow-lg hover:border-primary/50">
       <LocaleLink href={`/ppt/${ppt.id}`}>
         <CardHeader className="p-3 cursor-pointer">
           <div className="relative h-40 sm:h-48 lg:h-56 overflow-hidden rounded-xl bg-muted">
             <img
-              src={ppt.previewUrl || '/placeholder.svg'}
+              src={previewUrl}
               alt={ppt.title}
               className="h-full w-full object-cover transition-transform group-hover:scale-105 rounded-xl"
               loading="lazy"
             />
             <Badge className="absolute right-2 top-2 gap-1" variant="secondary">
               <Globe className="h-3 w-3" />
-              {ppt.language}
+              {language}
             </Badge>
           </div>
         </CardHeader>
@@ -79,11 +81,20 @@ export function PPTCard({ ppt, onDownload }: PPTCardProps) {
           </CardTitle>
         </LocaleLink>
         <div className="mb-3 flex flex-wrap gap-1">
-          {ppt.tags.map((tag, i) => (
-            <Badge key={i} variant="outline" className="text-xs">
-              {tag}
+          {tags.length > 0 ? (
+            tags.map((tag, i) => (
+              <Badge key={i} variant="outline" className="text-xs">
+                {tag}
+              </Badge>
+            ))
+          ) : (
+            <Badge
+              variant="outline"
+              className="text-xs text-muted-foreground border-dashed"
+            >
+              {ppt.category}
             </Badge>
-          ))}
+          )}
         </div>
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <span className="flex items-center gap-1">
@@ -94,7 +105,7 @@ export function PPTCard({ ppt, onDownload }: PPTCardProps) {
             <Eye className="h-3.5 w-3.5" />
             {(ppt.views / 1000).toFixed(1)}k
           </span>
-          <span>{ppt.pages}页</span>
+          <span>{pages}页</span>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">

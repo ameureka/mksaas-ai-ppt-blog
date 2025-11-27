@@ -188,17 +188,26 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
     setIsProcessing(true);
     setError(null);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const mockLink = `https://download.example.com/${ppt.id}/template.pptx?token=mock_token_${Date.now()}`;
+      const res = await fetch(`/api/ppts/${ppt.id}/download`, {
+        method: 'POST',
+      });
+      const json = await res.json();
+
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || '下载失败');
+      }
+
+      setDownloadLink(json.data.fileUrl);
       const mockExpiresAt = new Date(
         Date.now() + 48 * 60 * 60 * 1000
       ).toISOString();
-      setDownloadLink(mockLink);
       setExpiresAt(mockExpiresAt);
       setStep(3);
       toast.success('下载链接已生成', { description: '链接48小时内有效' });
     } catch (err) {
-      setError('生成下载链接失败，请稍后重试');
+      setError(
+        err instanceof Error ? err.message : '生成下载链接失败，请稍后重试'
+      );
     } finally {
       setIsProcessing(false);
     }

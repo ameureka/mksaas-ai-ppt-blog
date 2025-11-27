@@ -16,6 +16,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
+import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
 import {
@@ -162,6 +163,11 @@ export default function PPTDetailPage() {
   }, []);
 
   const handleDownload = () => {
+    if (websiteConfig.features.pptRequireLoginForDownload && !user) {
+      setIsLoginModalOpen(true);
+      toast.info('请先登录后下载');
+      return;
+    }
     setIsDownloadModalOpen(true);
   };
 
