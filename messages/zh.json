@@ -314,6 +314,9 @@
   },
   "Marketing": {
     "navbar": {
+      "ppt": {
+        "title": "PPT"
+      },
       "features": {
         "title": "功能"
       },

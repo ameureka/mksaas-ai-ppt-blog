@@ -52,13 +52,13 @@ export function useNavbarLinks(): NestedMenuItem[] {
 
   return [
     {
-      title: t('blog.title'),
-      href: Routes.Blog,
+      title: t('ppt.title'),
+      href: Routes.Root, // 指向首页
       external: false,
     },
     {
-      title: t('pricing.title'),
-      href: Routes.Pricing,
+      title: t('blog.title'),
+      href: Routes.Blog,
       external: false,
     },
     {

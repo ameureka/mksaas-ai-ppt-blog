@@ -1,72 +1,15 @@
-import HomeBlogSection from '@/components/home/home-blog';
-import HomeHeroSection from '@/components/home/home-hero';
-import { NewsletterCard } from '@/components/newsletter/newsletter-card';
-import { constructMetadata } from '@/lib/metadata';
-import type { Metadata } from 'next';
+import SearchHomePage from '@/app/[locale]/(marketing)/ppt/page';
 import type { Locale } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
-
-/**
- * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
- */
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}): Promise<Metadata | undefined> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Metadata' });
-
-  return constructMetadata({
-    title: t('title'),
-    description: t('description'),
-    locale,
-    pathname: '',
-  });
-}
 
 interface HomePageProps {
   params: Promise<{ locale: Locale }>;
 }
 
-export default async function HomePage(props: HomePageProps) {
-  const params = await props.params;
-  const { locale } = params;
-  const t = await getTranslations('HomePage');
-
-  return (
-    <>
-      <div className="flex flex-col">
-        <HomeHeroSection />
-
-        <HomeBlogSection locale={locale} />
-
-        {/* <HeroSection /> */}
-
-        {/* <LogoCloud /> */}
-
-        {/* <StatsSection /> */}
-
-        {/* <IntegrationSection /> */}
-
-        {/* <FeaturesSection /> */}
-
-        {/* <Features2Section /> */}
-
-        {/* <Features3Section /> */}
-
-        {/* <Integration2Section /> */}
-
-        {/* <PricingSection /> */}
-
-        {/* <FaqSection /> */}
-
-        {/* <CallToActionSection /> */}
-
-        {/* <TestimonialsSection /> */}
-
-        <NewsletterCard />
-      </div>
-    </>
-  );
+/**
+ * Home page now directly renders the PPT search page
+ * PPT is the main landing page of the site
+ */
+export default function HomePage(props: HomePageProps) {
+  // Directly render the PPT search page component
+  return <SearchHomePage />;
 }

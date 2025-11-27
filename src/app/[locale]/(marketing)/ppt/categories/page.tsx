@@ -119,10 +119,8 @@ export default function CategoriesPage() {
   const router = useRouter();
 
   const handleCategoryClick = (categoryName: string) => {
-    console.log('[v0] Navigating to category:', categoryName);
-    const encodedName = encodeURIComponent(categoryName);
-    console.log('[v0] Encoded name:', encodedName);
-    router.push(`/category/${encodedName}`);
+    console.log('[PPT] Navigating to category:', categoryName);
+    router.push(PublicRoutes.Category(categoryName));
   };
 
   return (
