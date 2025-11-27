@@ -1,0 +1,48 @@
+"use client"
+
+import { notFound } from "next/navigation"
+import Link from "next/link"
+import { ChevronRight } from "lucide-react"
+import { PPTEditForm } from "@/components/admin/ppt-edit-form"
+import { mockPPTs } from "@/lib/mock-data/ppts"
+import { AdminRoutes } from "@/lib/constants/routes"
+import { adminTexts } from "@/lib/constants/i18n"
+import { MksaasPreviewLayout } from "@/components/mksaas-preview-layout"
+import { MksaasDashboardHeader } from "@/components/mksaas-dashboard-header"
+
+export default function PPTEditPage({ params }: { params: { id: string } }) {
+  const ppt = mockPPTs.find((p) => p.id === params.id)
+
+  if (!ppt) {
+    notFound()
+  }
+
+  return (
+    <MksaasPreviewLayout>
+      <MksaasDashboardHeader title={adminTexts.ppt.edit} description="修改PPT的标题、分类、作者和描述信息" />
+      <div className="flex-1 overflow-auto p-6">
+        <div className="space-y-6">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link href={AdminRoutes.Dashboard} className="hover:text-foreground">
+              管理后台
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <Link href={AdminRoutes.PPTs} className="hover:text-foreground">
+              {adminTexts.ppt.management}
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="text-foreground">{adminTexts.ppt.edit}</span>
+          </div>
+
+          <div>
+            <h1 className="text-3xl font-bold">{adminTexts.ppt.edit}</h1>
+            <p className="text-muted-foreground mt-2">修改PPT的标题、分类、作者和描述信息</p>
+          </div>
+
+          <PPTEditForm ppt={ppt} />
+        </div>
+      </div>
+    </MksaasPreviewLayout>
+  )
+}

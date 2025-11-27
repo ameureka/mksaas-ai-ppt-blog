@@ -123,3 +123,26 @@ export const creditTransaction = pgTable("credit_transaction", {
 	creditTransactionUserIdIdx: index("credit_transaction_user_id_idx").on(table.userId),
 	creditTransactionTypeIdx: index("credit_transaction_type_idx").on(table.type),
 }));
+
+export const ppt = pgTable("ppt", {
+	id: text("id").primaryKey(),
+	title: text("title").notNull(),
+	category: text("category").notNull(),
+	author: text("author").notNull(),
+	description: text("description"),
+	slidesCount: integer("slides_count").notNull().default(0),
+	fileSize: text("file_size").notNull(),
+	fileUrl: text("file_url").notNull(),
+	previewUrl: text("preview_url"),
+	downloads: integer("downloads").notNull().default(0),
+	views: integer("views").notNull().default(0),
+	status: text("status").notNull().default('draft'),
+	uploadedAt: timestamp("uploaded_at").notNull().defaultNow(),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => ({
+	pptCategoryIdx: index("ppt_category_idx").on(table.category),
+	pptStatusIdx: index("ppt_status_idx").on(table.status),
+	pptCreatedAtIdx: index("ppt_created_at_idx").on(table.createdAt),
+	pptDownloadsIdx: index("ppt_downloads_idx").on(table.downloads),
+}));

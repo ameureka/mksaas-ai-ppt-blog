@@ -4,12 +4,15 @@ import { isDemoWebsite } from '@/lib/demo';
 import { Routes } from '@/routes';
 import type { NestedMenuItem } from '@/types';
 import {
+  BarChart3Icon,
   BellIcon,
   CircleUserRoundIcon,
   CoinsIcon,
   CreditCardIcon,
   LayoutDashboardIcon,
+  ListIcon,
   LockKeyholeIcon,
+  PresentationIcon,
   Settings2Icon,
   SettingsIcon,
   UsersRoundIcon,
@@ -49,6 +52,30 @@ export function useSidebarLinks(): NestedMenuItem[] {
           title: t('admin.users.title'),
           icon: <UsersRoundIcon className="size-4 shrink-0" />,
           href: Routes.AdminUsers,
+          external: false,
+        },
+        {
+          title: t('admin.ppt.title'),
+          icon: <PresentationIcon className="size-4 shrink-0" />,
+          href: Routes.AdminPPT,
+          external: false,
+        },
+        {
+          title: t('admin.pptList.title'),
+          icon: <ListIcon className="size-4 shrink-0" />,
+          href: Routes.AdminPPTList,
+          external: false,
+        },
+        {
+          title: t('admin.stats.title'),
+          icon: <BarChart3Icon className="size-4 shrink-0" />,
+          href: Routes.AdminStats,
+          external: false,
+        },
+        {
+          title: t('admin.settings.title'),
+          icon: <SettingsIcon className="size-4 shrink-0" />,
+          href: Routes.AdminSettings,
           external: false,
         },
       ],

@@ -1,0 +1,309 @@
+"use client"
+
+import { useState, useMemo } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Search, RefreshCw, Trash2, FolderEdit } from "lucide-react"
+import { PPTListTable } from "@/components/admin/ppt-list-table"
+import { categoryOptions } from "@/lib/mock-data/ppts"
+import { useToast } from "@/hooks/use-toast"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { auditLog } from "@/lib/admin/audit"
+import { adminTexts } from "@/lib/constants/i18n"
+import { MksaasPreviewLayout } from "@/components/mksaas-preview-layout"
+import { MksaasDashboardHeader } from "@/components/mksaas-dashboard-header"
+import { useGetPPTs } from "@/hooks/use-get-ppts"
+import { useDeletePPT } from "@/hooks/use-delete-ppt"
+import { useQueryClient } from "@tanstack/react-query"
+import { pptKeys } from "@/lib/query-keys"
+
+export default function PPTManagementPage() {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  const [searchQuery, setSearchQuery] = useState("")
+  const [categoryFilter, setCategoryFilter] = useState("all")
+  const [sortBy, setSortBy] = useState<"created_at" | "downloads" | "title">("created_at")
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  // 使用 hooks 获取数据
+  const { data, isLoading, refetch } = useGetPPTs()
+  const { deletePPTMutation, isLoading: isDeleting } = useDeletePPT()
+  const ppts = data?.items ?? []
+
+  const filteredPPTs = useMemo(() => {
+    let result = [...ppts]
+
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      result = result.filter(
+        (ppt) =>
+          ppt.title.toLowerCase().includes(query) ||
+          ppt.id.toLowerCase().includes(query) ||
+          ppt.author.toLowerCase().includes(query),
+      )
+    }
+
+    if (categoryFilter !== "all") {
+      result = result.filter((ppt) => ppt.category === categoryFilter)
+    }
+
+    result.sort((a, b) => {
+      let comparison = 0
+      if (sortBy === "created_at") {
+        comparison = new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      } else if (sortBy === "downloads") {
+        comparison = a.downloads - b.downloads
+      } else if (sortBy === "title") {
+        comparison = a.title.localeCompare(b.title)
+      }
+      return sortOrder === "asc" ? comparison : -comparison
+    })
+
+    return result
+  }, [searchQuery, categoryFilter, sortBy, sortOrder, ppts])
+
+  const handleRefresh = async () => {
+    await refetch()
+    toast({ title: adminTexts.common.success })
+  }
+
+  const handleDelete = (id: string) => {
+    setDeletingId(id)
+    setDeleteDialogOpen(true)
+  }
+
+  const confirmDelete = async () => {
+    if (deletingId) {
+      const result = await deletePPTMutation(deletingId)
+      if (result.success) {
+        auditLog("delete_ppt", "ppt", deletingId, { action: "delete" })
+        queryClient.invalidateQueries({ queryKey: pptKeys.all })
+      }
+      setDeleteDialogOpen(false)
+      setDeletingId(null)
+    }
+  }
+
+  const handleBatchDelete = async () => {
+    if (selectedIds.length === 0) {
+      toast({ title: "请至少选择一项", variant: "destructive" })
+      return
+    }
+    for (const id of selectedIds) {
+      await deletePPTMutation(id)
+    }
+    queryClient.invalidateQueries({ queryKey: pptKeys.all })
+    auditLog("batch_delete_ppt", "ppt", "batch", { ids: selectedIds, count: selectedIds.length })
+    toast({ title: `已删除 ${selectedIds.length} 个PPT` })
+    setSelectedIds([])
+  }
+
+  const handleBatchChangeCategory = () => {
+    if (selectedIds.length === 0) {
+      toast({ title: "请至少选择一项", variant: "destructive" })
+      return
+    }
+    toast({ title: "批量修改分类功能开发中" })
+  }
+
+  return (
+    <MksaasPreviewLayout>
+      <MksaasDashboardHeader title={adminTexts.ppt.management} />
+      <div className="flex-1 overflow-auto p-6">
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold">{adminTexts.ppt.management}</h1>
+              <p className="text-muted-foreground">{adminTexts.ppt.description}</p>
+            </div>
+            <Button onClick={handleRefresh} disabled={isLoading || isDeleting}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${isLoading || isDeleting ? "animate-spin" : ""}`} />
+              {adminTexts.ppt.refresh}
+            </Button>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-4">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  {adminTexts.dashboard.totalPPTs}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{ppts.length}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  {adminTexts.dashboard.totalDownloads}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {ppts.reduce((sum, ppt) => sum + ppt.downloads, 0).toLocaleString()}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">总浏览量</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {ppts.reduce((sum, ppt) => sum + ppt.views, 0).toLocaleString()}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">筛选结果</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{filteredPPTs.length}</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex flex-col gap-4 md:flex-row md:items-end">
+                <div className="flex-1 space-y-2">
+                  <label className="text-sm font-medium">{adminTexts.ppt.search}</label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder={adminTexts.ppt.searchPlaceholder}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2 md:w-48">
+                  <label className="text-sm font-medium">{adminTexts.ppt.category}</label>
+                  <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoryOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2 md:w-40">
+                  <label className="text-sm font-medium">{adminTexts.ppt.sort}</label>
+                  <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="created_at">创建时间</SelectItem>
+                      <SelectItem value="downloads">下载量</SelectItem>
+                      <SelectItem value="title">标题</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2 md:w-32">
+                  <label className="text-sm font-medium">{adminTexts.ppt.order}</label>
+                  <Select value={sortOrder} onValueChange={(value: any) => setSortOrder(value)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="desc">降序</SelectItem>
+                      <SelectItem value="asc">升序</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {selectedIds.length > 0 && (
+            <Card className="border-primary bg-primary/5">
+              <CardContent className="flex items-center justify-between py-4">
+                <div className="flex items-center gap-2">
+                  <Badge variant="default">{selectedIds.length}</Badge>
+                  <span className="text-sm text-foreground">
+                    {adminTexts.ppt.selected} {selectedIds.length} {adminTexts.ppt.items}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={handleBatchChangeCategory}>
+                    <FolderEdit className="mr-2 h-4 w-4" />
+                    {adminTexts.ppt.batchChangeCategory}
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={handleBatchDelete}>
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    {adminTexts.ppt.batchDelete}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          <PPTListTable
+            ppts={filteredPPTs}
+            selectedIds={selectedIds}
+            onSelectionChange={setSelectedIds}
+            onDelete={handleDelete}
+          />
+
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-muted-foreground">显示 {filteredPPTs.length} 条结果</div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" disabled>
+                上一页
+              </Button>
+              <Button variant="outline" size="sm" disabled>
+                下一页
+              </Button>
+            </div>
+          </div>
+
+          <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>确认删除PPT</AlertDialogTitle>
+                <AlertDialogDescription>此操作无法撤销。删除后将永久移除该PPT及相关数据。</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel disabled={isDeleting}>{adminTexts.common.cancel}</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={confirmDelete}
+                  disabled={isDeleting}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  {isDeleting ? "删除中..." : adminTexts.common.confirm}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      </div>
+    </MksaasPreviewLayout>
+  )
+}

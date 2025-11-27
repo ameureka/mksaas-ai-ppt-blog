@@ -544,6 +544,18 @@
           "error": "Failed to unban user"
         },
         "close": "Close"
+      },
+      "ppt": {
+        "title": "PPT Overview"
+      },
+      "pptList": {
+        "title": "PPT Management"
+      },
+      "stats": {
+        "title": "Statistics"
+      },
+      "settings": {
+        "title": "System Settings"
       }
     },
     "settings": {

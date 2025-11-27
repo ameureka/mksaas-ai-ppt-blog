@@ -1,11 +1,178 @@
-import { UsersPageClient } from '@/components/admin/users-page-client';
+'use client';
 
-/**
- * Users page
- *
- * This page is used to manage users for the admin,
- * it is protected and only accessible to the admin role
- */
+import { UserListTable } from '@/components/ppt/admin/user-list-table';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { useGetUsers } from '@/hooks/ppt/use-get-users';
+import { ADMIN_I18N } from '@/lib/constants/ppt-i18n';
+import type { PPTUser } from '@/lib/types/ppt/user';
+import { Coins, Search, UserCheck, UserX, Users } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+
 export default function UsersPage() {
-  return <UsersPageClient />;
+  const [searchQuery, setSearchQuery] = useState('');
+  const { data, isLoading } = useGetUsers();
+  const users = data?.items ?? [];
+
+  const filteredUsers = users.filter((user: PPTUser) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      user.username.toLowerCase().includes(query) ||
+      user.email.toLowerCase().includes(query) ||
+      user.id.toLowerCase().includes(query)
+    );
+  });
+
+  const totalUsers = users.length;
+  const activeUsers = users.filter(
+    (u: PPTUser) => u.status === 'active'
+  ).length;
+  const bannedUsers = users.filter(
+    (u: PPTUser) => u.status === 'banned'
+  ).length;
+  const totalCredits = users.reduce((sum, u) => sum + u.credits, 0);
+
+  const handleUserUpdate = (userId: string) => {
+    console.log('[v0] User action triggered:', userId);
+  };
+
+  return (
+    <div className="flex-1 overflow-auto p-6">
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">
+            {ADMIN_I18N.user.pageTitle}
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            {ADMIN_I18N.user.pageDesc}
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-foreground">
+                {ADMIN_I18N.user.totalUsers}
+              </CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-foreground">
+                {totalUsers}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {ADMIN_I18N.user.totalUsersDesc}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-foreground">
+                {ADMIN_I18N.user.activeUsers}
+              </CardTitle>
+              <UserCheck className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-foreground">
+                {activeUsers}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {ADMIN_I18N.user.activeUsersDesc}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-foreground">
+                {ADMIN_I18N.user.bannedUsers}
+              </CardTitle>
+              <UserX className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-foreground">
+                {bannedUsers}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {ADMIN_I18N.user.bannedUsersDesc}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-foreground">
+                {ADMIN_I18N.user.totalCredits}
+              </CardTitle>
+              <Coins className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-foreground">
+                {totalCredits.toLocaleString()}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {ADMIN_I18N.user.totalCreditsDesc}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{ADMIN_I18N.user.userList}</CardTitle>
+            <CardDescription>{ADMIN_I18N.user.userListDesc}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder={ADMIN_I18N.user.searchPlaceholder}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9"
+                />
+              </div>
+            </div>
+
+            {isLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-4 text-muted-foreground">
+                  {ADMIN_I18N.common.loading}
+                </p>
+              </div>
+            ) : (
+              <>
+                <UserListTable
+                  users={filteredUsers}
+                  onUserUpdate={handleUserUpdate}
+                />
+
+                {filteredUsers.length === 0 && (
+                  <div className="text-center py-12">
+                    <Users className="mx-auto h-12 w-12 text-muted-foreground" />
+                    <p className="mt-4 text-lg font-medium text-foreground">
+                      {ADMIN_I18N.user.noUsersFound}
+                    </p>
+                    <p className="text-muted-foreground">
+                      {ADMIN_I18N.user.tryOtherSearch}
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
 }

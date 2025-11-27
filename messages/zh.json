@@ -544,6 +544,18 @@
           "error": "解除封禁失败"
         },
         "close": "关闭"
+      },
+      "ppt": {
+        "title": "PPT 概览"
+      },
+      "pptList": {
+        "title": "PPT 管理"
+      },
+      "stats": {
+        "title": "数据统计"
+      },
+      "settings": {
+        "title": "系统设置"
       }
     },
     "settings": {
