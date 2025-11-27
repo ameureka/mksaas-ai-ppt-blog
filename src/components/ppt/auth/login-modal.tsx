@@ -11,7 +11,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { authClient } from '@/lib/auth-client';
+import { routing } from '@/i18n/routing';
+import { Routes } from '@/routes';
 import { Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -27,6 +30,7 @@ export function LoginModal({
   onOpenChange,
   onLoginSuccess,
 }: LoginModalProps) {
+  const locale = useLocale();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +64,11 @@ export function LoginModal({
 
   const handleRedirectToSignIn = () => {
     onOpenChange(false);
-    router.push('/auth/sign-in');
+    const localizedLoginPath =
+      locale && locale !== routing.defaultLocale
+        ? `/${locale}${Routes.Login}`
+        : Routes.Login;
+    router.push(localizedLoginPath);
   };
 
   return (
