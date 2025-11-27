@@ -108,6 +108,47 @@ export const auth = betterAuth({
 
 ---
 
+### TypeScript 构建错误 - useMigrations
+
+#### 错误信息
+```
+Failed to compile.
+
+./src/lib/auth.ts:31:5
+Type error: Object literal may only specify known properties, and 'useMigrations' does not exist in type 'DrizzleAdapterConfig'.
+```
+
+#### 错误原因
+
+`useMigrations` 配置选项在 Better Auth 的 `DrizzleAdapterConfig` 类型中不存在。这是一个无效的配置项。
+
+#### 解决方案
+
+❌ **错误的写法：**
+```typescript
+database: drizzleAdapter(getDb, {
+  provider: 'pg',
+  useMigrations: false,  // 这个选项不存在
+}),
+```
+
+✅ **正确的写法：**
+```typescript
+database: drizzleAdapter(getDb, {
+  provider: 'pg',  // 只需要 provider 配置
+}),
+```
+
+**关键点：**
+- Better Auth 的 Drizzle 适配器只需要 `provider` 配置
+- 移除任何不在官方文档中的配置选项
+- 参考 [Better Auth Drizzle Adapter 文档](https://www.better-auth.com/docs/adapters/drizzle) 获取正确的配置
+
+#### 相关提交
+- `fix: Remove unsupported useMigrations option from drizzleAdapter`
+
+---
+
 ## 数据库相关
 
 ### 问题待补充
@@ -192,6 +233,7 @@ Error: Missing environment variable: XXX
 
 ## 更新日志
 
+- **2025-01-27**: 添加 TypeScript 构建错误 - useMigrations 解决方案
 - **2025-01-27**: 添加 Vercel Middleware 错误解决方案
 - **2025-01-27**: 创建文档，添加基本结构
 
