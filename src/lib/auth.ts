@@ -28,7 +28,6 @@ export const auth = betterAuth({
   appName: defaultMessages.Metadata.name,
   database: drizzleAdapter(getDb, {
     provider: 'pg', // or "mysql", "sqlite"
-    useMigrations: false,
   }),
   session: {
     // https://www.better-auth.com/docs/concepts/session-management#cookie-cache
