@@ -100,85 +100,55 @@ export default function PPTDetailPage() {
 
   const [helpfulReviews, setHelpfulReviews] = useState<Set<string>>(new Set());
 
-  // Mock data
-  const mockPPT: PPTDetail = {
-    id: params.id as string,
-    title: '2025年终总结PPT模板',
-    description:
-      '这是一套专业的2025年终总结PPT模板，适用于企业年终总结、工作述职报告、项目成果展示等场景。模板采用商务蓝色系设计，包含数据图表、时间轴、团队介绍等多种实用页面。',
-    tags: [
-      '年终总结',
-      '工作汇报',
-      '商务风格',
-      '蓝色系',
-      '数据图表',
-      '述职报告',
-    ],
-    category: '商务办公',
-    subcategory: '年终总结',
-    downloads: 12345,
-    views: 45678,
-    rating: 4.8,
-    reviewCount: 234,
-    language: '中文',
-    pages: 24,
-    fileSize: '5.2MB',
-    format: 'PPTX',
-    aspectRatio: '16:9',
-    previewUrls: Array(24).fill('/ppt/business-presentation-slide.png'),
-    author: 'AI 团队',
-    uploadedAt: '2025-01-10',
-    updatedAt: '2025-01-10',
-    isFeatured: true,
-    isFirstDownloadFree: true,
-    price: 5,
-  };
-
-  const mockReviews: Review[] = [
-    {
-      id: 'rev_1',
-      userId: 'user_1',
-      userName: '张三',
-      userAvatar: '/ppt/diverse-user-avatars.png',
-      rating: 5,
-      comment:
-        '非常好用的模板，设计专业，修改方便！数据图表很实用，直接套用就能完成年终总结。强烈推荐给需要做汇报的朋友们！',
-      verified: true,
-      helpful: 23,
-      createdAt: '2025-01-15',
-    },
-    {
-      id: 'rev_2',
-      userId: 'user_2',
-      userName: '李四',
-      userAvatar: '/ppt/diverse-user-avatar-set-2.png',
-      rating: 4,
-      comment:
-        '整体不错，就是有些图表需要自己调整。配色很专业，适合正式场合使用。',
-      verified: true,
-      helpful: 12,
-      createdAt: '2025-01-14',
-    },
-  ];
-
-  const mockRecommendations: PPTDetail[] = Array(7)
-    .fill(null)
-    .map((_, i) => ({
-      ...mockPPT,
-      id: `rec_${i}`,
-      title: `相关模板 ${i + 1}`,
-      downloads: Math.floor(Math.random() * 5000) + 1000,
-      rating: 4.5 + Math.random() * 0.5,
-    }));
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setPpt(mockPPT);
-      setReviews(mockReviews);
-      setRecommendations(mockRecommendations);
-      setIsLoading(false);
+      try {
+        const res = await fetch(`/api/ppts/${params.id}`);
+        const json = await res.json();
+        if (json.success) {
+          const data = json.data;
+          const detail: PPTDetail = {
+            id: data.id,
+            title: data.title,
+            description: data.description || '暂无简介',
+            tags: data.tags ?? [],
+            category: data.category ?? '其他',
+            subcategory: data.category ?? '其他',
+            downloads: data.downloads ?? 0,
+            views: data.views ?? 0,
+            rating: 4.5,
+            reviewCount: 0,
+            language: data.language ?? '中文',
+            pages: data.slides_count ?? 0,
+            fileSize: data.file_size || '未知',
+            format: 'PPTX',
+            aspectRatio: '16:9',
+            previewUrls:
+              data.preview_url && data.slides_count
+                ? Array(Math.max(1, data.slides_count)).fill(data.preview_url)
+                : [data.preview_url || '/placeholder.svg'],
+            author: data.author || '未知',
+            uploadedAt: data.created_at || '',
+            updatedAt: data.updated_at || '',
+            isFeatured: false,
+            isFirstDownloadFree: true,
+            price: undefined,
+          };
+          setPpt(detail);
+          setRecommendations([]);
+          setReviews([]);
+        } else {
+          setPpt(null);
+          toast.error('未找到该模板');
+        }
+      } catch (error) {
+        console.error(error);
+        setPpt(null);
+        toast.error('加载失败');
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [params.id]);
@@ -192,11 +162,6 @@ export default function PPTDetailPage() {
   }, []);
 
   const handleDownload = () => {
-    if (!user) {
-      setIsLoginModalOpen(true);
-      toast.info('请先登录后下载');
-      return;
-    }
     setIsDownloadModalOpen(true);
   };
 

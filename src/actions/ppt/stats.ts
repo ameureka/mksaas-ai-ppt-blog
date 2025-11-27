@@ -1,20 +1,13 @@
 'use server';
 
-/**
- * Stats & Settings Server Actions (Mock)
- *
- * 迁移时替换为真实的 Server Actions
- */
-
-import { mockPPTs } from '@/lib/mock-data/ppts';
-import { mockUsers } from '@/lib/mock-data/users';
+import { getDb } from '@/db';
+import { ppt as pptTable, user as userTable } from '@/db/schema';
 import {
   type ServerActionResult,
+  errorResult,
   successResult,
 } from '@/lib/types/ppt/server-action';
-
-// 模拟网络延迟
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { count, sql } from 'drizzle-orm';
 
 export interface DashboardStats {
   totalPPTs: number;
@@ -27,20 +20,36 @@ export interface DashboardStats {
 export async function getDashboardStats(): Promise<
   ServerActionResult<DashboardStats>
 > {
-  await delay(400);
-  return successResult({
-    totalPPTs: mockPPTs.length,
-    totalUsers: mockUsers.length,
-    totalDownloads: mockPPTs.reduce((sum, p) => sum + p.downloads, 0),
-    todayDownloads: 156,
-    weeklyGrowth: 12.5,
-  });
+  try {
+    const db = await getDb();
+    const [pptAgg] = await db
+      .select({
+        totalPPTs: count(),
+        totalDownloads: sql<number>`coalesce(sum(${pptTable.downloads}), 0)`,
+        totalViews: sql<number>`coalesce(sum(${pptTable.views}), 0)`,
+      })
+      .from(pptTable);
+
+    const [userAgg] = await db
+      .select({ totalUsers: count() })
+      .from(userTable);
+
+    return successResult({
+      totalPPTs: Number(pptAgg?.totalPPTs ?? 0),
+      totalUsers: Number(userAgg?.totalUsers ?? 0),
+      totalDownloads: Number(pptAgg?.totalDownloads ?? 0),
+      todayDownloads: 0,
+      weeklyGrowth: 0,
+    });
+  } catch (error) {
+    console.error('[PPT] Failed to fetch dashboard stats', error);
+    return errorResult('Failed to fetch dashboard stats', 'INTERNAL_ERROR');
+  }
 }
 
 export async function updateSettings(
   settings: Record<string, unknown>
 ): Promise<ServerActionResult<void>> {
-  await delay(800);
-  console.log(`[Mock] Updated Settings:`, settings);
+  console.log(`[PPT] Update settings (stub):`, settings);
   return successResult(undefined);
 }

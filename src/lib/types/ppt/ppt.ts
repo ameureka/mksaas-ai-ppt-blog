@@ -4,7 +4,13 @@ export type PPTCategory =
   | 'business'
   | 'product'
   | 'education'
+  | 'technology'
+  | 'creative'
   | 'marketing'
+  | 'medical'
+  | 'finance'
+  | 'hr'
+  | 'lifestyle'
   | 'general';
 
 export type PPTStatus = 'draft' | 'published' | 'archived';

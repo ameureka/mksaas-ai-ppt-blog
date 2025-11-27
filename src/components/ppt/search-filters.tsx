@@ -11,6 +11,7 @@ import type { LucideIcon } from 'lucide-react';
 
 interface Category {
   name: string;
+  slug?: string;
   count: number;
   icon: LucideIcon;
   preview: string;
@@ -45,7 +46,7 @@ export function SearchFilters({
         <SelectContent>
           <SelectItem value="all">全部分类</SelectItem>
           {categories.map((cat) => (
-            <SelectItem key={cat.name} value={cat.name}>
+            <SelectItem key={cat.name} value={cat.slug ?? cat.name}>
               {cat.name}
             </SelectItem>
           ))}

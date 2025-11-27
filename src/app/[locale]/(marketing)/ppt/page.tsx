@@ -26,7 +26,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
-// Mock data types
 interface PPT {
   id: string;
   title: string;
@@ -40,59 +39,66 @@ interface PPT {
   isAd?: boolean;
 }
 
-// Mock categories
+// Categories (static labels)
 const categories = [
   {
     name: '商务汇报',
+    slug: 'business',
     count: 12345,
     icon: Briefcase,
     preview: '/ppt/business-presentation-template.png',
   },
   {
     name: '教育培训',
+    slug: 'education',
     count: 8234,
     icon: GraduationCap,
     preview: '/ppt/education-training-template.jpg',
   },
   {
     name: '产品营销',
+    slug: 'marketing',
     count: 6789,
     icon: TrendingUp,
     preview: '/ppt/product-marketing-template.jpg',
   },
   {
     name: '年终总结',
+    slug: 'general',
     count: 15678,
     icon: Calendar,
     preview: '/ppt/year-end-summary-template.jpg',
   },
   {
     name: '项目提案',
+    slug: 'creative',
     count: 9456,
     icon: Target,
     preview: '/ppt/project-proposal-template.png',
   },
   {
     name: '培训课件',
+    slug: 'education',
     count: 7123,
     icon: FileText,
     preview: '/ppt/training-courseware-template.jpg',
   },
   {
     name: '述职报告',
+    slug: 'business',
     count: 11234,
     icon: Presentation,
     preview: '/ppt/job-report-template.jpg',
   },
   {
     name: '营销方案',
+    slug: 'marketing',
     count: 5678,
     icon: Users,
     preview: '/ppt/marketing-plan-template.png',
   },
 ];
 
-// Mock hot keywords
 const hotKeywords: { text: string; size: 'large' | 'medium' | 'small' }[] = [
   { text: '年终总结', size: 'large' },
   { text: '工作汇报', size: 'medium' },
@@ -103,31 +109,6 @@ const hotKeywords: { text: string; size: 'large' | 'medium' | 'small' }[] = [
   { text: '产品介绍', size: 'medium' },
   { text: '营销方案', size: 'small' },
 ];
-
-// Mock PPT data
-const mockPPTs: PPT[] = Array.from({ length: 15 }, (_, i) => ({
-  id: `ppt_${i + 1}`,
-  title: [
-    '商务年终总结报告',
-    '新能源项目路演方案',
-    '产品营销策划方案',
-    '教育培训课件模板',
-    '工作述职报告PPT',
-    '商业计划书模板',
-    '项目提案展示',
-    '企业文化宣传',
-  ][i % 8],
-  tags: ['商务', '简约', '专业'][Math.floor(Math.random() * 3)]
-    ? ['商务', '简约']
-    : ['专业', '现代'],
-  downloads: Math.floor(Math.random() * 5000) + 500,
-  views: Math.floor(Math.random() * 10000) + 1000,
-  language: Math.random() > 0.7 ? 'English' : '中文',
-  previewUrl: `/placeholder.svg?height=400&width=600&query=business presentation template ${i + 1}`,
-  pages: Math.floor(Math.random() * 30) + 15,
-  category: categories[i % 8].name,
-  isAd: i === 7 || i === 15,
-}));
 
 function getErrorMessage(code: string, retryAfter?: number): string {
   const errorMap: Record<string, string> = {
@@ -144,10 +125,6 @@ function getErrorMessage(code: string, retryAfter?: number): string {
 
 function useAuditLog() {
   const logAction = (action: string, metadata?: Record<string, any>) => {
-    // TODO: 实现审计日志功能
-    // 1. 收集用户行为数据（搜索、下载、浏览等）
-    // 2. 发送到后端审计服务
-    // 3. 包含时间戳、用户ID、IP、操作类型等
     console.log('[Audit Log Placeholder]', {
       action,
       metadata,
@@ -177,10 +154,37 @@ export default function SearchHomePage() {
 
   const { logAction } = useAuditLog();
 
+  const transform = (items: any[]): PPT[] =>
+    items.map((item) => ({
+      id: item.id,
+      title: item.title,
+      tags: item.tags ?? [],
+      downloads: item.downloads ?? 0,
+      views: item.views ?? 0,
+      language: item.language ?? '中文',
+      previewUrl: item.preview_url ?? '/placeholder.svg',
+      pages: item.slides_count ?? 0,
+      category: item.category ?? '其他',
+    }));
+
   // Load initial data
   useEffect(() => {
-    setFeaturedPPTs(mockPPTs.slice(0, 8));
-    setNewPPTs(mockPPTs.slice(8, 16));
+    const load = async () => {
+      try {
+        const res = await fetch(
+          `/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc`
+        );
+        const json = await res.json();
+        if (json.success) {
+          const items = transform(json.data.items ?? []);
+          setFeaturedPPTs(items.slice(0, 8));
+          setNewPPTs(items.slice(0, 12));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    load();
   }, []);
 
   useEffect(() => {
@@ -215,37 +219,23 @@ export default function SearchHomePage() {
     setHasSearched(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Simulate rate limit error (5% chance)
-      if (Math.random() < 0.05) {
-        throw new Error('RATE_LIMITED');
-      }
-
-      // Filter mock data based on query
-      const filtered = mockPPTs.filter(
-        (ppt) =>
-          ppt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          ppt.tags.some((tag) => tag.includes(searchQuery))
+      const res = await fetch(
+        `/api/ppts?search=${encodeURIComponent(searchQuery)}`
       );
-
-      setResults(filtered);
-
-      if (filtered.length === 0) {
-        setError('NOT_FOUND');
+      const json = await res.json();
+      if (json.success) {
+        const items = transform(json.data.items ?? []);
+        setResults(items);
+        if (items.length === 0) {
+          setError('NOT_FOUND');
+        }
+      } else {
+        setError(json.code || 'INTERNAL_ERROR');
+        toast.error(getErrorMessage(json.code));
       }
     } catch (err) {
-      const errorCode = err instanceof Error ? err.message : 'INTERNAL_ERROR';
-      setError(errorCode);
-
-      if (errorCode === 'RATE_LIMITED') {
-        const countdown = 60;
-        setRetryAfter(countdown);
-        toast.error(getErrorMessage(errorCode, countdown), { duration: 5000 });
-      } else {
-        toast.error(getErrorMessage(errorCode));
-      }
+      setError('INTERNAL_ERROR');
+      toast.error(getErrorMessage('INTERNAL_ERROR'));
     } finally {
       setIsLoading(false);
     }
@@ -256,9 +246,9 @@ export default function SearchHomePage() {
     handleSearch(keyword);
   };
 
-  const handleCategoryClick = (categoryName: string) => {
-    logAction('category_click', { category: categoryName });
-    router.push(PublicRoutes.Category(categoryName));
+  const handleCategoryClick = (categorySlug: string) => {
+    logAction('category_click', { category: categorySlug });
+    router.push(PublicRoutes.Category(categorySlug));
   };
 
   const handleDownload = (ppt: PPT) => {
@@ -564,7 +554,7 @@ export default function SearchHomePage() {
                           return (
                             <button
                               key={cat.name}
-                              onClick={() => handleCategoryClick(cat.name)}
+                              onClick={() => handleCategoryClick(cat.slug)}
                               className="flex flex-col items-center gap-2 rounded-md border p-3 transition-colors hover:bg-muted"
                             >
                               <Icon className="h-5 w-5 text-muted-foreground" />
@@ -584,9 +574,9 @@ export default function SearchHomePage() {
             <SearchSidebar
               hotKeywords={hotKeywords}
               categories={categories}
-              recentDownloads={mockPPTs.slice(0, 3)}
+              recentDownloads={results.slice(0, 3)}
               onKeywordClick={handleKeywordClick}
-              onCategoryClick={handleCategoryClick}
+              onCategoryClick={(c) => handleCategoryClick(c.slug ?? c)}
             />
           </div>
         </section>
@@ -603,7 +593,7 @@ export default function SearchHomePage() {
                 <Card
                   key={category.name}
                   className="group cursor-pointer overflow-hidden transition-all hover:shadow-lg hover:border-primary"
-                  onClick={() => handleCategoryClick(category.name)}
+                  onClick={() => handleCategoryClick(category.slug)}
                 >
                   <CardContent className="p-0">
                     <div className="relative h-40 overflow-hidden bg-muted">

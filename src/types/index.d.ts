@@ -77,6 +77,7 @@ export interface FeaturesConfig {
   enablePromotekitAffiliate?: boolean;   // Whether to enable promotekit affiliate
   enableDatafastRevenueTrack?: boolean;   // Whether to enable datafast revenue tracking
   enableTurnstileCaptcha?: boolean;   // Whether to enable turnstile captcha
+  pptRequireLoginForDownload?: boolean; // Whether PPT download requires login
 }
 
 /**

@@ -43,7 +43,8 @@ import {
   Users,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 interface PPT {
   id: string;
@@ -220,11 +221,21 @@ const categoryMetadata: Record<
 
 export default function CategoryPage({
   params,
-}: { params: Promise<{ name: string }> }) {
-  const { name } = use(params);
-  const categoryName = decodeURIComponent(name);
-
-  console.log('[v0] Category page loaded:', categoryName);
+}: { params: { name: string } }) {
+  const slug = decodeURIComponent(params.name);
+  const slugToName: Record<string, string> = {
+    business: '商务汇报',
+    education: '教育培训',
+    marketing: '产品营销',
+    creative: '创意设计',
+    technology: '科技互联网',
+    medical: '医疗健康',
+    finance: '金融财务',
+    hr: '人力资源',
+    lifestyle: '生活休闲',
+    general: '通用模板',
+  };
+  const categoryName = slugToName[slug] ?? slug;
 
   const router = useRouter();
   const metadata =
@@ -244,75 +255,50 @@ export default function CategoryPage({
   useEffect(() => {
     const fetchCategoryPPTs = async () => {
       setIsLoading(true);
+      try {
+        const res = await fetch(
+          `/api/ppts?category=${encodeURIComponent(slug)}&page=${page}&pageSize=12&sortBy=created_at&sortOrder=desc`
+        );
+        const json = await res.json();
+        if (json.success) {
+          const items: PPT[] = (json.data.items ?? []).map((item: any) => ({
+            id: item.id,
+            title: item.title,
+            category: item.category ?? categoryName,
+            subcategory: item.category ?? categoryName,
+            thumbnail: item.preview_url ?? item.cover_image_url,
+            downloads: item.downloads ?? item.download_count ?? 0,
+            views: item.views ?? item.view_count ?? 0,
+            rating: 4.5,
+            reviewCount: 0,
+            price: undefined,
+            language: item.language ?? '中文',
+            slides: item.slides_count ?? 0,
+            tags: item.tags ?? [],
+            previewUrl: item.preview_url ?? '/placeholder.svg',
+            pages: item.slides_count ?? 0,
+          }));
 
-      await new Promise((resolve) => setTimeout(resolve, 800));
-
-      const generateMockPPT = (id: string, title: string): PPT => ({
-        id,
-        title,
-        category: categoryName,
-        subcategory: ['工作汇报', '项目总结', '业绩展示'][
-          Math.floor(Math.random() * 3)
-        ],
-        thumbnail: `/placeholder.svg?height=400&width=600&query=${categoryName}+${title}`,
-        downloads: Math.floor(Math.random() * 10000) + 1000,
-        views: Math.floor(Math.random() * 50000) + 5000,
-        rating: 4.5 + Math.random() * 0.5,
-        reviewCount: Math.floor(Math.random() * 500) + 50,
-        price: Math.random() > 0.7 ? 0 : 5,
-        language: Math.random() > 0.5 ? '中文' : 'English',
-        slides: Math.floor(Math.random() * 30) + 15,
-        tags: ['商务', '简约'],
-        previewUrl: `/placeholder.svg?height=400&width=600&query=${categoryName}+${title}`,
-        pages: Math.floor(Math.random() * 30) + 15,
-      });
-
-      // 热门PPT
-      setHotPPTs(
-        Array.from({ length: 8 }, (_, i) =>
-          generateMockPPT(
-            `${categoryName}-hot-${i + 1}`,
-            `${categoryName}热门模板 ${i + 1}`
-          )
-        )
-      );
-
-      // 精选PPT
-      setFeaturedPPTs(
-        Array.from({ length: 8 }, (_, i) =>
-          generateMockPPT(
-            `${categoryName}-featured-${i + 1}`,
-            `${categoryName}精选模板 ${i + 1}`
-          )
-        )
-      );
-
-      // 本周新品
-      setNewPPTs(
-        Array.from({ length: 8 }, (_, i) =>
-          generateMockPPT(
-            `${categoryName}-new-${i + 1}`,
-            `${categoryName}新品模板 ${i + 1}`
-          )
-        )
-      );
-
-      // 全部PPT
-      setAllPPTs(
-        Array.from({ length: 12 }, (_, i) =>
-          generateMockPPT(
-            `${categoryName}-all-${i + 1}`,
-            `${categoryName}PPT模板 ${i + 1}`
-          )
-        )
-      );
-
-      setTotalPages(3);
-      setIsLoading(false);
+          setHotPPTs(items.slice(0, 8));
+          setFeaturedPPTs(items.slice(0, 8));
+          setNewPPTs(items.slice(0, 8));
+          setAllPPTs(items);
+          setTotalPages(
+            Math.max(1, Math.ceil((json.data.total ?? items.length) / 12))
+          );
+        } else {
+          toast.error('加载分类数据失败');
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error('加载分类数据失败');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchCategoryPPTs();
-  }, [categoryName, sortBy, page]);
+  }, [categoryName, slug, sortBy, page]);
 
   const handleDownload = (ppt: PPT) => {
     alert(`准备下载《${ppt.title}》...`);

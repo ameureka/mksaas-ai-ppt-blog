@@ -14,6 +14,7 @@ interface HotKeyword {
 
 interface Category {
   name: string;
+  slug?: string;
   count: number;
   icon: LucideIcon;
   preview: string;
@@ -31,7 +32,7 @@ interface SearchSidebarProps {
   categories: Category[];
   recentDownloads: PPT[];
   onKeywordClick: (keyword: string) => void;
-  onCategoryClick: (categoryName: string) => void;
+  onCategoryClick: (categorySlug: string) => void;
 }
 
 export function SearchSidebar({
@@ -82,7 +83,7 @@ export function SearchSidebar({
               return (
                 <button
                   key={cat.name}
-                  onClick={() => onCategoryClick(cat.name)}
+                  onClick={() => onCategoryClick(cat.slug ?? cat.name)}
                   className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted"
                 >
                   <div className="flex items-center gap-2">

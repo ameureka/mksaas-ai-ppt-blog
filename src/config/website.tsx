@@ -37,6 +37,7 @@ export const websiteConfig: WebsiteConfig = {
     enableDatafastRevenueTrack: false,
     enableCrispChat: false,
     enableTurnstileCaptcha: false,
+    pptRequireLoginForDownload: false,
   },
   routes: {
     defaultLoginRedirect: '/settings/profile',
