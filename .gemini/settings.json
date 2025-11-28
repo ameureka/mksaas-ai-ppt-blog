@@ -1,0 +1,13 @@
+{
+  "context": {
+    "discoveryMaxDirs": 500
+  },
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "chrome-devtools-mcp@latest"
+      ]
+    }
+  }
+}
