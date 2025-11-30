@@ -71,7 +71,7 @@ code-backup/content/
 
 #### App 目录（实际存在）
 ```
-app/
+src/app/[locale]/(marketing)/
 ├── blog/
 │   ├── page.tsx           # ✅ 博客列表页
 │   └── [slug]/page.tsx    # ✅ 博客详情页
@@ -80,7 +80,7 @@ app/
 
 #### App 目录（待创建 - 代码已备份）
 ```
-app/
+src/app/[locale]/(marketing)/
 ├── about/page.tsx         # ⏳ 关于我们（代码在 code-backup）
 ├── contact/page.tsx       # ⏳ 联系我们（代码在 code-backup）
 └── privacy-policy/page.tsx # ⏳ 隐私政策（代码在 code-backup）
@@ -129,14 +129,14 @@ content/
 
 | 页面 | 路径 | 状态 | AdSense 要求 |
 |------|------|------|-------------|
-| 隐私政策 | `/privacy-policy` | ⏳ 代码已备份，待部署 | **必须** |
-| 关于我们 | `/about` | ⏳ 代码已备份，待部署 | **必须** |
-| 联系我们 | `/contact` | ⏳ 代码已备份，待部署 | **必须** |
+| 隐私政策 | `/privacy-policy` | ⏳ 代码已备份，待部署到 `src/app/[locale]/(marketing)/` | **必须** |
+| 关于我们 | `/about` | ⏳ 代码已备份，待部署到 `src/app/[locale]/(marketing)/` | **必须** |
+| 联系我们 | `/contact` | ⏳ 代码已备份，待部署到 `src/app/[locale]/(marketing)/` | **必须** |
 | 服务条款 | `/terms` | ✅ 已创建 | 推荐 |
 | 博客列表 | `/blog` | ✅ 已创建 | 推荐 |
 | 博客文章 | `/blog/[slug]` | ✅ 已创建 | 推荐 |
 
-> **注意**：隐私政策、关于我们、联系我们页面的代码已备份在 `code-backup/app-pages/` 目录，需要手动部署到 `app/` 目录。
+> **注意**：隐私政策、关于我们、联系我们页面的代码已备份在 `code-backup/app-pages/` 目录，需要手动部署到 `src/app/[locale]/(marketing)/` 目录。
 
 ---
 

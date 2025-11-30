@@ -862,61 +862,53 @@ PPT页数很重要，要根据情况决定。
 ### 12.1 博客系统
 
 **博客列表页**:
-- **路径**: `/blog` (`app/blog/page.tsx`)
+- **路径**: `/blog` (`app/[locale]/(marketing)/blog/page.tsx`)
 - **功能**: 文章列表、分类筛选、搜索
 - **SEO**: 包含 JSON-LD 结构化数据
 
 **博客详情页**:
-- **路径**: `/blog/[slug]` (`app/blog/[slug]/page.tsx`)
+- **路径**: `/blog/[slug]` (`app/[locale]/(marketing)/blog/[slug]/page.tsx`)
 - **功能**: 文章内容、相关文章、广告位
 - **SEO**: 包含 Article 结构化数据
 
-**已创建的文章**:
+**待创建的文章** (需同步到 content/blog/):
 
 1. **8大PPT分类完全指南**
-   - 路径: `/blog/ppt-category-guide`
-   - 字数: ~2500字
-   - 包含: 权威引用、统计数据、对照表
+   - 路径: `/blog/ppt-category-complete-guide`
+   - 状态: ⏳ 待同步 (存在于 code-backup)
 
 2. **PPT页数黄金法则**
    - 路径: `/blog/ppt-page-count-guide`
-   - 字数: ~1800字
-   - 包含: 时长-页数对照表、实战技巧
+   - 状态: ⏳ 待创建
 
 ### 12.2 AdSense 必备页面
 
 **隐私政策页面**:
-- **路径**: `/privacy-policy` (`app/privacy-policy/page.tsx`)
-- **内容**: Cookie使用、信息收集、用户权利、Google AdSense声明
-- **状态**: ✅ 已创建
+- **路径**: `/privacy-policy` (`app/[locale]/(marketing)/privacy-policy/page.tsx`)
+- **状态**: ⏳ 待部署 (代码在 code-backup)
 
 **关于我们页面**:
-- **路径**: `/about` (`app/about/page.tsx`)
-- **内容**: 公司介绍、产品特色、数据统计、价值观
-- **SEO**: 包含 AboutPage 结构化数据
-- **状态**: ✅ 已创建
+- **路径**: `/about` (`app/[locale]/(marketing)/about/page.tsx`)
+- **状态**: ⏳ 待部署 (代码在 code-backup)
 
 **联系我们页面**:
-- **路径**: `/contact` (`app/contact/page.tsx`)
-- **内容**: 联系表单、联系方式、响应时间
-- **状态**: ✅ 已创建
+- **路径**: `/contact` (`app/[locale]/(marketing)/contact/page.tsx`)
+- **状态**: ⏳ 待部署 (代码在 code-backup)
 
 **服务条款页面**:
-- **路径**: `/terms` (`app/terms/page.tsx`)
-- **内容**: 服务协议、使用许可、免责声明
-- **状态**: ✅ 已创建
+- **路径**: `/terms` (`app/[locale]/(marketing)/terms/page.tsx`)
+- **状态**: ✅ 已存在 (需确认内容)
 
 ### 12.3 页面创建总结
 
 | 页面类型 | 路径 | 状态 | AdSense要求 |
 |----------|------|------|-------------|
 | 博客列表 | /blog | ✅ 已创建 | 推荐 |
-| 博客文章1 | /blog/ppt-category-guide | ✅ 已创建 | 推荐 |
-| 博客文章2 | /blog/ppt-page-count-guide | ✅ 已创建 | 推荐 |
-| 隐私政策 | /privacy-policy | ✅ 已创建 | **必须** |
-| 关于我们 | /about | ✅ 已创建 | **必须** |
-| 联系我们 | /contact | ✅ 已创建 | **必须** |
-| 服务条款 | /terms | ✅ 已创建 | 推荐 |
+| 博客文章1 | /blog/ppt-category-complete-guide | ⏳ 待同步 | 推荐 |
+| 隐私政策 | /privacy-policy | ⏳ 待部署 | **必须** |
+| 关于我们 | /about | ⏳ 待部署 | **必须** |
+| 联系我们 | /contact | ⏳ 待部署 | **必须** |
+| 服务条款 | /terms | ✅ 已存在 | 推荐 |
 
 ---
 

@@ -133,11 +133,11 @@ https://www.google.com/adsense/start/
 
 **步骤 2: 将代码添加到网站**
 
-在 `app/layout.tsx` 的 `<head>` 部分添加:
+在 `src/app/[locale]/layout.tsx` 的 `<head>` 部分添加:
 
 
 ```typescript
-// app/layout.tsx
+// src/app/[locale]/layout.tsx
 import Script from 'next/script'
 
 export default function RootLayout({ children }) {
@@ -316,7 +316,7 @@ export default function RootLayout({ children }) {
 **步骤 1: 创建 AdSense 配置文件**
 
 ```typescript
-// lib/config/adsense.ts
+// src/lib/config/adsense.ts
 export const ADSENSE_CONFIG = {
   // 替换为你的 AdSense 发布商 ID
   publisherId: process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || 'ca-pub-XXXXXXXXXXXXXXXX',
@@ -346,6 +346,8 @@ export const ADSENSE_CONFIG = {
 
 **步骤 2: 添加环境变量**
 
+请在 `env.example` 和 `.env.local` 中添加：
+
 ```bash
 # .env.local
 NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXX
@@ -363,7 +365,7 @@ NEXT_PUBLIC_ADSENSE_MOBILE_BANNER=1234567895
 **步骤 3: 更新 Layout**
 
 ```typescript
-// app/layout.tsx
+// src/app/[locale]/layout.tsx
 import Script from 'next/script'
 import { ADSENSE_CONFIG } from '@/lib/config/adsense'
 
@@ -397,7 +399,7 @@ export default function RootLayout({ children }) {
 **更新 DisplayAd 组件**:
 
 ```typescript
-// components/ads/display-ad.tsx
+// src/components/ppt/ads/display-ad.tsx
 "use client"
 
 import { useRef, useEffect, useState } from "react"
@@ -652,8 +654,8 @@ export function SidebarLargeAd({ className, sticky = true, ...props }: Omit<Disp
 
 **首页**:
 ```typescript
-// app/page.tsx
-import { BannerAd, MobileBannerAd } from '@/components/ads/display-ad'
+// src/app/[locale]/(marketing)/page.tsx
+import { BannerAd, MobileBannerAd } from '@/components/ppt/ads/display-ad'
 
 export default function HomePage() {
   return (
@@ -672,8 +674,8 @@ export default function HomePage() {
 
 **分类页**:
 ```typescript
-// app/category/[name]/page.tsx
-import { BannerAd } from '@/components/ads/display-ad'
+// src/app/[locale]/(marketing)/ppt/category/[slug]/page.tsx
+import { BannerAd } from '@/components/ppt/ads/display-ad'
 
 export default function CategoryPage() {
   return (
@@ -882,7 +884,7 @@ google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
 
 **Next.js 配置**:
 ```typescript
-// next.config.mjs
+// next.config.ts
 export default {
   async headers() {
     return [

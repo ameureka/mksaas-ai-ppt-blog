@@ -15,7 +15,7 @@
 
 ### 1.1 组件文件结构
 ```
-components/ads/
+src/components/ppt/ads/
 ├── display-ad.tsx          # 展示广告（Banner、侧边栏）
 ├── native-ad-card.tsx      # 原生广告卡片
 └── rewarded-video-ad.tsx   # 激励视频广告
@@ -23,7 +23,7 @@ components/ads/
 
 ### 1.2 相关 Hooks
 ```
-hooks/
+src/hooks/ads/
 └── use-rewarded-video.ts   # 激励视频状态管理
 ```
 
@@ -33,7 +33,7 @@ hooks/
 
 ### 2.1 展示广告 (Display Ads)
 
-**文件**: `components/ads/display-ad.tsx`
+**文件**: `src/components/ppt/ads/display-ad.tsx`
 
 **广告格式**:
 - `mrec`: 300x250 (中矩形)
@@ -65,7 +65,7 @@ hooks/
 
 ### 2.2 原生广告 (Native Ads)
 
-**文件**: `components/ads/native-ad-card.tsx`
+**文件**: `src/components/ppt/ads/native-ad-card.tsx`
 
 **数据结构**:
 ```typescript
@@ -100,8 +100,8 @@ interface NativeAdData {
 
 ### 2.3 激励视频广告 (Rewarded Video Ads)
 
-**文件**: `components/ads/rewarded-video-ad.tsx`
-**Hook**: `hooks/use-rewarded-video.ts`
+**文件**: `src/components/ppt/ads/rewarded-video-ad.tsx`
+**Hook**: `src/hooks/ads/use-rewarded-video.ts`
 
 **状态流转**:
 ```
@@ -152,14 +152,14 @@ idle → loading → ready → playing → verifying → completed
 
 ## 3. 广告展示位置
 
-### 3.1 首页 (app/page.tsx)
+### 3.1 首页 (src/app/[locale]/(marketing)/page.tsx)
 
 **位置**: Hero Section 下方
 ```typescript
 <BannerAd />  // 728x90 横幅广告
 ```
 
-### 3.2 分类页 (app/category/[name]/page.tsx)
+### 3.2 分类页 (src/app/[locale]/(marketing)/ppt/category/[slug]/page.tsx)
 
 **位置1**: 分类信息下方
 ```typescript
@@ -185,7 +185,7 @@ idle → loading → ready → playing → verifying → completed
 <BannerAd />
 ```
 
-### 3.3 PPT详情页 (app/ppt/[id]/page.tsx)
+### 3.3 PPT详情页 (src/app/[locale]/(marketing)/ppt/[id]/page.tsx)
 
 **位置1**: 模板详情下方
 ```html
@@ -208,7 +208,7 @@ idle → loading → ready → playing → verifying → completed
 </div>
 ```
 
-### 3.4 下载流程 (components/download-flow/download-modal.tsx)
+### 3.4 下载流程 (src/components/ppt/download/download-modal.tsx)
 
 **激励视频广告**:
 - 用户选择"观看广告下载"
@@ -232,7 +232,7 @@ Intersection Observer 检测可见性
     ↓
 触发 onImpression 回调
     ↓
-[TODO] 发送展示追踪到后端
+[TODO] Server Action: recordAdImpression
 ```
 
 ### 4.2 原生广告流程
@@ -244,13 +244,13 @@ Intersection Observer (50% 可见)
     ↓
 触发 onImpression(adId)
     ↓
-[TODO] 发送展示追踪
+[TODO] Server Action: recordAdImpression
     ↓
 用户点击
     ↓
 触发 onClick(adId)
     ↓
-[TODO] 发送点击追踪
+[TODO] Server Action: recordAdClick
     ↓
 打开外部链接
 ```
@@ -262,7 +262,7 @@ Intersection Observer (50% 可见)
     ↓
 调用 load() - 请求广告资源
     ↓
-[TODO] POST /api/ads/rewarded/start
+[TODO] Server Action: startRewardedVideo
     ← 返回 { viewId, token, videoUrl }
     ↓
 播放视频 (防作弊监控)
@@ -271,7 +271,7 @@ Intersection Observer (50% 可见)
     ↓
 调用 complete() - 验证观看
     ↓
-[TODO] POST /api/ads/rewarded/complete
+[TODO] Server Action: completeRewardedVideo
     发送 { viewId, token, watchTime }
     ← 返回 { downloadUrl, credits }
     ↓
@@ -287,214 +287,122 @@ Intersection Observer (50% 可见)
 **现状**: 所有广告功能都是 **Mock 实现**，没有真实的后端 API
 
 **Mock 数据位置**:
-- `components/ads/native-ad-card.tsx` - mockNativeAd
-- `hooks/use-rewarded-video.ts` - Mock 视频链接和下载链接
+- `src/components/ppt/ads/native-ad-card.tsx` - mockNativeAd
+- `src/hooks/ads/use-rewarded-video.ts` - Mock 视频链接和下载链接
 
-### 5.2 需要实现的 API
+### 5.2 需要实现的 Server Actions
 
-#### 5.2.1 展示广告 API
+建议使用 Server Actions (`src/actions/ads/`) 处理核心逻辑，而非 API Routes。
+
+#### 5.2.1 展示广告 Action
 
 ```typescript
-// 获取广告配置
-GET /api/ads/config
-Response: {
-  slots: {
-    home_top: { provider: 'adsense', slotId: 'xxx' },
-    sidebar_1: { provider: 'adsense', slotId: 'yyy' }
-  }
+// src/actions/ads/config.ts
+export async function getAdConfig() {
+  // ... return config
 }
 
-// 追踪广告展示
-POST /api/ads/impression
-Body: {
-  slotId: string
-  adId: string
-  userId?: string
-  timestamp: string
-}
-
-// 追踪广告填充率
-POST /api/ads/unfilled
-Body: {
-  slotId: string
-  timestamp: string
+// src/actions/ads/tracking.ts
+export async function recordAdImpression(data: { slotId: string; adId: string }) {
+  // ... db insert
 }
 ```
 
-#### 5.2.2 原生广告 API
+#### 5.2.2 原生广告 Action
 
 ```typescript
-// 获取原生广告
-GET /api/ads/native?position=category_featured_6
-Response: {
-  id: string
-  imageUrl: string
-  headline: string
-  description: string
-  advertiser: string
-  logoUrl: string
-  clickUrl: string
-  callToAction: string
+// src/actions/ads/native.ts
+export async function getNativeAd(position: string) {
+  // ... db select
 }
 
-// 追踪展示
-POST /api/ads/native/impression
-Body: {
-  adId: string
-  position: string
-  userId?: string
-}
-
-// 追踪点击
-POST /api/ads/native/click
-Body: {
-  adId: string
-  position: string
-  userId?: string
+export async function recordNativeAdClick(adId: string) {
+  // ... db insert
 }
 ```
 
-#### 5.2.3 激励视频广告 API
+#### 5.2.3 激励视频广告 Action
 
 ```typescript
+// src/actions/ads/rewarded.ts
+
 // 开始观看
-POST /api/ads/rewarded/start
-Body: {
-  pptId: string
-  userId: string
-}
-Response: {
-  viewId: string
-  token: string
-  videoUrl: string
-  duration: number
+export async function startRewardedVideo(input: { pptId: string }) {
+  // 生成 viewId, token
+  // 记录到 DB (status: 'started')
+  // 返回 token, videoUrl
 }
 
 // 完成观看并验证
-POST /api/ads/rewarded/complete
-Body: {
-  viewId: string
-  token: string
-  watchTime: number
-  pptId: string
-}
-Response: {
-  success: boolean
-  downloadUrl: string
-  credits: number
-  expiresAt: string
-}
-
-// 记录跳过
-POST /api/ads/rewarded/skip
-Body: {
-  viewId: string
-  watchTime: number
+export async function completeRewardedVideo(input: { 
+  viewId: string; 
+  token: string; 
+  watchTime: number 
+}) {
+  // 验证 token 和 watchTime
+  // 更新 DB (status: 'completed')
+  // 发放奖励 (Credits + Download URL)
 }
 ```
 
 ---
 
-## 6. 数据库设计建议
+## 6. 数据库设计建议 (Drizzle ORM)
 
-### 6.1 广告配置表 (ad_configs)
+### 6.1 广告配置表 (ad_config)
 
-```sql
-CREATE TABLE ad_configs (
-  id VARCHAR(50) PRIMARY KEY,
-  slot_id VARCHAR(100) NOT NULL,
-  provider VARCHAR(50) NOT NULL,  -- 'adsense', 'custom', etc.
-  format VARCHAR(50) NOT NULL,    -- 'banner', 'native', 'video'
-  enabled BOOLEAN DEFAULT true,
-  config JSON,                    -- 额外配置
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+```typescript
+// src/db/schema.ts
+export const adConfig = pgTable("ad_config", {
+  id: text("id").primaryKey(),
+  slotId: text("slot_id").notNull(),
+  provider: text("provider").notNull(), // 'adsense', 'custom'
+  format: text("format").notNull(),     // 'banner', 'native', 'video'
+  enabled: boolean("enabled").default(true),
+  config: jsonb("config"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
 ```
 
-### 6.2 广告展示记录表 (ad_impressions)
+### 6.2 广告展示记录表 (ad_impression)
 
-```sql
-CREATE TABLE ad_impressions (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  ad_id VARCHAR(100) NOT NULL,
-  slot_id VARCHAR(100),
-  position VARCHAR(100),
-  user_id VARCHAR(50),
-  ip_address VARCHAR(45),
-  user_agent TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_ad_id (ad_id),
-  INDEX idx_user_id (user_id),
-  INDEX idx_created_at (created_at)
-);
+```typescript
+export const adImpression = pgTable("ad_impression", {
+  id: bigserial("id", { mode: "number" }).primaryKey(),
+  adId: text("ad_id").notNull(),
+  slotId: text("slot_id"),
+  position: text("position"),
+  userId: text("user_id"),
+  ipAddress: text("ip_address"),
+  createdAt: timestamp("created_at").defaultNow(),
+}, (table) => ({
+  adIdIdx: index("ad_impression_ad_id_idx").on(table.adId),
+  createdAtIdx: index("ad_impression_created_at_idx").on(table.createdAt),
+}));
 ```
 
-### 6.3 广告点击记录表 (ad_clicks)
+### 6.3 激励视频观看记录表 (rewarded_video_view)
 
-```sql
-CREATE TABLE ad_clicks (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  ad_id VARCHAR(100) NOT NULL,
-  slot_id VARCHAR(100),
-  position VARCHAR(100),
-  user_id VARCHAR(50),
-  ip_address VARCHAR(45),
-  user_agent TEXT,
-  referrer TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_ad_id (ad_id),
-  INDEX idx_user_id (user_id),
-  INDEX idx_created_at (created_at)
-);
-```
-
-### 6.4 激励视频观看记录表 (rewarded_video_views)
-
-```sql
-CREATE TABLE rewarded_video_views (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  view_id VARCHAR(100) UNIQUE NOT NULL,
-  user_id VARCHAR(50) NOT NULL,
-  ppt_id VARCHAR(50) NOT NULL,
-  video_url TEXT,
-  duration INT NOT NULL,           -- 视频总时长(秒)
-  watch_time INT DEFAULT 0,        -- 实际观看时长(秒)
-  status VARCHAR(20) NOT NULL,     -- 'started', 'completed', 'skipped', 'failed'
-  token VARCHAR(255),              -- 验证token
-  download_url TEXT,               -- 生成的下载链接
-  credits_awarded INT DEFAULT 0,   -- 奖励的积分
-  completed_at TIMESTAMP NULL,
-  expires_at TIMESTAMP NULL,       -- 下载链接过期时间
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  INDEX idx_user_id (user_id),
-  INDEX idx_ppt_id (ppt_id),
-  INDEX idx_status (status),
-  INDEX idx_created_at (created_at)
-);
-```
-
-### 6.5 原生广告内容表 (native_ads)
-
-```sql
-CREATE TABLE native_ads (
-  id VARCHAR(50) PRIMARY KEY,
-  headline VARCHAR(200) NOT NULL,
-  description TEXT,
-  image_url TEXT NOT NULL,
-  logo_url TEXT,
-  advertiser VARCHAR(100) NOT NULL,
-  click_url TEXT NOT NULL,
-  call_to_action VARCHAR(50),
-  positions JSON,                  -- 允许展示的位置
-  priority INT DEFAULT 0,
-  enabled BOOLEAN DEFAULT true,
-  start_date DATE,
-  end_date DATE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+```typescript
+export const rewardedVideoView = pgTable("rewarded_video_view", {
+  id: bigserial("id", { mode: "number" }).primaryKey(),
+  viewId: text("view_id").unique().notNull(),
+  userId: text("user_id").notNull(),
+  pptId: text("ppt_id").notNull(),
+  videoUrl: text("video_url"),
+  duration: integer("duration").notNull(),
+  watchTime: integer("watch_time").default(0),
+  status: text("status").notNull(), // 'started', 'completed', 'skipped'
+  token: text("token"),
+  downloadUrl: text("download_url"),
+  creditsAwarded: integer("credits_awarded").default(0),
+  expiresAt: timestamp("expires_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+}, (table) => ({
+  userIdIdx: index("rewarded_view_user_id_idx").on(table.userId),
+  statusIdx: index("rewarded_view_status_idx").on(table.status),
+}));
 ```
 
 ---
@@ -503,35 +411,10 @@ CREATE TABLE native_ads (
 
 ### 7.1 Google AdSense 集成
 
-**步骤1**: 修改 `components/ads/display-ad.tsx`
+**步骤1**: 修改 `src/components/ppt/ads/display-ad.tsx`
+(保持原逻辑，确保 script 加载正确)
 
-```typescript
-// 替换 TODO 部分
-{isVisible && !isLoading && !hasError && (
-  <ins 
-    className="adsbygoogle"
-    style={{ display: 'block' }}
-    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-    data-ad-slot={slot}
-    data-ad-format="auto"
-    data-full-width-responsive="true"
-  />
-)}
-
-// 在 useEffect 中初始化
-useEffect(() => {
-  if (isVisible && window.adsbygoogle) {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error('AdSense error:', err);
-      setHasError(true);
-    }
-  }
-}, [isVisible]);
-```
-
-**步骤2**: 在 `app/layout.tsx` 中添加 AdSense 脚本
+**步骤2**: 在 `src/app/[locale]/layout.tsx` 或根 `src/app/layout.tsx` 中添加 AdSense 脚本。
 
 ```typescript
 <Script
@@ -542,139 +425,44 @@ useEffect(() => {
 />
 ```
 
-### 7.2 后端 API 实现建议
+### 7.2 后端 Action 实现示例 (Drizzle)
 
-**技术栈**: Next.js App Router + Server Actions
-
-**文件结构**:
-```
-app/api/ads/
-├── config/route.ts
-├── impression/route.ts
-├── native/
-│   ├── route.ts
-│   ├── impression/route.ts
-│   └── click/route.ts
-└── rewarded/
-    ├── start/route.ts
-    ├── complete/route.ts
-    └── skip/route.ts
-```
-
-**示例实现** (`app/api/ads/rewarded/start/route.ts`):
+**示例实现** (`src/actions/ads/rewarded.ts`):
 
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { generateToken } from '@/lib/utils';
+'use server'
 
-export async function POST(request: NextRequest) {
-  try {
-    const { pptId, userId } = await request.json();
-    
-    // 生成唯一 viewId 和 token
-    const viewId = `view_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const token = generateToken();
-    
-    // 获取视频URL (从广告平台或CDN)
-    const videoUrl = await getRewardedVideoUrl();
-    
-    // 记录到数据库
-    await db.rewardedVideoViews.create({
-      data: {
-        viewId,
-        userId,
-        pptId,
-        videoUrl,
-        duration: 30,
-        status: 'started',
-        token,
-      }
-    });
-    
-    return NextResponse.json({
-      viewId,
-      token,
-      videoUrl,
-      duration: 30
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to start video' },
-      { status: 500 }
-    );
-  }
+import { getDb } from '@/db';
+import { rewardedVideoView } from '@/db/schema';
+import { randomUUID } from 'crypto';
+
+export async function startRewardedVideo(pptId: string, userId: string) {
+  const db = await getDb();
+  const viewId = `view_${Date.now()}`;
+  const token = randomUUID();
+  
+  await db.insert(rewardedVideoView).values({
+    viewId,
+    userId,
+    pptId,
+    duration: 30,
+    status: 'started',
+    token,
+    createdAt: new Date(),
+  });
+  
+  return { viewId, token, videoUrl: '...' };
 }
 ```
 
 ### 7.3 前端集成步骤
 
-**步骤1**: 创建广告配置 Hook
+**步骤1**: 创建广告配置 Hook `src/hooks/ads/use-ad-config.ts`
 
-```typescript
-// hooks/use-ad-config.ts
-export function useAdConfig() {
-  const [slots, setSlots] = useState({});
-  
-  useEffect(() => {
-    fetch('/api/ads/config')
-      .then(res => res.json())
-      .then(data => setSlots(data.slots));
-  }, []);
-  
-  return { slots };
-}
-```
+**步骤2**: 使用 `useAction` (next-safe-action) 调用 Server Actions 追踪展示和点击。
 
-**步骤2**: 创建广告追踪 Hook
+**步骤3**: 更新激励视频 Hook `src/hooks/ads/use-rewarded-video.ts` 调用真实的 Server Action。
 
-```typescript
-// hooks/use-ad-tracking.ts
-export function useAdTracking() {
-  const trackImpression = useCallback(async (adId: string, position: string) => {
-    await fetch('/api/ads/impression', {
-      method: 'POST',
-      body: JSON.stringify({ adId, position })
-    });
-  }, []);
-  
-  const trackClick = useCallback(async (adId: string, position: string) => {
-    await fetch('/api/ads/click', {
-      method: 'POST',
-      body: JSON.stringify({ adId, position })
-    });
-  }, []);
-  
-  return { trackImpression, trackClick };
-}
-```
-
-**步骤3**: 更新激励视频 Hook
-
-```typescript
-// hooks/use-rewarded-video.ts
-const load = useCallback(async () => {
-  setStatus('loading');
-  
-  try {
-    // 替换 Mock 为真实 API
-    const response = await fetch('/api/ads/rewarded/start', {
-      method: 'POST',
-      body: JSON.stringify({ pptId, userId: user?.id })
-    });
-    
-    const { viewId, token, videoUrl } = await response.json();
-    
-    viewIdRef.current = viewId;
-    tokenRef.current = token;
-    
-    setStatus('ready');
-  } catch (err) {
-    setError(err as Error);
-    setStatus('error');
-  }
-}, [pptId, user]);
-```
 
 ---
 

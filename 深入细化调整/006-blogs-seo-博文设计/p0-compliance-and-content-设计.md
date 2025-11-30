@@ -40,8 +40,8 @@
 - **无后端依赖**：Contact 表单初期可保留前端占位与校验，提交可暂用 toast 提示，后续再接 Server Action。
 
 ### 5.2 内容同步（MDX）
-- **文件来源**：`code-backup/content/` 中的 blog/author/category。
-- **Frontmatter 校验**：`title/description/image/date/categories/author/published`（必填），日期格式 `YYYY-MM-DD`。
+- **文件来源**：`深入细化调整/006-blogs-seo-博文设计/205-adsence-article-blogs-design/code-backup/content/` 中的 blog/author/category。
+- **Frontmatter 校验**：`title/description/image/date/categories/author/published`（必填），`premium`（可选），日期格式 `YYYY-MM-DD`。
 - **多语言**：文件成对 `slug.mdx` / `slug.zh.mdx`，缺失时标记 TODO。
 - **内链/外链**：内链指向 `/blog/{slug}`；外链保持 https，添加权威引用。
 
@@ -75,3 +75,31 @@
 - 图片清单与占位方案是否明确。
 - MDX frontmatter 字段与命名是否一致。
 - 验证步骤与回滚方案（如临时恢复旧页面/占位）。
+
+## 10. 附录：页面代码骨架 (参考)
+
+```tsx
+import { useTranslations } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
+
+interface PageProps {
+  params: { locale: string };
+}
+
+export default function AboutPage({ params: { locale } }: PageProps) {
+  // Enable static rendering
+  unstable_setRequestLocale(locale);
+  
+  const t = useTranslations('About');
+
+  return (
+    <div className="container py-12">
+      <div className="prose max-w-3xl mx-auto">
+        <h1>{t('title')}</h1>
+        <p>{t('description')}</p>
+        {/* Add content here */}
+      </div>
+    </div>
+  );
+}
+```

@@ -40,6 +40,7 @@ description: 完整指南教你快速下载高质量PPT模板
 image: /images/blog/download-guide.jpg
 date: "2024-01-15"
 published: true
+premium: false
 categories: ["tutorial", "ppt"]
 author: "pptx-team"
 ---
@@ -70,6 +71,7 @@ author: "pptx-team"
 | image | string | ✅ | 封面图路径 |
 | date | string | ✅ | 发布日期，格式 "YYYY-MM-DD" |
 | published | boolean | ❌ | 是否发布，默认 true |
+| premium | boolean | ❌ | 是否为付费文章，默认 false |
 | categories | string[] | ✅ | 分类数组 |
 | author | string | ✅ | 作者 slug |
 

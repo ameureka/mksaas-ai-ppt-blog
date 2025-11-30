@@ -181,6 +181,29 @@
       "messageMaxLength": "Message must not exceed 500 characters"
     }
   },
+  "PrivacyPolicyPage": {
+    "title": "Privacy Policy",
+    "description": "Our privacy policy explains how we collect, use, and protect your personal information.",
+    "lastUpdated": "Last updated: {date}",
+    "sections": {
+      "collection": {
+        "title": "Information Collection",
+        "content": "We use Google AdSense to display ads on our website. Google uses cookies to serve ads based on your prior visits to our website or other websites."
+      },
+      "cookies": {
+        "title": "Cookie Usage",
+        "content": "Google uses cookies to serve ads based on your prior visits to our website or other websites. Users may opt out of personalized advertising by visiting Ads Settings."
+      },
+      "thirdParty": {
+        "title": "Third Party Vendors",
+        "content": "Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to your website or other websites."
+      },
+      "rights": {
+        "title": "User Rights",
+        "content": "Users may opt out of third-party vendor's use of cookies for personalized advertising by visiting www.aboutads.info."
+      }
+    }
+  },
   "WaitlistPage": {
     "title": "Waitlist",
     "description": "Join our waitlist for the launch of our product",

@@ -27,12 +27,12 @@
 
 | 文件名 | 对应路径 | 状态 |
 |--------|----------|------|
-| `blog-page.tsx` | `app/blog/page.tsx` | ✅ 已部署 |
-| `blog-detail-page.tsx` | `app/blog/[slug]/page.tsx` | ✅ 已部署 |
-| `terms-page.tsx` | `app/terms/page.tsx` | ✅ 已部署 |
-| `about-page.tsx` | `app/about/page.tsx` | ⏳ 待部署 |
-| `contact-page.tsx` | `app/contact/page.tsx` | ⏳ 待部署 |
-| `privacy-policy-page.tsx` | `app/privacy-policy/page.tsx` | ⏳ 待部署 |
+| `blog-page.tsx` | `src/app/[locale]/(marketing)/blog/page.tsx` | ✅ 已部署 |
+| `blog-detail-page.tsx` | `src/app/[locale]/(marketing)/blog/[slug]/page.tsx` | ✅ 已部署 |
+| `terms-page.tsx` | `src/app/[locale]/(marketing)/terms/page.tsx` | ✅ 已部署 |
+| `about-page.tsx` | `src/app/[locale]/(marketing)/about/page.tsx` | ⏳ 待部署 |
+| `contact-page.tsx` | `src/app/[locale]/(marketing)/contact/page.tsx` | ⏳ 待部署 |
+| `privacy-policy-page.tsx` | `src/app/[locale]/(marketing)/privacy-policy/page.tsx` | ⏳ 待部署 |
 
 ### content/ - MDX 博客内容
 

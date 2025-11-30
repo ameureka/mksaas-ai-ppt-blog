@@ -181,6 +181,29 @@
       "messageMaxLength": "消息必须不超过 500 个字符"
     }
   },
+  "PrivacyPolicyPage": {
+    "title": "隐私政策",
+    "description": "我们的隐私政策解释了我们如何收集、使用和保护您的个人信息。",
+    "lastUpdated": "最后更新：{date}",
+    "sections": {
+      "collection": {
+        "title": "信息收集",
+        "content": "我们使用 Google AdSense 在我们的网站上展示广告。Google 使用 Cookie 根据您之前对我们网站或其他网站的访问来投放广告。"
+      },
+      "cookies": {
+        "title": "Cookie 使用",
+        "content": "Google 使用 Cookie 根据您之前对我们网站或其他网站的访问来投放广告。用户可以通过访问广告设置选择退出个性化广告。"
+      },
+      "thirdParty": {
+        "title": "第三方供应商",
+        "content": "包括 Google 在内的第三方供应商使用 Cookie 根据用户之前对您网站或其他网站的访问来投放广告。"
+      },
+      "rights": {
+        "title": "用户权利",
+        "content": "用户可以通过访问 www.aboutads.info 选择退出第三方供应商用于个性化广告的 Cookie。"
+      }
+    }
+  },
   "WaitlistPage": {
     "title": "等待队列",
     "description": "加入等待队列，及时获取最新消息和更新",

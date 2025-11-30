@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ppt-category-complete-guide",
+    "category": "tutorial",
+    "keywords": ["PPT分类", "PPT模板类型", "商务汇报", "教育培训"],
+    "title_idea": "8大PPT分类完全指南：如何选择最适合你的模板类型",
+    "intent": "用户不知道该选哪种PPT模板，希望了解不同分类的用途和区别。",
+    "status": "drafted"
+  },
+  {
+    "id": "ppt-page-count-golden-rule",
+    "category": "tutorial",
+    "keywords": ["PPT页数", "汇报时长", "PPT制作技巧"],
+    "title_idea": "PPT页数黄金法则：15分钟、30分钟汇报该做多少页？",
+    "intent": "用户在制作PPT时对页数没有概念，担心做多了讲不完或做少了讲不透。",
+    "status": "pending"
+  },
+  {
+    "id": "business-report-structure",
+    "category": "business",
+    "keywords": ["商务汇报结构", "工作汇报PPT", "PPT大纲"],
+    "title_idea": "商务汇报PPT完整结构：从封面到总结的9个必备模块",
+    "intent": "职场人士准备做商务汇报，不知道标准结构是什么，怕遗漏关键内容。",
+    "status": "pending"
+  },
+  {
+    "id": "year-end-summary-checklist",
+    "category": "general",
+    "keywords": ["年终总结PPT", "年终汇报内容", "个人总结"],
+    "title_idea": "年终总结PPT内容清单：不遗漏任何重要信息的高分模板",
+    "intent": "年底需要做总结，用户希望有一个Checklist来确保内容完整且出彩。",
+    "status": "pending"
+  },
+  {
+    "id": "ppt-color-scheme-guide",
+    "category": "tips",
+    "keywords": ["PPT配色", "商务蓝", "PPT美化"],
+    "title_idea": "PPT配色方案大全：30组专业配色让你的PPT瞬间高级",
+    "intent": "用户觉得自己做的PPT颜色土气，寻找现成的、好看的配色方案。",
+    "status": "pending"
+  },
+  {
+    "id": "how-to-modify-ppt-template",
+    "category": "tutorial",
+    "keywords": ["修改PPT模板", "PPT母版修改", "PPT效率"],
+    "title_idea": "下载了模板怎么改？5步快速定制属于你的PPT",
+    "intent": "用户下载了模板但不会改（如改不动Logo、改不动背景），需要操作教程。",
+    "status": "pending"
+  },
+  {
+    "id": "free-vs-paid-ppt-template",
+    "category": "tips",
+    "keywords": ["免费PPT模板", "付费PPT模板", "PPT版权"],
+    "title_idea": "免费 vs 付费PPT模板：5个关键区别决定你该不该掏钱",
+    "intent": "用户在犹豫是否购买会员或付费模板，需要了解付费的具体价值点。",
+    "status": "pending"
+  },
+  {
+    "id": "ppt-beginner-guide",
+    "category": "tutorial",
+    "keywords": ["PPT新手", "PPT入门", "简单PPT模板"],
+    "title_idea": "PPT新手入门：从这4类模板开始你的设计之路",
+    "intent": "完全不会做PPT的小白，希望找到上手难度低、容易出效果的模板类型。",
+    "status": "pending"
+  },
+  {
+    "id": "15-min-presentation-slides",
+    "category": "tutorial",
+    "keywords": ["15分钟汇报", "路演PPT", "演讲时间控制"],
+    "title_idea": "15分钟汇报的艺术：如何用20页PPT讲清楚核心内容",
+    "intent": "用户面临严格的时间限制（如路演、面试），需要针对性的页数和结构建议。",
+    "status": "pending"
+  },
+  {
+    "id": "ppt-design-style-guide",
+    "category": "tips",
+    "keywords": ["PPT风格", "扁平化设计", "微立体"],
+    "title_idea": "PPT设计风格大盘点：商务、科技、国潮风应该怎么选？",
+    "intent": "用户不知道该选什么风格，希望了解不同风格适用的场景。",
+    "status": "pending"
+  }
+]
