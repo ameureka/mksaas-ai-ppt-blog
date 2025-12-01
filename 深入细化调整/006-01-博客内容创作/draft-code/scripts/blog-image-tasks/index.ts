@@ -144,6 +144,21 @@ export function extractScenes(
 ): Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> {
   const scenes: Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> = [];
 
+  const pickParagraphSummary = (paragraph: string): string => {
+    const normalized = paragraph.replace(/\s+/g, ' ').trim();
+    if (!normalized) return '';
+
+    const sentences = normalized.split(/(?<=[。！？.!?])\s+/);
+    return sentences.slice(0, 2).join(' ') || normalized;
+  };
+
+  const bodyParagraph = content
+    .split(/\n\s*\n/)
+    .map((block) => block.replace(/\n/g, ' ').trim())
+    .find((block) => block.length > 0 && !block.startsWith('#'));
+  const bodySummary = bodyParagraph ? pickParagraphSummary(bodyParagraph) : '';
+  let hasUsedBodyFallback = false;
+
   const sectionRegex = /^##\s+(.+)\n([\s\S]*?)(?=^##\s+|\Z)/gm;
   let match: RegExpExecArray | null = null;
 
@@ -152,21 +167,41 @@ export function extractScenes(
     if (!heading || heading.includes('常见问题') || heading.includes('FAQ')) continue;
 
     const paragraph = (match[2] || '')
-      .split('\n')
-      .map((line) => line.trim())
-      .find((line) => line.length > 0);
+      .split(/\n\s*\n/)
+      .map((block) => block.replace(/\n/g, ' ').trim())
+      .find((block) => block.length > 0);
+    const summary = paragraph ? pickParagraphSummary(paragraph) : '';
+    const sceneContext = summary || paragraph || heading;
 
-    const sceneType = detectSceneType(heading, paragraph ?? '');
-    const elements = getSceneElements(sceneType, heading);
+    const sceneType = detectSceneType(heading, sceneContext);
+    const elements = getSceneElements(
+      sceneType,
+      `${heading} ${sceneContext}`.trim()
+    );
 
     scenes.push({
-      scene: heading,
+      scene: `${heading}${summary ? `：${summary}` : ''}`,
       sceneType,
       elements,
     });
   }
 
   while (scenes.length < count) {
+    if (!hasUsedBodyFallback && (bodySummary || bodyParagraph)) {
+      const fallbackText = bodySummary || bodyParagraph || '正文要点';
+      const sceneType = detectSceneType(fallbackText, fallbackText);
+      const elements = getSceneElements(sceneType, fallbackText);
+
+      scenes.push({
+        scene: fallbackText,
+        sceneType,
+        elements,
+      });
+
+      hasUsedBodyFallback = true;
+      continue;
+    }
+
     const fallbackScene = `概念图 ${scenes.length + 1}`;
     scenes.push({
       scene: fallbackScene,
