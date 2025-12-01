@@ -144,6 +144,14 @@ export function extractScenes(
 ): Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> {
   const scenes: Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> = [];
 
+  const buildSceneDescription = (
+    heading: string,
+    summary: string
+  ): string => {
+    if (summary) return `${heading}：${summary}`;
+    return heading;
+  };
+
   const pickParagraphSummary = (paragraph: string): string => {
     const normalized = paragraph.replace(/\s+/g, ' ').trim();
     if (!normalized) return '';
@@ -156,8 +164,17 @@ export function extractScenes(
     .split(/\n\s*\n/)
     .map((block) => block.replace(/\n/g, ' ').trim())
     .find((block) => block.length > 0 && !block.startsWith('#'));
-  const bodySummary = bodyParagraph ? pickParagraphSummary(bodyParagraph) : '';
-  let hasUsedBodyFallback = false;
+  const bodySentences = bodyParagraph
+    ? bodyParagraph
+        .replace(/\s+/g, ' ')
+        .split(/(?<=[。！？.!?])\s+/)
+        .filter(Boolean)
+    : [];
+  const bodySummaries: string[] = [];
+  for (let i = 0; i < bodySentences.length; i += 2) {
+    const chunk = bodySentences.slice(i, i + 2).join(' ');
+    if (chunk) bodySummaries.push(chunk);
+  }
 
   const sectionRegex = /^##\s+(.+)\n([\s\S]*?)(?=^##\s+|\Z)/gm;
   let match: RegExpExecArray | null = null;
@@ -171,24 +188,26 @@ export function extractScenes(
       .map((block) => block.replace(/\n/g, ' ').trim())
       .find((block) => block.length > 0);
     const summary = paragraph ? pickParagraphSummary(paragraph) : '';
+    const sceneDescription = buildSceneDescription(heading, summary);
     const sceneContext = summary || paragraph || heading;
 
-    const sceneType = detectSceneType(heading, sceneContext);
-    const elements = getSceneElements(
-      sceneType,
-      `${heading} ${sceneContext}`.trim()
-    );
+    const sceneType = detectSceneType(sceneDescription, sceneContext);
+    const elements = getSceneElements(sceneType, sceneDescription);
 
     scenes.push({
-      scene: `${heading}${summary ? `：${summary}` : ''}`,
+      scene: sceneDescription,
       sceneType,
       elements,
     });
   }
 
   while (scenes.length < count) {
-    if (!hasUsedBodyFallback && (bodySummary || bodyParagraph)) {
-      const fallbackText = bodySummary || bodyParagraph || '正文要点';
+    const bodySummary = bodySummaries.shift();
+    if (bodySummary || bodyParagraph) {
+      const fallbackText = buildSceneDescription(
+        '正文开篇要点',
+        bodySummary || pickParagraphSummary(bodyParagraph || '')
+      );
       const sceneType = detectSceneType(fallbackText, fallbackText);
       const elements = getSceneElements(sceneType, fallbackText);
 
@@ -198,7 +217,6 @@ export function extractScenes(
         elements,
       });
 
-      hasUsedBodyFallback = true;
       continue;
     }
 
