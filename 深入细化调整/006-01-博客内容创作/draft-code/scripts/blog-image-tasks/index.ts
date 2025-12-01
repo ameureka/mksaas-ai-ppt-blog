@@ -13,7 +13,15 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import matter from 'gray-matter';
-import { type CategoryStyle, categoryStyles } from '../../config/category-map';
+import {
+  generateCoverPrompt as buildCoverPrompt,
+  generateInlinePrompt as buildInlinePrompt,
+  detectSceneType,
+  getSceneElements,
+  type TextStrategy,
+  type InlinePromptParams,
+} from '../../config/prompt-templates';
+import { getCategoryStyle } from '../../config/category-styles';
 
 // ============================================================================
 // 类型定义
@@ -28,6 +36,8 @@ export interface ImageTaskConfig {
   coverCount: number;
   /** 内页图数量 */
   inlineCount: number;
+  /** 封面文字策略 */
+  textStrategy: TextStrategy;
 }
 
 export interface ImageTask {
@@ -43,6 +53,8 @@ export interface ImageTask {
   inlineImages: InlineImageTask[];
   /** 状态 */
   status: ImageTaskStatus;
+  /** 封面文字策略 */
+  textStrategy: TextStrategy;
 }
 
 export interface CoverImageTask {
@@ -65,6 +77,10 @@ export interface InlineImageTask {
   prompt: string;
   /** 场景描述 */
   scene: string;
+  /** 场景类型 */
+  sceneType: InlinePromptParams['sceneType'];
+  /** 场景推荐元素 */
+  elements: string[];
   /** 是否完成 */
   done: boolean;
 }
@@ -83,69 +99,8 @@ export const defaultImageTaskConfig: ImageTaskConfig = {
   outputDir: '深入细化调整/006-01-博客内容创作/流水线设计-博文生产',
   coverCount: 1,
   inlineCount: 3,
+  textStrategy: 'short-zh',
 };
-
-// ============================================================================
-// Prompt 生成
-// ============================================================================
-
-/**
- * 生成封面图 Prompt
- */
-export function generateCoverPrompt(
-  title: string,
-  category: string,
-  style: CategoryStyle
-): string {
-  const keywords = extractKeywords(title);
-
-  return `Create a professional blog cover image for a PPT/presentation article.
-
-Theme: ${title}
-Category: ${style.name}
-Style: ${style.style}
-Color Palette: ${style.colors.join(', ')}
-
-Visual Elements:
-${style.elements.map((e) => `- ${e}`).join('\n')}
-
-Keywords to incorporate: ${keywords.join(', ')}
-
-Requirements:
-- Size: 1200x630 pixels (OG image ratio)
-- Modern, clean design
-- Professional business style
-- No text overlay (title will be added separately)
-- High contrast, visually appealing
-- Suitable for social media sharing`;
-}
-
-/**
- * 生成内页图 Prompt
- */
-export function generateInlinePrompt(
-  title: string,
-  scene: string,
-  category: string,
-  style: CategoryStyle,
-  index: number
-): string {
-  return `Create an inline illustration for a PPT/presentation blog article.
-
-Article: ${title}
-Scene: ${scene}
-Category: ${style.name}
-Style: ${style.style}
-Color Palette: ${style.colors.join(', ')}
-
-Requirements:
-- Size: 1000x600 pixels
-- Clean, informative illustration
-- Match the article's professional tone
-- Can include simple diagrams, icons, or conceptual visuals
-- No text (captions will be added in markdown)
-- Image ${index + 1} of the article`;
-}
 
 /**
  * 从标题提取关键词
@@ -181,31 +136,43 @@ export function extractKeywords(title: string): string[] {
 }
 
 /**
- * 从文章内容提取场景
+ * 从文章内容解析场景并匹配画面元素
  */
-export function extractScenes(content: string, count: number): string[] {
-  const scenes: string[] = [];
+export function extractScenes(
+  content: string,
+  count: number
+): Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> {
+  const scenes: Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> = [];
 
-  // 提取 H2 标题作为场景
-  const h2Matches = content.match(/^## .+$/gm) || [];
-  for (const match of h2Matches.slice(0, count)) {
-    const scene = match.replace(/^## /, '').trim();
-    if (scene && !scene.includes('常见问题') && !scene.includes('FAQ')) {
-      scenes.push(scene);
-    }
+  const sectionRegex = /^##\s+(.+)\n([\s\S]*?)(?=^##\s+|\Z)/gm;
+  let match: RegExpExecArray | null = null;
+
+  while ((match = sectionRegex.exec(content)) !== null && scenes.length < count) {
+    const heading = match[1].trim();
+    if (!heading || heading.includes('常见问题') || heading.includes('FAQ')) continue;
+
+    const paragraph = (match[2] || '')
+      .split('\n')
+      .map((line) => line.trim())
+      .find((line) => line.length > 0);
+
+    const sceneType = detectSceneType(heading, paragraph ?? '');
+    const elements = getSceneElements(sceneType, heading);
+
+    scenes.push({
+      scene: heading,
+      sceneType,
+      elements,
+    });
   }
 
-  // 如果场景不够，添加通用场景
-  const defaultScenes = [
-    '核心概念展示',
-    '步骤流程图解',
-    '案例效果对比',
-    '工具使用演示',
-  ];
-
   while (scenes.length < count) {
-    const defaultScene = defaultScenes[scenes.length % defaultScenes.length];
-    scenes.push(defaultScene);
+    const fallbackScene = `概念图 ${scenes.length + 1}`;
+    scenes.push({
+      scene: fallbackScene,
+      sceneType: 'concept',
+      elements: getSceneElements('concept', fallbackScene),
+    });
   }
 
   return scenes.slice(0, count);
@@ -228,27 +195,53 @@ export function generateImageTaskForFile(
     const slug = path.basename(filePath, path.extname(filePath));
 
     const title = data.title || slug;
+    const shortTitle: string = data.shortTitle || title;
     const categories = data.categories || ['general'];
     const category = categories[0];
-    const style = categoryStyles[category] || categoryStyles.general;
+    const style = getCategoryStyle(category);
+    const textStrategy = config.textStrategy || 'short-zh';
+
+    const coverKeywords = Array.from(
+      new Set([...(style.coverKeywords || []), ...extractKeywords(title)])
+    );
+
+    const coverPrompt = buildCoverPrompt({
+      title,
+      shortTitle,
+      keywords: coverKeywords,
+      style,
+      textStrategy,
+      textToRender: shortTitle,
+    });
 
     // 生成封面图任务
     const cover: CoverImageTask = {
       filename: `${slug}-cover.jpg`,
       size: '1200x630',
-      prompt: generateCoverPrompt(title, category, style),
+      prompt: coverPrompt,
       done: false,
     };
 
     // 提取场景并生成内页图任务
     const scenes = extractScenes(content, config.inlineCount);
-    const inlineImages: InlineImageTask[] = scenes.map((scene, index) => ({
-      filename: `${slug}-${index + 1}.png`,
-      size: '1000x600',
-      prompt: generateInlinePrompt(title, scene, category, style, index),
-      scene,
-      done: false,
-    }));
+    const inlineImages: InlineImageTask[] = scenes.map((sceneMeta, index) => {
+      const prompt = buildInlinePrompt({
+        scene: sceneMeta.scene,
+        sceneType: sceneMeta.sceneType,
+        elements: sceneMeta.elements,
+        style,
+      });
+
+      return {
+        filename: `${slug}-${index + 1}.png`,
+        size: '1000x600',
+        prompt,
+        scene: sceneMeta.scene,
+        sceneType: sceneMeta.sceneType,
+        elements: sceneMeta.elements,
+        done: false,
+      };
+    });
 
     return {
       slug,
@@ -261,6 +254,7 @@ export function generateImageTaskForFile(
         inlineDone: 0,
         uploaded: false,
       },
+      textStrategy,
     };
   } catch (error) {
     console.error(`生成图片任务失败: ${filePath}`, error);
@@ -307,12 +301,19 @@ export function generateAllImageTasks(
 /**
  * 生成 Markdown 格式的任务清单
  */
-export function generateMarkdownTaskList(tasks: ImageTask[]): string {
+export function generateMarkdownTaskList(
+  tasks: ImageTask[],
+  options: Pick<ImageTaskConfig, 'coverCount' | 'inlineCount' | 'textStrategy'>
+): string {
+  const totalImages =
+    tasks.length * (options.coverCount + options.inlineCount);
+
   let md = `# 博客图片任务清单
 
 > 生成时间: ${new Date().toISOString().split('T')[0]}
 > 总文章数: ${tasks.length}
-> 总图片数: ${tasks.length * 4} (封面 ${tasks.length} + 内页 ${tasks.length * 3})
+> 总图片数: ${totalImages} (封面 ${tasks.length * options.coverCount} + 内页 ${tasks.length * options.inlineCount})
+> 封面文字策略: ${options.textStrategy}
 
 ## 状态说明
 
@@ -325,18 +326,26 @@ export function generateMarkdownTaskList(tasks: ImageTask[]): string {
 
 ## 任务列表
 
-| # | Slug | 标题 | 分类 | 封面 | 内页1 | 内页2 | 内页3 | 上传 |
-|---|------|------|------|------|-------|-------|-------|------|
 `;
+
+  const inlineHeaders = Array.from(
+    { length: options.inlineCount },
+    (_, index) => `内页${index + 1}`
+  );
+
+  md += `| # | Slug | 标题 | 分类 | 封面 | ${inlineHeaders.join(' | ')} | 上传 |\n`;
+  md += `|---|------|------|------|------|${inlineHeaders
+    .map(() => '-------')
+    .join('|')}|------|\n`;
 
   tasks.forEach((task, index) => {
     const coverStatus = task.status.coverDone ? '✅' : '⬜';
-    const inline1 = task.inlineImages[0]?.done ? '✅' : '⬜';
-    const inline2 = task.inlineImages[1]?.done ? '✅' : '⬜';
-    const inline3 = task.inlineImages[2]?.done ? '✅' : '⬜';
+    const inlineStatuses = Array.from({ length: options.inlineCount }, (_, i) =>
+      task.inlineImages[i]?.done ? '✅' : '⬜'
+    );
     const uploadStatus = task.status.uploaded ? '📤' : '⬜';
 
-    md += `| ${index + 1} | ${task.slug} | ${task.title.slice(0, 20)}... | ${task.category} | ${coverStatus} | ${inline1} | ${inline2} | ${inline3} | ${uploadStatus} |\n`;
+    md += `| ${index + 1} | ${task.slug} | ${task.title.slice(0, 20)}... | ${task.category} | ${coverStatus} | ${inlineStatuses.join(' | ')} | ${uploadStatus} |\n`;
   });
 
   md += `\n---\n\n## 详细 Prompt\n\n`;
@@ -345,6 +354,7 @@ export function generateMarkdownTaskList(tasks: ImageTask[]): string {
     md += `### ${task.slug}\n\n`;
     md += `**标题**: ${task.title}\n`;
     md += `**分类**: ${task.category}\n\n`;
+    md += `**封面文字策略**: ${task.textStrategy}\n\n`;
 
     md += `#### 封面图 (${task.cover.filename})\n\n`;
     md += `\`\`\`\n${task.cover.prompt}\n\`\`\`\n\n`;
@@ -353,6 +363,8 @@ export function generateMarkdownTaskList(tasks: ImageTask[]): string {
       const img = task.inlineImages[i];
       md += `#### 内页图 ${i + 1} (${img.filename})\n\n`;
       md += `**场景**: ${img.scene}\n\n`;
+      md += `**类型**: ${img.sceneType}\n\n`;
+      md += `**元素**: ${img.elements.join(' / ')}\n\n`;
       md += `\`\`\`\n${img.prompt}\n\`\`\`\n\n`;
     }
 
@@ -365,12 +377,18 @@ export function generateMarkdownTaskList(tasks: ImageTask[]): string {
 /**
  * 生成 JSON 格式的任务数据
  */
-export function generateJsonTaskData(tasks: ImageTask[]): string {
+export function generateJsonTaskData(
+  tasks: ImageTask[],
+  options: Pick<ImageTaskConfig, 'coverCount' | 'inlineCount' | 'textStrategy'>
+): string {
   return JSON.stringify(
     {
       generatedAt: new Date().toISOString(),
       totalArticles: tasks.length,
-      totalImages: tasks.length * 4,
+      totalImages: tasks.length * (options.coverCount + options.inlineCount),
+      coverCount: options.coverCount,
+      inlineCount: options.inlineCount,
+      textStrategy: options.textStrategy,
       tasks,
     },
     null,
@@ -399,16 +417,33 @@ async function main() {
     config.outputDir = args[outputDirIndex + 1];
   }
 
+  // 解析 --text-strategy 参数
+  const textStrategyIndex = args.indexOf('--text-strategy');
+  if (textStrategyIndex !== -1 && args[textStrategyIndex + 1]) {
+    const strategy = args[textStrategyIndex + 1];
+    if (['short-zh', 'english', 'blank'].includes(strategy)) {
+      config.textStrategy = strategy as TextStrategy;
+    } else {
+      console.warn(
+        `⚠️ 无效的 --text-strategy 值 "${strategy}"，将使用默认配置。`
+      );
+    }
+  }
+
+  const fullConfig: ImageTaskConfig = { ...defaultImageTaskConfig, ...config };
+
   console.log('🖼️ 博客图片任务生成脚本');
-  console.log('配置:', JSON.stringify(config, null, 2));
+  console.log('配置:', JSON.stringify(fullConfig, null, 2));
   console.log('');
 
   // 生成任务
-  const tasks = generateAllImageTasks(config);
+  const tasks = generateAllImageTasks(fullConfig);
 
   console.log(`📊 生成结果:`);
   console.log(`  总文章数: ${tasks.length}`);
-  console.log(`  总图片数: ${tasks.length * 4}`);
+  console.log(
+    `  总图片数: ${tasks.length * (fullConfig.coverCount + fullConfig.inlineCount)}`
+  );
 
   // 按分类统计
   const categoryStats: Record<string, number> = {};
@@ -421,15 +456,24 @@ async function main() {
   }
 
   // 输出 Markdown 任务清单
-  const outputDir = config.outputDir || defaultImageTaskConfig.outputDir;
+  const outputDir = fullConfig.outputDir;
+  fs.mkdirSync(outputDir, { recursive: true });
   const mdPath = path.join(outputDir, 'image-tasks.md');
-  const mdContent = generateMarkdownTaskList(tasks);
+  const mdContent = generateMarkdownTaskList(tasks, {
+    coverCount: fullConfig.coverCount,
+    inlineCount: fullConfig.inlineCount,
+    textStrategy: fullConfig.textStrategy,
+  });
   fs.writeFileSync(mdPath, mdContent, 'utf-8');
   console.log(`\n📄 Markdown 任务清单已保存到: ${mdPath}`);
 
   // 输出 JSON 数据
   const jsonPath = path.join(outputDir, 'image-tasks.json');
-  const jsonContent = generateJsonTaskData(tasks);
+  const jsonContent = generateJsonTaskData(tasks, {
+    coverCount: fullConfig.coverCount,
+    inlineCount: fullConfig.inlineCount,
+    textStrategy: fullConfig.textStrategy,
+  });
   fs.writeFileSync(jsonPath, jsonContent, 'utf-8');
   console.log(`📄 JSON 任务数据已保存到: ${jsonPath}`);
 }
@@ -444,8 +488,10 @@ if (require.main === module) {
 // ============================================================================
 
 export {
-  generateCoverPrompt,
-  generateInlinePrompt,
+  buildCoverPrompt as generateCoverPrompt,
+  buildInlinePrompt as generateInlinePrompt,
+  detectSceneType,
+  getSceneElements,
   extractKeywords,
   extractScenes,
   generateImageTaskForFile,
