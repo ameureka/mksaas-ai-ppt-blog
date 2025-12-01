@@ -98,5 +98,9 @@ export const blog = defineCollections({
     premium: z.boolean().optional(),
     categories: z.array(z.string()),
     author: z.string(),
+    // SEO 扩展字段
+    tags: z.array(z.string()).optional().default([]),
+    seoKeywords: z.array(z.string()).optional().default([]),
+    relatedPosts: z.array(z.string()).optional().default([]),
   }),
 });

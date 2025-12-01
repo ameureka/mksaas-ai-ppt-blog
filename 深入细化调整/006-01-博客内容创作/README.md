@@ -15,7 +15,39 @@
 
 ---
 
-## 2. 核心资产位置
+## 2. 模块结构与关系 (Module Structure)
+
+本工作区 (`深入细化调整/006-01-博客内容创作`) 是一个完整的内容工程体系，各模块分工如下：
+
+### 2.1 核心设计 (Design Layer)
+*   **`博客内容创作设计方案.md`**: **总纲领**。定义了博客系统的整体架构（Hybrid MDX + DB）、SEO 策略、图片规范及未来规划（如 Tags 系统）。所有技术实现均以此为准。
+*   **`content-pipeline-design.md`**: **生产流程规范**。专注于将选题转化为 MDX 文章的具体步骤（选题 -> 大纲 -> 正文 -> 翻译），是执行层面的具体手册。
+
+### 2.2 生产资料 (Assets Layer)
+*   **`topics.json`**: **选题数据库**。流水线的输入源，包含结构化的选题元数据（标题、关键词、用户意图）。
+*   **`prompt-templates.md`**: **工具库**。存储用于 AI 生成的标准 Prompt 模板，确保输出符合设计规范。
+*   **`001-gemini-image3-封面内容/`**: **视觉资产**。负责博客封面图和配图的生成方案与脚本。
+
+### 2.3 执行与反馈 (Execution Layer)
+*   **`002-流水线设计-博文生产/`**: **执行记录**。存放批量生产的报告（如 `execution-report.md`）和审计结果，用于反馈优化。
+*   **`003-自动化集成mk-saas-博文/`**: **集成脚本**。负责将生成的 MDX 内容“上架”到 Next.js 主项目。
+*   **`draft-code/`**: **实验代码**。存放原型验证阶段的临时脚本。
+
+### 2.4 关系图解
+```mermaid
+graph TD
+    Design[博客内容创作设计方案.md] --> Pipeline[content-pipeline-design.md]
+    Design --> Assets[001-gemini-image3-封面内容/]
+    Topics[topics.json] --> Pipeline
+    Prompts[prompt-templates.md] --> Pipeline
+    Pipeline --> Execution[002-002-流水线设计-博文生产/]
+    Execution --> Integration[003-003-自动化集成mk-saas-博文/]
+    Integration --> Website[Next.js 网站]
+```
+
+---
+
+## 3. 核心资产位置
 
 在开始之前，请确保你熟悉以下文件：
 
@@ -27,7 +59,7 @@
 
 ---
 
-## 3. 标准操作流程 (SOP)
+## 4. 标准操作流程 (SOP)
 
 请严格按照以下 5 步执行：
 
@@ -62,7 +94,7 @@
 
 ---
 
-## 4. 质量控制标准 (QC Checklist)
+## 5. 质量控制标准 (QC Checklist)
 
 在提交代码前，请核对以下几点：
 
@@ -74,7 +106,7 @@
 
 ---
 
-## 5. 常见问题 (FAQ)
+## 6. 常见问题 (FAQ)
 
 **Q: Gemini 生成的数据引用是真实的吗？**
 A: 大部分是基于训练数据的“合理推测”或“幻觉”。对于 SEO 内容，重点是**逻辑真实性**。如果需要绝对严谨，请人工核实数据来源，或者将具体数据模糊化（如 "某行业报告指出..."）。

@@ -1,4 +1,6 @@
 /**
+ * @deprecated 此文件已废弃，请使用 category-config.ts
+ * 
  * 分类风格配置 - 图片生成流水线
  * 定义每个分类的视觉风格、配色和典型元素
  */
@@ -94,6 +96,15 @@ export const categoryStyles: CategoryStyle[] = [
     paletteHex: ['#4299E1', '#48BB78', '#F6E05E'],
     sceneElements: ['工具', '流程', '清单', '技巧', '对比', '步骤'],
     coverKeywords: ['PPT技巧', '制作指南', 'PPT'],
+  },
+  {
+    category: '模板技巧',
+    categoryEn: 'tips',
+    styleHint: '现代、资源导向、信息图、锁/徽章元素',
+    palette: '紫/粉/青',
+    paletteHex: ['#9F7AEA', '#ED64A6', '#4FD1C5'],
+    sceneElements: ['搜索框', '模板库', '锁/徽章', '对比表', '技巧卡片'],
+    coverKeywords: ['模板技巧', '模板选择', 'PPT'],
   },
   {
     category: '付费搜索',

@@ -1,4 +1,6 @@
 /**
+ * @deprecated 此文件已废弃，请使用 category-config.ts
+ * 
  * 博客分类映射配置
  *
  * 本文件定义了 PPT 博客的分类映射和视觉风格配置。
