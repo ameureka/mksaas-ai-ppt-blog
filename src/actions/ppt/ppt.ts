@@ -85,7 +85,6 @@ const resolveOrder = (sortBy?: string, sortOrder?: 'asc' | 'desc') => {
       return direction(pptTable.downloadCount);
     case 'title':
       return direction(pptTable.title);
-    case 'created_at':
     default:
       return direction(pptTable.createdAt);
   }

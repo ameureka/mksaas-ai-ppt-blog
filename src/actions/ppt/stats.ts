@@ -48,6 +48,6 @@ export async function getDashboardStats(): Promise<
 export async function updateSettings(
   settings: Record<string, unknown>
 ): Promise<ServerActionResult<void>> {
-  console.log(`[PPT] Update settings (stub):`, settings);
+  console.log('[PPT] Update settings (stub):', settings);
   return successResult(undefined);
 }

@@ -235,8 +235,7 @@ export default function CategoryPage() {
   const categoryName = slugToName[slug] ?? slug;
 
   const router = useRouter();
-  const metadata =
-    categoryMetadata[categoryName] || categoryMetadata['商务汇报'];
+  const metadata = categoryMetadata[categoryName] || categoryMetadata.商务汇报;
   const CategoryIcon = metadata.icon;
 
   const [hotPPTs, setHotPPTs] = useState<PPT[]>([]);

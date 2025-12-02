@@ -217,71 +217,69 @@ export default function CategoriesPage() {
             const Icon = category.icon;
 
             if (index === 4) {
-              return (
-                <>
-                  <Card
-                    key="native-ad"
-                    className="relative overflow-hidden border-primary/20"
-                  >
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded">
-                        推广
-                      </span>
+              return [
+                <Card
+                  key="native-ad"
+                  className="relative overflow-hidden border-primary/20"
+                >
+                  <div className="absolute top-2 left-2 z-10">
+                    <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded">
+                      推广
+                    </span>
+                  </div>
+                  <CardContent className="p-0">
+                    <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                      <p className="text-sm text-muted-foreground text-center px-4">
+                        [原生广告位]
+                        <br />
+                        300x250 推广内容
+                      </p>
                     </div>
-                    <CardContent className="p-0">
-                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                        <p className="text-sm text-muted-foreground text-center px-4">
-                          [原生广告位]
-                          <br />
-                          300x250 推广内容
-                        </p>
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-1">
-                          推荐合作伙伴
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          专业PPT设计服务
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold mb-1">
+                        推荐合作伙伴
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        专业PPT设计服务
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>,
 
-                  <Card
-                    key={category.name}
-                    className="group cursor-pointer overflow-hidden transition-all hover:shadow-xl hover:border-primary hover:-translate-y-1"
-                    onClick={() => handleCategoryClick(category.name)}
-                  >
-                    <CardContent className="p-0">
-                      <div className="relative h-48 overflow-hidden bg-muted">
-                        <img
-                          src={category.preview || '/placeholder.svg'}
-                          alt={category.name}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <Card
+                  key={category.name}
+                  className="group cursor-pointer overflow-hidden transition-all hover:shadow-xl hover:border-primary hover:-translate-y-1"
+                  onClick={() => handleCategoryClick(category.name)}
+                >
+                  <CardContent className="p-0">
+                    <div className="relative h-48 overflow-hidden bg-muted">
+                      <img
+                        src={category.preview || '/placeholder.svg'}
+                        alt={category.name}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-                        <div className="absolute top-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm">
-                          <Icon className="h-6 w-6 text-primary" />
-                        </div>
+                      <div className="absolute top-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm">
+                        <Icon className="h-6 w-6 text-primary" />
                       </div>
+                    </div>
 
-                      <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
-                          {category.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                          {category.description}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {category.count.toLocaleString()} 个模板
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </>
-              );
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
+                        {category.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                        {category.description}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {category.count.toLocaleString()} 个模板
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>,
+              ];
             }
 
             return (

@@ -22,6 +22,7 @@ import {
   Users,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
@@ -38,66 +39,6 @@ interface PPT {
   category: string;
   isAd?: boolean;
 }
-
-// Categories (static labels)
-const categories = [
-  {
-    name: '商务汇报',
-    slug: 'business',
-    count: 12345,
-    icon: Briefcase,
-    preview: '/ppt/business-presentation-template.png',
-  },
-  {
-    name: '教育培训',
-    slug: 'education',
-    count: 8234,
-    icon: GraduationCap,
-    preview: '/ppt/education-training-template.jpg',
-  },
-  {
-    name: '产品营销',
-    slug: 'marketing',
-    count: 6789,
-    icon: TrendingUp,
-    preview: '/ppt/product-marketing-template.jpg',
-  },
-  {
-    name: '年终总结',
-    slug: 'general',
-    count: 15678,
-    icon: Calendar,
-    preview: '/ppt/year-end-summary-template.jpg',
-  },
-  {
-    name: '项目提案',
-    slug: 'creative',
-    count: 9456,
-    icon: Target,
-    preview: '/ppt/project-proposal-template.png',
-  },
-  {
-    name: '培训课件',
-    slug: 'education',
-    count: 7123,
-    icon: FileText,
-    preview: '/ppt/training-courseware-template.jpg',
-  },
-  {
-    name: '述职报告',
-    slug: 'business',
-    count: 11234,
-    icon: Presentation,
-    preview: '/ppt/job-report-template.jpg',
-  },
-  {
-    name: '营销方案',
-    slug: 'marketing',
-    count: 5678,
-    icon: Users,
-    preview: '/ppt/marketing-plan-template.png',
-  },
-];
 
 const hotKeywords: { text: string; size: 'large' | 'medium' | 'small' }[] = [
   { text: '年终总结', size: 'large' },
@@ -136,6 +77,7 @@ function useAuditLog() {
 }
 
 export default function SearchHomePage() {
+  const t = useTranslations('PPTPage.categories');
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<PPT[]>([]);
   const [featuredPPTs, setFeaturedPPTs] = useState<PPT[]>([]);
@@ -153,6 +95,69 @@ export default function SearchHomePage() {
   const router = useRouter(); // Add navigation hook for view more buttons
 
   const { logAction } = useAuditLog();
+
+  // Categories using translations
+  const categories = useMemo(
+    () => [
+      {
+        name: t('business'),
+        slug: 'business',
+        count: 12345,
+        icon: Briefcase,
+        preview: '/ppt/business-presentation-template.png',
+      },
+      {
+        name: t('education'),
+        slug: 'education',
+        count: 8234,
+        icon: GraduationCap,
+        preview: '/ppt/education-training-template.jpg',
+      },
+      {
+        name: t('marketing'),
+        slug: 'marketing',
+        count: 6789,
+        icon: TrendingUp,
+        preview: '/ppt/product-marketing-template.jpg',
+      },
+      {
+        name: t('general'),
+        slug: 'general',
+        count: 15678,
+        icon: Calendar,
+        preview: '/ppt/year-end-summary-template.jpg',
+      },
+      {
+        name: t('creative'),
+        slug: 'creative',
+        count: 9456,
+        icon: Target,
+        preview: '/ppt/project-proposal-template.png',
+      },
+      {
+        name: t('training'),
+        slug: 'education',
+        count: 7123,
+        icon: FileText,
+        preview: '/ppt/training-courseware-template.jpg',
+      },
+      {
+        name: t('report'),
+        slug: 'business',
+        count: 11234,
+        icon: Presentation,
+        preview: '/ppt/job-report-template.jpg',
+      },
+      {
+        name: t('plan'),
+        slug: 'marketing',
+        count: 5678,
+        icon: Users,
+        preview: '/ppt/marketing-plan-template.png',
+      },
+    ],
+    [t]
+  );
 
   const transform = (items: any[]): PPT[] =>
     items.map((item) => ({
@@ -172,7 +177,7 @@ export default function SearchHomePage() {
     const load = async () => {
       try {
         const res = await fetch(
-          `/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc`
+          '/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc'
         );
         const json = await res.json();
         if (json.success) {

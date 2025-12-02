@@ -237,7 +237,7 @@ export function insertAuthorityQuotes(
       type: 'fix-authority',
       before: `${existingQuotes} 条权威引用`,
       after: `${existingQuotes + 1} 条权威引用`,
-      description: `插入了 1 条权威引用`,
+      description: '插入了 1 条权威引用',
     },
   };
 }
@@ -343,7 +343,7 @@ export function insertStats(
       type: 'fix-stats',
       before: `${existingStats} 条统计数据`,
       after: `${existingStats + 1} 条统计数据`,
-      description: `插入了 1 条统计数据`,
+      description: '插入了 1 条统计数据',
     },
   };
 }

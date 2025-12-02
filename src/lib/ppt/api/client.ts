@@ -37,10 +37,9 @@ export class ApiClient {
 
     // 添加认证token（如果需要）
     if (requiresAuth) {
-      const token = this.getAuthToken();
+      const token = ApiClient.getAuthToken();
       if (token) {
-        (headers as Record<string, string>)['Authorization'] =
-          `Bearer ${token}`;
+        (headers as Record<string, string>).Authorization = `Bearer ${token}`;
       }
     }
 
@@ -75,7 +74,7 @@ export class ApiClient {
   }
 
   static get<T>(endpoint: string, requiresAuth = false): Promise<T> {
-    return this.request<T>(endpoint, {
+    return ApiClient.request<T>(endpoint, {
       method: 'GET',
       requiresAuth,
     });
@@ -86,7 +85,7 @@ export class ApiClient {
     body?: unknown,
     requiresAuth = false
   ): Promise<T> {
-    return this.request<T>(endpoint, {
+    return ApiClient.request<T>(endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
       requiresAuth,
@@ -98,7 +97,7 @@ export class ApiClient {
     body?: unknown,
     requiresAuth = false
   ): Promise<T> {
-    return this.request<T>(endpoint, {
+    return ApiClient.request<T>(endpoint, {
       method: 'PUT',
       body: JSON.stringify(body),
       requiresAuth,
@@ -106,7 +105,7 @@ export class ApiClient {
   }
 
   static delete<T>(endpoint: string, requiresAuth = false): Promise<T> {
-    return this.request<T>(endpoint, {
+    return ApiClient.request<T>(endpoint, {
       method: 'DELETE',
       requiresAuth,
     });

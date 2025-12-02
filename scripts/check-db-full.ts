@@ -36,7 +36,7 @@ async function check() {
     .select({ count: count() })
     .from(ppt)
     .where(sql`file_url IS NOT NULL AND file_url != ''`);
-  console.log(`\n=== 文件链接统计 ===`);
+  console.log('\n=== 文件链接统计 ===');
   console.log(`有 file_url: ${withFileUrl[0].count}`);
 
   // 4. 分类分布
@@ -64,7 +64,7 @@ async function check() {
   // 6. 检查一个文件链接是否可访问
   const sample = await db.select({ file_url: ppt.fileUrl }).from(ppt).limit(1);
   if (sample[0]?.file_url) {
-    console.log(`\n=== 文件链接样本 ===`);
+    console.log('\n=== 文件链接样本 ===');
     console.log(sample[0].file_url);
   }
 

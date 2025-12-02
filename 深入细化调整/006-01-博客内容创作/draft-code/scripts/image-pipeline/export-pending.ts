@@ -74,7 +74,7 @@ function main() {
         lines.push(`### 🖼️ 封面: ${task.title}`);
         lines.push('');
         lines.push(`**文件名**: \`${task.cover.filename}\``);
-        lines.push(`**尺寸**: 1200x630`);
+        lines.push('**尺寸**: 1200x630');
         lines.push(`**文字**: ${task.cover.textToRender}`);
         lines.push('');
         lines.push('**Prompt**:');
@@ -93,7 +93,7 @@ function main() {
         lines.push(`### 📄 内页: ${img.scene}`);
         lines.push('');
         lines.push(`**文件名**: \`${img.filename}\``);
-        lines.push(`**尺寸**: 1000x600`);
+        lines.push('**尺寸**: 1000x600');
         lines.push('');
         lines.push('**Prompt**:');
         lines.push('```');

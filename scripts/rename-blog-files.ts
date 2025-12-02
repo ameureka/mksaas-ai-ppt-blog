@@ -159,7 +159,7 @@ async function main() {
     }
   }
 
-  console.log(`\\n=== 重命名完成 ===`);
+  console.log('\\n=== 重命名完成 ===');
   console.log(`✅ 成功重命名: ${renamed} 个文件`);
   console.log(`⏭️  跳过（已是英文）: ${skipped} 个文件`);
   console.log(`❌ 错误: ${errors} 个文件`);
@@ -174,7 +174,7 @@ async function main() {
 
   const { writeFileSync } = await import('fs');
   writeFileSync('rename-map.txt', mapContent);
-  console.log(`\\n📝 重命名映射已保存到 rename-map.txt`);
+  console.log('\\n📝 重命名映射已保存到 rename-map.txt');
 }
 
 main().catch(console.error);

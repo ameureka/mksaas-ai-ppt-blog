@@ -1139,5 +1139,17 @@
   "AIAudioPage": {
     "title": "AI Audio",
     "description": "PPTHub lets you make AI SaaS in days, simply and effortlessly"
+  },
+  "PPTPage": {
+    "categories": {
+      "business": "Business",
+      "education": "Education",
+      "marketing": "Marketing",
+      "general": "General",
+      "creative": "Creative",
+      "training": "Training",
+      "report": "Report",
+      "plan": "Plan"
+    }
   }
 }

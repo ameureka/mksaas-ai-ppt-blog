@@ -99,7 +99,7 @@ async function main() {
     console.log(`   ${cat}: ${count} 篇`);
   }
 
-  console.log(`\n✅ 生成完成`);
+  console.log('\n✅ 生成完成');
   console.log(`   封面图: ${coverCount} 张`);
   console.log(`   内页图: ${inlineCount} 张`);
   console.log(`   总计: ${coverCount + inlineCount} 张`);

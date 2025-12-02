@@ -162,7 +162,7 @@ const config = withMDX(withNextIntl(nextConfig));
 // Remove unsupported keys that may be injected by plugins (e.g. turbopack)
 if ('turbopack' in (config as any)) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-delete
-  delete (config as any).turbopack;
+  (config as any).turbopack = undefined;
 }
 
 export default config;

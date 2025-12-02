@@ -39,6 +39,6 @@ export async function updateSettings(
   settings: Record<string, unknown>
 ): Promise<ServerActionResult<void>> {
   await delay(800);
-  console.log(`[Mock] Updated Settings:`, settings);
+  console.log('[Mock] Updated Settings:', settings);
   return successResult(undefined);
 }

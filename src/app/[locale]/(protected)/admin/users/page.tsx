@@ -145,7 +145,7 @@ export default function UsersPage() {
 
             {isLoading ? (
               <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto" />
                 <p className="mt-4 text-muted-foreground">
                   {ADMIN_I18N.common.loading}
                 </p>

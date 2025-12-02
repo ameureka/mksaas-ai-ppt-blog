@@ -404,7 +404,7 @@ export function generateMarkdownTaskList(
     md += `| ${index + 1} | ${task.slug} | ${task.title.slice(0, 20)}... | ${task.category} | ${coverStatus} | ${inlineStatuses.join(' | ')} | ${uploadStatus} |\n`;
   });
 
-  md += `\n---\n\n## 详细 Prompt\n\n`;
+  md += '\n---\n\n## 详细 Prompt\n\n';
 
   for (const task of tasks) {
     md += `### ${task.slug}\n\n`;
@@ -424,7 +424,7 @@ export function generateMarkdownTaskList(
       md += `\`\`\`\n${img.prompt}\n\`\`\`\n\n`;
     }
 
-    md += `---\n\n`;
+    md += '---\n\n';
   }
 
   return md;
@@ -495,7 +495,7 @@ async function main() {
   // 生成任务
   const tasks = generateAllImageTasks(fullConfig);
 
-  console.log(`📊 生成结果:`);
+  console.log('📊 生成结果:');
   console.log(`  总文章数: ${tasks.length}`);
   console.log(
     `  总图片数: ${tasks.length * (fullConfig.coverCount + fullConfig.inlineCount)}`

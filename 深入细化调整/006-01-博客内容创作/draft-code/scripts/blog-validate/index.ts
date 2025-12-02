@@ -270,7 +270,7 @@ export function checkImageAvailability(
 
         // 检查 frontmatter 中的封面图
         const { data } = matter(content);
-        if (data.image && data.image.startsWith('/images/blog/')) {
+        if (data.image?.startsWith('/images/blog/')) {
           totalRefs++;
           const imageName = path.basename(data.image).toLowerCase();
           if (!existingImages.has(imageName)) {
@@ -485,7 +485,7 @@ export function generateAcceptanceReport(result: ValidationResult): string {
     md += `| ${check.name} | ${check.passed ? '✅' : '❌'} | ${check.details} |\n`;
   }
 
-  md += `\n## 统计\n\n`;
+  md += '\n## 统计\n\n';
   md += `- 总检查数: ${result.totalChecks}\n`;
   md += `- 通过: ${result.passedChecks}\n`;
   md += `- 失败: ${result.failedChecks}\n`;
@@ -493,16 +493,16 @@ export function generateAcceptanceReport(result: ValidationResult): string {
   // 输出失败检查的详情
   const failedChecks = result.checks.filter((c) => !c.passed);
   if (failedChecks.length > 0) {
-    md += `\n## 失败详情\n\n`;
+    md += '\n## 失败详情\n\n';
     for (const check of failedChecks) {
       md += `### ${check.name}\n\n`;
       md += `${check.details}\n\n`;
       if (check.issues && check.issues.length > 0) {
-        md += `问题列表:\n`;
+        md += '问题列表:\n';
         for (const issue of check.issues) {
           md += `- ${issue}\n`;
         }
-        md += `\n`;
+        md += '\n';
       }
     }
   }
@@ -551,7 +551,7 @@ async function main() {
   fs.writeFileSync(mdPath, generateAcceptanceReport(result), 'utf-8');
   fs.writeFileSync(jsonPath, JSON.stringify(result, null, 2), 'utf-8');
 
-  console.log(`\n📄 报告已保存到:`);
+  console.log('\n📄 报告已保存到:');
   console.log(`  - ${mdPath}`);
   console.log(`  - ${jsonPath}`);
 

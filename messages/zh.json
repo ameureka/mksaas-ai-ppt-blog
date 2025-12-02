@@ -1139,5 +1139,17 @@
   "AIAudioPage": {
     "title": "AI 音频",
     "description": "PPTHub 让您在几天内轻松构建您的 AI SaaS，简单且毫不费力"
+  },
+  "PPTPage": {
+    "categories": {
+      "business": "商务",
+      "education": "教育",
+      "marketing": "营销",
+      "general": "通用",
+      "creative": "创意",
+      "training": "培训",
+      "report": "报告",
+      "plan": "方案"
+    }
   }
 }
