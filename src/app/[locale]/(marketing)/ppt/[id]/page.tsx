@@ -275,6 +275,7 @@ export default function PPTDetailPage() {
             {/* 面包屑导航 */}
             <div className="flex items-center gap-2 text-sm text-muted-foreground overflow-x-auto">
               <button
+                type="button"
                 onClick={() => router.push(PublicRoutes.Home)}
                 className="hover:text-foreground transition-colors whitespace-nowrap"
               >
@@ -282,6 +283,7 @@ export default function PPTDetailPage() {
               </button>
               <span>/</span>
               <button
+                type="button"
                 onClick={() => router.push(PublicRoutes.Category(ppt.category))}
                 className="hover:text-foreground transition-colors whitespace-nowrap"
               >
@@ -289,6 +291,7 @@ export default function PPTDetailPage() {
               </button>
               <span>/</span>
               <button
+                type="button"
                 onClick={() =>
                   router.push(PublicRoutes.Category(ppt.subcategory))
                 }
@@ -306,12 +309,12 @@ export default function PPTDetailPage() {
       </div>
 
       {/* Hero 区域 */}
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <div className="grid gap-8 lg:grid-cols-5">
+      <div className="container mx-auto px-4 py-4 md:py-8 max-w-7xl overflow-hidden">
+        <div className="grid gap-6 md:gap-8 lg:grid-cols-5">
           {/* 左侧 - 预览区域 */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-6 min-w-0">
             {/* 主预览图 */}
-            <div className="relative aspect-video rounded-xl border bg-muted overflow-hidden group">
+            <div className="relative aspect-video rounded-xl border bg-muted overflow-hidden group w-full">
               <img
                 src={ppt.previewUrls[currentSlide] || '/placeholder.svg'}
                 alt={`${ppt.title} - 第${currentSlide + 1}页`}
@@ -362,6 +365,7 @@ export default function PPTDetailPage() {
             <div className="flex gap-2 overflow-x-auto pb-2">
               {ppt.previewUrls.slice(0, 12).map((url, i) => (
                 <button
+                  type="button"
                   key={i}
                   onClick={() => setCurrentSlide(i)}
                   className={`flex-shrink-0 w-20 h-14 rounded border-2 overflow-hidden transition-all ${
