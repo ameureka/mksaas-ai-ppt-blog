@@ -1,6 +1,6 @@
 import { recordDownload } from '@/actions/ppt/ppt';
-import { websiteConfig } from '@/config/website';
 import { getPPTById } from '@/actions/ppt/ppt';
+import { websiteConfig } from '@/config/website';
 import { NextResponse } from 'next/server';
 
 export async function POST(

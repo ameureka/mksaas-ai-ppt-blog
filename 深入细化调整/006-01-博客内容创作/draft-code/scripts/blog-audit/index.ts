@@ -39,7 +39,10 @@ const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '../../../../..');
 
 const defaultConfig: AuditConfig = {
-  sourceDir: path.join(PROJECT_ROOT, '深入细化调整/006-blogs-seo-博文设计/广告-博文'),
+  sourceDir: path.join(
+    PROJECT_ROOT,
+    '深入细化调整/006-blogs-seo-博文设计/广告-博文'
+  ),
   outputPath: path.join(__dirname, '../../reports/blog-audit-report.json'),
   checkEnglish: true,
   verbose: true,

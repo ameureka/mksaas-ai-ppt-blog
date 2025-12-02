@@ -123,9 +123,8 @@ export const categoryMapping: Record<string, string> = Object.fromEntries(
 );
 
 // slug -> 中文名 映射
-export const categoryMappingReverse: Record<string, string> = Object.fromEntries(
-  categories.map((c) => [c.slug, c.name])
-);
+export const categoryMappingReverse: Record<string, string> =
+  Object.fromEntries(categories.map((c) => [c.slug, c.name]));
 
 // 辅助函数
 export const getCategoryBySlug = (slug: string) =>

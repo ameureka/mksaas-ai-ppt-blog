@@ -23,12 +23,12 @@ const titleSuffixes: Record<string, string[]> = {
 function expandTitle(title: string, category: string): string {
   const suffixes = titleSuffixes[category] || titleSuffixes.general;
   const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
-  
+
   // 如果标题已有问号，在问号前插入
   if (title.includes('？')) {
     return title.replace('？', `：${suffix}？`);
   }
-  
+
   // 否则直接追加
   return `${title}：${suffix}`;
 }
@@ -36,42 +36,45 @@ function expandTitle(title: string, category: string): string {
 function processFile(filePath: string): boolean {
   const content = fs.readFileSync(filePath, 'utf-8');
   const { data, content: body } = matter(content);
-  
+
   const title = data.title || '';
   const category = data.categories?.[0] || 'general';
-  
+
   // 计算中文字符数
   const chineseChars = (title.match(/[\u4e00-\u9fa5]/g) || []).length;
-  
+
   if (chineseChars >= minTitleLength) {
     return false;
   }
-  
+
   const newTitle = expandTitle(title, category);
   data.title = newTitle;
-  
+
   const newContent = matter.stringify(body, data);
   fs.writeFileSync(filePath, newContent, 'utf-8');
-  
-  console.log(`✅ ${path.basename(filePath)}: ${chineseChars} → ${(newTitle.match(/[\u4e00-\u9fa5]/g) || []).length} 字符`);
+
+  console.log(
+    `✅ ${path.basename(filePath)}: ${chineseChars} → ${(newTitle.match(/[\u4e00-\u9fa5]/g) || []).length} 字符`
+  );
   return true;
 }
 
 function main() {
   console.log('📝 标题扩展脚本');
   console.log(`最小长度: ${minTitleLength} 中文字符\n`);
-  
-  const files = fs.readdirSync(sourceDir, { recursive: true, withFileTypes: true })
-    .filter(f => f.isFile() && f.name.endsWith('.zh.mdx'))
-    .map(f => path.join(f.path || f.parentPath, f.name));
-  
+
+  const files = fs
+    .readdirSync(sourceDir, { recursive: true, withFileTypes: true })
+    .filter((f) => f.isFile() && f.name.endsWith('.zh.mdx'))
+    .map((f) => path.join(f.path || f.parentPath, f.name));
+
   let count = 0;
   for (const file of files) {
     if (processFile(file)) {
       count++;
     }
   }
-  
+
   console.log(`\n📊 扩展了 ${count} 个标题`);
 }
 

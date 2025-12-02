@@ -576,7 +576,7 @@ export default function SearchHomePage() {
               categories={categories}
               recentDownloads={results.slice(0, 3)}
               onKeywordClick={handleKeywordClick}
-              onCategoryClick={(c) => handleCategoryClick(c.slug ?? c)}
+              onCategoryClick={handleCategoryClick}
             />
           </div>
         </section>

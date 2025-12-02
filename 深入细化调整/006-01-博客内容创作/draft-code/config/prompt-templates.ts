@@ -6,7 +6,13 @@
 import type { CategoryStyle } from './category-styles';
 
 export type TextStrategy = 'short-zh' | 'english' | 'blank';
-export type SceneType = 'flow' | 'chart' | 'cards' | 'compare' | 'scene' | 'concept';
+export type SceneType =
+  | 'flow'
+  | 'chart'
+  | 'cards'
+  | 'compare'
+  | 'scene'
+  | 'concept';
 
 export interface CoverPromptParams {
   title: string;
@@ -112,7 +118,8 @@ export const blankTextSuffix = `
  * 生成封面 Prompt
  */
 export function generateCoverPrompt(params: CoverPromptParams): string {
-  const { title, shortTitle, keywords, style, textStrategy, textToRender } = params;
+  const { title, shortTitle, keywords, style, textStrategy, textToRender } =
+    params;
 
   let template = coverPromptTemplateZh;
   let finalTextToRender = textToRender;
@@ -161,11 +168,16 @@ export function generateInlinePrompt(params: InlinePromptParams): string {
 /**
  * 场景类型判断规则 - 增强版，结合段落内容
  */
-export function detectSceneType(h2Title: string, paragraphContent: string): SceneType {
+export function detectSceneType(
+  h2Title: string,
+  paragraphContent: string
+): SceneType {
   const text = (h2Title + ' ' + paragraphContent).toLowerCase();
 
   // 流程/步骤类
-  if (/步骤|流程|第[一二三四五六七八九十]步|首先|然后|最后|阶段|顺序/.test(text)) {
+  if (
+    /步骤|流程|第[一二三四五六七八九十]步|首先|然后|最后|阶段|顺序/.test(text)
+  ) {
     return 'flow';
   }
   // 对比类
@@ -192,64 +204,176 @@ export function detectSceneType(h2Title: string, paragraphContent: string): Scen
  */
 const CONTENT_ELEMENT_MAP: Array<{ pattern: RegExp; elements: string[] }> = [
   // === 品牌视觉 ===
-  { pattern: /logo|标识|品牌|vi/i, elements: ['Logo图标', '品牌标识', '替换示意'] },
-  { pattern: /配色|颜色|色彩|主色|辅助色|调色/, elements: ['调色板', '颜色对比', '配色方案', '取色器'] },
-  { pattern: /字体|排版|字号|文字|标题字/, elements: ['字体样式', '排版对比', '文字示例', '字号标注'] },
-  { pattern: /截图|界面|产品图|屏幕|软件/, elements: ['界面截图', '产品展示', '屏幕框', '软件界面'] },
-  { pattern: /图标|插画|icon|视觉元素/, elements: ['图标库', '插画风格', '视觉元素', '图形符号'] },
-  { pattern: /模板|母版|版式|布局/, elements: ['模板预览', '版式结构', '布局示意', '页面框架'] },
+  {
+    pattern: /logo|标识|品牌|vi/i,
+    elements: ['Logo图标', '品牌标识', '替换示意'],
+  },
+  {
+    pattern: /配色|颜色|色彩|主色|辅助色|调色/,
+    elements: ['调色板', '颜色对比', '配色方案', '取色器'],
+  },
+  {
+    pattern: /字体|排版|字号|文字|标题字/,
+    elements: ['字体样式', '排版对比', '文字示例', '字号标注'],
+  },
+  {
+    pattern: /截图|界面|产品图|屏幕|软件/,
+    elements: ['界面截图', '产品展示', '屏幕框', '软件界面'],
+  },
+  {
+    pattern: /图标|插画|icon|视觉元素/,
+    elements: ['图标库', '插画风格', '视觉元素', '图形符号'],
+  },
+  {
+    pattern: /模板|母版|版式|布局/,
+    elements: ['模板预览', '版式结构', '布局示意', '页面框架'],
+  },
 
   // === 数据与图表 ===
-  { pattern: /图表|数据|统计|分析|报表/, elements: ['数据图表', '统计图', '数据看板', '趋势线'] },
-  { pattern: /时间线|里程碑|进度|阶段|节点/, elements: ['时间线', '里程碑', '进度条', '节点标记'] },
-  { pattern: /增长|下降|趋势|变化|波动/, elements: ['趋势曲线', '增长箭头', '数据变化图', '波动线'] },
-  { pattern: /百分比|占比|比例|份额/, elements: ['饼图', '环形图', '比例条', '占比标注'] },
+  {
+    pattern: /图表|数据|统计|分析|报表/,
+    elements: ['数据图表', '统计图', '数据看板', '趋势线'],
+  },
+  {
+    pattern: /时间线|里程碑|进度|阶段|节点/,
+    elements: ['时间线', '里程碑', '进度条', '节点标记'],
+  },
+  {
+    pattern: /增长|下降|趋势|变化|波动/,
+    elements: ['趋势曲线', '增长箭头', '数据变化图', '波动线'],
+  },
+  {
+    pattern: /百分比|占比|比例|份额/,
+    elements: ['饼图', '环形图', '比例条', '占比标注'],
+  },
 
   // === 人物角色 ===
-  { pattern: /用户|受众|客户|人群|画像/, elements: ['用户画像', '人物图标', '受众分析', '人群标签'] },
-  { pattern: /新人|新手|入门|初学/, elements: ['新人图标', '入门标识', '学习者形象', '成长符号'] },
-  { pattern: /主管|领导|管理|经理|总监/, elements: ['管理者图标', '领导形象', '决策者符号', '层级示意'] },
-  { pattern: /团队|协作|合作|沟通|讨论/, elements: ['团队图标', '协作示意', '沟通场景', '讨论图'] },
-  { pattern: /演讲|汇报|展示|演示|讲解/, elements: ['演讲场景', '演讲人', '大屏展示', '听众'] },
+  {
+    pattern: /用户|受众|客户|人群|画像/,
+    elements: ['用户画像', '人物图标', '受众分析', '人群标签'],
+  },
+  {
+    pattern: /新人|新手|入门|初学/,
+    elements: ['新人图标', '入门标识', '学习者形象', '成长符号'],
+  },
+  {
+    pattern: /主管|领导|管理|经理|总监/,
+    elements: ['管理者图标', '领导形象', '决策者符号', '层级示意'],
+  },
+  {
+    pattern: /团队|协作|合作|沟通|讨论/,
+    elements: ['团队图标', '协作示意', '沟通场景', '讨论图'],
+  },
+  {
+    pattern: /演讲|汇报|展示|演示|讲解/,
+    elements: ['演讲场景', '演讲人', '大屏展示', '听众'],
+  },
 
   // === 业务场景 ===
-  { pattern: /转化|漏斗|路径|渠道/, elements: ['转化漏斗', '路径图', '流程箭头', '渠道示意'] },
-  { pattern: /目标|成果|成绩|kpi|指标/, elements: ['目标图标', '成果展示', '达成标记', '指标卡片'] },
-  { pattern: /会议|会议室|开会/, elements: ['会议室', '会议桌', '白板', '投影'] },
-  { pattern: /课堂|培训|教学|学习|课件/, elements: ['课堂场景', '培训图标', '学习元素', '教学示意'] },
-  { pattern: /项目|提案|方案|计划/, elements: ['项目图标', '方案文档', '计划表', '提案符号'] },
+  {
+    pattern: /转化|漏斗|路径|渠道/,
+    elements: ['转化漏斗', '路径图', '流程箭头', '渠道示意'],
+  },
+  {
+    pattern: /目标|成果|成绩|kpi|指标/,
+    elements: ['目标图标', '成果展示', '达成标记', '指标卡片'],
+  },
+  {
+    pattern: /会议|会议室|开会/,
+    elements: ['会议室', '会议桌', '白板', '投影'],
+  },
+  {
+    pattern: /课堂|培训|教学|学习|课件/,
+    elements: ['课堂场景', '培训图标', '学习元素', '教学示意'],
+  },
+  {
+    pattern: /项目|提案|方案|计划/,
+    elements: ['项目图标', '方案文档', '计划表', '提案符号'],
+  },
 
   // === 对比与选择 ===
-  { pattern: /vs|对比|比较|差异|区别/, elements: ['VS符号', '左右对比', '差异标注', '对比箭头'] },
-  { pattern: /选择|挑选|筛选|决策/, elements: ['选择图标', '筛选漏斗', '决策树', '选项卡片'] },
-  { pattern: /优势|劣势|优点|缺点/, elements: ['优劣对比', '加减符号', '评分星级', '对比表格'] },
+  {
+    pattern: /vs|对比|比较|差异|区别/,
+    elements: ['VS符号', '左右对比', '差异标注', '对比箭头'],
+  },
+  {
+    pattern: /选择|挑选|筛选|决策/,
+    elements: ['选择图标', '筛选漏斗', '决策树', '选项卡片'],
+  },
+  {
+    pattern: /优势|劣势|优点|缺点/,
+    elements: ['优劣对比', '加减符号', '评分星级', '对比表格'],
+  },
 
   // === 结构与框架 ===
-  { pattern: /结构|框架|架构|体系/, elements: ['结构图', '框架示意', '层级关系', '架构图'] },
-  { pattern: /清单|列表|要点|条目/, elements: ['清单图标', '勾选标记', '条目列表', '要点卡片'] },
-  { pattern: /章节|目录|大纲|提纲/, elements: ['目录结构', '章节标记', '大纲图', '层级列表'] },
+  {
+    pattern: /结构|框架|架构|体系/,
+    elements: ['结构图', '框架示意', '层级关系', '架构图'],
+  },
+  {
+    pattern: /清单|列表|要点|条目/,
+    elements: ['清单图标', '勾选标记', '条目列表', '要点卡片'],
+  },
+  {
+    pattern: /章节|目录|大纲|提纲/,
+    elements: ['目录结构', '章节标记', '大纲图', '层级列表'],
+  },
 
   // === 年终/述职特有 ===
-  { pattern: /年终|年度|全年|一年/, elements: ['年度日历', '12月时间轴', '年度总结图', '年份标记'] },
-  { pattern: /总结|复盘|回顾|盘点/, elements: ['总结图标', '复盘箭头', '回顾时间线', '盘点清单'] },
-  { pattern: /成长|提升|进步|突破/, elements: ['成长曲线', '上升箭头', '进步阶梯', '突破符号'] },
-  { pattern: /证明|展示|呈现|体现/, elements: ['证据图标', '展示框', '呈现箭头', '证明标记'] },
+  {
+    pattern: /年终|年度|全年|一年/,
+    elements: ['年度日历', '12月时间轴', '年度总结图', '年份标记'],
+  },
+  {
+    pattern: /总结|复盘|回顾|盘点/,
+    elements: ['总结图标', '复盘箭头', '回顾时间线', '盘点清单'],
+  },
+  {
+    pattern: /成长|提升|进步|突破/,
+    elements: ['成长曲线', '上升箭头', '进步阶梯', '突破符号'],
+  },
+  {
+    pattern: /证明|展示|呈现|体现/,
+    elements: ['证据图标', '展示框', '呈现箭头', '证明标记'],
+  },
 
   // === 营销特有 ===
-  { pattern: /卖点|亮点|特色|优势/, elements: ['卖点标签', '亮点星标', '特色图标', '优势徽章'] },
-  { pattern: /营销|推广|宣传|广告/, elements: ['营销漏斗', '推广图标', '宣传喇叭', '广告牌'] },
-  { pattern: /产品|功能|特性|服务/, elements: ['产品图标', '功能模块', '特性卡片', '服务图示'] },
+  {
+    pattern: /卖点|亮点|特色|优势/,
+    elements: ['卖点标签', '亮点星标', '特色图标', '优势徽章'],
+  },
+  {
+    pattern: /营销|推广|宣传|广告/,
+    elements: ['营销漏斗', '推广图标', '宣传喇叭', '广告牌'],
+  },
+  {
+    pattern: /产品|功能|特性|服务/,
+    elements: ['产品图标', '功能模块', '特性卡片', '服务图示'],
+  },
 
   // === 教育特有 ===
-  { pattern: /知识|概念|原理|理论/, elements: ['知识图标', '概念图', '原理示意', '理论框架'] },
-  { pattern: /练习|实践|操作|动手/, elements: ['练习图标', '实践场景', '操作步骤', '动手示意'] },
-  { pattern: /问题|疑问|困惑|难点/, elements: ['问号图标', '疑问符号', '困惑表情', '难点标记'] },
+  {
+    pattern: /知识|概念|原理|理论/,
+    elements: ['知识图标', '概念图', '原理示意', '理论框架'],
+  },
+  {
+    pattern: /练习|实践|操作|动手/,
+    elements: ['练习图标', '实践场景', '操作步骤', '动手示意'],
+  },
+  {
+    pattern: /问题|疑问|困惑|难点/,
+    elements: ['问号图标', '疑问符号', '困惑表情', '难点标记'],
+  },
 ];
 
 /**
  * 根据场景类型和内容推荐画面元素 - 增强版
  */
-export function getSceneElements(sceneType: SceneType, h2Title: string, paragraph: string = ''): string[] {
+export function getSceneElements(
+  sceneType: SceneType,
+  h2Title: string,
+  paragraph = ''
+): string[] {
   const text = h2Title + ' ' + paragraph;
   const contentElements: string[] = [];
 
@@ -286,7 +410,11 @@ export function extractArticleKeywords(title: string, body: string): string[] {
   const text = title + ' ' + body;
   const keywords: string[] = [];
 
-  const patterns: Array<{ pattern: RegExp; keyword: string; priority: number }> = [
+  const patterns: Array<{
+    pattern: RegExp;
+    keyword: string;
+    priority: number;
+  }> = [
     // 高优先级：标题中的核心词
     { pattern: /vs|对比/, keyword: '对比', priority: 10 },
     { pattern: /新人|新手/, keyword: '新人', priority: 10 },

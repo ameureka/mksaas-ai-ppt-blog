@@ -23,9 +23,7 @@
       "slug": "PPT模板设计风格大盘点",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/PPT模板设计风格大盘点.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2672,
         "h2Count": 11,
@@ -46,23 +44,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "设计",
-          "总结",
-          "营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT",
-          "营销方案PPT",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "模板", "设计", "总结", "营销"],
+        "seoKeywords": ["PPT模板", "年终总结PPT", "营销方案PPT", "PPT设计技巧"],
         "relatedPosts": [
           "scenario-ppt-report-4",
           "how-to-choose-suitable-ppt-category-business-report-educatio",
@@ -77,10 +62,7 @@
       "slug": "PPT模板选错分类的5个典型坑",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/PPT模板选错分类的5个典型坑.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1561,
         "h2Count": 9,
@@ -101,18 +83,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "ppt-leader-colleague-audience-structure",
           "博客分类与索引汇总",
@@ -127,11 +101,7 @@
       "slug": "一份PPT兼顾领导同事和合作方三类受众的结构取舍",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/一份PPT兼顾领导同事和合作方三类受众的结构取舍.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1819,
         "h2Count": 9,
@@ -152,17 +122,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "PPT模板设计风格大盘点",
           "PPT模板选错分类的5个典型坑",
@@ -177,10 +140,7 @@
       "slug": "一份PPT同时兼顾现场授课和课后复习的结构设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/一份PPT同时兼顾现场授课和课后复习的结构设计.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1794,
         "h2Count": 8,
@@ -201,19 +161,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "教育培训"],
+        "seoKeywords": ["PPT模板", "PPT设计技巧"],
         "relatedPosts": [
           "教学培训PPT模板选型与互动设计",
           "什么时候适合购买付费培训课件PPT模板企业内训的典型场景",
@@ -228,11 +179,7 @@
       "slug": "一份PPT能兼顾年终总结和项目复盘吗",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/一份PPT能兼顾年终总结和项目复盘吗.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1321,
         "h2Count": 8,
@@ -253,19 +200,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "通用技巧"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "一份PPT能兼顾年终总结和项目复盘吗",
           "ppt-how-to-structure-pages",
@@ -306,19 +244,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "技巧",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "技巧", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "user-how-to-design-ppt-category-pages",
           "how-to-quick-ppt-template-search-category",
@@ -333,10 +262,7 @@
       "slug": "一套可复用的年终总结PPT骨架怎么设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/一套可复用的年终总结PPT骨架怎么设计.zh.mdx",
-      "issues": [
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_images", "low_word_count"],
       "stats": {
         "wordCount": 1195,
         "h2Count": 8,
@@ -357,21 +283,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT", "PPT设计技巧"],
         "relatedPosts": [
           "什么时候值得为年终总结PPT买一份模板",
           "download-year-end-summary-ppt-template-how-to-quick-modify-c",
@@ -386,10 +301,7 @@
       "slug": "下载PPT模板后怎么改最快通用流程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载PPT模板后怎么改最快通用流程.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1648,
         "h2Count": 9,
@@ -410,18 +322,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "如何根据实际内容删减和合并PPT模板中的章节",
           "从用户常见问题反推PPT内容和分类",
@@ -436,9 +340,7 @@
       "slug": "下载产品营销模板后如何改成自家品牌风格",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载产品营销模板后如何改成自家品牌风格.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1635,
         "h2Count": 9,
@@ -459,20 +361,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "营销",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "模板", "营销", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "product-marketing-ppt-content-guide-selling-point-conversion",
           "产品营销PPT推荐页数按三种场景拆分",
@@ -487,10 +379,7 @@
       "slug": "下载到好模板却改废了怎么办一次改稿失败的复盘",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载到好模板却改废了怎么办一次改稿失败的复盘.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1601,
         "h2Count": 9,
@@ -511,14 +400,9 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "模板",
-          "付费与搜索"
-        ],
+        "tags": ["模板", "付费与搜索"],
         "relatedPosts": [
           "download-ppt-template-quick",
           "从常见问题看用户真实需求我们是如何设计PPT分类和页数推荐的",
@@ -533,9 +417,7 @@
       "slug": "下载商务汇报模板后如何在30分钟内改成自己的内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载商务汇报模板后如何在30分钟内改成自己的内容.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1811,
         "h2Count": 9,
@@ -556,18 +438,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "模板",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "工作汇报PPT"
-        ],
+        "tags": ["模板", "汇报", "商务汇报"],
+        "seoKeywords": ["工作汇报PPT"],
         "relatedPosts": [
           "商务汇报PPT一般包含哪些内容",
           "免费vs付费商务汇报PPT模板什么时候该掏钱",
@@ -582,11 +456,7 @@
       "slug": "下载培训课件模板后如何快速替换成自己的课程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载培训课件模板后如何快速替换成自己的课程.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1402,
         "h2Count": 8,
@@ -607,18 +477,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "模板",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "培训课件PPT"
-        ],
+        "tags": ["模板", "培训", "教育培训"],
+        "seoKeywords": ["培训课件PPT"],
         "relatedPosts": [
           "用PPTAI搭建课程系列模板库的思路",
           "education-training-ppt",
@@ -633,10 +495,7 @@
       "slug": "下载年终总结模板后如何快速修改从目录到图表的完整流程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载年终总结模板后如何快速修改从目录到图表的完整流程.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1761,
         "h2Count": 10,
@@ -657,20 +516,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "模板", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "一套可复用的年终总结PPT骨架怎么设计",
           "年终总结PPT推荐页数是多少",
@@ -685,9 +534,7 @@
       "slug": "下载述职模板后如何细致地填入业绩",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载述职模板后如何细致地填入业绩.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1628,
         "h2Count": 9,
@@ -708,20 +555,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "模板", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "用PPTAI为不同岗位生成个性化述职模板的思路",
           "述职报告PPT里如何处理成绩不够好的情况",
@@ -736,11 +573,7 @@
       "slug": "下载项目提案模板后如何快速改成自己的BP",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/下载项目提案模板后如何快速改成自己的BP.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1499,
         "h2Count": 8,
@@ -761,18 +594,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "模板",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "项目提案PPT"
-        ],
+        "tags": ["模板", "提案", "项目提案"],
+        "seoKeywords": ["项目提案PPT"],
         "relatedPosts": [
           "下载项目提案模板后如何快速改成自己的BP",
           "project-proposal-ppt-page-count-scenario",
@@ -787,9 +612,7 @@
       "slug": "不同行业的商务汇报结构有什么差异",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/不同行业的商务汇报结构有什么差异.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1481,
         "h2Count": 7,
@@ -810,19 +633,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "不同行业的商务汇报结构有什么差异",
           "免费vs付费商务汇报PPT模板什么时候该掏钱",
@@ -837,10 +651,7 @@
       "slug": "为了未来搜索和复用写PPT时如何设计结构和命名",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/为了未来搜索和复用写PPT时如何设计结构和命名.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1594,
         "h2Count": 9,
@@ -861,19 +672,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "付费与搜索"],
+        "seoKeywords": ["PPT模板", "PPT设计技巧"],
         "relatedPosts": [
           "为了未来搜索和复用写PPT时如何设计结构和命名",
           "下载到好模板却改废了怎么办一次改稿失败的复盘",
@@ -888,11 +690,7 @@
       "slug": "为什么在常见问题里反复强调付费模板的价值",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/为什么在常见问题里反复强调付费模板的价值.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1586,
         "h2Count": 8,
@@ -913,18 +711,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "用常见问题规划整站PPT模板库的内容分类",
           "user-how-to-ppt-content-category",
@@ -939,10 +729,7 @@
       "slug": "为什么营销场景更适合使用付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/为什么营销场景更适合使用付费PPT模板.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1855,
         "h2Count": 8,
@@ -963,20 +750,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "营销",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "模板", "营销", "付费与搜索"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "为什么在常见问题里反复强调付费模板的价值",
           "用常见问题规划整站PPT模板库的内容分类",
@@ -991,10 +768,7 @@
       "slug": "产品营销PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1479,
         "h2Count": 8,
@@ -1015,21 +789,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "营销",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "营销", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT", "PPT设计技巧"],
         "relatedPosts": [
           "marketing-plan-ppt-how-to-write-goal-budget",
           "下载产品营销模板后如何改成自家品牌风格",
@@ -1044,9 +807,7 @@
       "slug": "产品营销PPT推荐页数按三种场景拆分",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销PPT推荐页数按三种场景拆分.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1668,
         "h2Count": 8,
@@ -1067,19 +828,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "营销",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "营销", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "download-product-marketing-ppt-template-how-to-quick-convert",
           "下载产品营销模板后如何改成自家品牌风格",
@@ -1094,9 +846,7 @@
       "slug": "产品营销PPT用什么字体和配色打造记忆点",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销PPT用什么字体和配色打造记忆点.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1770,
         "h2Count": 8,
@@ -1117,19 +867,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "营销",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "营销", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "产品营销PPT推荐页数按三种场景拆分",
           "下载产品营销模板后如何改成自家品牌风格"
@@ -1143,9 +884,7 @@
       "slug": "下载产品营销模板后如何改成自家品牌风格",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/下载产品营销模板后如何改成自家品牌风格.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1639,
         "h2Count": 9,
@@ -1166,9 +905,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1179,11 +916,7 @@
       "slug": "产品营销PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/产品营销PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1487,
         "h2Count": 8,
@@ -1204,9 +937,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1217,9 +948,7 @@
       "slug": "产品营销PPT推荐页数按三种场景拆分",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/产品营销PPT推荐页数按三种场景拆分.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1672,
         "h2Count": 8,
@@ -1240,9 +969,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1253,9 +980,7 @@
       "slug": "产品营销PPT用什么字体和配色打造记忆点",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/产品营销PPT用什么字体和配色打造记忆点.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1809,
         "h2Count": 8,
@@ -1276,9 +1001,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1289,9 +1012,7 @@
       "slug": "如何让产品营销PPT更专业避免功能堆砌",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/如何让产品营销PPT更专业避免功能堆砌.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1805,
         "h2Count": 9,
@@ -1312,9 +1033,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1325,10 +1044,7 @@
       "slug": "想提升转化率的营销方案PPT该怎么选",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/想提升转化率的营销方案PPT该怎么选.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1225,
         "h2Count": 7,
@@ -1349,9 +1065,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1362,10 +1076,7 @@
       "slug": "用PPTAI搜索营销方案模板的实战指南",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/用PPTAI搜索营销方案模板的实战指南.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1688,
         "h2Count": 9,
@@ -1386,9 +1097,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1399,10 +1108,7 @@
       "slug": "营销方案PPT一般怎么写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/营销方案PPT一般怎么写.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1548,
         "h2Count": 9,
@@ -1423,9 +1129,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1436,10 +1140,7 @@
       "slug": "营销方案PPT里如何讲清创意和数据",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/营销方案PPT里如何讲清创意和数据.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1595,
         "h2Count": 9,
@@ -1460,9 +1161,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1473,11 +1172,7 @@
       "slug": "适合小团队的轻量级营销方案PPT模板长什么样",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品营销与营销方案PPT/适合小团队的轻量级营销方案PPT模板长什么样.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1096,
         "h2Count": 7,
@@ -1498,9 +1193,7 @@
         "image": "/images/blog/ppt/marketing/conversion-marketing-plan-ppt-how-to-choose-structure-pages-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -1511,11 +1204,7 @@
       "slug": "产品视角看常见问题理解不同用户画像和使用场景",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/产品视角看常见问题理解不同用户画像和使用场景.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1449,
         "h2Count": 8,
@@ -1536,13 +1225,9 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "付费与搜索"
-        ],
+        "tags": ["付费与搜索"],
         "relatedPosts": [
           "download-ppt-template-quick",
           "下载PPT模板后怎么改最快通用流程",
@@ -1557,11 +1242,7 @@
       "slug": "什么时候值得为年终总结PPT买一份模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/什么时候值得为年终总结PPT买一份模板.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1081,
         "h2Count": 7,
@@ -1582,20 +1263,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "模板", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "year-end-summary-ppt-failure-review-how-to-write",
           "在年终总结PPT里复用商务汇报和项目提案页面的策略",
@@ -1610,11 +1281,7 @@
       "slug": "什么时候适合购买付费培训课件PPT模板企业内训的典型场景",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/什么时候适合购买付费培训课件PPT模板企业内训的典型场景.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1369,
         "h2Count": 8,
@@ -1635,20 +1302,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT"
-        ],
+        "tags": ["PPT", "模板", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT"],
         "relatedPosts": [
           "线下课堂和线上直播教育培训PPT应该怎么区别设计",
           "什么时候适合购买付费培训课件PPT模板企业内训的典型场景",
@@ -1663,9 +1320,7 @@
       "slug": "从使用场景出发选PPT分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/从使用场景出发选PPT分类.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2149,
         "h2Count": 9,
@@ -1686,17 +1341,9 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "培训",
-          "营销",
-          "提案"
-        ],
+        "tags": ["PPT", "汇报", "培训", "营销", "提案"],
         "seoKeywords": [
           "PPT模板",
           "工作汇报PPT",
@@ -1718,11 +1365,7 @@
       "slug": "从常见问题看用户真实需求我们是如何设计PPT分类和页数推荐的",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/从常见问题看用户真实需求我们是如何设计PPT分类和页数推荐的.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1622,
         "h2Count": 9,
@@ -1743,19 +1386,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "付费与搜索"],
+        "seoKeywords": ["PPT模板", "PPT设计技巧"],
         "relatedPosts": [
           "product-user-scenario",
           "一句话关键词搜索怎么写",
@@ -1770,10 +1404,7 @@
       "slug": "从日报周报到述职如何构建证据链",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/从日报周报到述职如何构建证据链.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1542,
         "h2Count": 9,
@@ -1794,19 +1425,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "用PPTAI为不同岗位生成个性化述职模板的思路",
           "how-to-work-report-ppt-professional",
@@ -1821,11 +1443,7 @@
       "slug": "从用户常见问题反推PPT内容和分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/从用户常见问题反推PPT内容和分类.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1325,
         "h2Count": 8,
@@ -1846,17 +1464,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "search-how-to-write-ppt-template-10-tips",
           "一句话关键词搜索怎么写",
@@ -1871,11 +1482,7 @@
       "slug": "从用户问题到产品功能如何把页数风格分类变成产品设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/从用户问题到产品功能如何把页数风格分类变成产品设计.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1578,
         "h2Count": 8,
@@ -1896,17 +1503,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "设计",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT设计技巧"
-        ],
+        "tags": ["设计", "付费与搜索"],
+        "seoKeywords": ["PPT设计技巧"],
         "relatedPosts": [
           "下载PPT模板后怎么改最快通用流程",
           "why-paid-ppt-template"
@@ -1920,10 +1520,7 @@
       "slug": "从项目提案到年终复盘两套PPT结构应该怎么改写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/从项目提案到年终复盘两套PPT结构应该怎么改写.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1804,
         "h2Count": 9,
@@ -1944,19 +1541,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "通用技巧"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "agent",
           "design-ppt-category-template-how-to-choose",
@@ -1997,9 +1585,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-1.png",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2010,10 +1596,7 @@
       "slug": "下载PPT模板后怎么改最快通用流程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/下载PPT模板后怎么改最快通用流程.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1648,
         "h2Count": 9,
@@ -2034,9 +1617,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-2.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2047,10 +1628,7 @@
       "slug": "下载到好模板却改废了怎么办一次改稿失败的复盘",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/下载到好模板却改废了怎么办一次改稿失败的复盘.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1601,
         "h2Count": 9,
@@ -2071,9 +1649,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-3.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2084,10 +1660,7 @@
       "slug": "为了未来搜索和复用写PPT时如何设计结构和命名",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/为了未来搜索和复用写PPT时如何设计结构和命名.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1594,
         "h2Count": 9,
@@ -2108,9 +1681,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-4.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2147,9 +1718,7 @@
         "image": "/images/blog/ppt/general/beginner-ppt-4-ppt-category-1.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2160,10 +1729,7 @@
       "slug": "为什么营销场景更适合使用付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/为什么营销场景更适合使用付费PPT模板.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1855,
         "h2Count": 8,
@@ -2184,9 +1750,7 @@
         "image": "/images/blog/ppt/general/beginner-ppt-4-ppt-category-2.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2223,9 +1787,7 @@
         "image": "/images/blog/ppt/general/beginner-ppt-4-ppt-category-3.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2236,11 +1798,7 @@
       "slug": "从常见问题看用户真实需求我们是如何设计PPT分类和页数推荐的",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/从常见问题看用户真实需求我们是如何设计PPT分类和页数推荐的.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1620,
         "h2Count": 9,
@@ -2261,9 +1819,7 @@
         "image": "/images/blog/ppt/general/beginner-ppt-4-ppt-category-4.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2274,10 +1830,7 @@
       "slug": "从用户常见问题反推PPT内容和分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/从用户常见问题反推PPT内容和分类.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1324,
         "h2Count": 8,
@@ -2298,9 +1851,7 @@
         "image": "/images/blog/ppt/general/business-report-ppt-template-how-to-project-proposal-year-en-1.png",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2311,10 +1862,7 @@
       "slug": "从用户问题到产品功能如何把页数风格分类变成产品设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/从用户问题到产品功能如何把页数风格分类变成产品设计.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1578,
         "h2Count": 8,
@@ -2335,9 +1883,7 @@
         "image": "/images/blog/ppt/general/business-report-ppt-template-how-to-project-proposal-year-en-2.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2348,10 +1894,7 @@
       "slug": "使用PPTAI搜索年终总结和项目提案模板的实战教程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/使用PPTAI搜索年终总结和项目提案模板的实战教程.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1476,
         "h2Count": 8,
@@ -2372,9 +1915,7 @@
         "image": "/images/blog/ppt/general/business-report-ppt-template-how-to-project-proposal-year-en-3.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2385,10 +1926,7 @@
       "slug": "免费PPT模板-vs-付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/免费PPT模板-vs-付费PPT模板.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 3184,
         "h2Count": 8,
@@ -2409,9 +1947,7 @@
         "image": "/images/blog/ppt/general/business-report-ppt-template-how-to-project-proposal-year-en-4.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2422,12 +1958,7 @@
       "slug": "免费vs付费商务汇报PPT模板什么时候该掏钱",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/免费vs付费商务汇报PPT模板什么时候该掏钱.zh.mdx",
-      "issues": [
-        "short_title",
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["short_title", "few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1015,
         "h2Count": 7,
@@ -2448,9 +1979,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2461,9 +1990,7 @@
       "slug": "如何快速找到自己要的PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/如何快速找到自己要的PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2054,
         "h2Count": 9,
@@ -2484,9 +2011,7 @@
         "image": "/images/blog/ppt/general/design-ppt-category-template-how-to-choose-2.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2497,11 +2022,7 @@
       "slug": "如何根据实际内容删减和合并PPT模板中的章节",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/如何根据实际内容删减和合并PPT模板中的章节.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1530,
         "h2Count": 9,
@@ -2522,9 +2043,7 @@
         "image": "/images/blog/ppt/general/design-ppt-category-template-how-to-choose-3.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2561,9 +2080,7 @@
         "image": "/images/blog/ppt/general/design-ppt-category-template-how-to-choose-4.png",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2574,9 +2091,7 @@
       "slug": "用分类关键词和页数组合精准搜索PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/用分类关键词和页数组合精准搜索PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1474,
         "h2Count": 8,
@@ -2597,9 +2112,7 @@
         "image": "/images/blog/ppt/general/how-to-choose-suitable-ppt-category-business-report-educatio-1.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2610,10 +2123,7 @@
       "slug": "用常见问题规划整站PPT模板库的内容分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/用常见问题规划整站PPT模板库的内容分类.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1598,
         "h2Count": 9,
@@ -2634,9 +2144,7 @@
         "image": "/images/blog/ppt/general/how-to-choose-suitable-ppt-category-business-report-educatio-2.png",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2647,11 +2155,7 @@
       "slug": "路演为什么更适合使用付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/付费模板搜索与产品视角/路演为什么更适合使用付费PPT模板.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1387,
         "h2Count": 8,
@@ -2672,9 +2176,7 @@
         "image": "/images/blog/ppt/general/how-to-choose-suitable-ppt-category-business-report-educatio-3.png",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -2685,10 +2187,7 @@
       "slug": "使用PPTAI搜索年终总结和项目提案模板的实战教程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/使用PPTAI搜索年终总结和项目提案模板的实战教程.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1476,
         "h2Count": 8,
@@ -2709,22 +2208,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "总结",
-          "提案",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "模板", "总结", "提案", "付费与搜索"],
+        "seoKeywords": ["PPT模板", "年终总结PPT", "项目提案PPT"],
         "relatedPosts": [
           "为了未来搜索和复用写PPT时如何设计结构和命名",
           "产品视角看常见问题理解不同用户画像和使用场景",
@@ -2739,9 +2226,7 @@
       "slug": "免费PPT模板-vs-付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/免费PPT模板-vs-付费PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 3185,
         "h2Count": 8,
@@ -2762,18 +2247,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "下载到好模板却改废了怎么办一次改稿失败的复盘",
           "download-template-failure-review",
@@ -2788,12 +2265,7 @@
       "slug": "免费vs付费商务汇报PPT模板什么时候该掏钱",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/免费vs付费商务汇报PPT模板什么时候该掏钱.zh.mdx",
-      "issues": [
-        "short_title",
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["short_title", "few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1016,
         "h2Count": 7,
@@ -2814,20 +2286,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "模板", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "商务汇报里的数据怎么展示更清楚",
           "business-report-ppt-15-30-60-scenario",
@@ -2842,9 +2304,7 @@
       "slug": "关键述职节点为什么值得用付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/关键述职节点为什么值得用付费PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1637,
         "h2Count": 8,
@@ -2865,20 +2325,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "模板", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "从日报周报到述职如何构建证据链",
           "下载述职模板后如何细致地填入业绩",
@@ -2893,11 +2343,7 @@
       "slug": "初入职场的述职PPT写作与模板选择指南",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/初入职场的述职PPT写作与模板选择指南.zh.mdx",
-      "issues": [
-        "few_stats",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_stats", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1183,
         "h2Count": 7,
@@ -2918,20 +2364,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "模板", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "关键述职节点为什么值得用付费PPT模板",
           "初入职场的述职PPT写作与模板选择指南",
@@ -2972,19 +2408,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "通用技巧"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "从项目提案到年终复盘两套PPT结构应该怎么改写",
           "博客分类与索引汇总",
@@ -2999,9 +2426,7 @@
       "slug": "可以在一个PPT里混用多个分类模板吗",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/可以在一个PPT里混用多个分类模板吗.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2223,
         "h2Count": 8,
@@ -3022,18 +2447,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "博客实现格式与模式总结",
           "如何用一份商务汇报模板改写出项目提案和年终总结三种版本",
@@ -3048,9 +2465,7 @@
       "slug": "下载商务汇报模板后如何在30分钟内改成自己的内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/下载商务汇报模板后如何在30分钟内改成自己的内容.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1845,
         "h2Count": 9,
@@ -3071,9 +2486,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3084,9 +2497,7 @@
       "slug": "不同行业的商务汇报结构有什么差异",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/不同行业的商务汇报结构有什么差异.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1515,
         "h2Count": 7,
@@ -3107,9 +2518,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3120,10 +2529,7 @@
       "slug": "商务汇报PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/商务汇报PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 2073,
         "h2Count": 11,
@@ -3144,9 +2550,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3157,10 +2561,7 @@
       "slug": "商务汇报PPT实战案例从杂乱需求到清晰故事线",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/商务汇报PPT实战案例从杂乱需求到清晰故事线.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1358,
         "h2Count": 8,
@@ -3181,9 +2582,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3194,9 +2593,7 @@
       "slug": "商务汇报PPT推荐字体和配色",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/商务汇报PPT推荐字体和配色.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2017,
         "h2Count": 8,
@@ -3217,9 +2614,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3257,9 +2652,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3270,9 +2663,7 @@
       "slug": "商务汇报里的数据怎么展示更清楚",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/商务汇报里的数据怎么展示更清楚.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1476,
         "h2Count": 7,
@@ -3293,9 +2684,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3306,9 +2695,7 @@
       "slug": "如何让商务汇报PPT更专业",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/如何让商务汇报PPT更专业.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1835,
         "h2Count": 9,
@@ -3329,9 +2716,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3342,9 +2727,7 @@
       "slug": "给老板看的商务汇报PPT如何用10页讲清一年",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT/给老板看的商务汇报PPT如何用10页讲清一年.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1671,
         "h2Count": 7,
@@ -3365,9 +2748,7 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -3378,10 +2759,7 @@
       "slug": "商务汇报PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 2039,
         "h2Count": 11,
@@ -3402,21 +2780,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "总结",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "汇报", "总结", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT", "年终总结PPT"],
         "relatedPosts": [
           "商务汇报PPT一般包含哪些内容",
           "business-report-data-chart",
@@ -3431,10 +2798,7 @@
       "slug": "商务汇报PPT实战案例从杂乱需求到清晰故事线",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT实战案例从杂乱需求到清晰故事线.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1324,
         "h2Count": 8,
@@ -3455,19 +2819,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "商务汇报PPT实战案例从杂乱需求到清晰故事线",
           "给老板看的商务汇报PPT如何用10页讲清一年",
@@ -3482,9 +2837,7 @@
       "slug": "商务汇报PPT推荐字体和配色",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT推荐字体和配色.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2051,
         "h2Count": 8,
@@ -3505,19 +2858,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "free-vs-paid-business-report-ppt-template-when-to",
           "下载商务汇报模板后如何在30分钟内改成自己的内容",
@@ -3532,12 +2876,7 @@
       "slug": "商务汇报PPT推荐页数按15-30-60分钟场景拆分",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报PPT推荐页数按15-30-60分钟场景拆分.zh.mdx",
-      "issues": [
-        "short_title",
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["short_title", "few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1100,
         "h2Count": 7,
@@ -3558,19 +2897,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "下载商务汇报模板后如何在30分钟内改成自己的内容",
           "download-business-report-template-how-to-30-convert-content",
@@ -3585,9 +2915,7 @@
       "slug": "商务汇报里的数据怎么展示更清楚",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/商务汇报里的数据怎么展示更清楚.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1476,
         "h2Count": 7,
@@ -3608,17 +2936,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "工作汇报PPT"
-        ],
+        "tags": ["汇报", "商务汇报"],
+        "seoKeywords": ["工作汇报PPT"],
         "relatedPosts": [
           "boss-business-report-ppt-how-to-10",
           "商务汇报里的数据怎么展示更清楚",
@@ -3633,9 +2954,7 @@
       "slug": "在年终总结PPT里复用商务汇报和项目提案页面的策略",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/在年终总结PPT里复用商务汇报和项目提案页面的策略.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1664,
         "h2Count": 9,
@@ -3656,23 +2975,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "总结",
-          "提案",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT",
-          "年终总结PPT",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "汇报", "总结", "提案", "年终总结"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT", "年终总结PPT", "项目提案PPT"],
         "relatedPosts": [
           "year-end-summary-ppt-data-how-to-write",
           "下载年终总结模板后如何快速修改从目录到图表的完整流程",
@@ -3687,9 +2993,7 @@
       "slug": "如何快速找到自己要的PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何快速找到自己要的PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2055,
         "h2Count": 9,
@@ -3710,18 +3014,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "产品视角看常见问题理解不同用户画像和使用场景",
           "用常见问题规划整站PPT模板库的内容分类",
@@ -3736,11 +3032,7 @@
       "slug": "如何根据实际内容删减和合并PPT模板中的章节",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何根据实际内容删减和合并PPT模板中的章节.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1530,
         "h2Count": 9,
@@ -3761,18 +3053,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "为了未来搜索和复用写PPT时如何设计结构和命名",
           "产品视角看常见问题理解不同用户画像和使用场景",
@@ -3787,11 +3071,7 @@
       "slug": "如何根据时间和听众裁剪PPT内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何根据时间和听众裁剪PPT内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1212,
         "h2Count": 8,
@@ -3812,17 +3092,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "PPT模板设计风格大盘点",
           "线下汇报vs线上发送同一份PPT该怎么调整",
@@ -3837,11 +3110,7 @@
       "slug": "如何用一份商务汇报模板改写出项目提案和年终总结三种版本",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何用一份商务汇报模板改写出项目提案和年终总结三种版本.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1392,
         "h2Count": 8,
@@ -3862,23 +3131,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "汇报",
-          "总结",
-          "提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT",
-          "年终总结PPT",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "模板", "汇报", "总结", "提案"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT", "年终总结PPT", "项目提案PPT"],
         "relatedPosts": [
           "页数不够用怎么办压缩PPT内容的七个策略",
           "如何用一份商务汇报模板改写出项目提案和年终总结三种版本",
@@ -3919,18 +3175,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "why-scenario-paid-ppt-template-brand",
           "下载到好模板却改废了怎么办一次改稿失败的复盘"
@@ -3944,11 +3192,7 @@
       "slug": "如何自查一份PPT的结构和页数是否合理",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何自查一份PPT的结构和页数是否合理.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1334,
         "h2Count": 9,
@@ -3969,17 +3213,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "新手做PPT先从哪一类开始",
           "offline-report-vs-online-send-ppt",
@@ -3994,11 +3231,7 @@
       "slug": "如何规划PPT页数按汇报时长和信息密度估算",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何规划PPT页数按汇报时长和信息密度估算.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1155,
         "h2Count": 7,
@@ -4019,19 +3252,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "通用技巧"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "线下汇报vs线上发送同一份PPT该怎么调整",
           "PPT模板设计风格大盘点",
@@ -4046,9 +3270,7 @@
       "slug": "如何让产品营销PPT更专业避免功能堆砌",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何让产品营销PPT更专业避免功能堆砌.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1804,
         "h2Count": 9,
@@ -4069,19 +3291,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "营销",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "营销", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "download-product-marketing-ppt-template-how-to-quick-convert",
           "product-marketing-ppt-content-guide-selling-point-conversion",
@@ -4096,9 +3309,7 @@
       "slug": "如何让商务汇报PPT更专业",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何让商务汇报PPT更专业.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1869,
         "h2Count": 9,
@@ -4119,19 +3330,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "商务汇报PPT推荐页数按15-30-60分钟场景拆分",
           "商务汇报里的数据怎么展示更清楚",
@@ -4172,19 +3374,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT"
-        ],
+        "tags": ["PPT", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT"],
         "relatedPosts": [
           "education-training-ppt",
           "教育培训PPT推荐页数",
@@ -4199,9 +3392,7 @@
       "slug": "如何让述职报告PPT更专业从影响说起",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何让述职报告PPT更专业从影响说起.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1615,
         "h2Count": 8,
@@ -4222,19 +3413,10 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "述职报告PPT一般包含哪些内容",
           "work-report-ppt-template-choose-guide",
@@ -4249,11 +3431,7 @@
       "slug": "如何让项目提案PPT更专业",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何让项目提案PPT更专业.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_stats",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_stats", "few_images"],
       "stats": {
         "wordCount": 1574,
         "h2Count": 7,
@@ -4274,19 +3452,10 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "项目提案"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "项目提案PPT推荐字体和配色如何兼顾技术感和商务感",
           "项目提案PPT里如何说服决策层",
@@ -4301,9 +3470,7 @@
       "slug": "如何选择合适的PPT分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/如何选择合适的PPT分类.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 3392,
         "h2Count": 11,
@@ -4324,23 +3491,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "培训",
-          "提案",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT",
-          "培训课件PPT",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "汇报", "培训", "提案", "通用技巧"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT", "培训课件PPT", "项目提案PPT"],
         "relatedPosts": [
           "用常见问题法规划PPT结构",
           "ppt-how-to-structure-pages",
@@ -4355,10 +3509,7 @@
       "slug": "一套可复用的年终总结PPT骨架怎么设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/一套可复用的年终总结PPT骨架怎么设计.zh.mdx",
-      "issues": [
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_images", "low_word_count"],
       "stats": {
         "wordCount": 1195,
         "h2Count": 8,
@@ -4379,9 +3530,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4392,10 +3541,7 @@
       "slug": "下载年终总结模板后如何快速修改从目录到图表的完整流程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/下载年终总结模板后如何快速修改从目录到图表的完整流程.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1769,
         "h2Count": 10,
@@ -4416,9 +3562,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4429,11 +3573,7 @@
       "slug": "什么时候值得为年终总结PPT买一份模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/什么时候值得为年终总结PPT买一份模板.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1089,
         "h2Count": 7,
@@ -4454,9 +3594,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4467,10 +3605,7 @@
       "slug": "年终总结PPT一般该写些什么",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/年终总结PPT一般该写些什么.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2341,
         "h2Count": 8,
@@ -4491,9 +3626,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4504,11 +3637,7 @@
       "slug": "年终总结PPT推荐页数是多少",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/年终总结PPT推荐页数是多少.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1502,
         "h2Count": 9,
@@ -4529,9 +3658,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4542,10 +3669,7 @@
       "slug": "年终总结PPT的风格与配图怎么选",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/年终总结PPT的风格与配图怎么选.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1204,
         "h2Count": 7,
@@ -4566,9 +3690,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4579,9 +3701,7 @@
       "slug": "年终总结PPT里同时写总结和新年计划怎么设计结构",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/年终总结PPT里同时写总结和新年计划怎么设计结构.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2225,
         "h2Count": 8,
@@ -4602,9 +3722,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4615,10 +3733,7 @@
       "slug": "年终总结PPT里的失败与复盘怎么写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/年终总结PPT里的失败与复盘怎么写.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1624,
         "h2Count": 8,
@@ -4639,9 +3754,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4652,10 +3765,7 @@
       "slug": "年终总结PPT里的数据篇怎么写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/年终总结PPT里的数据篇怎么写.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2147,
         "h2Count": 7,
@@ -4676,9 +3786,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4689,9 +3797,7 @@
       "slug": "职场新人和资深主管的年终总结PPT有什么不一样",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT/职场新人和资深主管的年终总结PPT有什么不一样.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2439,
         "h2Count": 9,
@@ -4712,9 +3818,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -4725,10 +3829,7 @@
       "slug": "年终总结PPT一般该写些什么",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT一般该写些什么.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2338,
         "h2Count": 8,
@@ -4749,19 +3850,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "一套可复用的年终总结PPT骨架怎么设计",
           "year-end-summary-ppt-how-to-design-content",
@@ -4776,11 +3868,7 @@
       "slug": "年终总结PPT推荐页数是多少",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT推荐页数是多少.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1506,
         "h2Count": 9,
@@ -4801,19 +3889,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "一套可复用的年终总结PPT骨架怎么设计",
           "年终总结PPT里的数据篇怎么写",
@@ -4828,11 +3907,7 @@
       "slug": "年终总结PPT的风格与配图怎么选",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT的风格与配图怎么选.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1197,
         "h2Count": 7,
@@ -4853,19 +3928,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "when-to-year-end-summary-ppt-template",
           "year-end-summary-ppt-how-to-design-content",
@@ -4880,9 +3946,7 @@
       "slug": "年终总结PPT里同时写总结和新年计划怎么设计结构",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT里同时写总结和新年计划怎么设计结构.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2217,
         "h2Count": 8,
@@ -4903,19 +3967,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "year-end-summary-ppt-how-to-design-content",
           "下载年终总结模板后如何快速修改从目录到图表的完整流程",
@@ -4930,10 +3985,7 @@
       "slug": "年终总结PPT里的失败与复盘怎么写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT里的失败与复盘怎么写.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1616,
         "h2Count": 8,
@@ -4954,19 +4006,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "什么时候值得为年终总结PPT买一份模板",
           "year-end-summary-ppt",
@@ -4981,10 +4024,7 @@
       "slug": "年终总结PPT里的数据篇怎么写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结PPT里的数据篇怎么写.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2147,
         "h2Count": 7,
@@ -5005,19 +4045,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "一套可复用的年终总结PPT骨架怎么设计",
           "年终总结PPT里的数据篇怎么写",
@@ -5032,9 +4063,7 @@
       "slug": "年终总结还是述职报告怎么选",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/年终总结还是述职报告怎么选.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2300,
         "h2Count": 8,
@@ -5055,19 +4084,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "总结",
-          "述职",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "年终总结PPT",
-          "述职报告PPT"
-        ],
+        "tags": ["总结", "述职", "通用技巧"],
+        "seoKeywords": ["年终总结PPT", "述职报告PPT"],
         "relatedPosts": [
           "ppt-leader-colleague-audience-structure",
           "ppt-template-design-style-year-end-summary-how-to-choose",
@@ -5082,11 +4102,7 @@
       "slug": "想提升转化率的营销方案PPT该怎么选",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/想提升转化率的营销方案PPT该怎么选.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1189,
         "h2Count": 7,
@@ -5107,20 +4123,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "营销",
-          "方案",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "营销", "方案", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "marketing-plan-ppt-template",
           "产品营销PPT一般包含哪些内容",
@@ -5135,10 +4141,7 @@
       "slug": "技术项目和商业项目的提案PPT结构有什么不同",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/技术项目和商业项目的提案PPT结构有什么不同.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2100,
         "h2Count": 8,
@@ -5159,19 +4162,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "项目提案"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "下载项目提案模板后如何快速改成自己的BP",
           "技术项目和商业项目的提案PPT结构有什么不同",
@@ -5186,10 +4180,7 @@
       "slug": "教学培训PPT模板选型与互动设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教学培训PPT模板选型与互动设计.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1346,
         "h2Count": 7,
@@ -5210,20 +4201,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT"
-        ],
+        "tags": ["PPT", "模板", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT"],
         "relatedPosts": [
           "下载培训课件模板后如何快速替换成自己的课程",
           "how-to-education-training-ppt-professional",
@@ -5238,11 +4219,7 @@
       "slug": "教育培训PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1749,
         "h2Count": 11,
@@ -5263,19 +4240,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT"
-        ],
+        "tags": ["PPT", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT"],
         "relatedPosts": [
           "如何让教育培训PPT更专业又不无聊",
           "education-training-ppt-how-to-choose-category-template-check",
@@ -5290,10 +4258,7 @@
       "slug": "教育培训PPT分类和模板推荐清单",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训PPT分类和模板推荐清单.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2044,
         "h2Count": 8,
@@ -5314,20 +4279,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT"
-        ],
+        "tags": ["PPT", "模板", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT"],
         "relatedPosts": [
           "ppt-structure-how-to-design",
           "教育培训PPT里的互动页怎么设计",
@@ -5342,11 +4297,7 @@
       "slug": "教育培训PPT推荐页数",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训PPT推荐页数.zh.mdx",
-      "issues": [
-        "short_desc",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["short_desc", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1494,
         "h2Count": 9,
@@ -5367,19 +4318,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT"
-        ],
+        "tags": ["PPT", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT"],
         "relatedPosts": [
           "download-training-courseware-template-how-to-quick",
           "一份PPT同时兼顾现场授课和课后复习的结构设计",
@@ -5394,10 +4336,7 @@
       "slug": "教育培训PPT里的互动页怎么设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训PPT里的互动页怎么设计.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2117,
         "h2Count": 8,
@@ -5418,21 +4357,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT", "PPT设计技巧"],
         "relatedPosts": [
           "education-training-ppt-content-guide-structure",
           "download-training-courseware-template-how-to-quick",
@@ -5447,10 +4375,7 @@
       "slug": "一份PPT同时兼顾现场授课和课后复习的结构设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/一份PPT同时兼顾现场授课和课后复习的结构设计.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1795,
         "h2Count": 8,
@@ -5471,9 +4396,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5484,11 +4407,7 @@
       "slug": "下载培训课件模板后如何快速替换成自己的课程",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/下载培训课件模板后如何快速替换成自己的课程.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1369,
         "h2Count": 8,
@@ -5509,9 +4428,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5522,11 +4439,7 @@
       "slug": "什么时候适合购买付费培训课件PPT模板企业内训的典型场景",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/什么时候适合购买付费培训课件PPT模板企业内训的典型场景.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1336,
         "h2Count": 8,
@@ -5547,9 +4460,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5560,11 +4471,7 @@
       "slug": "如何让教育培训PPT更专业又不无聊",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/如何让教育培训PPT更专业又不无聊.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1130,
         "h2Count": 7,
@@ -5585,9 +4492,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5598,9 +4503,7 @@
       "slug": "教学培训PPT模板选型与互动设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/教学培训PPT模板选型与互动设计.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1344,
         "h2Count": 7,
@@ -5621,9 +4524,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5634,11 +4535,7 @@
       "slug": "教育培训PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/教育培训PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1748,
         "h2Count": 11,
@@ -5659,9 +4556,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5672,10 +4567,7 @@
       "slug": "教育培训PPT分类和模板推荐清单",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/教育培训PPT分类和模板推荐清单.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2043,
         "h2Count": 8,
@@ -5696,9 +4588,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5709,11 +4599,7 @@
       "slug": "教育培训PPT推荐页数",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/教育培训PPT推荐页数.zh.mdx",
-      "issues": [
-        "short_desc",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["short_desc", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1461,
         "h2Count": 9,
@@ -5734,9 +4620,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5747,10 +4631,7 @@
       "slug": "教育培训PPT里的互动页怎么设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/教育培训PPT里的互动页怎么设计.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2118,
         "h2Count": 8,
@@ -5771,9 +4652,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5784,10 +4663,7 @@
       "slug": "用PPTAI搭建课程系列模板库的思路",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/用PPTAI搭建课程系列模板库的思路.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1824,
         "h2Count": 9,
@@ -5808,9 +4684,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5821,9 +4695,7 @@
       "slug": "线下课堂和线上直播教育培训PPT应该怎么区别设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/教育培训与课件PPT/线下课堂和线上直播教育培训PPT应该怎么区别设计.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1597,
         "h2Count": 8,
@@ -5844,9 +4716,7 @@
         "image": "/images/blog/ppt/education/download-training-courseware-template-how-to-quick-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -5857,9 +4727,7 @@
       "slug": "新手做PPT先从哪一类开始",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/新手做PPT先从哪一类开始.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2522,
         "h2Count": 11,
@@ -5880,17 +4748,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "PPT模板选错分类的5个典型坑",
           "ppt-template-design-style-year-end-summary-how-to-choose",
@@ -5905,10 +4766,7 @@
       "slug": "根据投影录屏和文件发送选择PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/根据投影录屏和文件发送选择PPT模板.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1490,
         "h2Count": 8,
@@ -5929,18 +4787,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "project-proposal-review-ppt-structure",
           "如何自查一份PPT的结构和页数是否合理",
@@ -5955,9 +4805,7 @@
       "slug": "每个PPT分类大概多少页最合适",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/每个PPT分类大概多少页最合适.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2769,
         "h2Count": 8,
@@ -5978,17 +4826,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "beginner-ppt-4-ppt-category",
           "博客分类与索引汇总",
@@ -6003,11 +4844,7 @@
       "slug": "用PPTAI为不同岗位生成个性化述职模板的思路",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/用PPTAI为不同岗位生成个性化述职模板的思路.zh.mdx",
-      "issues": [
-        "short_title",
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["short_title", "few_h3", "few_images"],
       "stats": {
         "wordCount": 1740,
         "h2Count": 9,
@@ -6028,20 +4865,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "模板", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "从日报周报到述职如何构建证据链",
           "work-report-how-to-ppt",
@@ -6056,10 +4883,7 @@
       "slug": "用PPTAI搜索营销方案模板的实战指南",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/用PPTAI搜索营销方案模板的实战指南.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1686,
         "h2Count": 9,
@@ -6080,21 +4904,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "营销",
-          "方案",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "模板", "营销", "方案", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "产品营销PPT一般包含哪些内容",
           "下载产品营销模板后如何改成自家品牌风格",
@@ -6109,11 +4922,7 @@
       "slug": "用PPTAI搭建课程系列模板库的思路",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/用PPTAI搭建课程系列模板库的思路.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1826,
         "h2Count": 9,
@@ -6134,18 +4943,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "教育培训"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "education-training-ppt-how-to-choose-category-template-check",
           "教育培训PPT分类和模板推荐清单",
@@ -6160,9 +4961,7 @@
       "slug": "用分类关键词和页数组合精准搜索PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/用分类关键词和页数组合精准搜索PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1474,
         "h2Count": 8,
@@ -6183,18 +4982,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "how-to-quick-modify-ppt-template",
           "免费PPT模板-vs-付费PPT模板",
@@ -6236,17 +5027,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "projection-recording-file-send-how-to-choose-suitable-ppt-te",
           "如何选择合适的PPT分类",
@@ -6261,10 +5045,7 @@
       "slug": "用常见问题规划整站PPT模板库的内容分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/用常见问题规划整站PPT模板库的内容分类.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1598,
         "h2Count": 9,
@@ -6285,18 +5066,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "how-to-quick-ppt-template-search-category",
           "如何用查找替换和母版快速批量修改PPT模板",
@@ -6311,10 +5084,7 @@
       "slug": "线上路演和线下路演PPT应该怎么区分准备",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/线上路演和线下路演PPT应该怎么区分准备.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1349,
         "h2Count": 8,
@@ -6335,17 +5105,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "博客选题与写作计划",
           "根据投影录屏和文件发送选择PPT模板",
@@ -6386,19 +5149,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "通用技巧"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "从项目提案到年终复盘两套PPT结构应该怎么改写",
           "每个PPT分类大概多少页最合适",
@@ -6413,10 +5167,7 @@
       "slug": "线下课堂和线上直播教育培训PPT应该怎么区别设计",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/线下课堂和线上直播教育培训PPT应该怎么区别设计.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1597,
         "h2Count": 8,
@@ -6437,21 +5188,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "education"
-        ],
+        "categories": ["education"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "设计",
-          "培训",
-          "教育培训"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "培训课件PPT",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "设计", "培训", "教育培训"],
+        "seoKeywords": ["PPT模板", "培训课件PPT", "PPT设计技巧"],
         "relatedPosts": [
           "education-training-ppt",
           "education-training-ppt-how-to-choose-category-template-check",
@@ -6466,9 +5206,7 @@
       "slug": "给老板看的商务汇报PPT如何用10页讲清一年",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/给老板看的商务汇报PPT如何用10页讲清一年.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1671,
         "h2Count": 7,
@@ -6489,19 +5227,10 @@
         "image": "/images/blog/ppt/business/boss-business-report-ppt-how-to-10-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "business"
-        ],
+        "categories": ["business"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "汇报",
-          "商务汇报"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "工作汇报PPT"
-        ],
+        "tags": ["PPT", "汇报", "商务汇报"],
+        "seoKeywords": ["PPT模板", "工作汇报PPT"],
         "relatedPosts": [
           "free-vs-paid-business-report-ppt-template-when-to",
           "下载商务汇报模板后如何在30分钟内改成自己的内容",
@@ -6516,9 +5245,7 @@
       "slug": "职场新人和资深主管的年终总结PPT有什么不一样",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/职场新人和资深主管的年终总结PPT有什么不一样.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2439,
         "h2Count": 9,
@@ -6539,19 +5266,10 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "year-end"
-        ],
+        "categories": ["year-end"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "总结",
-          "年终总结"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "年终总结PPT"
-        ],
+        "tags": ["PPT", "总结", "年终总结"],
+        "seoKeywords": ["PPT模板", "年终总结PPT"],
         "relatedPosts": [
           "year-end-summary-ppt-failure-review-how-to-write",
           "一套可复用的年终总结PPT骨架怎么设计",
@@ -6566,11 +5284,7 @@
       "slug": "营销方案PPT一般怎么写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/营销方案PPT一般怎么写.zh.mdx",
-      "issues": [
-        "short_desc",
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["short_desc", "few_h3", "few_images"],
       "stats": {
         "wordCount": 1544,
         "h2Count": 9,
@@ -6591,20 +5305,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "营销",
-          "方案",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "营销", "方案", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "想提升转化率的营销方案PPT该怎么选",
           "产品营销PPT一般包含哪些内容",
@@ -6619,10 +5323,7 @@
       "slug": "营销方案PPT里如何讲清创意和数据",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/营销方案PPT里如何讲清创意和数据.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_images"],
       "stats": {
         "wordCount": 1593,
         "h2Count": 9,
@@ -6643,20 +5344,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "营销",
-          "方案",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "营销", "方案", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "产品营销PPT用什么字体和配色打造记忆点",
           "营销方案PPT一般怎么写",
@@ -6671,10 +5362,7 @@
       "slug": "设计师视角看PPT分类与风格拆解",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/设计师视角看PPT分类与风格拆解.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1588,
         "h2Count": 9,
@@ -6695,20 +5383,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "设计",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "PPT设计技巧"
-        ],
+        "tags": ["PPT", "模板", "设计", "通用技巧"],
+        "seoKeywords": ["PPT模板", "PPT设计技巧"],
         "relatedPosts": [
           "PPT模板设计风格大盘点",
           "how-to-ppt-pages-report-practical",
@@ -6723,11 +5401,7 @@
       "slug": "路演为什么更适合使用付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/路演为什么更适合使用付费PPT模板.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1387,
         "h2Count": 8,
@@ -6748,18 +5422,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "paid-search"
-        ],
+        "categories": ["paid-search"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "付费与搜索"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "模板", "付费与搜索"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "产品视角看常见问题理解不同用户画像和使用场景",
           "user-how-to-design-ppt-category-pages",
@@ -6774,9 +5440,7 @@
       "slug": "下载述职模板后如何细致地填入业绩",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/下载述职模板后如何细致地填入业绩.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1629,
         "h2Count": 9,
@@ -6797,9 +5461,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -6810,11 +5472,7 @@
       "slug": "从日报周报到述职如何构建证据链",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/从日报周报到述职如何构建证据链.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_stats",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_stats", "few_images"],
       "stats": {
         "wordCount": 1543,
         "h2Count": 9,
@@ -6835,9 +5493,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -6848,9 +5504,7 @@
       "slug": "关键述职节点为什么值得用付费PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/关键述职节点为什么值得用付费PPT模板.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1635,
         "h2Count": 8,
@@ -6871,9 +5525,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -6884,10 +5536,7 @@
       "slug": "初入职场的述职PPT写作与模板选择指南",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/初入职场的述职PPT写作与模板选择指南.zh.mdx",
-      "issues": [
-        "few_stats",
-        "few_images"
-      ],
+      "issues": ["few_stats", "few_images"],
       "stats": {
         "wordCount": 1219,
         "h2Count": 7,
@@ -6908,9 +5557,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -6921,9 +5568,7 @@
       "slug": "如何让述职报告PPT更专业从影响说起",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/如何让述职报告PPT更专业从影响说起.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1615,
         "h2Count": 8,
@@ -6944,9 +5589,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -6957,11 +5600,7 @@
       "slug": "用PPTAI为不同岗位生成个性化述职模板的思路",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/用PPTAI为不同岗位生成个性化述职模板的思路.zh.mdx",
-      "issues": [
-        "short_title",
-        "few_h3",
-        "few_images"
-      ],
+      "issues": ["short_title", "few_h3", "few_images"],
       "stats": {
         "wordCount": 1741,
         "h2Count": 9,
@@ -6982,9 +5621,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -6995,9 +5632,7 @@
       "slug": "述职报告PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/述职报告PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2198,
         "h2Count": 8,
@@ -7018,9 +5653,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7031,10 +5664,7 @@
       "slug": "述职报告PPT推荐字体和配色如何传达信任感",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/述职报告PPT推荐字体和配色如何传达信任感.zh.mdx",
-      "issues": [
-        "few_stats",
-        "few_images"
-      ],
+      "issues": ["few_stats", "few_images"],
       "stats": {
         "wordCount": 1683,
         "h2Count": 8,
@@ -7055,9 +5685,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7068,11 +5696,7 @@
       "slug": "述职报告PPT推荐页数是多少",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/述职报告PPT推荐页数是多少.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1198,
         "h2Count": 8,
@@ -7093,9 +5717,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7106,9 +5728,7 @@
       "slug": "述职报告PPT里如何处理成绩不够好的情况",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT/述职报告PPT里如何处理成绩不够好的情况.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1425,
         "h2Count": 8,
@@ -7129,9 +5749,7 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7142,9 +5760,7 @@
       "slug": "述职报告PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2198,
         "h2Count": 8,
@@ -7165,19 +5781,10 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "work-report-how-to-ppt",
           "从日报周报到述职如何构建证据链",
@@ -7192,9 +5799,7 @@
       "slug": "述职报告PPT推荐字体和配色如何传达信任感",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT推荐字体和配色如何传达信任感.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1680,
         "h2Count": 8,
@@ -7215,19 +5820,10 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "关键述职节点为什么值得用付费PPT模板",
           "从日报周报到述职如何构建证据链"
@@ -7241,11 +5837,7 @@
       "slug": "述职报告PPT推荐页数是多少",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT推荐页数是多少.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1195,
         "h2Count": 8,
@@ -7266,19 +5858,10 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "初入职场的述职PPT写作与模板选择指南",
           "work-report-ppt-font-color",
@@ -7293,9 +5876,7 @@
       "slug": "述职报告PPT里如何处理成绩不够好的情况",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/述职报告PPT里如何处理成绩不够好的情况.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1428,
         "h2Count": 8,
@@ -7316,19 +5897,10 @@
         "image": "/images/blog/ppt/report/download-work-report-ppt-template-how-to-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "report"
-        ],
+        "categories": ["report"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "述职",
-          "述职报告"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "述职报告PPT"
-        ],
+        "tags": ["PPT", "述职", "述职报告"],
+        "seoKeywords": ["PPT模板", "述职报告PPT"],
         "relatedPosts": [
           "work-report-how-to-ppt",
           "初入职场的述职PPT写作与模板选择指南"
@@ -7342,11 +5914,7 @@
       "slug": "适合小团队的轻量级营销方案PPT模板长什么样",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/适合小团队的轻量级营销方案PPT模板长什么样.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_h3", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1060,
         "h2Count": 7,
@@ -7367,21 +5935,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "marketing"
-        ],
+        "categories": ["marketing"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "模板",
-          "营销",
-          "方案",
-          "产品营销"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "营销方案PPT"
-        ],
+        "tags": ["PPT", "模板", "营销", "方案", "产品营销"],
+        "seoKeywords": ["PPT模板", "营销方案PPT"],
         "relatedPosts": [
           "product-marketing-ppt-font-color-product",
           "product-marketing-ppt-content-guide-selling-point-conversion",
@@ -7396,9 +5953,7 @@
       "slug": "PPT模板设计风格大盘点",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/PPT模板设计风格大盘点.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2672,
         "h2Count": 11,
@@ -7419,9 +5974,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7432,10 +5985,7 @@
       "slug": "PPT模板选错分类的5个典型坑",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/PPT模板选错分类的5个典型坑.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1561,
         "h2Count": 9,
@@ -7456,9 +6006,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7469,11 +6017,7 @@
       "slug": "一份PPT兼顾领导同事和合作方三类受众的结构取舍",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/一份PPT兼顾领导同事和合作方三类受众的结构取舍.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1819,
         "h2Count": 9,
@@ -7494,9 +6038,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7507,11 +6049,7 @@
       "slug": "一份PPT能兼顾年终总结和项目复盘吗",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/一份PPT能兼顾年终总结和项目复盘吗.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1355,
         "h2Count": 8,
@@ -7532,9 +6070,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7545,9 +6081,7 @@
       "slug": "从使用场景出发选PPT分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/从使用场景出发选PPT分类.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2149,
         "h2Count": 9,
@@ -7568,9 +6102,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7581,10 +6113,7 @@
       "slug": "从项目提案到年终复盘两套PPT结构应该怎么改写",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/从项目提案到年终复盘两套PPT结构应该怎么改写.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1804,
         "h2Count": 9,
@@ -7605,9 +6134,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7645,9 +6172,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7658,10 +6183,7 @@
       "slug": "可以在一个PPT里混用多个分类模板吗",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/可以在一个PPT里混用多个分类模板吗.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 2257,
         "h2Count": 8,
@@ -7682,9 +6204,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7695,9 +6215,7 @@
       "slug": "在年终总结PPT里复用商务汇报和项目提案页面的策略",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/在年终总结PPT里复用商务汇报和项目提案页面的策略.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1664,
         "h2Count": 9,
@@ -7718,9 +6236,7 @@
         "image": "/images/blog/ppt/year-end/download-year-end-summary-ppt-template-how-to-quick-modify-c-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7757,9 +6273,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7770,11 +6284,7 @@
       "slug": "如何用一份商务汇报模板改写出项目提案和年终总结三种版本",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/如何用一份商务汇报模板改写出项目提案和年终总结三种版本.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1392,
         "h2Count": 8,
@@ -7795,9 +6305,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7808,11 +6316,7 @@
       "slug": "如何自查一份PPT的结构和页数是否合理",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/如何自查一份PPT的结构和页数是否合理.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1334,
         "h2Count": 9,
@@ -7833,9 +6337,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7846,11 +6348,7 @@
       "slug": "如何规划PPT页数按汇报时长和信息密度估算",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/如何规划PPT页数按汇报时长和信息密度估算.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images",
-        "low_word_count"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images", "low_word_count"],
       "stats": {
         "wordCount": 1121,
         "h2Count": 7,
@@ -7871,9 +6369,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7884,9 +6380,7 @@
       "slug": "如何选择合适的PPT分类",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/如何选择合适的PPT分类.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 3392,
         "h2Count": 11,
@@ -7907,9 +6401,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7920,9 +6412,7 @@
       "slug": "年终总结还是述职报告怎么选",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/年终总结还是述职报告怎么选.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2300,
         "h2Count": 8,
@@ -7943,9 +6433,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7956,9 +6444,7 @@
       "slug": "新手做PPT先从哪一类开始",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/新手做PPT先从哪一类开始.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2522,
         "h2Count": 11,
@@ -7979,9 +6465,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -7992,10 +6476,7 @@
       "slug": "根据投影录屏和文件发送选择PPT模板",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/根据投影录屏和文件发送选择PPT模板.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1490,
         "h2Count": 8,
@@ -8016,9 +6497,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8029,9 +6508,7 @@
       "slug": "每个PPT分类大概多少页最合适",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/每个PPT分类大概多少页最合适.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 2769,
         "h2Count": 8,
@@ -8052,9 +6529,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8092,9 +6567,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8105,10 +6578,7 @@
       "slug": "线上路演和线下路演PPT应该怎么区分准备",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/线上路演和线下路演PPT应该怎么区分准备.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1383,
         "h2Count": 8,
@@ -8129,9 +6599,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8168,9 +6636,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8181,9 +6647,7 @@
       "slug": "设计师视角看PPT分类与风格拆解",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/设计师视角看PPT分类与风格拆解.zh.mdx",
-      "issues": [
-        "few_images"
-      ],
+      "issues": ["few_images"],
       "stats": {
         "wordCount": 1588,
         "h2Count": 9,
@@ -8204,9 +6668,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-28",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8217,11 +6679,7 @@
       "slug": "页数不够用怎么办压缩PPT内容的七个策略",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/页数不够用怎么办压缩PPT内容的七个策略.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1722,
         "h2Count": 12,
@@ -8242,9 +6700,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8255,10 +6711,7 @@
       "slug": "页数太多讲不完怎么办拆分和删减PPT内容的实战案例",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/通用与混合场景/页数太多讲不完怎么办拆分和删减PPT内容的实战案例.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1708,
         "h2Count": 8,
@@ -8279,9 +6732,7 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8292,11 +6743,7 @@
       "slug": "页数不够用怎么办压缩PPT内容的七个策略",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/页数不够用怎么办压缩PPT内容的七个策略.zh.mdx",
-      "issues": [
-        "few_h3",
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_h3", "few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1722,
         "h2Count": 12,
@@ -8317,17 +6764,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "ppt-template-category-5",
           "从项目提案到年终复盘两套PPT结构应该怎么改写",
@@ -8342,10 +6782,7 @@
       "slug": "页数太多讲不完怎么办拆分和删减PPT内容的实战案例",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/页数太多讲不完怎么办拆分和删减PPT内容的实战案例.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1708,
         "h2Count": 8,
@@ -8366,17 +6803,10 @@
         "image": "/images/blog/ppt/general/12-report-scenario-ppt-category-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "general"
-        ],
+        "categories": ["general"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "通用技巧"
-        ],
-        "seoKeywords": [
-          "PPT模板"
-        ],
+        "tags": ["PPT", "通用技巧"],
+        "seoKeywords": ["PPT模板"],
         "relatedPosts": [
           "如何自查一份PPT的结构和页数是否合理",
           "一份PPT能兼顾年终总结和项目复盘吗",
@@ -8391,12 +6821,7 @@
       "slug": "下载项目提案模板后如何快速改成自己的BP",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/下载项目提案模板后如何快速改成自己的BP.zh.mdx",
-      "issues": [
-        "few_h3",
-        "no_authoritative_quote",
-        "few_stats",
-        "few_images"
-      ],
+      "issues": ["few_h3", "no_authoritative_quote", "few_stats", "few_images"],
       "stats": {
         "wordCount": 1535,
         "h2Count": 8,
@@ -8417,9 +6842,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8430,10 +6853,7 @@
       "slug": "如何让项目提案PPT更专业",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/如何让项目提案PPT更专业.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_images"],
       "stats": {
         "wordCount": 1538,
         "h2Count": 7,
@@ -8454,9 +6874,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8467,10 +6885,7 @@
       "slug": "技术项目和商业项目的提案PPT结构有什么不同",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/技术项目和商业项目的提案PPT结构有什么不同.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_images"],
       "stats": {
         "wordCount": 2100,
         "h2Count": 8,
@@ -8491,9 +6906,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8504,10 +6917,7 @@
       "slug": "项目提案PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/项目提案PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1813,
         "h2Count": 11,
@@ -8528,9 +6938,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8541,11 +6949,7 @@
       "slug": "项目提案PPT推荐字体和配色如何兼顾技术感和商务感",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/项目提案PPT推荐字体和配色如何兼顾技术感和商务感.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_stats",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_stats", "few_images"],
       "stats": {
         "wordCount": 1716,
         "h2Count": 8,
@@ -8566,9 +6970,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8579,10 +6981,7 @@
       "slug": "项目提案PPT推荐页数是多少不同评审场景的拆分建议",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/项目提案PPT推荐页数是多少不同评审场景的拆分建议.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1525,
         "h2Count": 8,
@@ -8603,9 +7002,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8616,10 +7013,7 @@
       "slug": "项目提案PPT里如何说服决策层",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT/项目提案PPT里如何说服决策层.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_images"],
       "stats": {
         "wordCount": 2064,
         "h2Count": 9,
@@ -8640,9 +7034,7 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox"
       },
       "status": "needs_fix",
@@ -8653,10 +7045,7 @@
       "slug": "项目提案PPT一般包含哪些内容",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT一般包含哪些内容.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1813,
         "h2Count": 11,
@@ -8677,19 +7066,10 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "项目提案"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "技术项目和商业项目的提案PPT结构有什么不同",
           "how-to-project-proposal-ppt-professional-execution",
@@ -8704,10 +7084,7 @@
       "slug": "项目提案PPT推荐字体和配色如何兼顾技术感和商务感",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT推荐字体和配色如何兼顾技术感和商务感.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_images"],
       "stats": {
         "wordCount": 1680,
         "h2Count": 8,
@@ -8728,19 +7105,10 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "项目提案"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "download-project-proposal-template-how-to-quick-convert-bp",
           "how-to-project-proposal-ppt-professional-execution",
@@ -8755,10 +7123,7 @@
       "slug": "项目提案PPT推荐页数是多少不同评审场景的拆分建议",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT推荐页数是多少不同评审场景的拆分建议.zh.mdx",
-      "issues": [
-        "few_authoritative_quotes",
-        "few_images"
-      ],
+      "issues": ["few_authoritative_quotes", "few_images"],
       "stats": {
         "wordCount": 1525,
         "h2Count": 8,
@@ -8779,19 +7144,10 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "项目提案"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "项目提案PPT一般包含哪些内容",
           "vs-project-proposal-ppt-structure",
@@ -8806,10 +7162,7 @@
       "slug": "项目提案PPT里如何说服决策层",
       "locale": "zh",
       "filePath": "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/深入细化调整/006-blogs-seo-博文设计/广告-博文/项目提案PPT里如何说服决策层.zh.mdx",
-      "issues": [
-        "no_authoritative_quote",
-        "few_images"
-      ],
+      "issues": ["no_authoritative_quote", "few_images"],
       "stats": {
         "wordCount": 2064,
         "h2Count": 9,
@@ -8830,19 +7183,10 @@
         "image": "/images/blog/ppt/proposal/download-project-proposal-template-how-to-quick-convert-bp-cover.jpg",
         "date": "2025-11-27",
         "published": false,
-        "categories": [
-          "proposal"
-        ],
+        "categories": ["proposal"],
         "author": "fox",
-        "tags": [
-          "PPT",
-          "提案",
-          "项目提案"
-        ],
-        "seoKeywords": [
-          "PPT模板",
-          "项目提案PPT"
-        ],
+        "tags": ["PPT", "提案", "项目提案"],
+        "seoKeywords": ["PPT模板", "项目提案PPT"],
         "relatedPosts": [
           "download-project-proposal-template-how-to-quick-convert-bp",
           "project-proposal-ppt-font-color",

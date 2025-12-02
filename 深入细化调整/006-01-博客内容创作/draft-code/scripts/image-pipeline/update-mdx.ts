@@ -1,6 +1,6 @@
 /**
  * 更新 MDX 文件中的图片路径
- * 
+ *
  * 用法: npx tsx scripts/image-pipeline/update-mdx.ts
  */
 
@@ -26,7 +26,10 @@ function findMdxFile(slug: string, dir: string): string | null {
       const found = findMdxFile(slug, fullPath);
       if (found) return found;
     } else if (entry.name.endsWith('.zh.mdx')) {
-      const fileSlug = path.basename(entry.name, '.zh.mdx').toLowerCase().replace(/\s+/g, '-');
+      const fileSlug = path
+        .basename(entry.name, '.zh.mdx')
+        .toLowerCase()
+        .replace(/\s+/g, '-');
       if (fileSlug === slug) return fullPath;
     }
   }
@@ -56,7 +59,10 @@ function updateMdxFile(
   // 替换占位符 ![placeholder-{n}]
   for (let i = 0; i < inlineImages.length; i++) {
     const img = inlineImages[i];
-    const placeholder = new RegExp(`!\\[placeholder-${i + 1}\\]\\([^)]*\\)`, 'g');
+    const placeholder = new RegExp(
+      `!\\[placeholder-${i + 1}\\]\\([^)]*\\)`,
+      'g'
+    );
     const replacement = `![${img.scene}](/images/blog/${img.filename})`;
 
     if (placeholder.test(newBody)) {
@@ -70,7 +76,10 @@ function updateMdxFile(
   let match: RegExpExecArray | null;
   let imgIndex = 0;
 
-  while ((match = postPlaceholder.exec(newBody)) !== null && imgIndex < inlineImages.length) {
+  while (
+    (match = postPlaceholder.exec(newBody)) !== null &&
+    imgIndex < inlineImages.length
+  ) {
     const img = inlineImages[imgIndex];
     const alt = match[1] || img.scene;
     const replacement = `![${alt}](/images/blog/${img.filename})`;

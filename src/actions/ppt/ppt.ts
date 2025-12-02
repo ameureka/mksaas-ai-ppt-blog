@@ -1,5 +1,6 @@
 'use server';
 
+import { randomUUID } from 'node:crypto';
 import { getDb } from '@/db';
 import { ppt as pptTable } from '@/db/schema';
 import type {
@@ -27,7 +28,6 @@ import {
   or,
   sql,
 } from 'drizzle-orm';
-import { randomUUID } from 'node:crypto';
 
 const DEFAULT_PAGE_SIZE = 12;
 const MAX_PAGE_SIZE = 50;
@@ -48,10 +48,7 @@ const buildWhere = (params?: PPTListParams) => {
   if (params.search?.trim()) {
     const keyword = `%${params.search.trim()}%`;
     conditions.push(
-      or(
-        ilike(pptTable.title, keyword),
-        ilike(pptTable.author, keyword)
-      )
+      or(ilike(pptTable.title, keyword), ilike(pptTable.author, keyword))
     );
   }
 
@@ -139,12 +136,7 @@ export async function getPPTs(
       .offset((page - 1) * pageSize);
 
     return successResult(
-      createListResult(
-        rows.map(toPPTDto),
-        total,
-        page,
-        pageSize
-      )
+      createListResult(rows.map(toPPTDto), total, page, pageSize)
     );
   } catch (error) {
     console.error('[PPT] Failed to list PPTs', error);
@@ -208,18 +200,19 @@ export async function updatePPT(
 ): Promise<ServerActionResult<PPT>> {
   try {
     const db = await getDb();
-  const updates: Partial<typeof pptTable.$inferInsert> = {};
+    const updates: Partial<typeof pptTable.$inferInsert> = {};
 
-  if (data.title !== undefined) updates.title = data.title;
-  if (data.category !== undefined) updates.category = data.category;
-  if (data.status !== undefined) updates.status = data.status;
+    if (data.title !== undefined) updates.title = data.title;
+    if (data.category !== undefined) updates.category = data.category;
+    if (data.status !== undefined) updates.status = data.status;
     if (data.author !== undefined) updates.author = data.author;
     if (data.file_url !== undefined) updates.fileUrl = data.file_url;
     if (data.preview_url !== undefined) {
       updates.coverImageUrl = data.preview_url;
       updates.thumbnailUrl = data.preview_url;
     }
-    if (data.slides_count !== undefined) updates.slidesCount = data.slides_count;
+    if (data.slides_count !== undefined)
+      updates.slidesCount = data.slides_count;
 
     if (Object.keys(updates).length === 0) {
       return errorResult('No fields to update', 'NO_UPDATES');

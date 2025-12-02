@@ -52,7 +52,13 @@ export const ADMIN_I18N = {
     business: '商业',
     product: '产品',
     education: '教育',
+    technology: '技术',
+    creative: '创意',
     marketing: '营销',
+    medical: '医疗',
+    finance: '金融',
+    hr: '人力资源',
+    lifestyle: '生活方式',
     general: '通用',
   },
   ppt: {

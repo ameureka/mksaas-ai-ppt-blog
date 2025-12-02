@@ -564,7 +564,10 @@ async function main() {
   console.log(`  失败: ${result.failedFiles}`);
 
   // 输出详细结果到 JSON
-  const reportPath = path.join(__dirname, '../../reports/blog-translate-report.json');
+  const reportPath = path.join(
+    __dirname,
+    '../../reports/blog-translate-report.json'
+  );
   fs.mkdirSync(path.dirname(reportPath), { recursive: true });
   fs.writeFileSync(reportPath, JSON.stringify(result, null, 2), 'utf-8');
   console.log(`\n📄 详细报告已保存到: ${reportPath}`);

@@ -46,14 +46,14 @@ const quotes: Record<string, string[]> = {
 
 function extractCategory(filePath: string): string {
   const map: Record<string, string> = {
-    '产品营销与营销方案PPT': 'marketing',
-    '商务汇报PPT': 'business',
-    '年终总结PPT': 'year-end',
-    '教育培训与课件PPT': 'education',
-    '述职报告PPT': 'report',
-    '项目提案PPT': 'proposal',
-    '通用与混合场景': 'general',
-    '付费模板搜索与产品视角': 'paid-search',
+    产品营销与营销方案PPT: 'marketing',
+    商务汇报PPT: 'business',
+    年终总结PPT: 'year-end',
+    教育培训与课件PPT: 'education',
+    述职报告PPT: 'report',
+    项目提案PPT: 'proposal',
+    通用与混合场景: 'general',
+    付费模板搜索与产品视角: 'paid-search',
   };
   for (const [dir, cat] of Object.entries(map)) {
     if (filePath.includes(dir)) return cat;
@@ -73,7 +73,13 @@ function scanFiles(dir: string): string[] {
 }
 
 function hasEnoughQuotes(content: string): boolean {
-  const quotePatterns = [/📊.*数据/g, /💡.*观点/g, /研究表明/g, /数据显示/g, /调查显示/g];
+  const quotePatterns = [
+    /📊.*数据/g,
+    /💡.*观点/g,
+    /研究表明/g,
+    /数据显示/g,
+    /调查显示/g,
+  ];
   let count = 0;
   for (const p of quotePatterns) {
     count += (content.match(p) || []).length;
@@ -97,17 +103,25 @@ function main() {
 
     const category = extractCategory(file);
     const categoryQuotes = quotes[category] || quotes.general;
-    
+
     // 在第三个 ## 标题后插入引用
     const h2Matches = [...content.matchAll(/^## .+$/gm)];
     if (h2Matches.length >= 3) {
       const thirdH2 = h2Matches[2];
       if (thirdH2.index !== undefined) {
-        const insertPos = content.indexOf('\n\n', thirdH2.index + thirdH2[0].length);
+        const insertPos = content.indexOf(
+          '\n\n',
+          thirdH2.index + thirdH2[0].length
+        );
         if (insertPos > 0) {
-          const quote = categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)];
-          const newContent = content.slice(0, insertPos) + '\n\n' + quote + content.slice(insertPos);
-          
+          const quote =
+            categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)];
+          const newContent =
+            content.slice(0, insertPos) +
+            '\n\n' +
+            quote +
+            content.slice(insertPos);
+
           if (!dryRun) {
             fs.writeFileSync(file, matter.stringify(newContent, data), 'utf-8');
           }

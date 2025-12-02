@@ -111,14 +111,14 @@ function scanMdxFiles(dir: string): string[] {
 
 function extractCategory(filePath: string): string {
   const dirMap: Record<string, string> = {
-    '产品营销与营销方案PPT': 'marketing',
-    '商务汇报PPT': 'business',
-    '年终总结PPT': 'year-end',
-    '教育培训与课件PPT': 'education',
-    '述职报告PPT': 'report',
-    '项目提案PPT': 'proposal',
-    '通用与混合场景': 'general',
-    '付费模板搜索与产品视角': 'paid-search',
+    产品营销与营销方案PPT: 'marketing',
+    商务汇报PPT: 'business',
+    年终总结PPT: 'year-end',
+    教育培训与课件PPT: 'education',
+    述职报告PPT: 'report',
+    项目提案PPT: 'proposal',
+    通用与混合场景: 'general',
+    付费模板搜索与产品视角: 'paid-search',
   };
 
   for (const [dirName, category] of Object.entries(dirMap)) {
@@ -145,7 +145,13 @@ function extractFirstParagraph(content: string): string {
       inQuote = false;
       continue;
     }
-    if (!inQuote && trimmed && !trimmed.startsWith('#') && !trimmed.startsWith('-') && !trimmed.startsWith('```')) {
+    if (
+      !inQuote &&
+      trimmed &&
+      !trimmed.startsWith('#') &&
+      !trimmed.startsWith('-') &&
+      !trimmed.startsWith('```')
+    ) {
       paragraph = trimmed;
       break;
     }
@@ -165,7 +171,10 @@ interface OptimizeResult {
   error?: string;
 }
 
-function optimizeFile(filePath: string, config: OptimizeConfig): OptimizeResult {
+function optimizeFile(
+  filePath: string,
+  config: OptimizeConfig
+): OptimizeResult {
   const result: OptimizeResult = {
     filePath,
     success: false,
@@ -189,7 +198,8 @@ function optimizeFile(filePath: string, config: OptimizeConfig): OptimizeResult 
       let newDesc = '';
       if (firstPara.length >= 50) {
         // 使用内容首段
-        newDesc = firstPara.length > 150 ? firstPara.slice(0, 147) + '...' : firstPara;
+        newDesc =
+          firstPara.length > 150 ? firstPara.slice(0, 147) + '...' : firstPara;
       } else {
         // 使用模板
         newDesc = templates[Math.floor(Math.random() * templates.length)];
@@ -204,13 +214,18 @@ function optimizeFile(filePath: string, config: OptimizeConfig): OptimizeResult 
       }
 
       frontmatter.description = newDesc;
-      result.optimizations.push(`desc: ${currentDesc.length} → ${newDesc.length}`);
+      result.optimizations.push(
+        `desc: ${currentDesc.length} → ${newDesc.length}`
+      );
       modified = true;
     }
 
     // 2. 优化标题
     const currentTitle = String(frontmatter.title || '');
-    if (currentTitle.length < config.minTitleLength && currentTitle.length > 0) {
+    if (
+      currentTitle.length < config.minTitleLength &&
+      currentTitle.length > 0
+    ) {
       const suffixes = titleSuffixes[category] || titleSuffixes.general;
       const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
 
@@ -221,7 +236,9 @@ function optimizeFile(filePath: string, config: OptimizeConfig): OptimizeResult 
         : currentTitle + '：' + suffix;
 
       frontmatter.title = newTitle;
-      result.optimizations.push(`title: ${currentTitle.length} → ${newTitle.length}`);
+      result.optimizations.push(
+        `title: ${currentTitle.length} → ${newTitle.length}`
+      );
       modified = true;
     }
 
@@ -272,9 +289,15 @@ async function main() {
     }
   }
 
-  const optimizedCount = results.filter(r => r.optimizations.length > 0).length;
-  const descOptimized = results.filter(r => r.optimizations.some(o => o.startsWith('desc:'))).length;
-  const titleOptimized = results.filter(r => r.optimizations.some(o => o.startsWith('title:'))).length;
+  const optimizedCount = results.filter(
+    (r) => r.optimizations.length > 0
+  ).length;
+  const descOptimized = results.filter((r) =>
+    r.optimizations.some((o) => o.startsWith('desc:'))
+  ).length;
+  const titleOptimized = results.filter((r) =>
+    r.optimizations.some((o) => o.startsWith('title:'))
+  ).length;
 
   console.log('\n📊 优化结果:');
   console.log(`  总文件数: ${files.length}`);
@@ -282,9 +305,16 @@ async function main() {
   console.log(`  描述优化: ${descOptimized}`);
   console.log(`  标题优化: ${titleOptimized}`);
 
-  const reportPath = path.join(__dirname, '../../reports/blog-optimize-meta-report.json');
+  const reportPath = path.join(
+    __dirname,
+    '../../reports/blog-optimize-meta-report.json'
+  );
   fs.mkdirSync(path.dirname(reportPath), { recursive: true });
-  fs.writeFileSync(reportPath, JSON.stringify({ config, results }, null, 2), 'utf-8');
+  fs.writeFileSync(
+    reportPath,
+    JSON.stringify({ config, results }, null, 2),
+    'utf-8'
+  );
   console.log(`\n📄 报告已保存到: ${reportPath}`);
 }
 

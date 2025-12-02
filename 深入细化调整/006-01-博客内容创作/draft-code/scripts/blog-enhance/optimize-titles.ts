@@ -36,7 +36,7 @@ function main() {
     const catDir = path.join(targetDir, cat);
     if (!fs.statSync(catDir).isDirectory()) continue;
 
-    const files = fs.readdirSync(catDir).filter(f => f.endsWith('.zh.mdx'));
+    const files = fs.readdirSync(catDir).filter((f) => f.endsWith('.zh.mdx'));
     for (const file of files) {
       const filePath = path.join(catDir, file);
       const raw = fs.readFileSync(filePath, 'utf-8');
@@ -47,7 +47,7 @@ function main() {
 
       const category = getCategory(filePath);
       const catSuffixes = suffixes[category] || suffixes.general;
-      
+
       // 选择一个后缀使标题达到 30+ 字符
       let newTitle = title;
       for (const suffix of catSuffixes) {
@@ -69,7 +69,7 @@ function main() {
         data.title = newTitle;
         const output = matter.stringify(content, data);
         fs.writeFileSync(filePath, output);
-        
+
         // 同步更新英文文件
         const enFile = file.replace('.zh.mdx', '.en.mdx');
         const enPath = path.join(catDir, enFile);
@@ -79,7 +79,7 @@ function main() {
           // 英文标题保持不变，只更新中文
         }
       }
-      
+
       console.log(`  ${title.length} → ${newTitle.length}: ${file}`);
       optimized++;
     }

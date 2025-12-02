@@ -25,5 +25,12 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "vo-ui-code-pro", "scripts"]
+  "exclude": [
+    "node_modules",
+    "vo-ui-code-pro",
+    "scripts",
+    "深入细化调整",
+    "分析过程",
+    "验证方案"
+  ]
 }

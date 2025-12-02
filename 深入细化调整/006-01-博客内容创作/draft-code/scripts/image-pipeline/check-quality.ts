@@ -1,12 +1,12 @@
 /**
  * 图片质量检查脚本
- * 
+ *
  * 用法: npx tsx scripts/image-pipeline/check-quality.ts
  */
 
+import { execSync } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { execSync } from 'node:child_process';
 import type { ImageTasksData } from './types';
 
 const CONFIG = {
@@ -29,18 +29,23 @@ interface QualityIssue {
   issues: string[];
 }
 
-function getImageDimensions(filePath: string): { width: number; height: number } | null {
+function getImageDimensions(
+  filePath: string
+): { width: number; height: number } | null {
   try {
     // 尝试使用 sips (macOS)
-    const output = execSync(`sips -g pixelWidth -g pixelHeight "${filePath}" 2>/dev/null`, {
-      encoding: 'utf-8',
-    });
+    const output = execSync(
+      `sips -g pixelWidth -g pixelHeight "${filePath}" 2>/dev/null`,
+      {
+        encoding: 'utf-8',
+      }
+    );
     const widthMatch = output.match(/pixelWidth:\s*(\d+)/);
     const heightMatch = output.match(/pixelHeight:\s*(\d+)/);
     if (widthMatch && heightMatch) {
       return {
-        width: parseInt(widthMatch[1], 10),
-        height: parseInt(heightMatch[1], 10),
+        width: Number.parseInt(widthMatch[1], 10),
+        height: Number.parseInt(heightMatch[1], 10),
       };
     }
   } catch {
@@ -73,7 +78,9 @@ function checkImage(
   const stats = fs.statSync(filePath);
   const maxSize = isCover ? CONFIG.coverMaxSize : CONFIG.inlineMaxSize;
   if (stats.size > maxSize) {
-    issues.push(`文件过大: ${Math.round(stats.size / 1024)}KB > ${Math.round(maxSize / 1024)}KB`);
+    issues.push(
+      `文件过大: ${Math.round(stats.size / 1024)}KB > ${Math.round(maxSize / 1024)}KB`
+    );
   }
 
   // 检查尺寸
@@ -83,11 +90,15 @@ function checkImage(
     const expectedHeight = isCover ? CONFIG.coverHeight : CONFIG.inlineHeight;
 
     // 允许 10% 误差
-    const widthOk = Math.abs(dimensions.width - expectedWidth) / expectedWidth < 0.1;
-    const heightOk = Math.abs(dimensions.height - expectedHeight) / expectedHeight < 0.1;
+    const widthOk =
+      Math.abs(dimensions.width - expectedWidth) / expectedWidth < 0.1;
+    const heightOk =
+      Math.abs(dimensions.height - expectedHeight) / expectedHeight < 0.1;
 
     if (!widthOk || !heightOk) {
-      issues.push(`尺寸不符: ${dimensions.width}x${dimensions.height} (期望 ${expectedWidth}x${expectedHeight})`);
+      issues.push(
+        `尺寸不符: ${dimensions.width}x${dimensions.height} (期望 ${expectedWidth}x${expectedHeight})`
+      );
     }
   }
 
@@ -122,7 +133,10 @@ function main() {
       if (coverResult.issues.length === 0) {
         passedFiles++;
       } else {
-        allIssues.push({ file: task.cover.filename, issues: coverResult.issues });
+        allIssues.push({
+          file: task.cover.filename,
+          issues: coverResult.issues,
+        });
       }
     } else {
       allIssues.push({ file: task.cover.filename, issues: coverResult.issues });
@@ -158,9 +172,15 @@ function main() {
     console.log('');
 
     // 按问题类型分组
-    const missingFiles = allIssues.filter((i) => i.issues.includes('文件不存在'));
-    const sizeIssues = allIssues.filter((i) => i.issues.some((issue) => issue.includes('文件过大')));
-    const dimensionIssues = allIssues.filter((i) => i.issues.some((issue) => issue.includes('尺寸不符')));
+    const missingFiles = allIssues.filter((i) =>
+      i.issues.includes('文件不存在')
+    );
+    const sizeIssues = allIssues.filter((i) =>
+      i.issues.some((issue) => issue.includes('文件过大'))
+    );
+    const dimensionIssues = allIssues.filter((i) =>
+      i.issues.some((issue) => issue.includes('尺寸不符'))
+    );
 
     if (missingFiles.length > 0) {
       console.log(`📁 缺失文件 (${missingFiles.length}):`);
@@ -218,7 +238,9 @@ function main() {
     } else {
       incompleteCount++;
       if (incompleteCount <= 5) {
-        console.log(`   ⚠️ ${task.slug}: 封面=${coverExists ? '✓' : '✗'}, 内页=${inlineCount}/3`);
+        console.log(
+          `   ⚠️ ${task.slug}: 封面=${coverExists ? '✓' : '✗'}, 内页=${inlineCount}/3`
+        );
       }
     }
   }

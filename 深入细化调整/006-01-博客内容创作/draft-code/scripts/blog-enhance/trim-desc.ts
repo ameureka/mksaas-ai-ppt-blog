@@ -22,23 +22,23 @@ function scanFiles(dir: string): string[] {
 
 function trimDescription(desc: string): string {
   if (desc.length <= maxDescLength) return desc;
-  
+
   // 尝试在句号、逗号或空格处截断
   let trimmed = desc.slice(0, maxDescLength);
-  
+
   // 找最后一个合适的截断点
   const lastPeriod = trimmed.lastIndexOf('。');
   const lastComma = trimmed.lastIndexOf('，');
   const lastSpace = trimmed.lastIndexOf(' ');
-  
+
   const cutPoint = Math.max(lastPeriod, lastComma, lastSpace);
-  
+
   if (cutPoint > 60) {
     trimmed = desc.slice(0, cutPoint + 1);
   } else {
     trimmed = desc.slice(0, 97) + '...';
   }
-  
+
   return trimmed;
 }
 
@@ -58,7 +58,7 @@ function main() {
     if (desc.length <= maxDescLength) continue;
 
     data.description = trimDescription(desc);
-    
+
     if (!dryRun) {
       fs.writeFileSync(file, matter.stringify(content, data), 'utf-8');
     }

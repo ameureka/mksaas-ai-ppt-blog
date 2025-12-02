@@ -1,6 +1,6 @@
 /**
  * 导出待处理 Prompt 清单 - 供网页手工生成使用
- * 
+ *
  * 用法: npx tsx scripts/image-pipeline/export-pending.ts
  */
 
@@ -57,7 +57,9 @@ function main() {
 
   for (const [category, tasks] of byCategory) {
     const pendingTasks = tasks.filter(
-      (t) => t.cover.status === 'pending' || t.inlineImages.some((i) => i.status === 'pending')
+      (t) =>
+        t.cover.status === 'pending' ||
+        t.inlineImages.some((i) => i.status === 'pending')
     );
 
     if (pendingTasks.length === 0) continue;
@@ -83,7 +85,9 @@ function main() {
       }
 
       // 内页
-      const pendingInlineImages = task.inlineImages.filter((i) => i.status === 'pending');
+      const pendingInlineImages = task.inlineImages.filter(
+        (i) => i.status === 'pending'
+      );
       for (const img of pendingInlineImages) {
         pendingInlines++;
         lines.push(`### 📄 内页: ${img.scene}`);

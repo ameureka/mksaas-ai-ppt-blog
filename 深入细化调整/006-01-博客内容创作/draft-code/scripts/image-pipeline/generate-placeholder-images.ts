@@ -17,10 +17,12 @@ const OUTPUT_DIR = path.join(ROOT, 'generated-images');
 
 // 读取示例图片
 function getSampleImages(): { covers: string[]; inlines: string[] } {
-  const files = fs.readdirSync(SAMPLE_DIR).filter(f => f.endsWith('.png') || f.endsWith('.jpg'));
+  const files = fs
+    .readdirSync(SAMPLE_DIR)
+    .filter((f) => f.endsWith('.png') || f.endsWith('.jpg'));
   return {
-    covers: files.filter(f => f.startsWith('generated_')).slice(0, 1),
-    inlines: files.filter(f => f.startsWith('generated_')).slice(0, 3),
+    covers: files.filter((f) => f.startsWith('generated_')).slice(0, 1),
+    inlines: files.filter((f) => f.startsWith('generated_')).slice(0, 3),
   };
 }
 
@@ -55,7 +57,9 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`📁 示例图片: ${samples.covers.length} 封面, ${samples.inlines.length} 内页\n`);
+  console.log(
+    `📁 示例图片: ${samples.covers.length} 封面, ${samples.inlines.length} 内页\n`
+  );
 
   const data = loadTasks();
   const tasks = data.tasks;

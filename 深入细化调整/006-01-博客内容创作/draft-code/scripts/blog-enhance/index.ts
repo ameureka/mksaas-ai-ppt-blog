@@ -52,26 +52,65 @@ const categorySlugMap: Record<string, string> = {
 // 外部权威链接库
 // ============================================================================
 
-const authorityLinks: Record<string, { url: string; name: string; desc: string }[]> = {
+const authorityLinks: Record<
+  string,
+  { url: string; name: string; desc: string }[]
+> = {
   ppt: [
-    { url: 'https://support.microsoft.com/zh-cn/powerpoint', name: 'Microsoft PowerPoint 官方支持', desc: '微软官方 PPT 教程' },
-    { url: 'https://www.canva.com/designschool/', name: 'Canva Design School', desc: '设计学院资源' },
+    {
+      url: 'https://support.microsoft.com/zh-cn/powerpoint',
+      name: 'Microsoft PowerPoint 官方支持',
+      desc: '微软官方 PPT 教程',
+    },
+    {
+      url: 'https://www.canva.com/designschool/',
+      name: 'Canva Design School',
+      desc: '设计学院资源',
+    },
   ],
   design: [
-    { url: 'https://www.smashingmagazine.com/', name: 'Smashing Magazine', desc: '设计与开发资源' },
-    { url: 'https://www.nngroup.com/', name: 'Nielsen Norman Group', desc: '用户体验研究' },
+    {
+      url: 'https://www.smashingmagazine.com/',
+      name: 'Smashing Magazine',
+      desc: '设计与开发资源',
+    },
+    {
+      url: 'https://www.nngroup.com/',
+      name: 'Nielsen Norman Group',
+      desc: '用户体验研究',
+    },
   ],
   marketing: [
-    { url: 'https://www.hubspot.com/marketing-statistics', name: 'HubSpot Marketing Statistics', desc: '营销数据统计' },
-    { url: 'https://www.mckinsey.com/', name: 'McKinsey & Company', desc: '商业咨询洞察' },
+    {
+      url: 'https://www.hubspot.com/marketing-statistics',
+      name: 'HubSpot Marketing Statistics',
+      desc: '营销数据统计',
+    },
+    {
+      url: 'https://www.mckinsey.com/',
+      name: 'McKinsey & Company',
+      desc: '商业咨询洞察',
+    },
   ],
   business: [
-    { url: 'https://hbr.org/', name: 'Harvard Business Review', desc: '商业管理洞察' },
+    {
+      url: 'https://hbr.org/',
+      name: 'Harvard Business Review',
+      desc: '商业管理洞察',
+    },
     { url: 'https://www.forbes.com/', name: 'Forbes', desc: '商业新闻与分析' },
   ],
   education: [
-    { url: 'https://www.edutopia.org/', name: 'Edutopia', desc: '教育创新资源' },
-    { url: 'https://www.coursera.org/', name: 'Coursera', desc: '在线教育平台' },
+    {
+      url: 'https://www.edutopia.org/',
+      name: 'Edutopia',
+      desc: '教育创新资源',
+    },
+    {
+      url: 'https://www.coursera.org/',
+      name: 'Coursera',
+      desc: '在线教育平台',
+    },
   ],
 };
 
@@ -128,44 +167,116 @@ const authorityQuotes: Record<string, string[]> = {
 
 const faqTemplates: Record<string, { q: string; a: string }[]> = {
   marketing: [
-    { q: '产品营销 PPT 需要多少页？', a: '根据场景不同，快速演示建议 10-15 页，完整方案建议 20-30 页，详细提案可以 30-50 页。' },
-    { q: '如何让营销 PPT 更有说服力？', a: '使用数据支撑论点，加入客户案例和成功故事，保持视觉一致性，突出核心卖点。' },
-    { q: '营销 PPT 的配色有什么讲究？', a: '建议使用品牌色为主色，搭配 1-2 个辅助色，避免超过 3 种主要颜色，保持专业感。' },
+    {
+      q: '产品营销 PPT 需要多少页？',
+      a: '根据场景不同，快速演示建议 10-15 页，完整方案建议 20-30 页，详细提案可以 30-50 页。',
+    },
+    {
+      q: '如何让营销 PPT 更有说服力？',
+      a: '使用数据支撑论点，加入客户案例和成功故事，保持视觉一致性，突出核心卖点。',
+    },
+    {
+      q: '营销 PPT 的配色有什么讲究？',
+      a: '建议使用品牌色为主色，搭配 1-2 个辅助色，避免超过 3 种主要颜色，保持专业感。',
+    },
   ],
   business: [
-    { q: '商务汇报 PPT 一般多长时间？', a: '15 分钟汇报建议 10-15 页，30 分钟建议 15-25 页，60 分钟建议 25-40 页。' },
-    { q: '如何让数据展示更清晰？', a: '选择合适的图表类型，突出关键数据，添加数据标签，使用对比色强调重点。' },
-    { q: '商务汇报需要包含哪些内容？', a: '通常包括：背景介绍、现状分析、核心内容、数据支撑、结论建议、下一步计划。' },
+    {
+      q: '商务汇报 PPT 一般多长时间？',
+      a: '15 分钟汇报建议 10-15 页，30 分钟建议 15-25 页，60 分钟建议 25-40 页。',
+    },
+    {
+      q: '如何让数据展示更清晰？',
+      a: '选择合适的图表类型，突出关键数据，添加数据标签，使用对比色强调重点。',
+    },
+    {
+      q: '商务汇报需要包含哪些内容？',
+      a: '通常包括：背景介绍、现状分析、核心内容、数据支撑、结论建议、下一步计划。',
+    },
   ],
   'year-end': [
-    { q: '年终总结 PPT 应该写多少页？', a: '一般建议 15-25 页，重点突出成果和数据，避免流水账式罗列。' },
-    { q: '年终总结如何量化成果？', a: '使用具体数字、百分比、对比数据，展示前后变化，突出个人贡献。' },
-    { q: '年终总结和述职报告有什么区别？', a: '年终总结侧重工作回顾和成果展示，述职报告更强调岗位职责履行和能力证明。' },
+    {
+      q: '年终总结 PPT 应该写多少页？',
+      a: '一般建议 15-25 页，重点突出成果和数据，避免流水账式罗列。',
+    },
+    {
+      q: '年终总结如何量化成果？',
+      a: '使用具体数字、百分比、对比数据，展示前后变化，突出个人贡献。',
+    },
+    {
+      q: '年终总结和述职报告有什么区别？',
+      a: '年终总结侧重工作回顾和成果展示，述职报告更强调岗位职责履行和能力证明。',
+    },
   ],
   education: [
-    { q: '培训课件 PPT 需要多少页？', a: '根据课时安排，1 小时课程建议 20-30 页，半天培训建议 40-60 页。' },
-    { q: '如何让培训 PPT 更有互动性？', a: '加入问答环节、小测验、案例讨论、实操练习等互动元素。' },
-    { q: '线上和线下培训 PPT 有什么区别？', a: '线上需要更多视觉引导和文字说明，线下可以更简洁，依靠讲师补充。' },
+    {
+      q: '培训课件 PPT 需要多少页？',
+      a: '根据课时安排，1 小时课程建议 20-30 页，半天培训建议 40-60 页。',
+    },
+    {
+      q: '如何让培训 PPT 更有互动性？',
+      a: '加入问答环节、小测验、案例讨论、实操练习等互动元素。',
+    },
+    {
+      q: '线上和线下培训 PPT 有什么区别？',
+      a: '线上需要更多视觉引导和文字说明，线下可以更简洁，依靠讲师补充。',
+    },
   ],
   report: [
-    { q: '述职报告 PPT 一般多少页？', a: '建议 10-20 页，重点突出业绩成果、能力提升和未来规划。' },
-    { q: '述职报告如何展示不理想的业绩？', a: '客观分析原因，展示改进措施和学习收获，强调未来改进计划。' },
-    { q: '述职报告需要准备什么材料？', a: '工作数据、项目成果、获得荣誉、学习记录、未来计划等支撑材料。' },
+    {
+      q: '述职报告 PPT 一般多少页？',
+      a: '建议 10-20 页，重点突出业绩成果、能力提升和未来规划。',
+    },
+    {
+      q: '述职报告如何展示不理想的业绩？',
+      a: '客观分析原因，展示改进措施和学习收获，强调未来改进计划。',
+    },
+    {
+      q: '述职报告需要准备什么材料？',
+      a: '工作数据、项目成果、获得荣誉、学习记录、未来计划等支撑材料。',
+    },
   ],
   proposal: [
-    { q: '项目提案 PPT 需要多少页？', a: '快速评审建议 10-15 页，正式提案建议 20-30 页，详细方案可以 30-50 页。' },
-    { q: '如何让提案更有说服力？', a: '明确问题定义，提供数据支撑，展示可行性分析，说明预期收益。' },
-    { q: '技术提案和商业提案有什么区别？', a: '技术提案侧重方案细节和实现路径，商业提案更强调市场机会和投资回报。' },
+    {
+      q: '项目提案 PPT 需要多少页？',
+      a: '快速评审建议 10-15 页，正式提案建议 20-30 页，详细方案可以 30-50 页。',
+    },
+    {
+      q: '如何让提案更有说服力？',
+      a: '明确问题定义，提供数据支撑，展示可行性分析，说明预期收益。',
+    },
+    {
+      q: '技术提案和商业提案有什么区别？',
+      a: '技术提案侧重方案细节和实现路径，商业提案更强调市场机会和投资回报。',
+    },
   ],
   general: [
-    { q: '如何选择合适的 PPT 模板？', a: '根据使用场景、受众特点、品牌调性选择，优先考虑专业性和易用性。' },
-    { q: 'PPT 模板下载后如何快速修改？', a: '先替换 logo 和品牌色，再修改标题和内容，最后调整图表和图片。' },
-    { q: '免费模板和付费模板有什么区别？', a: '付费模板通常设计更专业、元素更丰富、更新更及时、有售后支持。' },
+    {
+      q: '如何选择合适的 PPT 模板？',
+      a: '根据使用场景、受众特点、品牌调性选择，优先考虑专业性和易用性。',
+    },
+    {
+      q: 'PPT 模板下载后如何快速修改？',
+      a: '先替换 logo 和品牌色，再修改标题和内容，最后调整图表和图片。',
+    },
+    {
+      q: '免费模板和付费模板有什么区别？',
+      a: '付费模板通常设计更专业、元素更丰富、更新更及时、有售后支持。',
+    },
   ],
   'paid-search': [
-    { q: '如何找到合适的付费 PPT 模板？', a: '明确使用场景和风格需求，使用分类筛选和关键词搜索，查看预览和评价。' },
-    { q: '付费模板值得购买吗？', a: '对于重要场合（路演、述职、大型汇报），专业模板可以显著提升效果，值得投资。' },
-    { q: '购买模板后可以修改吗？', a: '大多数模板支持自由修改，包括颜色、字体、布局等，但需遵守授权协议。' },
+    {
+      q: '如何找到合适的付费 PPT 模板？',
+      a: '明确使用场景和风格需求，使用分类筛选和关键词搜索，查看预览和评价。',
+    },
+    {
+      q: '付费模板值得购买吗？',
+      a: '对于重要场合（路演、述职、大型汇报），专业模板可以显著提升效果，值得投资。',
+    },
+    {
+      q: '购买模板后可以修改吗？',
+      a: '大多数模板支持自由修改，包括颜色、字体、布局等，但需遵守授权协议。',
+    },
   ],
 };
 
@@ -191,14 +302,14 @@ function scanMdxFiles(dir: string): string[] {
 
 function extractCategory(filePath: string): string {
   const dirMap: Record<string, string> = {
-    '产品营销与营销方案PPT': 'marketing',
-    '商务汇报PPT': 'business',
-    '年终总结PPT': 'year-end',
-    '教育培训与课件PPT': 'education',
-    '述职报告PPT': 'report',
-    '项目提案PPT': 'proposal',
-    '通用与混合场景': 'general',
-    '付费模板搜索与产品视角': 'paid-search',
+    产品营销与营销方案PPT: 'marketing',
+    商务汇报PPT: 'business',
+    年终总结PPT: 'year-end',
+    教育培训与课件PPT: 'education',
+    述职报告PPT: 'report',
+    项目提案PPT: 'proposal',
+    通用与混合场景: 'general',
+    付费模板搜索与产品视角: 'paid-search',
   };
 
   for (const [dirName, category] of Object.entries(dirMap)) {
@@ -233,7 +344,11 @@ function buildBlogIndex(files: string[]): BlogMeta[] {
   return index;
 }
 
-function findRelatedBlogs(current: BlogMeta, allBlogs: BlogMeta[], limit = 3): BlogMeta[] {
+function findRelatedBlogs(
+  current: BlogMeta,
+  allBlogs: BlogMeta[],
+  limit = 3
+): BlogMeta[] {
   const related: { blog: BlogMeta; score: number }[] = [];
 
   for (const blog of allBlogs) {
@@ -254,7 +369,9 @@ function findRelatedBlogs(current: BlogMeta, allBlogs: BlogMeta[], limit = 3): B
     }
 
     // 标题关键词匹配
-    const titleWords = current.title.split(/[，。、\s]+/).filter(w => w.length > 1);
+    const titleWords = current.title
+      .split(/[，。、\s]+/)
+      .filter((w) => w.length > 1);
     for (const word of titleWords) {
       if (blog.title.includes(word)) {
         score += 1;
@@ -269,7 +386,7 @@ function findRelatedBlogs(current: BlogMeta, allBlogs: BlogMeta[], limit = 3): B
   return related
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
-    .map(r => r.blog);
+    .map((r) => r.blog);
 }
 
 // ============================================================================
@@ -279,7 +396,9 @@ function findRelatedBlogs(current: BlogMeta, allBlogs: BlogMeta[], limit = 3): B
 function generateInternalLinks(current: BlogMeta, related: BlogMeta[]): string {
   if (related.length === 0) return '';
 
-  const links = related.map(blog => `- [${blog.title}](/blog/${blog.slug})`).join('\n');
+  const links = related
+    .map((blog) => `- [${blog.title}](/blog/${blog.slug})`)
+    .join('\n');
 
   return `
 
@@ -295,7 +414,9 @@ function generateExternalLinks(category: string): string {
 
   if (selected.length === 0) return '';
 
-  const linkList = selected.map(l => `- [${l.name}](${l.url}) - ${l.desc}`).join('\n');
+  const linkList = selected
+    .map((l) => `- [${l.name}](${l.url}) - ${l.desc}`)
+    .join('\n');
 
   return `
 
@@ -311,7 +432,7 @@ function generateFAQ(category: string): string {
 
   if (selected.length === 0) return '';
 
-  const faqList = selected.map(f => `### ${f.q}\n\n${f.a}`).join('\n\n');
+  const faqList = selected.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
 
   return `
 
@@ -382,7 +503,11 @@ function enhanceFile(
     const enhancements: string[] = [];
 
     // 1. 检查并添加权威引用
-    if (!content.includes('💡 **专业洞察**') && !content.includes('研究表明') && !content.includes('数据显示')) {
+    if (
+      !content.includes('💡 **专业洞察**') &&
+      !content.includes('研究表明') &&
+      !content.includes('数据显示')
+    ) {
       enhancedContent = insertAuthorityQuote(enhancedContent, category);
       enhancements.push('authority-quote');
     }
@@ -463,8 +588,8 @@ async function main() {
   }
 
   // 统计结果
-  const successCount = results.filter(r => r.success).length;
-  const enhancedCount = results.filter(r => r.enhancements.length > 0).length;
+  const successCount = results.filter((r) => r.success).length;
+  const enhancedCount = results.filter((r) => r.enhancements.length > 0).length;
 
   const enhancementStats: Record<string, number> = {};
   for (const r of results) {
@@ -484,9 +609,16 @@ async function main() {
   }
 
   // 保存报告
-  const reportPath = path.join(__dirname, '../../reports/blog-enhance-report.json');
+  const reportPath = path.join(
+    __dirname,
+    '../../reports/blog-enhance-report.json'
+  );
   fs.mkdirSync(path.dirname(reportPath), { recursive: true });
-  fs.writeFileSync(reportPath, JSON.stringify({ config, results, stats: enhancementStats }, null, 2), 'utf-8');
+  fs.writeFileSync(
+    reportPath,
+    JSON.stringify({ config, results, stats: enhancementStats }, null, 2),
+    'utf-8'
+  );
   console.log(`\n📄 报告已保存到: ${reportPath}`);
 }
 

@@ -5,7 +5,13 @@
 export type TaskStatus = 'pending' | 'generated' | 'approved' | 'uploaded';
 export type MediaStatus = 'none' | 'partial' | 'done';
 export type TextStrategy = 'short-zh' | 'english' | 'blank';
-export type SceneType = 'flow' | 'chart' | 'cards' | 'compare' | 'scene' | 'concept';
+export type SceneType =
+  | 'flow'
+  | 'chart'
+  | 'cards'
+  | 'compare'
+  | 'scene'
+  | 'concept';
 
 export interface CoverTask {
   filename: string;
@@ -59,7 +65,8 @@ export interface ImageTasksData {
  * 计算任务的 mediaStatus
  */
 export function calculateMediaStatus(task: ImageTask): MediaStatus {
-  const coverDone = task.cover.status === 'approved' || task.cover.status === 'uploaded';
+  const coverDone =
+    task.cover.status === 'approved' || task.cover.status === 'uploaded';
   const inlineDone = task.inlineImages.filter(
     (img) => img.status === 'approved' || img.status === 'uploaded'
   ).length;
@@ -73,7 +80,10 @@ export function calculateMediaStatus(task: ImageTask): MediaStatus {
 /**
  * 验证 ImageTask 数据完整性
  */
-export function validateImageTask(task: ImageTask): { valid: boolean; errors: string[] } {
+export function validateImageTask(task: ImageTask): {
+  valid: boolean;
+  errors: string[];
+} {
   const errors: string[] = [];
 
   if (!task.slug) errors.push('缺少 slug');
@@ -129,27 +139,49 @@ export function calculateProgress(tasks: ImageTask[]): TaskProgress {
   for (const task of tasks) {
     // 封面统计
     switch (task.cover.status) {
-      case 'pending': progress.coverPending++; break;
-      case 'generated': progress.coverGenerated++; break;
-      case 'approved': progress.coverApproved++; break;
-      case 'uploaded': progress.coverUploaded++; break;
+      case 'pending':
+        progress.coverPending++;
+        break;
+      case 'generated':
+        progress.coverGenerated++;
+        break;
+      case 'approved':
+        progress.coverApproved++;
+        break;
+      case 'uploaded':
+        progress.coverUploaded++;
+        break;
     }
 
     // 内页统计
     for (const img of task.inlineImages) {
       switch (img.status) {
-        case 'pending': progress.inlinePending++; break;
-        case 'generated': progress.inlineGenerated++; break;
-        case 'approved': progress.inlineApproved++; break;
-        case 'uploaded': progress.inlineUploaded++; break;
+        case 'pending':
+          progress.inlinePending++;
+          break;
+        case 'generated':
+          progress.inlineGenerated++;
+          break;
+        case 'approved':
+          progress.inlineApproved++;
+          break;
+        case 'uploaded':
+          progress.inlineUploaded++;
+          break;
       }
     }
 
     // mediaStatus 统计
     switch (task.mediaStatus) {
-      case 'none': progress.mediaStatusNone++; break;
-      case 'partial': progress.mediaStatusPartial++; break;
-      case 'done': progress.mediaStatusDone++; break;
+      case 'none':
+        progress.mediaStatusNone++;
+        break;
+      case 'partial':
+        progress.mediaStatusPartial++;
+        break;
+      case 'done':
+        progress.mediaStatusDone++;
+        break;
     }
   }
 

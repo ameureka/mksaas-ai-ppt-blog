@@ -29,7 +29,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '../../../../..');
 const DRAFT_CODE_ROOT = path.resolve(__dirname, '../..');
 
 // 加载 image-tasks.json 获取 slug 映射
-let slugMapping: Record<string, string> = {};
+const slugMapping: Record<string, string> = {};
 try {
   const tasksPath = path.join(DRAFT_CODE_ROOT, 'data/image-tasks.json');
   if (fs.existsSync(tasksPath)) {
@@ -125,8 +125,14 @@ export interface BlogFile {
 // ============================================================================
 
 export const defaultFixConfig: FixConfig = {
-  contentDir: path.join(PROJECT_ROOT, '深入细化调整/006-blogs-seo-博文设计/广告-博文'),
-  outputDir: path.join(PROJECT_ROOT, '深入细化调整/006-blogs-seo-博文设计/广告-博文'),
+  contentDir: path.join(
+    PROJECT_ROOT,
+    '深入细化调整/006-blogs-seo-博文设计/广告-博文'
+  ),
+  outputDir: path.join(
+    PROJECT_ROOT,
+    '深入细化调整/006-blogs-seo-博文设计/广告-博文'
+  ),
   fixTypes: ['fix-all'],
   overwrite: true,
   backup: true,
@@ -164,11 +170,11 @@ export function parseMdxFile(filePath: string): BlogFile | null {
     const rawContent = fs.readFileSync(filePath, 'utf-8');
     const { data, content } = matter(rawContent);
     const fileName = path.basename(filePath, path.extname(filePath));
-    
+
     // 优先使用 image-tasks.json 中的英文 slug
     const title = (data as BlogFrontmatter).title || '';
     let slug = slugMapping[title];
-    
+
     // 如果没有映射，使用文件名（去掉 .zh 后缀）
     if (!slug) {
       slug = fileName.replace(/\.zh$/, '');
@@ -216,14 +222,14 @@ export function writeMdxFile(
 
 // 目录名到分类 slug 的映射
 const dirToCategorySlug: Record<string, string> = {
-  '产品营销与营销方案PPT': 'marketing',
-  '商务汇报PPT': 'business',
-  '年终总结PPT': 'year-end',
-  '教育培训与课件PPT': 'education',
-  '述职报告PPT': 'report',
-  '项目提案PPT': 'proposal',
-  '通用与混合场景': 'general',
-  '付费模板搜索与产品视角': 'paid-search',
+  产品营销与营销方案PPT: 'marketing',
+  商务汇报PPT: 'business',
+  年终总结PPT: 'year-end',
+  教育培训与课件PPT: 'education',
+  述职报告PPT: 'report',
+  项目提案PPT: 'proposal',
+  通用与混合场景: 'general',
+  付费模板搜索与产品视角: 'paid-search',
 };
 
 /**
@@ -244,16 +250,18 @@ function inferCategoryFromPath(filePath: string): string | null {
 export function fixCategory(
   frontmatter: BlogFrontmatter,
   slug: string,
-  filePath: string = ''
+  filePath = ''
 ): AppliedFix | null {
   const currentCategories = frontmatter.categories || [];
   const validSlugs = Object.keys(categoryStyles);
 
   // 首先尝试从文件路径推断分类
   const inferredCategory = inferCategoryFromPath(filePath);
-  
+
   // 检查是否需要修复
-  const needsFix = currentCategories.some((cat) => !validSlugs.includes(cat)) || currentCategories.length === 0;
+  const needsFix =
+    currentCategories.some((cat) => !validSlugs.includes(cat)) ||
+    currentCategories.length === 0;
   if (!needsFix && currentCategories.length > 0) return null;
 
   // 如果能从路径推断，优先使用

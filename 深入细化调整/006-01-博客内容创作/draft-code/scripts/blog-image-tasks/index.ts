@@ -13,15 +13,15 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import matter from 'gray-matter';
+import { getCategoryStyle } from '../../config/category-styles';
 import {
+  type InlinePromptParams,
+  type TextStrategy,
   generateCoverPrompt as buildCoverPrompt,
   generateInlinePrompt as buildInlinePrompt,
   detectSceneType,
   getSceneElements,
-  type TextStrategy,
-  type InlinePromptParams,
 } from '../../config/prompt-templates';
-import { getCategoryStyle } from '../../config/category-styles';
 
 // ============================================================================
 // 类型定义
@@ -142,12 +142,11 @@ export function extractScenes(
   content: string,
   count: number
 ): Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> {
-  const scenes: Array<Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>> = [];
+  const scenes: Array<
+    Pick<InlineImageTask, 'scene' | 'sceneType' | 'elements'>
+  > = [];
 
-  const buildSceneDescription = (
-    heading: string,
-    summary: string
-  ): string => {
+  const buildSceneDescription = (heading: string, summary: string): string => {
     if (summary) return `${heading}：${summary}`;
     return heading;
   };
@@ -179,9 +178,13 @@ export function extractScenes(
   const sectionRegex = /^##\s+(.+)\n([\s\S]*?)(?=^##\s+|\Z)/gm;
   let match: RegExpExecArray | null = null;
 
-  while ((match = sectionRegex.exec(content)) !== null && scenes.length < count) {
+  while (
+    (match = sectionRegex.exec(content)) !== null &&
+    scenes.length < count
+  ) {
     const heading = match[1].trim();
-    if (!heading || heading.includes('常见问题') || heading.includes('FAQ')) continue;
+    if (!heading || heading.includes('常见问题') || heading.includes('FAQ'))
+      continue;
 
     const paragraph = (match[2] || '')
       .split(/\n\s*\n/)
@@ -358,8 +361,7 @@ export function generateMarkdownTaskList(
   tasks: ImageTask[],
   options: Pick<ImageTaskConfig, 'coverCount' | 'inlineCount' | 'textStrategy'>
 ): string {
-  const totalImages =
-    tasks.length * (options.coverCount + options.inlineCount);
+  const totalImages = tasks.length * (options.coverCount + options.inlineCount);
 
   let md = `# 博客图片任务清单
 
@@ -393,8 +395,9 @@ export function generateMarkdownTaskList(
 
   tasks.forEach((task, index) => {
     const coverStatus = task.status.coverDone ? '✅' : '⬜';
-    const inlineStatuses = Array.from({ length: options.inlineCount }, (_, i) =>
-      task.inlineImages[i]?.done ? '✅' : '⬜'
+    const inlineStatuses = Array.from(
+      { length: options.inlineCount },
+      (_, i) => (task.inlineImages[i]?.done ? '✅' : '⬜')
     );
     const uploadStatus = task.status.uploaded ? '📤' : '⬜';
 

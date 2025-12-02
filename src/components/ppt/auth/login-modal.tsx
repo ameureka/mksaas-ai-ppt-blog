@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { authClient } from '@/lib/auth-client';
 import { routing } from '@/i18n/routing';
+import { authClient } from '@/lib/auth-client';
 import { Routes } from '@/routes';
 import { Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react';
 import { useLocale } from 'next-intl';

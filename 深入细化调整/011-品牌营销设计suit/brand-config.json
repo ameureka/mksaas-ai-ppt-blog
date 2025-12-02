@@ -14,16 +14,13 @@
       "en": "Find Perfect Templates in 3 Minutes"
     },
     "domain": "ppthub.shop",
-    "alternativeDomains": [
-      "ppthub.xyz",
-      "ppthub.cc"
-    ],
+    "alternativeDomains": ["ppthub.xyz", "ppthub.cc"],
     "description": {
       "short": "免费 PPT 模板下载站，AI 智能推荐",
       "long": "PPTHub 为大学生、公务员、职场小白提供海量免费 PPT 模板，通过 AI 向量搜索快速匹配最合适的模板，配套制作教程，实现 PPT 创作自由"
     }
   },
-  
+
   "colors": {
     "primary": {
       "main": "#2563EB",
@@ -53,7 +50,7 @@
       }
     }
   },
-  
+
   "typography": {
     "fontFamily": {
       "zh": "思源黑体, Source Han Sans CN, sans-serif",
@@ -71,7 +68,7 @@
       "4xl": "2.25rem"
     }
   },
-  
+
   "author": {
     "id": "ppthub-official",
     "name": {
@@ -91,7 +88,7 @@
       "zhihu": "ppthub"
     }
   },
-  
+
   "replacements": {
     "MkSaaS": "PPTHub",
     "Indie Maker Fox": "AI 驱动的 PPT 模板快速下载站",
@@ -103,7 +100,7 @@
     "mkdirs": "ppthub-official",
     "pptx-team": "ppthub-official"
   },
-  
+
   "seo": {
     "title": {
       "template": "%s | PPTHub - 免费 PPT 模板下载",
@@ -128,7 +125,7 @@
       "PPTHub"
     ]
   },
-  
+
   "social": {
     "xiaohongshu": {
       "name": "PPTHub",
@@ -146,7 +143,7 @@
       "avatar": "/images/social/zhihu-avatar.png"
     }
   },
-  
+
   "features": {
     "aiSearch": {
       "title": "AI 智能推荐",
@@ -165,7 +162,7 @@
       "description": "每个模板附带制作技巧"
     }
   },
-  
+
   "categories": {
     "business": {
       "name": "商业报告",
@@ -198,7 +195,7 @@
       "description": "年度总结、季度回顾、绩效汇报"
     }
   },
-  
+
   "meta": {
     "version": "1.0.0",
     "createdAt": "2025-12-02",

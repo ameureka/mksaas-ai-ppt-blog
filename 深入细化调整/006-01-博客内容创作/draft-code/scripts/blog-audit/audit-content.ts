@@ -42,7 +42,7 @@ function main() {
     const catDir = path.join(targetDir, cat);
     if (!fs.statSync(catDir).isDirectory()) continue;
 
-    const files = fs.readdirSync(catDir).filter(f => f.endsWith('.zh.mdx'));
+    const files = fs.readdirSync(catDir).filter((f) => f.endsWith('.zh.mdx'));
     for (const file of files) {
       total++;
       const filePath = path.join(catDir, file);

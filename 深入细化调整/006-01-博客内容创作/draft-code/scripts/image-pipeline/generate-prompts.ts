@@ -1,11 +1,11 @@
 /**
  * Prompt 生成脚本 - 从 MDX 文件提取内容并生成图片 Prompt
- * 
+ *
  * 功能：
  * 1. 根据文件所在目录自动映射分类
  * 2. 将中文标题转换为英文 slug
  * 3. 生成封面和内页 Prompt
- * 
+ *
  * 用法: npx tsx scripts/image-pipeline/generate-prompts.ts
  */
 
@@ -13,18 +13,21 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { getCategoryStyleBySlug } from '../../config/category-styles';
 import {
+  type TextStrategy,
+  detectSceneType,
+  extractArticleKeywords,
   generateCoverPrompt,
   generateInlinePrompt,
-  detectSceneType,
   getSceneElements,
-  extractArticleKeywords,
-  type TextStrategy,
 } from '../../config/prompt-templates';
 import type { ImageTask, ImageTasksData, SceneType } from './types';
 
 // 配置
 const CONFIG = {
-  mdxDir: path.resolve(__dirname, '../../../../006-blogs-seo-博文设计/广告-博文'),
+  mdxDir: path.resolve(
+    __dirname,
+    '../../../../006-blogs-seo-博文设计/广告-博文'
+  ),
   outputDir: path.resolve(__dirname, '../../data'),
   outputJson: 'image-tasks.json',
   outputMd: 'image-tasks.md',
@@ -32,114 +35,114 @@ const CONFIG = {
 
 // 目录名 -> 分类 slug 映射
 const DIR_TO_CATEGORY: Record<string, string> = {
-  '商务汇报PPT': 'business',
-  '年终总结PPT': 'year-end',
-  '教育培训与课件PPT': 'education',
-  '产品营销与营销方案PPT': 'marketing',
-  '项目提案PPT': 'proposal',
-  '述职报告PPT': 'report',
-  '通用与混合场景': 'general',
-  '付费模板搜索与产品视角': 'tips',
+  商务汇报PPT: 'business',
+  年终总结PPT: 'year-end',
+  教育培训与课件PPT: 'education',
+  产品营销与营销方案PPT: 'marketing',
+  项目提案PPT: 'proposal',
+  述职报告PPT: 'report',
+  通用与混合场景: 'general',
+  付费模板搜索与产品视角: 'tips',
 };
 
 // 中文关键词 -> 英文翻译映射
 const TITLE_TRANSLATIONS: Record<string, string> = {
-  '商务汇报': 'business-report',
-  '年终总结': 'year-end-summary',
-  '教育培训': 'education-training',
-  '培训课件': 'training-courseware',
-  '产品营销': 'product-marketing',
-  '营销方案': 'marketing-plan',
-  '项目提案': 'project-proposal',
-  '述职报告': 'work-report',
-  '述职': 'work-report',
-  'PPT模板': 'ppt-template',
-  'PPT': 'ppt',
-  '一般包含哪些内容': 'content-guide',
-  '推荐页数': 'page-count',
-  '推荐字体和配色': 'font-color',
-  '字体和配色': 'font-color',
-  '怎么做': 'how-to',
-  '怎么写': 'how-to-write',
-  '怎么选': 'how-to-choose',
-  '怎么设计': 'how-to-design',
-  '如何': 'how-to',
-  '什么时候': 'when-to',
-  '为什么': 'why',
-  '下载': 'download',
-  '模板': 'template',
-  '快速': 'quick',
-  '修改': 'modify',
-  '改成': 'convert',
-  '更专业': 'professional',
-  '数据': 'data',
-  '图表': 'chart',
-  '结构': 'structure',
-  '内容': 'content',
-  '设计': 'design',
-  '风格': 'style',
-  '分类': 'category',
-  '页数': 'pages',
-  '场景': 'scenario',
-  '技巧': 'tips',
-  '指南': 'guide',
-  '清单': 'checklist',
-  '案例': 'case-study',
-  '实战': 'practical',
-  '新手': 'beginner',
-  '入门': 'getting-started',
-  '免费': 'free',
-  '付费': 'paid',
-  '搜索': 'search',
-  '选择': 'choose',
-  '合适': 'suitable',
-  '互动': 'interactive',
-  '课堂': 'classroom',
-  '线上': 'online',
-  '线下': 'offline',
-  '复盘': 'review',
-  '总结': 'summary',
-  '计划': 'plan',
-  '目标': 'goal',
-  '成绩': 'achievement',
-  '失败': 'failure',
-  '决策层': 'decision-maker',
-  '老板': 'boss',
-  '领导': 'leader',
-  '同事': 'colleague',
-  '受众': 'audience',
-  '用户': 'user',
-  '产品': 'product',
-  '品牌': 'brand',
-  '转化': 'conversion',
-  '卖点': 'selling-point',
-  '创意': 'creative',
-  '策略': 'strategy',
-  '执行': 'execution',
-  '效果': 'effect',
-  '评估': 'evaluation',
-  '预算': 'budget',
-  '渠道': 'channel',
-  '路演': 'roadshow',
-  '汇报': 'report',
-  '演讲': 'presentation',
-  '会议': 'meeting',
-  '投影': 'projection',
-  '录屏': 'recording',
-  '发送': 'send',
-  '文件': 'file',
+  商务汇报: 'business-report',
+  年终总结: 'year-end-summary',
+  教育培训: 'education-training',
+  培训课件: 'training-courseware',
+  产品营销: 'product-marketing',
+  营销方案: 'marketing-plan',
+  项目提案: 'project-proposal',
+  述职报告: 'work-report',
+  述职: 'work-report',
+  PPT模板: 'ppt-template',
+  PPT: 'ppt',
+  一般包含哪些内容: 'content-guide',
+  推荐页数: 'page-count',
+  推荐字体和配色: 'font-color',
+  字体和配色: 'font-color',
+  怎么做: 'how-to',
+  怎么写: 'how-to-write',
+  怎么选: 'how-to-choose',
+  怎么设计: 'how-to-design',
+  如何: 'how-to',
+  什么时候: 'when-to',
+  为什么: 'why',
+  下载: 'download',
+  模板: 'template',
+  快速: 'quick',
+  修改: 'modify',
+  改成: 'convert',
+  更专业: 'professional',
+  数据: 'data',
+  图表: 'chart',
+  结构: 'structure',
+  内容: 'content',
+  设计: 'design',
+  风格: 'style',
+  分类: 'category',
+  页数: 'pages',
+  场景: 'scenario',
+  技巧: 'tips',
+  指南: 'guide',
+  清单: 'checklist',
+  案例: 'case-study',
+  实战: 'practical',
+  新手: 'beginner',
+  入门: 'getting-started',
+  免费: 'free',
+  付费: 'paid',
+  搜索: 'search',
+  选择: 'choose',
+  合适: 'suitable',
+  互动: 'interactive',
+  课堂: 'classroom',
+  线上: 'online',
+  线下: 'offline',
+  复盘: 'review',
+  总结: 'summary',
+  计划: 'plan',
+  目标: 'goal',
+  成绩: 'achievement',
+  失败: 'failure',
+  决策层: 'decision-maker',
+  老板: 'boss',
+  领导: 'leader',
+  同事: 'colleague',
+  受众: 'audience',
+  用户: 'user',
+  产品: 'product',
+  品牌: 'brand',
+  转化: 'conversion',
+  卖点: 'selling-point',
+  创意: 'creative',
+  策略: 'strategy',
+  执行: 'execution',
+  效果: 'effect',
+  评估: 'evaluation',
+  预算: 'budget',
+  渠道: 'channel',
+  路演: 'roadshow',
+  汇报: 'report',
+  演讲: 'presentation',
+  会议: 'meeting',
+  投影: 'projection',
+  录屏: 'recording',
+  发送: 'send',
+  文件: 'file',
 };
 
 /**
  * 将中文标题转换为英文 slug
  */
 function titleToSlug(title: string, categorySlug: string): string {
-  let slug = title
-    .replace(/[？?！!。，,：:""''「」【】（）()]/g, '')
-    .trim();
+  let slug = title.replace(/[？?！!。，,：:""''「」【】（）()]/g, '').trim();
 
   // 按优先级替换关键词
-  const sortedKeys = Object.keys(TITLE_TRANSLATIONS).sort((a, b) => b.length - a.length);
+  const sortedKeys = Object.keys(TITLE_TRANSLATIONS).sort(
+    (a, b) => b.length - a.length
+  );
   for (const zh of sortedKeys) {
     const en = TITLE_TRANSLATIONS[zh];
     slug = slug.replace(new RegExp(zh, 'g'), `-${en}-`);
@@ -181,7 +184,10 @@ function getCategoryFromPath(filePath: string): string {
 /**
  * 简单的 frontmatter 解析
  */
-function parseFrontmatter(content: string): { data: Record<string, unknown>; content: string } {
+function parseFrontmatter(content: string): {
+  data: Record<string, unknown>;
+  content: string;
+} {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!match) return { data: {}, content };
 
@@ -203,7 +209,11 @@ function parseFrontmatter(content: string): { data: Record<string, unknown>; con
     }
 
     if (value.startsWith('[') && value.endsWith(']')) {
-      data[key] = value.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+      data[key] = value
+        .slice(1, -1)
+        .split(',')
+        .map((s) => s.trim().replace(/^["']|["']$/g, ''))
+        .filter(Boolean);
     } else if (value === 'true') {
       data[key] = true;
     } else if (value === 'false') {
@@ -315,7 +325,7 @@ function processFile(filePath: string): ImageTask | null {
   }
 
   const title = String(data.title);
-  
+
   // 从路径获取分类
   const categorySlug = getCategoryFromPath(filePath);
   const style = getCategoryStyleBySlug(categorySlug);
@@ -325,23 +335,25 @@ function processFile(filePath: string): ImageTask | null {
 
   const textStrategy: TextStrategy = 'short-zh';
   const textToRender = extractCoreKeywords(title);
-  
+
   // 英文短标题
   const shortTitleEnMap: Record<string, string> = {
-    'business': 'Business Report PPT',
+    business: 'Business Report PPT',
     'year-end': 'Year-End Summary PPT',
-    'education': 'Education Training PPT',
-    'marketing': 'Product Marketing PPT',
-    'proposal': 'Project Proposal PPT',
-    'report': 'Work Report PPT',
-    'general': 'PPT Tips',
-    'tips': 'Template Tips',
+    education: 'Education Training PPT',
+    marketing: 'Product Marketing PPT',
+    proposal: 'Project Proposal PPT',
+    report: 'Work Report PPT',
+    general: 'PPT Tips',
+    tips: 'Template Tips',
   };
   const shortTitleEn = shortTitleEnMap[categorySlug] || 'PPT Guide';
 
   // 从文章内容提取关键词，与分类关键词合并
   const articleKeywords = extractArticleKeywords(title, body);
-  const keywords = [...new Set([...articleKeywords, ...style.coverKeywords])].slice(0, 5);
+  const keywords = [
+    ...new Set([...articleKeywords, ...style.coverKeywords]),
+  ].slice(0, 5);
 
   const coverPrompt = generateCoverPrompt({
     title,

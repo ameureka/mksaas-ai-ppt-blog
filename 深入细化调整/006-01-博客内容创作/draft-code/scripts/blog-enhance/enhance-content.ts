@@ -78,7 +78,7 @@ function main() {
     const catDir = path.join(targetDir, cat);
     if (!fs.statSync(catDir).isDirectory()) continue;
 
-    const files = fs.readdirSync(catDir).filter(f => f.endsWith('.zh.mdx'));
+    const files = fs.readdirSync(catDir).filter((f) => f.endsWith('.zh.mdx'));
     for (const file of files) {
       const filePath = path.join(catDir, file);
       const raw = fs.readFileSync(filePath, 'utf-8');
@@ -88,7 +88,8 @@ function main() {
 
       const category = getCategory(filePath);
       const categoryQuotes = quotes[category] || quotes.general;
-      const quote = categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)];
+      const quote =
+        categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)];
 
       const newContent = addQuotesAfterFirstH2(content, quote);
       if (newContent === content) continue;

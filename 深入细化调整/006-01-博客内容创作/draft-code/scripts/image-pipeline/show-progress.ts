@@ -1,6 +1,6 @@
 /**
  * 显示图片生成进度
- * 
+ *
  * 用法: npx tsx scripts/image-pipeline/show-progress.ts
  */
 
@@ -41,9 +41,14 @@ function main() {
   console.log('');
 
   // 内页进度
-  const totalInline = progress.inlinePending + progress.inlineGenerated + progress.inlineApproved + progress.inlineUploaded;
+  const totalInline =
+    progress.inlinePending +
+    progress.inlineGenerated +
+    progress.inlineApproved +
+    progress.inlineUploaded;
   const inlineDone = progress.inlineApproved + progress.inlineUploaded;
-  const inlinePercent = totalInline > 0 ? Math.round((inlineDone / totalInline) * 100) : 0;
+  const inlinePercent =
+    totalInline > 0 ? Math.round((inlineDone / totalInline) * 100) : 0;
   console.log('📄 内页图:');
   console.log(`   待处理: ${progress.inlinePending}`);
   console.log(`   已生成: ${progress.inlineGenerated}`);
@@ -61,8 +66,12 @@ function main() {
 
   // 进度条
   const barWidth = 30;
-  const coverBar = '█'.repeat(Math.round(coverPercent / 100 * barWidth)) + '░'.repeat(barWidth - Math.round(coverPercent / 100 * barWidth));
-  const inlineBar = '█'.repeat(Math.round(inlinePercent / 100 * barWidth)) + '░'.repeat(barWidth - Math.round(inlinePercent / 100 * barWidth));
+  const coverBar =
+    '█'.repeat(Math.round((coverPercent / 100) * barWidth)) +
+    '░'.repeat(barWidth - Math.round((coverPercent / 100) * barWidth));
+  const inlineBar =
+    '█'.repeat(Math.round((inlinePercent / 100) * barWidth)) +
+    '░'.repeat(barWidth - Math.round((inlinePercent / 100) * barWidth));
 
   console.log('📈 进度条:');
   console.log(`   封面: [${coverBar}] ${coverPercent}%`);

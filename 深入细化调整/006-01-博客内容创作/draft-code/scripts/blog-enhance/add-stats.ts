@@ -90,14 +90,14 @@ function scanMdxFiles(dir: string): string[] {
 
 function extractCategory(filePath: string): string {
   const dirMap: Record<string, string> = {
-    '产品营销与营销方案PPT': 'marketing',
-    '商务汇报PPT': 'business',
-    '年终总结PPT': 'year-end',
-    '教育培训与课件PPT': 'education',
-    '述职报告PPT': 'report',
-    '项目提案PPT': 'proposal',
-    '通用与混合场景': 'general',
-    '付费模板搜索与产品视角': 'paid-search',
+    产品营销与营销方案PPT: 'marketing',
+    商务汇报PPT: 'business',
+    年终总结PPT: 'year-end',
+    教育培训与课件PPT: 'education',
+    述职报告PPT: 'report',
+    项目提案PPT: 'proposal',
+    通用与混合场景: 'general',
+    付费模板搜索与产品视角: 'paid-search',
   };
 
   for (const [dirName, category] of Object.entries(dirMap)) {
@@ -152,7 +152,10 @@ function addStatsToFile(filePath: string, config: StatsConfig): StatsResult {
       const secondH2 = h2Matches[1];
       if (secondH2.index !== undefined) {
         // 找到该标题后的第一个段落结束位置
-        const afterH2 = content.indexOf('\n\n', secondH2.index + secondH2[0].length);
+        const afterH2 = content.indexOf(
+          '\n\n',
+          secondH2.index + secondH2[0].length
+        );
         if (afterH2 > 0) {
           const nextParaEnd = content.indexOf('\n\n', afterH2 + 2);
           if (nextParaEnd > afterH2) {
@@ -213,17 +216,24 @@ async function main() {
     }
   }
 
-  const addedCount = results.filter(r => r.added).length;
-  const skippedCount = results.filter(r => r.success && !r.added).length;
+  const addedCount = results.filter((r) => r.added).length;
+  const skippedCount = results.filter((r) => r.success && !r.added).length;
 
   console.log('\n📊 增强结果:');
   console.log(`  总文件数: ${files.length}`);
   console.log(`  已添加统计: ${addedCount}`);
   console.log(`  已有统计(跳过): ${skippedCount}`);
 
-  const reportPath = path.join(__dirname, '../../reports/blog-add-stats-report.json');
+  const reportPath = path.join(
+    __dirname,
+    '../../reports/blog-add-stats-report.json'
+  );
   fs.mkdirSync(path.dirname(reportPath), { recursive: true });
-  fs.writeFileSync(reportPath, JSON.stringify({ config, results }, null, 2), 'utf-8');
+  fs.writeFileSync(
+    reportPath,
+    JSON.stringify({ config, results }, null, 2),
+    'utf-8'
+  );
   console.log(`\n📄 报告已保存到: ${reportPath}`);
 }
 

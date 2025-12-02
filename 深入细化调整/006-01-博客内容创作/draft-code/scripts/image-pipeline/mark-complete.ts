@@ -1,7 +1,7 @@
 /**
  * 标记图片生成完成 - 更新任务状态
- * 
- * 用法: 
+ *
+ * 用法:
  *   npx tsx scripts/image-pipeline/mark-complete.ts --slug <slug> --type cover
  *   npx tsx scripts/image-pipeline/mark-complete.ts --slug <slug> --type inline --index 1
  *   npx tsx scripts/image-pipeline/mark-complete.ts --scan  # 扫描 generated-images 自动标记
@@ -46,7 +46,11 @@ function markCover(slug: string, status: TaskStatus = 'generated') {
   console.log(`✅ 已标记封面: ${slug} -> ${status}`);
 }
 
-function markInline(slug: string, index: number, status: TaskStatus = 'generated') {
+function markInline(
+  slug: string,
+  index: number,
+  status: TaskStatus = 'generated'
+) {
   const data = loadTasks();
   const task = data.tasks.find((t) => t.slug === slug);
 
@@ -103,7 +107,7 @@ function scanAndMark() {
     const inlineMatch = file.match(/^(.+)-(\d+)\.(jpg|jpeg|png)$/i);
     if (inlineMatch) {
       const slug = inlineMatch[1];
-      const index = parseInt(inlineMatch[2], 10);
+      const index = Number.parseInt(inlineMatch[2], 10);
       const task = data.tasks.find((t) => t.slug === slug);
       if (task && task.inlineImages[index - 1]?.status === 'pending') {
         task.inlineImages[index - 1].status = 'generated';
@@ -146,7 +150,8 @@ function main() {
   if (type === 'cover') {
     markCover(slug);
   } else if (type === 'inline') {
-    const index = indexIndex !== -1 ? parseInt(args[indexIndex + 1], 10) : 1;
+    const index =
+      indexIndex !== -1 ? Number.parseInt(args[indexIndex + 1], 10) : 1;
     markInline(slug, index);
   } else {
     console.error('❌ 无效的类型，使用 cover 或 inline');
