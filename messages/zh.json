@@ -143,12 +143,18 @@
   },
   "AboutPage": {
     "title": "关于我们",
-    "description": "PPTHub 是一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
+    "description": "PPTHub 是一个 AI 驱动的免费 PPT 模板下载平台，为职场人士、学生和创作者提供高质量的演示文稿模板。",
     "authorName": "PPTHub",
-    "authorBio": "最好的 AI SaaS 模板",
-    "introduction": "👋 你好，这里是 PPTHub，一个使用最先进的技术栈构建的 AI SaaS 模板，它可以帮助你更快更好地构建你的 SaaS。如果你有任何问题，欢迎联系我。",
-    "talkWithMe": "联系我",
-    "followMe": "关注我"
+    "authorBio": "AI 驱动的免费 PPT 模板下载平台",
+    "introduction": "👋 欢迎来到 PPTHub！我们致力于为用户提供高质量、易于使用的 PPT 模板。无论您是准备商务汇报、教育培训还是产品营销，我们都有适合您的专业模板。我们的使命是让每个人都能轻松制作出专业水准的演示文稿。",
+    "mission": "我们的使命",
+    "missionText": "让每个人都能轻松制作专业的 PPT，通过 AI 技术和精美设计，提升您的演示效率和效果。",
+    "stats": "平台数据",
+    "templates": "模板数量",
+    "downloads": "总下载量",
+    "users": "活跃用户",
+    "talkWithMe": "联系我们",
+    "followMe": "关注我们"
   },
   "ChangelogPage": {
     "title": "更新日志",
@@ -163,7 +169,9 @@
   "ContactPage": {
     "title": "联系我们",
     "description": "我们帮助您找到合适的计划",
-    "subtitle": "我们帮助您找到合适的计划",
+    "subtitle": "有任何问题或建议？我们随时为您服务",
+    "otherMethods": "其他联系方式",
+    "workingHours": "工作时间：周一至周五 9:00-18:00",
     "form": {
       "title": "联系我们",
       "description": "如果您有任何问题或反馈，请随时联系我们的团队",
@@ -172,6 +180,7 @@
       "message": "消息",
       "submit": "提交",
       "submitting": "提交中...",
+      "toast": "消息发送成功！",
       "success": "消息发送成功",
       "fail": "消息发送失败",
       "nameMinLength": "姓名必须至少包含 3 个字符",
@@ -188,7 +197,15 @@
     "sections": {
       "collection": {
         "title": "信息收集",
-        "content": "我们使用 Google AdSense 在我们的网站上展示广告。Google 使用 Cookie 根据您之前对我们网站或其他网站的访问来投放广告。"
+        "content": "我们使用 Google AdSense 在我们的网站上展示广告。Google 使用 Cookie 根据您之前对我们网站或其他网站的访问来投放广告。我们还可能收集您的浏览行为、设备信息和 IP 地址，以改善用户体验和提供个性化内容。"
+      },
+      "dataUsage": {
+        "title": "数据使用",
+        "content": "我们收集的数据仅用于：1) 展示相关广告；2) 分析网站流量；3) 改进服务质量。我们不会出售您的个人信息给第三方。"
+      },
+      "security": {
+        "title": "数据安全",
+        "content": "我们采用行业标准的安全措施保护您的数据，包括 SSL 加密传输和安全的数据存储。"
       },
       "cookies": {
         "title": "Cookie 使用",
@@ -200,7 +217,7 @@
       },
       "rights": {
         "title": "用户权利",
-        "content": "用户可以通过访问 www.aboutads.info 选择退出第三方供应商用于个性化广告的 Cookie。"
+        "content": "用户可以通过访问 www.aboutads.info 选择退出第三方供应商对个性化广告的 Cookie 使用。"
       }
     }
   },

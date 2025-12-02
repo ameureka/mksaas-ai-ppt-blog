@@ -37,6 +37,20 @@ export default async function PrivacyPolicyPage(props: PageProps) {
 
           <section>
             <h2 className="mb-4 text-2xl font-semibold tracking-tight">
+              {t('sections.dataUsage.title')}
+            </h2>
+            <p>{t('sections.dataUsage.content')}</p>
+          </section>
+
+          <section>
+            <h2 className="mb-4 text-2xl font-semibold tracking-tight">
+              {t('sections.security.title')}
+            </h2>
+            <p>{t('sections.security.content')}</p>
+          </section>
+
+          <section>
+            <h2 className="mb-4 text-2xl font-semibold tracking-tight">
               {t('sections.cookies.title')}
             </h2>
             <p>{t('sections.cookies.content')}</p>
@@ -55,6 +69,34 @@ export default async function PrivacyPolicyPage(props: PageProps) {
             </h2>
             <p>{t('sections.rights.content')}</p>
           </section>
+
+          <div className="mt-8 p-6 bg-muted rounded-lg">
+            <h3 className="font-semibold mb-4 text-lg">
+              Manage Ad Preferences
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a
+                  href="https://www.google.com/settings/ads"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline flex items-center gap-2"
+                >
+                  Google Ad Settings
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.aboutads.info/choices/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline flex items-center gap-2"
+                >
+                  Opt out of personalized advertising
+                </a>
+              </li>
+            </ul>
+          </div>
 
           <div className="mt-12 border-t pt-8 text-sm text-muted-foreground">
             {t('lastUpdated', { date: currentDate })}

@@ -142,13 +142,19 @@
     "backToHome": "Back to home"
   },
   "AboutPage": {
-    "title": "About",
-    "description": "Hi, I'm PPTHub Team, an indie maker who builds in public. I share thoughts and ideas about indie hacking here, and I build amazing products people need.",
-    "authorName": "PPTHub Team",
-    "authorBio": "Indie Maker",
-    "introduction": "👋 Hi there! This is PPTHub Team, an indie maker who builds in public. I share thoughts and ideas about indie hacking here, and I build amazing products people need.",
-    "talkWithMe": "Talk with me",
-    "followMe": "Follow me on X"
+    "title": "About Us",
+    "description": "PPTHub is an AI-powered free PPT template platform providing high-quality presentation templates for professionals, students, and creators.",
+    "authorName": "PPTHub",
+    "authorBio": "AI-Powered Free PPT Template Platform",
+    "introduction": "👋 Welcome to PPTHub! We are dedicated to providing high-quality, easy-to-use PPT templates. Whether you are preparing for a business report, education training, or product marketing, we have professional templates for you. Our mission is to make it easy for everyone to create professional-level presentations.",
+    "mission": "Our Mission",
+    "missionText": "Empowering everyone to create professional presentations easily through AI technology and exquisite design.",
+    "stats": "Platform Stats",
+    "templates": "Templates",
+    "downloads": "Downloads",
+    "users": "Active Users",
+    "talkWithMe": "Contact Us",
+    "followMe": "Follow Us on X"
   },
   "ChangelogPage": {
     "title": "Changelog",
@@ -161,17 +167,20 @@
     "subtitle": "Explore our future plans and upcoming features"
   },
   "ContactPage": {
-    "title": "Contact",
-    "description": "We'll help you find the right plan for your business",
-    "subtitle": "We'll help you find the right plan for your business",
+    "title": "Contact Us",
+    "description": "We help you find the right plan",
+    "subtitle": "Have questions or suggestions? We are here to help.",
+    "otherMethods": "Other Contact Methods",
+    "workingHours": "Working Hours: Mon-Fri 9:00-18:00",
     "form": {
       "title": "Contact Us",
-      "description": "If you have any questions or feedback, please reach out to our team",
+      "description": "If you have any questions or feedback, please feel free to contact our team",
       "name": "Name",
       "email": "Email",
       "message": "Message",
       "submit": "Submit",
       "submitting": "Submitting...",
+      "toast": "Message sent successfully!",
       "success": "Message sent successfully",
       "fail": "Failed to send message",
       "nameMinLength": "Name must be at least 3 characters",
@@ -188,7 +197,15 @@
     "sections": {
       "collection": {
         "title": "Information Collection",
-        "content": "We use Google AdSense to display ads on our website. Google uses cookies to serve ads based on your prior visits to our website or other websites."
+        "content": "We use Google AdSense to display ads on our website. Google uses cookies to serve ads based on your prior visits to our website or other websites. We may also collect your browsing behavior, device information, and IP address to improve user experience and provide personalized content."
+      },
+      "dataUsage": {
+        "title": "Data Usage",
+        "content": "The data we collect is used only for: 1) Displaying relevant ads; 2) Analyzing website traffic; 3) Improving service quality. We do not sell your personal information to third parties."
+      },
+      "security": {
+        "title": "Data Security",
+        "content": "We use industry-standard security measures to protect your data, including SSL encryption and secure data storage."
       },
       "cookies": {
         "title": "Cookie Usage",

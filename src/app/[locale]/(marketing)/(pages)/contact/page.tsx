@@ -41,8 +41,36 @@ export default async function ContactPage() {
           </p>
         </div>
 
-        {/* Form */}
-        <ContactFormCard />
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Form */}
+          <ContactFormCard />
+
+          {/* Other Methods */}
+          <div className="space-y-8">
+            <div className="p-6 bg-muted/50 rounded-xl space-y-4">
+              <h3 className="font-semibold text-xl">{t('otherMethods')}</h3>
+              <div className="space-y-3 text-muted-foreground">
+                <p className="flex items-center gap-2">
+                  <span>📧</span>
+                  <a
+                    href="mailto:support@ppthub.shop"
+                    className="hover:text-primary transition-colors"
+                  >
+                    support@ppthub.shop
+                  </a>
+                </p>
+                {/* <p className="flex items-center gap-2">
+                  <span>💬</span>
+                  <span>WeChat: PPTHub_Official</span>
+                </p> */}
+                <p className="flex items-center gap-2">
+                  <span>⏰</span>
+                  <span>{t('workingHours')}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Container>
   );
