@@ -57,11 +57,11 @@ interface PPT {
   rating?: number;
   reviewCount?: number;
   price?: number;
-  language: string;
+  language?: string;
   slides?: number;
-  tags: string[];
-  previewUrl: string;
-  pages: number;
+  tags?: string[];
+  previewUrl?: string;
+  pages?: number;
 }
 
 const categoryMetadata: Record<

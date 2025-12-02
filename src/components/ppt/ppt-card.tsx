@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { LocaleLink } from '@/i18n/navigation';
 import { Download, Eye, Globe } from 'lucide-react';
 
-interface PPT {
+interface PPTBase {
   id: string;
   title: string;
   category: string;
@@ -30,8 +30,8 @@ interface PPT {
 }
 
 interface PPTCardProps {
-  ppt: PPT;
-  onDownload: (ppt: PPT) => void;
+  ppt: PPTBase;
+  onDownload: (ppt: PPTBase) => void;
 }
 
 export function PPTCard({ ppt, onDownload }: PPTCardProps) {

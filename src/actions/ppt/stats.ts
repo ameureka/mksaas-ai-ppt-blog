@@ -25,14 +25,12 @@ export async function getDashboardStats(): Promise<
     const [pptAgg] = await db
       .select({
         totalPPTs: count(),
-        totalDownloads: sql<number>`coalesce(sum(${pptTable.downloads}), 0)`,
-        totalViews: sql<number>`coalesce(sum(${pptTable.views}), 0)`,
+        totalDownloads: sql<number>`coalesce(sum(${pptTable.downloadCount}), 0)`,
+        totalViews: sql<number>`coalesce(sum(${pptTable.viewCount}), 0)`,
       })
       .from(pptTable);
 
-    const [userAgg] = await db
-      .select({ totalUsers: count() })
-      .from(userTable);
+    const [userAgg] = await db.select({ totalUsers: count() }).from(userTable);
 
     return successResult({
       totalPPTs: Number(pptAgg?.totalPPTs ?? 0),

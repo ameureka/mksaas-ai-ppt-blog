@@ -85,8 +85,8 @@ fi
 echo -e "${YELLOW}📄 生成 site.webmanifest...${NC}"
 cat > "$OUTPUT_DIR/site.webmanifest" << 'EOF'
 {
-  "name": "SlideAI",
-  "short_name": "SlideAI",
+  "name": "PPTHub",
+  "short_name": "PPTHub",
   "description": "AI 驱动的免费 PPT 模板下载站",
   "icons": [
     {

@@ -1,5 +1,3 @@
-import { useTranslations } from 'next-intl';
-import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
 interface PageProps {
@@ -18,9 +16,6 @@ export async function generateMetadata(props: PageProps) {
 
 export default async function PrivacyPolicyPage(props: PageProps) {
   const { locale } = await props.params;
-  // Enable static rendering
-  unstable_setRequestLocale(locale);
-  
   const t = await getTranslations({ locale, namespace: 'PrivacyPolicyPage' });
   const currentDate = new Date().toISOString().split('T')[0];
 
@@ -30,10 +25,8 @@ export default async function PrivacyPolicyPage(props: PageProps) {
         <h1 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
           {t('title')}
         </h1>
-        <p className="mb-8 text-lg text-muted-foreground">
-          {t('description')}
-        </p>
-        
+        <p className="mb-8 text-lg text-muted-foreground">{t('description')}</p>
+
         <div className="space-y-8 text-base leading-7 text-foreground">
           <section>
             <h2 className="mb-4 text-2xl font-semibold tracking-tight">

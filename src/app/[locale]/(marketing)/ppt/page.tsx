@@ -29,12 +29,12 @@ import { toast } from 'sonner';
 interface PPT {
   id: string;
   title: string;
-  tags: string[];
+  tags?: string[];
   downloads: number;
   views: number;
-  language: string;
-  previewUrl: string;
-  pages: number;
+  language?: string;
+  previewUrl?: string;
+  pages?: number;
   category: string;
   isAd?: boolean;
 }

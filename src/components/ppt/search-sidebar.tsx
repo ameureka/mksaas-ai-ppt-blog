@@ -23,8 +23,8 @@ interface Category {
 interface PPT {
   id: string;
   title: string;
-  previewUrl: string;
-  pages: number;
+  previewUrl?: string;
+  pages?: number;
 }
 
 interface SearchSidebarProps {

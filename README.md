@@ -1,6 +1,6 @@
-# MkSaaS Blog & AI Playground
+# PPTHub Blog & AI Playground
 
-Personal site and AI demos built on the MkSaaS stack: multi-language blog, auth/billing, newsletter, and AI playground (chat, image generation, web content analyzer).
+Personal site and AI demos built on the PPTHub stack: multi-language blog, auth/billing, newsletter, and AI playground (chat, image generation, web content analyzer).
 
 ## Highlights
 - Next.js 15 App Router (React 19, TypeScript strict) with next-intl (en, zh) and Tailwind/Radix-based UI.
