@@ -1,13 +1,20 @@
 #!/usr/bin/env npx tsx
 /**
  * 阶段 2.1: 创建新的官方作者配置
+ * 品牌配置已内联，无需外部依赖
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
-const brandConfig = JSON.parse(
-  readFileSync('新品牌资源包/brand-config.json', 'utf-8')
-);
+// 品牌配置（内联）
+const brandConfig = {
+  name: 'PPTHub',
+  author: {
+    name: 'PPTHub 官方',
+    avatar: '/images/avatars/official.png',
+    bio: 'PPTHub 官方账号，为您提供最新的 PPT 模板和使用技巧。',
+  },
+};
 
 // 确保目录存在
 if (!existsSync('content/author')) {
