@@ -1,0 +1,203 @@
+{
+  "brand": {
+    "name": {
+      "zh": "快模板",
+      "en": "SlideAI",
+      "full": "快模板 SlideAI"
+    },
+    "tagline": {
+      "zh": "AI 驱动的 PPT 模板快速下载站",
+      "en": "AI-Powered PPT Template Download Platform"
+    },
+    "slogan": {
+      "zh": "3 分钟找到完美模板，30 分钟完成专业 PPT",
+      "en": "Find Perfect Templates in 3 Minutes"
+    },
+    "domain": "slideai.com",
+    "description": {
+      "short": "免费 PPT 模板下载站，AI 智能推荐",
+      "long": "为大学生、公务员、职场小白提供海量免费 PPT 模板，通过 AI 向量搜索快速匹配最合适的模板，配套制作教程，实现 PPT 创作自由"
+    }
+  },
+  
+  "colors": {
+    "primary": {
+      "main": "#2563EB",
+      "light": "#60A5FA",
+      "dark": "#1E40AF",
+      "gradient": "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)"
+    },
+    "secondary": {
+      "main": "#F59E0B",
+      "light": "#FCD34D",
+      "dark": "#D97706"
+    },
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "error": "#EF4444",
+    "neutral": "#64748B",
+    "background": {
+      "light": {
+        "primary": "#FFFFFF",
+        "secondary": "#F8FAFC",
+        "border": "#E2E8F0"
+      },
+      "dark": {
+        "primary": "#0F172A",
+        "secondary": "#1E293B",
+        "border": "#334155"
+      }
+    }
+  },
+  
+  "typography": {
+    "fontFamily": {
+      "zh": "思源黑体, Source Han Sans CN, sans-serif",
+      "en": "Inter, Poppins, system-ui, sans-serif",
+      "mono": "JetBrains Mono, Consolas, monospace"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem"
+    }
+  },
+  
+  "author": {
+    "id": "official",
+    "name": {
+      "zh": "快模板官方",
+      "en": "SlideAI Team"
+    },
+    "avatar": "/images/avatars/official.png",
+    "bio": {
+      "zh": "快模板官方账号，为您提供最新的 PPT 模板和制作技巧",
+      "en": "Official account of SlideAI, providing latest PPT templates and tips"
+    },
+    "social": {
+      "website": "https://slideai.com",
+      "email": "hello@slideai.com",
+      "xiaohongshu": "@slideai",
+      "douyin": "@slideai",
+      "zhihu": "slideai"
+    }
+  },
+  
+  "replacements": {
+    "MkSaaS": "快模板",
+    "Indie Maker Fox": "AI 驱动的 PPT 模板快速下载站",
+    "mksaas.me": "slideai.com",
+    "Fox": "快模板官方",
+    "fox": "official",
+    "mksaas": "official",
+    "haitang": "official",
+    "mkdirs": "official",
+    "pptx-team": "official"
+  },
+  
+  "seo": {
+    "title": {
+      "template": "%s | 快模板 SlideAI - 免费 PPT 模板下载",
+      "home": "快模板 SlideAI - AI 驱动的免费 PPT 模板下载站",
+      "blog": "PPT 制作教程 | 快模板 SlideAI",
+      "category": "%s PPT 模板 | 快模板 SlideAI"
+    },
+    "description": {
+      "home": "快模板 SlideAI 提供海量免费 PPT 模板下载，通过 AI 智能推荐快速找到最合适的模板。涵盖商业、教育、政府、营销等 6 大分类，配套制作教程，3 分钟找到完美模板。",
+      "blog": "PPT 制作技巧、模板使用教程、设计原则分享，帮助大学生、公务员、职场新人快速提升 PPT 制作能力。"
+    },
+    "keywords": [
+      "PPT 模板",
+      "免费 PPT 模板",
+      "PPT 模板下载",
+      "PowerPoint 模板",
+      "AI 推荐",
+      "商业 PPT",
+      "答辩 PPT",
+      "工作汇报 PPT",
+      "PPT 制作教程"
+    ]
+  },
+  
+  "social": {
+    "xiaohongshu": {
+      "name": "快模板 SlideAI",
+      "bio": "AI 智能推荐 PPT 模板 | 3 分钟找到完美模板 | 每天分享制作技巧",
+      "avatar": "/images/social/xiaohongshu-avatar.png"
+    },
+    "douyin": {
+      "name": "快模板 SlideAI",
+      "bio": "60 秒学会 PPT 制作技巧 | 免费模板下载",
+      "avatar": "/images/social/douyin-avatar.png"
+    },
+    "zhihu": {
+      "name": "快模板 SlideAI",
+      "bio": "专注 PPT 模板推荐和制作教程分享",
+      "avatar": "/images/social/zhihu-avatar.png"
+    }
+  },
+  
+  "features": {
+    "aiSearch": {
+      "title": "AI 智能推荐",
+      "description": "输入需求，AI 秒级匹配最合适模板"
+    },
+    "freeDownload": {
+      "title": "100% 免费",
+      "description": "无需注册，即下即用"
+    },
+    "richTemplates": {
+      "title": "海量资源",
+      "description": "800+ 精选模板，6 大分类"
+    },
+    "tutorials": {
+      "title": "配套教程",
+      "description": "每个模板附带制作技巧"
+    }
+  },
+  
+  "categories": {
+    "business": {
+      "name": "商业报告",
+      "icon": "📊",
+      "description": "商业计划书、市场分析、财务报告"
+    },
+    "education": {
+      "name": "教育培训",
+      "icon": "📚",
+      "description": "课程 PPT、培训材料、教学课件"
+    },
+    "marketing": {
+      "name": "产品营销",
+      "icon": "📈",
+      "description": "产品发布、营销方案、品牌推广"
+    },
+    "proposal": {
+      "name": "项目提案",
+      "icon": "💡",
+      "description": "项目方案、投标文件、策划书"
+    },
+    "report": {
+      "name": "工作汇报",
+      "icon": "📋",
+      "description": "述职报告、工作总结、进度汇报"
+    },
+    "year-end": {
+      "name": "年终总结",
+      "icon": "🎯",
+      "description": "年度总结、季度回顾、绩效汇报"
+    }
+  },
+  
+  "meta": {
+    "version": "1.0.0",
+    "createdAt": "2025-12-02",
+    "updatedAt": "2025-12-02",
+    "author": "Brand Strategy Team"
+  }
+}

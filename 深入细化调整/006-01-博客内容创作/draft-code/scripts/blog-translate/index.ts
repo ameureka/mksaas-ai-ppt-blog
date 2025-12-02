@@ -200,7 +200,7 @@ export function getTargetFilePath(
 
   // 添加目标语言后缀
   const targetBasename =
-    targetLang === 'en' ? cleanBasename : `${cleanBasename}.zh`;
+    targetLang === 'en' ? `${cleanBasename}.en` : `${cleanBasename}.zh`;
 
   return path.join(dir, `${targetBasename}${ext}`);
 }
@@ -564,8 +564,8 @@ async function main() {
   console.log(`  失败: ${result.failedFiles}`);
 
   // 输出详细结果到 JSON
-  const reportPath =
-    '深入细化调整/006-01-博客内容创作/流水线设计-博文生产/blog-translate-report.json';
+  const reportPath = path.join(__dirname, '../../reports/blog-translate-report.json');
+  fs.mkdirSync(path.dirname(reportPath), { recursive: true });
   fs.writeFileSync(reportPath, JSON.stringify(result, null, 2), 'utf-8');
   console.log(`\n📄 详细报告已保存到: ${reportPath}`);
 }

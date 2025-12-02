@@ -92,6 +92,7 @@ export const blog = defineCollections({
   type: 'doc',
   dir: 'content/blog',
   schema: frontmatterSchema.extend({
+    slug: z.string().optional(), // 自定义 URL slug
     image: z.string(),
     date: z.string().date(),
     published: z.boolean().default(true),

@@ -33,10 +33,14 @@ import type {
 // 默认配置
 // ============================================================================
 
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PROJECT_ROOT = path.resolve(__dirname, '../../../../..');
+
 const defaultConfig: AuditConfig = {
-  sourceDir: '深入细化调整/006-blogs-seo-博文设计/广告-博文',
-  outputPath:
-    '深入细化调整/006-01-博客内容创作/流水线设计-博文生产/blog-audit-report.json',
+  sourceDir: path.join(PROJECT_ROOT, '深入细化调整/006-blogs-seo-博文设计/广告-博文'),
+  outputPath: path.join(__dirname, '../../reports/blog-audit-report.json'),
   checkEnglish: true,
   verbose: true,
 };

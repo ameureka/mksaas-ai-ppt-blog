@@ -13,6 +13,7 @@
 
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import {
   type CategoryStyle,
@@ -20,6 +21,27 @@ import {
   categoryStyles,
   pptCategoryToSlug,
 } from '../../config/category-map';
+
+// 路径配置
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PROJECT_ROOT = path.resolve(__dirname, '../../../../..');
+const DRAFT_CODE_ROOT = path.resolve(__dirname, '../..');
+
+// 加载 image-tasks.json 获取 slug 映射
+let slugMapping: Record<string, string> = {};
+try {
+  const tasksPath = path.join(DRAFT_CODE_ROOT, 'data/image-tasks.json');
+  if (fs.existsSync(tasksPath)) {
+    const tasksData = JSON.parse(fs.readFileSync(tasksPath, 'utf-8'));
+    for (const task of tasksData.tasks) {
+      // 从文件名提取中文标题作为 key
+      slugMapping[task.title] = task.slug;
+    }
+  }
+} catch (e) {
+  console.warn('⚠️ 无法加载 image-tasks.json，将使用文件名作为 slug');
+}
 
 // ============================================================================
 // 类型定义
@@ -103,10 +125,10 @@ export interface BlogFile {
 // ============================================================================
 
 export const defaultFixConfig: FixConfig = {
-  contentDir: 'content/blog',
-  outputDir: 'content/blog',
+  contentDir: path.join(PROJECT_ROOT, '深入细化调整/006-blogs-seo-博文设计/广告-博文'),
+  outputDir: path.join(PROJECT_ROOT, '深入细化调整/006-blogs-seo-博文设计/广告-博文'),
   fixTypes: ['fix-all'],
-  overwrite: false,
+  overwrite: true,
   backup: true,
   dryRun: false,
 };
@@ -141,7 +163,16 @@ export function parseMdxFile(filePath: string): BlogFile | null {
   try {
     const rawContent = fs.readFileSync(filePath, 'utf-8');
     const { data, content } = matter(rawContent);
-    const slug = path.basename(filePath, path.extname(filePath));
+    const fileName = path.basename(filePath, path.extname(filePath));
+    
+    // 优先使用 image-tasks.json 中的英文 slug
+    const title = (data as BlogFrontmatter).title || '';
+    let slug = slugMapping[title];
+    
+    // 如果没有映射，使用文件名（去掉 .zh 后缀）
+    if (!slug) {
+      slug = fileName.replace(/\.zh$/, '');
+    }
 
     return {
       filePath,
@@ -183,19 +214,58 @@ export function writeMdxFile(
 // 分类修复
 // ============================================================================
 
+// 目录名到分类 slug 的映射
+const dirToCategorySlug: Record<string, string> = {
+  '产品营销与营销方案PPT': 'marketing',
+  '商务汇报PPT': 'business',
+  '年终总结PPT': 'year-end',
+  '教育培训与课件PPT': 'education',
+  '述职报告PPT': 'report',
+  '项目提案PPT': 'proposal',
+  '通用与混合场景': 'general',
+  '付费模板搜索与产品视角': 'paid-search',
+};
+
+/**
+ * 从文件路径推断分类
+ */
+function inferCategoryFromPath(filePath: string): string | null {
+  for (const [dirName, slug] of Object.entries(dirToCategorySlug)) {
+    if (filePath.includes(dirName)) {
+      return slug;
+    }
+  }
+  return null;
+}
+
 /**
  * 修复分类：将中文分类或错误分类转换为正确的英文 slug
  */
 export function fixCategory(
   frontmatter: BlogFrontmatter,
-  slug: string
+  slug: string,
+  filePath: string = ''
 ): AppliedFix | null {
   const currentCategories = frontmatter.categories || [];
   const validSlugs = Object.keys(categoryStyles);
 
+  // 首先尝试从文件路径推断分类
+  const inferredCategory = inferCategoryFromPath(filePath);
+  
   // 检查是否需要修复
-  const needsFix = currentCategories.some((cat) => !validSlugs.includes(cat));
+  const needsFix = currentCategories.some((cat) => !validSlugs.includes(cat)) || currentCategories.length === 0;
   if (!needsFix && currentCategories.length > 0) return null;
+
+  // 如果能从路径推断，优先使用
+  if (inferredCategory) {
+    frontmatter.categories = [inferredCategory];
+    return {
+      type: 'fix-category',
+      before: currentCategories,
+      after: [inferredCategory],
+      description: `分类从 [${currentCategories.join(', ')}] 修复为 [${inferredCategory}]（根据目录推断）`,
+    };
+  }
 
   // 尝试从中文映射
   const fixedCategories: string[] = [];
@@ -497,7 +567,7 @@ export function fixBlogFile(
   try {
     // 应用各种修复
     if (fixTypes.includes('fix-category')) {
-      const fix = fixCategory(frontmatter, slug);
+      const fix = fixCategory(frontmatter, slug, file.filePath);
       if (fix) appliedFixes.push(fix);
     }
 
@@ -653,8 +723,7 @@ async function main() {
   }
 
   // 输出详细结果到 JSON
-  const reportPath =
-    '深入细化调整/006-01-博客内容创作/流水线设计-博文生产/blog-fix-report.json';
+  const reportPath = path.join(DRAFT_CODE_ROOT, 'reports/blog-fix-report.json');
   fs.writeFileSync(reportPath, JSON.stringify(result, null, 2), 'utf-8');
   console.log(`\n📄 详细报告已保存到: ${reportPath}`);
 }

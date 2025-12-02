@@ -26,18 +26,49 @@ import { notFound } from 'next/navigation';
 import '@/styles/mdx.css';
 
 /**
- * get related posts, random pick from all posts with same locale, different slug,
+ * get related posts
+ * 1. First try to use relatedPosts from frontmatter (manual curation)
+ * 2. Fall back to random pick from same locale posts
  * max size is websiteConfig.blog.relatedPostsSize
  */
 async function getRelatedPosts(post: BlogType) {
-  const relatedPosts = blogSource
+  const allPosts = blogSource
     .getPages(post.locale)
     .filter((p) => p.data.published)
-    .filter((p) => p.slugs.join('/') !== post.slugs.join('/'))
-    .sort(() => Math.random() - 0.5)
-    .slice(0, websiteConfig.blog.relatedPostsSize);
+    .filter((p) => p.slugs.join('/') !== post.slugs.join('/'));
 
-  return relatedPosts;
+  // If frontmatter has relatedPosts, use them first
+  const manualRelatedSlugs = post.data.relatedPosts || [];
+  const manualRelatedPosts: BlogType[] = [];
+
+  if (manualRelatedSlugs.length > 0) {
+    for (const slug of manualRelatedSlugs) {
+      // Try to find post by slug (can be partial match)
+      const found = allPosts.find(
+        (p) =>
+          p.slugs.join('/').includes(slug) ||
+          p.slugs[p.slugs.length - 1] === slug
+      );
+      if (found && !manualRelatedPosts.includes(found)) {
+        manualRelatedPosts.push(found);
+      }
+    }
+  }
+
+  // If we have enough manual posts, return them
+  if (manualRelatedPosts.length >= websiteConfig.blog.relatedPostsSize) {
+    return manualRelatedPosts.slice(0, websiteConfig.blog.relatedPostsSize);
+  }
+
+  // Fill remaining slots with random posts
+  const remainingSlots =
+    websiteConfig.blog.relatedPostsSize - manualRelatedPosts.length;
+  const randomPosts = allPosts
+    .filter((p) => !manualRelatedPosts.includes(p))
+    .sort(() => Math.random() - 0.5)
+    .slice(0, remainingSlots);
+
+  return [...manualRelatedPosts, ...randomPosts];
 }
 
 export function generateStaticParams() {

@@ -6,6 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import matter from 'gray-matter';
 import {
   authorityKeywords,
   faqKeywords,
@@ -21,6 +22,27 @@ import type { AuditStats, BlogFrontmatter, ParsedMDX } from './types';
  * 解析 MDX 文件的 Frontmatter 和正文
  */
 export function parseMDX(filePath: string): ParsedMDX {
+  try {
+    const rawContent = fs.readFileSync(filePath, 'utf-8');
+    const { data, content } = matter(rawContent);
+
+    return {
+      frontmatter: data as BlogFrontmatter,
+      content: content.trim(),
+      success: true,
+    };
+  } catch (error) {
+    return {
+      frontmatter: {},
+      content: '',
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+// 保留旧的简单解析器作为备用
+function parseMDXLegacy(filePath: string): ParsedMDX {
   try {
     const content = fs.readFileSync(filePath, 'utf-8');
 

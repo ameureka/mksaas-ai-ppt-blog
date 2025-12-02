@@ -1,4 +1,17 @@
-## 广告-博文 目录结构学习总结
+---
+categories:
+  - general
+date: '2025-12-01'
+image: /images/blog/agent-cover.jpg
+tags:
+  - '[TRANSLATED] [TRANSLATED] 通用技巧'
+  - 通用技巧
+relatedPosts:
+  - pages-ppt-content-strategy
+  - 博客实现格式与模式总结
+  - scenario-ppt-report-4
+---
+[TRANSLATED] [TRANSLATED] ## 广告-博文 目录结构学习总结
 
 ### 📁 整体目录结构
 

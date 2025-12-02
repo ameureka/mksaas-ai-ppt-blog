@@ -20,7 +20,7 @@ export default function BlogCard({ locale, post }: BlogCardProps) {
     .filter((category) => categories.includes(category.slugs[0] ?? ''));
 
   return (
-    <LocaleLink href={`/blog/${post.slugs}`} className="block h-full">
+    <LocaleLink href={`/blog/${post.slugs.join('/')}`} className="block h-full">
       <div className="group flex flex-col border border-border rounded-lg overflow-hidden h-full transition-all duration-300 ease-in-out hover:border-primary hover:shadow-lg hover:shadow-primary/20">
         {/* Image container - fixed aspect ratio */}
         <div className="group overflow-hidden relative aspect-16/9 w-full">
