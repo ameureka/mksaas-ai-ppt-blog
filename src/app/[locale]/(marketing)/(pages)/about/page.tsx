@@ -1,15 +1,15 @@
-import FriendsSection from '@/components/about/friends';
-import HomeDiscordSection from '@/components/home/home-discord';
+// import FriendsSection from '@/components/about/friends';
+// import HomeDiscordSection from '@/components/home/home-discord';
 import HomeNewsletterSection from '@/components/home/home-newsletter';
-import HomeProjectsSection from '@/components/home/home-projects';
-import { DiscordIcon } from '@/components/icons/discord';
+// import HomeProjectsSection from '@/components/home/home-projects';
+// import { DiscordIcon } from '@/components/icons/discord';
 import Container from '@/components/layout/container';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
 import { constructMetadata } from '@/lib/metadata';
 import { cn } from '@/lib/utils';
-import { MailIcon, TwitterIcon } from 'lucide-react';
+// import { MailIcon, TwitterIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -73,7 +73,8 @@ export default async function AboutPage() {
                     {t('introduction')}
                   </p>
 
-                  <div className="flex items-center gap-4">
+                  {/* Social buttons commented out - not suitable for PPT site */}
+                  {/* <div className="flex items-center gap-4">
                     {websiteConfig.metadata.social?.twitter && (
                       <a
                         href={websiteConfig.metadata.social.twitter}
@@ -88,16 +89,6 @@ export default async function AboutPage() {
                         {t('followMe')}
                       </a>
                     )}
-                    {/* {websiteConfig.mail.supportEmail && (
-                      <div className="flex items-center gap-4">
-                        <Button className="rounded-lg cursor-pointer">
-                          <MailIcon className="mr-1 size-4" />
-                          <a href={`mailto:${websiteConfig.mail.supportEmail}`}>
-                            {t('talkWithMe')}
-                          </a>
-                        </Button>
-                      </div>
-                    )} */}
                     {websiteConfig.metadata?.social?.discord && (
                       <a
                         href={`${websiteConfig.metadata.social.discord}`}
@@ -110,7 +101,7 @@ export default async function AboutPage() {
                         {t('talkWithMe')}
                       </a>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -122,16 +113,16 @@ export default async function AboutPage() {
       </Container>
 
       {/* projects section */}
-      <HomeProjectsSection />
+      {/* <HomeProjectsSection /> */}
 
       {/* friends section */}
-      <FriendsSection />
+      {/* <FriendsSection /> */}
 
       {/* newsletter */}
-      {/* <HomeNewsletterSection /> */}
+      <HomeNewsletterSection />
 
       {/* discord */}
-      <HomeDiscordSection />
+      {/* <HomeDiscordSection /> */}
     </div>
   );
 }

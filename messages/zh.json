@@ -492,40 +492,62 @@
       }
     },
     "footer": {
-      "tagline": "PPTHub Team is Building in Public",
-      "product": {
-        "title": "产品",
-        "items": {
-          "features": "功能",
-          "pricing": "价格",
-          "faq": "常见问题"
-        }
+      "tagline": "AI 驱动的免费 PPT 模板下载平台",
+      "description": "提供 100,000+ 免费 PPT 模板，涵盖商务汇报、教育培训、产品营销等 8 大分类。支持在线预览和一键下载。",
+      "stats": {
+        "templates": "模板",
+        "downloads": "下载",
+        "users": "用户"
+      },
+      "categories": {
+        "title": "热门分类",
+        "business": "商务汇报 PPT",
+        "education": "教育培训 PPT",
+        "yearEnd": "年终总结 PPT",
+        "proposal": "项目提案 PPT",
+        "marketing": "产品营销 PPT",
+        "report": "述职报告 PPT",
+        "viewAll": "查看全部分类"
       },
       "resources": {
-        "title": "资源",
-        "items": {
-          "blog": "博客",
-          "docs": "文档",
-          "changelog": "更新日志",
-          "roadmap": "路线图"
-        }
+        "title": "资源中心",
+        "blog": "博客文章",
+        "tutorial": "PPT 制作教程",
+        "tips": "设计技巧",
+        "inspiration": "灵感案例",
+        "popular": "热门文章",
+        "changelog": "更新日志",
+        "roadmap": "产品路线图"
       },
-      "company": {
-        "title": "公司",
-        "items": {
-          "about": "关于我们",
-          "contact": "联系我们",
-          "waitlist": "邮件列表"
-        }
+      "support": {
+        "title": "支持",
+        "contact": "联系我们",
+        "help": "帮助中心",
+        "faq": "常见问题",
+        "feedback": "意见反馈",
+        "submit": "提交模板",
+        "email": "support@ppthub.shop"
       },
-      "legal": {
-        "title": "法律",
-        "items": {
-          "cookiePolicy": "Cookie政策",
-          "privacyPolicy": "隐私政策",
-          "termsOfService": "服务条款"
-        }
-      }
+      "about": {
+        "title": "关于",
+        "aboutUs": "关于我们",
+        "privacy": "隐私政策",
+        "terms": "服务条款",
+        "sitemap": "网站地图",
+        "rss": "RSS 订阅",
+        "api": "开发者 API"
+      },
+      "partners": {
+        "title": "合作伙伴 & 推荐工具"
+      },
+      "keywords": {
+        "title": "热门搜索",
+        "free": "免费PPT模板",
+        "business": "商务PPT",
+        "education": "教育PPT",
+        "ai": "AI生成PPT"
+      },
+      "copyright": "© 2024 PPTHub. All rights reserved."
     },
     "avatar": {
       "dashboard": "工作台",

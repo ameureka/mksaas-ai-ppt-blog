@@ -492,40 +492,62 @@
       }
     },
     "footer": {
-      "tagline": "Building in Public, Coding for Future",
-      "product": {
-        "title": "Product",
-        "items": {
-          "features": "Features",
-          "pricing": "Pricing",
-          "faq": "FAQ"
-        }
+      "tagline": "AI-Powered Free PPT Template Platform",
+      "description": "Providing 100,000+ free PPT templates covering 8 major categories including business reports, education, and marketing. Support online preview and one-click download.",
+      "stats": {
+        "templates": "Templates",
+        "downloads": "Downloads",
+        "users": "Users"
+      },
+      "categories": {
+        "title": "Popular Categories",
+        "business": "Business Presentation PPT",
+        "education": "Education & Training PPT",
+        "yearEnd": "Year-End Summary PPT",
+        "proposal": "Project Proposal PPT",
+        "marketing": "Product Marketing PPT",
+        "report": "Work Report PPT",
+        "viewAll": "View All Categories"
       },
       "resources": {
         "title": "Resources",
-        "items": {
-          "blog": "Blog",
-          "docs": "Documentation",
-          "changelog": "Changelog",
-          "roadmap": "Roadmap"
-        }
+        "blog": "Blog",
+        "tutorial": "PPT Tutorials",
+        "tips": "Design Tips",
+        "inspiration": "Inspiration",
+        "popular": "Popular Posts",
+        "changelog": "Changelog",
+        "roadmap": "Roadmap"
       },
-      "company": {
-        "title": "Company",
-        "items": {
-          "about": "About",
-          "contact": "Contact",
-          "waitlist": "Waitlist"
-        }
+      "support": {
+        "title": "Support",
+        "contact": "Contact Us",
+        "help": "Help Center",
+        "faq": "FAQ",
+        "feedback": "Feedback",
+        "submit": "Submit Template",
+        "email": "support@ppthub.shop"
       },
-      "legal": {
-        "title": "Legal",
-        "items": {
-          "cookiePolicy": "Cookie Policy",
-          "privacyPolicy": "Privacy Policy",
-          "termsOfService": "Terms of Service"
-        }
-      }
+      "about": {
+        "title": "About",
+        "aboutUs": "About Us",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "sitemap": "Sitemap",
+        "rss": "RSS Feed",
+        "api": "Developer API"
+      },
+      "partners": {
+        "title": "Partners & Recommended Tools"
+      },
+      "keywords": {
+        "title": "Popular Searches",
+        "free": "Free PPT Templates",
+        "business": "Business PPT",
+        "education": "Education PPT",
+        "ai": "AI Generated PPT"
+      },
+      "copyright": "© 2024 PPTHub. All rights reserved."
     },
     "avatar": {
       "dashboard": "Dashboard",
