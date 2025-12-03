@@ -11,7 +11,7 @@ export const mockUsers: User[] = [
     id: 'user-1',
     username: '张三',
     email: 'zhangsan@example.com',
-    avatar: '/placeholder.svg',
+    avatar: '/svg/placeholder.svg',
     credits: 500,
     emailVerified: true,
     created_at: '2025-01-10T10:00:00Z',

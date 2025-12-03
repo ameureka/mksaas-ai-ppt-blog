@@ -1,10 +1,6 @@
 'use client';
 
-import { BannerAd } from '@/components/ppt/ads/display-ad';
-import {
-  NativeAdCard,
-  mockNativeAd,
-} from '@/components/ppt/ads/native-ad-card';
+import { BlogBannerAd, NativeAdCard, mockNativeAd } from '@/components/ads';
 import { PPTCard } from '@/components/ppt/ppt-card';
 import {
   Accordion,
@@ -442,10 +438,6 @@ export default function CategoryPage() {
           </div>
         </section>
 
-        <div className="mb-8">
-          <BannerAd slot="category-banner" />
-        </div>
-
         <section className="mb-12">
           <h3 className="text-lg font-semibold mb-4">常见使用场景</h3>
           <div className="flex flex-wrap gap-2">
@@ -459,6 +451,11 @@ export default function CategoryPage() {
               </Badge>
             ))}
           </div>
+        </section>
+
+        {/* 广告位 - Hero 下方 */}
+        <section className="mb-8">
+          <BlogBannerAd />
         </section>
 
         <section className="mb-16">
@@ -495,9 +492,37 @@ export default function CategoryPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {hotPPTs.map((ppt) => (
-                <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
-              ))}
+              {(() => {
+                const items = [...hotPPTs];
+                // 在第 6 位插入原生广告
+                if (items.length >= 5) {
+                  items.splice(5, 0, null as any);
+                }
+                return items.map((ppt, index) => {
+                  if (ppt === null) {
+                    return (
+                      <NativeAdCard
+                        key="native-ad-hot"
+                        ad={mockNativeAd}
+                        position={`category_${slug}_hot_6`}
+                        onImpression={(adId) =>
+                          console.log('Native ad impression:', adId)
+                        }
+                        onClick={(adId) =>
+                          console.log('Native ad click:', adId)
+                        }
+                      />
+                    );
+                  }
+                  return (
+                    <PPTCard
+                      key={ppt.id}
+                      ppt={ppt}
+                      onDownload={handleDownload}
+                    />
+                  );
+                });
+              })()}
             </div>
           )}
         </section>
@@ -536,41 +561,40 @@ export default function CategoryPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {featuredPPTs.map((ppt, index) => {
-                // 使用真实的 NativeAdCard 组件替换占位符
-                if (index === 6) {
-                  return (
-                    <>
-                      <NativeAdCard
-                        key="native-ad"
-                        ad={mockNativeAd}
-                        position={6}
-                        onImpression={(adId: string) => {
-                          console.log('[v0] 原生广告展示:', adId);
-                        }}
-                        onClick={(adId: string) => {
-                          console.log('[v0] 原生广告点击:', adId);
-                        }}
-                      />
-                      <PPTCard
-                        key={ppt.id}
-                        ppt={ppt}
-                        onDownload={handleDownload}
-                      />
-                    </>
-                  );
+              {(() => {
+                const items = [...featuredPPTs];
+                // 在第 6 位插入原生广告
+                if (items.length >= 5) {
+                  items.splice(5, 0, null as any);
                 }
-                return (
-                  <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
-                );
-              })}
+                return items.map((ppt, index) => {
+                  if (ppt === null) {
+                    return (
+                      <NativeAdCard
+                        key="native-ad-featured"
+                        ad={mockNativeAd}
+                        position={`category_${slug}_featured_6`}
+                        onImpression={(adId) =>
+                          console.log('Native ad impression:', adId)
+                        }
+                        onClick={(adId) =>
+                          console.log('Native ad click:', adId)
+                        }
+                      />
+                    );
+                  }
+                  return (
+                    <PPTCard
+                      key={ppt.id}
+                      ppt={ppt}
+                      onDownload={handleDownload}
+                    />
+                  );
+                });
+              })()}
             </div>
           )}
         </section>
-
-        <div className="mb-16">
-          <BannerAd slot="category-banner" />
-        </div>
 
         {/* 全部PPT区块（原有功能保留） */}
         <section className="mb-16">
@@ -620,9 +644,37 @@ export default function CategoryPage() {
           ) : (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {allPPTs.map((ppt) => (
-                  <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
-                ))}
+                {(() => {
+                  const items = [...allPPTs];
+                  // 在第 6 位插入原生广告
+                  if (items.length >= 5) {
+                    items.splice(5, 0, null as any);
+                  }
+                  return items.map((ppt, index) => {
+                    if (ppt === null) {
+                      return (
+                        <NativeAdCard
+                          key="native-ad-all"
+                          ad={mockNativeAd}
+                          position={`category_${slug}_all_6`}
+                          onImpression={(adId) =>
+                            console.log('Native ad impression:', adId)
+                          }
+                          onClick={(adId) =>
+                            console.log('Native ad click:', adId)
+                          }
+                        />
+                      );
+                    }
+                    return (
+                      <PPTCard
+                        key={ppt.id}
+                        ppt={ppt}
+                        onDownload={handleDownload}
+                      />
+                    );
+                  });
+                })()}
               </div>
 
               {totalPages > 1 && (
@@ -636,16 +688,67 @@ export default function CategoryPage() {
                   </Button>
 
                   <div className="flex gap-1">
-                    {Array.from({ length: totalPages }).map((_, i) => (
-                      <Button
-                        key={i + 1}
-                        variant={page === i + 1 ? 'default' : 'outline'}
-                        size="icon"
-                        onClick={() => setPage(i + 1)}
-                      >
-                        {i + 1}
-                      </Button>
-                    ))}
+                    {(() => {
+                      const pages: (number | string)[] = [];
+                      const showPages = 5; // 最多显示5个页码
+
+                      if (totalPages <= showPages + 2) {
+                        // 总页数较少时，显示全部
+                        for (let i = 1; i <= totalPages; i++) {
+                          pages.push(i);
+                        }
+                      } else {
+                        // 总页数较多时，智能显示
+                        pages.push(1); // 始终显示第一页
+
+                        let start = Math.max(2, page - 1);
+                        let end = Math.min(totalPages - 1, page + 1);
+
+                        // 确保显示足够的页码
+                        if (page <= 3) {
+                          end = Math.min(totalPages - 1, 4);
+                        } else if (page >= totalPages - 2) {
+                          start = Math.max(2, totalPages - 3);
+                        }
+
+                        if (start > 2) {
+                          pages.push('...');
+                        }
+
+                        for (let i = start; i <= end; i++) {
+                          pages.push(i);
+                        }
+
+                        if (end < totalPages - 1) {
+                          pages.push('...');
+                        }
+
+                        pages.push(totalPages); // 始终显示最后一页
+                      }
+
+                      return pages.map((p, idx) => {
+                        if (p === '...') {
+                          return (
+                            <span
+                              key={`ellipsis-${idx}`}
+                              className="px-2 text-muted-foreground"
+                            >
+                              ...
+                            </span>
+                          );
+                        }
+                        return (
+                          <Button
+                            key={p}
+                            variant={page === p ? 'default' : 'outline'}
+                            size="icon"
+                            onClick={() => setPage(p as number)}
+                          >
+                            {p}
+                          </Button>
+                        );
+                      });
+                    })()}
                   </div>
 
                   <Button
@@ -839,10 +942,6 @@ export default function CategoryPage() {
               })}
           </div>
         </section>
-
-        <div className="mb-8">
-          <BannerAd slot="category-banner" />
-        </div>
       </main>
     </>
   );

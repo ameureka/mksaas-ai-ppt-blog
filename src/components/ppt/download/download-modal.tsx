@@ -12,17 +12,16 @@ import {
 } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
+import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
 import {
   AlertCircle,
   Check,
   Clock,
-  Coins,
   Copy,
   Download,
   Loader2,
   Play,
-  RefreshCw,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -49,7 +48,8 @@ interface UserDownloadStatus {
   pptId: string;
   hasDownloadedBefore: boolean;
   isFirstDownloadAvailable: boolean;
-  remainingFreeDownloads: number;
+  creditBalance: number;
+  requiredCredits: number;
 }
 
 interface DownloadModalProps {
@@ -64,19 +64,24 @@ type FlowStep = 1 | 2 | 3;
 export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
+  const adRewardConfig = websiteConfig.adReward;
 
   const [step, setStep] = useState<FlowStep>(1);
   const [selectedMethod, setSelectedMethod] =
     useState<DownloadMethod>('firstFree');
   const [isProcessing, setIsProcessing] = useState(false);
   const [downloadLink, setDownloadLink] = useState<string | null>(null);
-  const [expiresAt, setExpiresAt] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [adCountdown, setAdCountdown] = useState(30);
+  const [adCountdown, setAdCountdown] = useState(adRewardConfig.watchDuration);
   const [adCompleted, setAdCompleted] = useState(false);
   const [userDownloadStatus, setUserDownloadStatus] =
     useState<UserDownloadStatus | null>(null);
+
+  // Ad watch tokens
+  const [watchToken, setWatchToken] = useState<string | null>(null);
+  const [downloadToken, setDownloadToken] = useState<string | null>(null);
+  const [creditsAwarded, setCreditsAwarded] = useState(0);
 
   useEffect(() => {
     if (open) {
@@ -86,32 +91,49 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
       setDownloadLink(null);
       setError(null);
       setAgreedToTerms(false);
-      setAdCountdown(30);
+      setAdCountdown(adRewardConfig.watchDuration);
       setAdCompleted(false);
+      setWatchToken(null);
+      setDownloadToken(null);
+      setCreditsAwarded(0);
       fetchUserDownloadStatus();
     }
-  }, [open, ppt.id]);
+  }, [open, ppt.id, adRewardConfig.watchDuration]);
 
   const fetchUserDownloadStatus = async () => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const mockStatus: UserDownloadStatus = {
-        pptId: ppt.id,
-        hasDownloadedBefore: false,
-        isFirstDownloadAvailable: ppt.isFirstDownloadFree || false,
-        remainingFreeDownloads: 1,
-      };
-      setUserDownloadStatus(mockStatus);
-      if (
-        !mockStatus.hasDownloadedBefore &&
-        mockStatus.isFirstDownloadAvailable
-      ) {
-        setSelectedMethod('firstFree');
+      const res = await fetch(`/api/ppts/${ppt.id}/download-status`);
+      const json = await res.json();
+
+      if (json.success && json.data) {
+        setUserDownloadStatus(json.data);
+        if (
+          !json.data.hasDownloadedBefore &&
+          json.data.isFirstDownloadAvailable
+        ) {
+          setSelectedMethod('firstFree');
+        } else {
+          setSelectedMethod('credits');
+        }
       } else {
-        setSelectedMethod('credits');
+        // Fallback for non-logged-in users
+        setUserDownloadStatus({
+          pptId: ppt.id,
+          hasDownloadedBefore: false,
+          isFirstDownloadAvailable: true,
+          creditBalance: 0,
+          requiredCredits: ppt.price || 5,
+        });
       }
     } catch (err) {
       console.error('Failed to fetch download status', err);
+      setUserDownloadStatus({
+        pptId: ppt.id,
+        hasDownloadedBefore: false,
+        isFirstDownloadAvailable: true,
+        creditBalance: 0,
+        requiredCredits: ppt.price || 5,
+      });
     }
   };
 
@@ -122,9 +144,8 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
       description: '首次下载此模板无需积分',
       icon: '🎁',
       enabled:
-        (userDownloadStatus?.isFirstDownloadAvailable &&
-          !userDownloadStatus?.hasDownloadedBefore) ||
-        false,
+        (userDownloadStatus?.isFirstDownloadAvailable ?? false) &&
+        !(userDownloadStatus?.hasDownloadedBefore ?? true),
       disabledReason: userDownloadStatus?.hasDownloadedBefore
         ? '您已下载过此模板'
         : '此模板不支持免费下载',
@@ -132,18 +153,19 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
     {
       type: 'credits',
       label: '积分下载',
-      requiredCredits: ppt.price || 5,
-      description: `使用 ${ppt.price || 5} 积分立即下载`,
+      requiredCredits: userDownloadStatus?.requiredCredits || ppt.price || 5,
+      description: `使用 ${userDownloadStatus?.requiredCredits || ppt.price || 5} 积分立即下载 (余额: ${userDownloadStatus?.creditBalance || 0})`,
       icon: '💎',
       enabled: true,
     },
     {
       type: 'ad',
       label: '观看广告下载',
-      rewardCredits: 5,
-      description: '观看30秒广告，获得5积分并下载',
+      rewardCredits: adRewardConfig.creditsPerWatch,
+      description: `观看${adRewardConfig.watchDuration}秒广告，获得${adRewardConfig.creditsPerWatch}积分并下载`,
       icon: '📺',
-      enabled: true,
+      enabled: adRewardConfig.enable,
+      disabledReason: '广告功能暂未开放',
     },
     {
       type: 'register',
@@ -162,6 +184,58 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
     }
   };
 
+  const handleStartAdWatch = async () => {
+    setIsProcessing(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/ad/start-watch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pptId: ppt.id }),
+      });
+      const json = await res.json();
+
+      if (json.success && json.data) {
+        setWatchToken(json.data.watchToken);
+        setAdCountdown(json.data.duration || adRewardConfig.watchDuration);
+        setStep(2);
+      } else {
+        setError(json.error || '启动广告失败');
+      }
+    } catch (err) {
+      setError('启动广告失败，请稍后重试');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleAdComplete = async () => {
+    if (!watchToken) return;
+
+    setIsProcessing(true);
+    try {
+      const res = await fetch('/api/ad/complete-watch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ watchToken, pptId: ppt.id }),
+      });
+      const json = await res.json();
+
+      if (json.success && json.data) {
+        setDownloadToken(json.data.downloadToken);
+        setCreditsAwarded(json.data.creditsAwarded);
+        setAdCompleted(true);
+        toast.success(`获得 ${json.data.creditsAwarded} 积分！`);
+      } else {
+        setError(json.error || '验证广告失败');
+      }
+    } catch (err) {
+      setError('验证广告失败，请稍后重试');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handleContinue = () => {
     setError(null);
     if (selectedMethod === 'register') {
@@ -169,7 +243,9 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
       onOpenChange(false);
       return;
     }
-    if (selectedMethod === 'firstFree') {
+    if (selectedMethod === 'ad') {
+      handleStartAdWatch();
+    } else if (selectedMethod === 'firstFree') {
       handleGenerateLink();
     } else {
       setStep(2);
@@ -188,8 +264,17 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
     setIsProcessing(true);
     setError(null);
     try {
+      const body: { method: DownloadMethod; downloadToken?: string } = {
+        method: selectedMethod,
+      };
+      if (selectedMethod === 'ad' && downloadToken) {
+        body.downloadToken = downloadToken;
+      }
+
       const res = await fetch(`/api/ppts/${ppt.id}/download`, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
       });
       const json = await res.json();
 
@@ -198,10 +283,6 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
       }
 
       setDownloadLink(json.data.fileUrl);
-      const mockExpiresAt = new Date(
-        Date.now() + 48 * 60 * 60 * 1000
-      ).toISOString();
-      setExpiresAt(mockExpiresAt);
       setStep(3);
       toast.success('下载链接已生成', { description: '链接48小时内有效' });
     } catch (err) {
@@ -227,13 +308,20 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
     }
   };
 
+  // Ad countdown timer
   useEffect(() => {
-    if (selectedMethod === 'ad' && step === 2 && adCountdown > 0) {
+    if (
+      selectedMethod === 'ad' &&
+      step === 2 &&
+      adCountdown > 0 &&
+      watchToken &&
+      !adCompleted
+    ) {
       const timer = setInterval(() => {
         setAdCountdown((prev) => {
           if (prev <= 1) {
-            setAdCompleted(true);
             clearInterval(timer);
+            handleAdComplete();
             return 0;
           }
           return prev - 1;
@@ -241,7 +329,7 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [selectedMethod, step, adCountdown]);
+  }, [selectedMethod, step, adCountdown, watchToken, adCompleted]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -287,6 +375,7 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
               <div className="grid md:grid-cols-2 gap-4">
                 {downloadOptions.map((option) => (
                   <button
+                    type="button"
                     key={option.type}
                     onClick={() => handleSelectMethod(option.type)}
                     disabled={!option.enabled}
@@ -340,11 +429,19 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
                 size="lg"
                 onClick={handleContinue}
                 disabled={
+                  isProcessing ||
                   !downloadOptions.find((o) => o.type === selectedMethod)
                     ?.enabled
                 }
               >
-                继续
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    处理中...
+                  </>
+                ) : (
+                  '继续'
+                )}
               </Button>
             </div>
           )}
@@ -375,13 +472,17 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
                         <>
                           <Check className="h-16 w-16 text-primary mb-4" />
                           <p className="text-sm font-medium text-primary">
-                            广告已看完！
+                            广告已看完！获得 {creditsAwarded} 积分
                           </p>
                         </>
                       )}
                     </div>
                     <Progress
-                      value={((30 - adCountdown) / 30) * 100}
+                      value={
+                        ((adRewardConfig.watchDuration - adCountdown) /
+                          adRewardConfig.watchDuration) *
+                        100
+                      }
                       className="h-2"
                     />
                   </CardContent>
@@ -430,7 +531,11 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
                   className="flex-1"
                   size="lg"
                   onClick={handleConfirmMethod}
-                  disabled={isProcessing || !agreedToTerms}
+                  disabled={
+                    isProcessing ||
+                    !agreedToTerms ||
+                    (selectedMethod === 'ad' && !adCompleted)
+                  }
                 >
                   {isProcessing ? (
                     <>

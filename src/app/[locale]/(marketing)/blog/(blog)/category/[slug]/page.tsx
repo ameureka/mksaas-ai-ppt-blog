@@ -1,3 +1,4 @@
+import { BlogBannerAd } from '@/components/ads';
 import BlogGridWithPagination from '@/components/blog/blog-grid-with-pagination';
 import { websiteConfig } from '@/config/website';
 import { LOCALES } from '@/i18n/routing';
@@ -72,11 +73,14 @@ export default async function BlogCategoryPage({
   const totalPages = Math.ceil(sortedPosts.length / blogPageSize);
 
   return (
-    <BlogGridWithPagination
-      locale={locale}
-      posts={paginatedLocalePosts}
-      totalPages={totalPages}
-      routePrefix={`/blog/category/${slug}`}
-    />
+    <>
+      <BlogBannerAd className="mb-8" />
+      <BlogGridWithPagination
+        locale={locale}
+        posts={paginatedLocalePosts}
+        totalPages={totalPages}
+        routePrefix={`/blog/category/${slug}`}
+      />
+    </>
   );
 }

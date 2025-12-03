@@ -1,5 +1,6 @@
 'use client';
 
+import { BlogBannerAd, NativeAdCard, mockNativeAd } from '@/components/ads';
 import {
   Accordion,
   AccordionContent,
@@ -203,13 +204,10 @@ export default function CategoriesPage() {
           </p>
         </div>
 
-        <div className="my-8">
-          <div className="flex h-24 items-center justify-center rounded-lg border-2 border-dashed bg-muted/30">
-            <p className="text-sm text-muted-foreground">
-              [Google AdSense 自动广告 - 728x90 横幅]
-            </p>
-          </div>
-        </div>
+        {/* 广告位 - 页面顶部 */}
+        <section className="my-8">
+          <BlogBannerAd />
+        </section>
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -218,33 +216,15 @@ export default function CategoriesPage() {
 
             if (index === 4) {
               return [
-                <Card
-                  key="native-ad"
-                  className="relative overflow-hidden border-primary/20"
-                >
-                  <div className="absolute top-2 left-2 z-10">
-                    <span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded">
-                      推广
-                    </span>
-                  </div>
-                  <CardContent className="p-0">
-                    <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                      <p className="text-sm text-muted-foreground text-center px-4">
-                        [原生广告位]
-                        <br />
-                        300x250 推广内容
-                      </p>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-semibold mb-1">
-                        推荐合作伙伴
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        专业PPT设计服务
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>,
+                <NativeAdCard
+                  key="native-ad-categories"
+                  ad={mockNativeAd}
+                  position="categories_grid_5"
+                  onImpression={(adId) =>
+                    console.log('Native ad impression:', adId)
+                  }
+                  onClick={(adId) => console.log('Native ad click:', adId)}
+                />,
 
                 <Card
                   key={category.name}
@@ -454,13 +434,10 @@ export default function CategoriesPage() {
           </Accordion>
         </section>
 
-        <div className="my-12">
-          <div className="flex h-24 items-center justify-center rounded-lg border-2 border-dashed bg-muted/30">
-            <p className="text-sm text-muted-foreground">
-              [Google AdSense 自动广告 - 728x90 横幅]
-            </p>
-          </div>
-        </div>
+        {/* 广告位 - 底部 */}
+        <section className="my-12">
+          <BlogBannerAd />
+        </section>
 
         {/* CTA Section */}
         <div className="mt-16 text-center py-12 border-t">

@@ -56,7 +56,24 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'service.firecrawl.dev',
       },
+      {
+        protocol: 'https',
+        hostname: 'aippt.guochunlin.com',
+      },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: '/ads.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain',
+          },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [

@@ -50,3 +50,68 @@
        * 建议位置: 侧边栏底部 (BlogSidebarAd) 和 文章标题下方 (BlogBannerAd)。
    3. 配置环境变量: 确保生产环境的 .env 文件中设置了 NEXT_PUBLIC_ADSENSE_ENABLED=true 和有效的 NEXT_PUBLIC_ADSENSE_PUBLISHER_ID。
    4. 检查页脚: 确认网站页脚有清晰的"隐私政策"和"服务条款"链接。
+
+✦ 基于 google-adsense-integration-guide.md 指南与当前代码库的对比，我为您整理了以下具体的实施建议和差异分析。
+
+  📋 状态总览
+  指南是一份非常完善的 "AdSense 最佳实践" 文档，但在代码落地层面，目前的实现还比较初级。
+
+  核心差距：
+   1. 广告组件实现不一致：代码中有两套广告组件，且都没有完全达到指南中建议的 "高性能/防CLS" 标准。
+   2. 页面覆盖率低：指南建议在首页、分类页、详情页均投放广告，但目前实际上这些页面 全都没有 植入广告代码。
+   3. 关键配置缺失：ads.txt 未配置，且 next.config.ts 缺少对应的 Header 规则。
+
+  ---
+
+  🛠️ 具体实施建议 (Action Plan)
+
+  建议按照以下顺序执行，以达到指南要求的标准：
+
+  1. 标准化广告组件 (Priority: High)
+  指南中的 DisplayAd 组件代码（4.2 章节）非常优秀，包含了懒加载、占位符和防布局偏移逻辑。
+   * 行动: 使用指南中的代码替换 src/components/ads/display-ad.tsx（注意不是 ppt 目录下的那个，建议统一使用 src/components/ads/ 作为源头）。
+   * 清理: 删除 src/components/ppt/ads/display-ad.tsx，避免混淆。
+
+  2. 植入广告位 (Priority: High)
+  根据指南 4.3 和 5.2 章节，您需要在以下文件添加组件：
+
+   * 首页 (`src/app/[locale]/(marketing)/(home)/page.tsx`):
+       * 目前的首页只是简单转发到 SearchHomePage。
+       * 建议: 既然转发了，应在 src/app/[locale]/(marketing)/ppt/page.tsx (即 SearchHomePage) 中添加 <BannerAd /> (顶部) 和 <MobileBannerAd /> (移动端)。
+
+   * 博客详情页 (`src/app/[locale]/(marketing)/blog/[...slug]/page.tsx`):
+       * 建议: 在 <PremiumBadge> 附近或标题下方添加 <BannerAd />。
+       * 建议: 在右侧 Sidebar 的 "Table of Contents" 下方添加 <SidebarAd />。
+
+   * 博客分类页 (`src/app/[locale]/(marketing)/blog/(blog)/category/[slug]/page.tsx`):
+       * 建议: 在 BlogGridWithPagination 组件上方添加 <BannerAd />。
+
+  3. 配置 ads.txt (Priority: Medium)
+  指南 7.4 章节提到了防止广告欺诈的 ads.txt。
+   * 行动: 编辑 public/ads.txt，填入您真实的 AdSense ID（格式：google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0）。
+   * 行动: 在 next.config.ts 的 headers() 方法中添加规则（目前代码中完全没有这个配置）：
+
+   1     // next.config.ts
+   2     async headers() {
+   3       return [
+   4         {
+   5           source: '/ads.txt',
+   6           headers: [{ key: 'Content-Type', value: 'text/plain' }],
+   7         },
+   8       ];
+   9     }
+
+  4. 环境变量检查 (Priority: Medium)
+  指南 4.1 章节列出了需要的环境变量。
+   * 行动: 检查生产环境（Vercel 等）是否已设置：
+       * NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
+       * NEXT_PUBLIC_ADSENSE_ENABLED=true
+       * 以及各个 _BANNER 对应的 Slot ID。
+
+  ---
+
+  🚀 一键修复指令
+  如果您希望我开始执行，请告诉我。我可以：
+   1. 重构组件: 将指南中的 DisplayAd 代码写入 src/components/ads/display-ad.tsx。
+   2. 页面植入: 自动修改上述 3 个关键页面文件，插入广告位。
+   3. 配置更新: 更新 next.config.ts 添加 ads.txt 支持。

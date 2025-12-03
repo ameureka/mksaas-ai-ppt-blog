@@ -1,3 +1,4 @@
+import { OutstreamVideoAd } from '@/components/ads';
 import { ImageWrapper } from '@/components/docs/image-wrapper';
 import { Wrapper } from '@/components/docs/wrapper';
 import { YoutubeVideo } from '@/components/docs/youtube-video';
@@ -40,6 +41,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Files,
     blockquote: Callout as unknown as FC<ComponentProps<'blockquote'>>,
     img: ImageWrapper,
+    // Ad component for manual insertion in MDX
+    InArticleAd: OutstreamVideoAd,
   };
 
   return {

@@ -1,5 +1,12 @@
+import {
+  BlogBannerAd,
+  BlogSidebarAd,
+  MultiplexAd,
+  VerticalSidebarAd,
+} from '@/components/ads';
 import AllPostsButton from '@/components/blog/all-posts-button';
 import BlogGrid from '@/components/blog/blog-grid';
+import { MDXContentWithAds } from '@/components/blog/mdx-content-with-ads';
 import { getMDXComponents } from '@/components/docs/mdx-components';
 import { PremiumBadge } from '@/components/premium/premium-badge';
 import { PremiumGuard } from '@/components/premium/premium-guard';
@@ -180,6 +187,9 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
 
             {/* blog post description */}
             <p className="text-lg text-muted-foreground">{description}</p>
+
+            {/* Ad banner below description */}
+            <BlogBannerAd className="my-4" />
           </div>
 
           {/* blog post content */}
@@ -191,7 +201,9 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
               canAccess={hasPremiumAccess}
               className="max-w-none"
             >
-              <MDX components={getMDXComponents()} />
+              <MDXContentWithAds>
+                <MDX components={getMDXComponents()} />
+              </MDXContentWithAds>
             </PremiumGuard>
           </div>
 
@@ -254,9 +266,16 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
                 />
               )}
             </div>
+
+            {/* Sidebar ad */}
+            <BlogSidebarAd className="mt-4" />
+            <VerticalSidebarAd className="mt-4" />
           </div>
         </div>
       </div>
+
+      {/* Multiplex ad before related posts */}
+      <MultiplexAd className="mt-8" />
 
       {/* Footer section shows related posts */}
       {relatedPosts && relatedPosts.length > 0 && (

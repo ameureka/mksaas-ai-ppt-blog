@@ -1,6 +1,6 @@
 'use client';
 
-import { BannerAd } from '@/components/ppt/ads/display-ad';
+import { BlogBannerAd, NativeAdCard, mockNativeAd } from '@/components/ads';
 import { PPTCard } from '@/components/ppt/ppt-card';
 import { SearchFilters } from '@/components/ppt/search-filters';
 import { SearchSidebar } from '@/components/ppt/search-sidebar';
@@ -465,11 +465,6 @@ export default function SearchHomePage() {
         </div>
       </section>
 
-      {/* Ad Banner Placeholder */}
-      <div className="container mx-auto my-8 px-4">
-        <BannerAd slot="ppt-home-banner" />
-      </div>
-
       {hasSearched && (
         <section className="container mx-auto mb-16 px-4">
           <div className="flex flex-col gap-8 lg:flex-row">
@@ -492,6 +487,11 @@ export default function SearchHomePage() {
                   />
                 )}
               </div>
+
+              {/* 搜索结果上方横幅广告 */}
+              {!isLoading && !error && filteredResults.length > 0 && (
+                <BlogBannerAd className="mb-8" />
+              )}
 
               {isLoading ? (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -517,13 +517,40 @@ export default function SearchHomePage() {
                 </div>
               ) : (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {filteredResults.map((ppt) => (
-                    <PPTCard
-                      key={ppt.id}
-                      ppt={ppt}
-                      onDownload={handleDownload}
-                    />
-                  ))}
+                  {(() => {
+                    const items = [...filteredResults];
+                    // 在第 5 位和第 11 位插入原生广告
+                    if (items.length >= 4) {
+                      items.splice(4, 0, null as any);
+                    }
+                    if (items.length >= 11) {
+                      items.splice(10, 0, null as any);
+                    }
+                    return items.map((ppt, index) => {
+                      if (ppt === null) {
+                        return (
+                          <NativeAdCard
+                            key={`native-ad-search-${index}`}
+                            ad={mockNativeAd}
+                            position={`search_results_${index}`}
+                            onImpression={(adId) =>
+                              console.log('Native ad impression:', adId)
+                            }
+                            onClick={(adId) =>
+                              console.log('Native ad click:', adId)
+                            }
+                          />
+                        );
+                      }
+                      return (
+                        <PPTCard
+                          key={ppt.id}
+                          ppt={ppt}
+                          onDownload={handleDownload}
+                        />
+                      );
+                    });
+                  })()}
                 </div>
               )}
 
@@ -625,6 +652,13 @@ export default function SearchHomePage() {
         </section>
       )}
 
+      {/* 广告位 - 热门分类下方 */}
+      {!hasSearched && (
+        <section className="container mx-auto mb-8 px-4">
+          <BlogBannerAd />
+        </section>
+      )}
+
       {/* Featured Templates */}
       {!hasSearched && (
         <section className="container mx-auto mb-16 px-4">
@@ -635,9 +669,31 @@ export default function SearchHomePage() {
             </Button>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {featuredPPTs.map((ppt) => (
-              <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
-            ))}
+            {(() => {
+              const items = [...featuredPPTs];
+              // 在第 5 位插入原生广告
+              if (items.length >= 4) {
+                items.splice(4, 0, null as any);
+              }
+              return items.map((ppt, index) => {
+                if (ppt === null) {
+                  return (
+                    <NativeAdCard
+                      key="native-ad-featured"
+                      ad={mockNativeAd}
+                      position="home_featured_5"
+                      onImpression={(adId) =>
+                        console.log('Native ad impression:', adId)
+                      }
+                      onClick={(adId) => console.log('Native ad click:', adId)}
+                    />
+                  );
+                }
+                return (
+                  <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
+                );
+              });
+            })()}
           </div>
         </section>
       )}
@@ -652,9 +708,31 @@ export default function SearchHomePage() {
             </Button>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {newPPTs.map((ppt) => (
-              <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
-            ))}
+            {(() => {
+              const items = [...newPPTs];
+              // 在第 5 位插入原生广告
+              if (items.length >= 4) {
+                items.splice(4, 0, null as any);
+              }
+              return items.map((ppt, index) => {
+                if (ppt === null) {
+                  return (
+                    <NativeAdCard
+                      key="native-ad-new"
+                      ad={mockNativeAd}
+                      position="home_new_5"
+                      onImpression={(adId) =>
+                        console.log('Native ad impression:', adId)
+                      }
+                      onClick={(adId) => console.log('Native ad click:', adId)}
+                    />
+                  );
+                }
+                return (
+                  <PPTCard key={ppt.id} ppt={ppt} onDownload={handleDownload} />
+                );
+              });
+            })()}
           </div>
         </section>
       )}

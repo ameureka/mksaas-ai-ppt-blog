@@ -211,4 +211,13 @@ export const websiteConfig: WebsiteConfig = {
       },
     },
   },
+  adReward: {
+    enable: true, // Enable ad reward feature
+    creditsPerWatch: 5, // Credits awarded per ad watch
+    watchDuration: 30, // Frontend countdown duration in seconds
+    minWatchDuration: 25, // Minimum elapsed time for backend validation (allows 5s tolerance)
+    tokenExpireMinutes: 5, // Watch token expires after 5 minutes
+    dailyLimitPerUser: 10, // Max 10 ad watches per user per day
+    dailyLimitPerIP: 20, // Max 20 ad watches per IP per day
+  },
 };

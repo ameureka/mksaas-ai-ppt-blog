@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { ExternalLink } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
-interface NativeAdData {
+export interface NativeAdData {
   id: string;
   imageUrl: string;
   headline: string;
@@ -18,9 +18,9 @@ interface NativeAdData {
   callToAction: string;
 }
 
-interface NativeAdCardProps {
+export interface NativeAdCardProps {
   ad: NativeAdData;
-  position?: number;
+  position?: string;
   className?: string;
   onImpression?: (adId: string) => void;
   onClick?: (adId: string) => void;
@@ -124,14 +124,14 @@ export function NativeAdCard({
   );
 }
 
-// Mock 数据示例
+// Mock 数据 - 用于开发测试
 export const mockNativeAd: NativeAdData = {
   id: 'ad_001',
-  imageUrl: '/placeholder.svg?height=200&width=320&text=Ad+Image',
+  imageUrl: 'https://placehold.co/320x200/1a1a2e/ffffff?text=Ad+Image',
   headline: '提升团队协作效率的最佳工具',
   description: '超过100万团队正在使用，免费试用30天',
   advertiser: 'Notion',
-  logoUrl: '/placeholder.svg?height=40&width=40&text=Logo',
+  logoUrl: 'https://placehold.co/40x40/4a90d9/ffffff?text=N',
   clickUrl: 'https://example.com/landing',
   callToAction: '免费试用',
 };

@@ -153,3 +153,46 @@ export const ppt = pgTable("ppt", {
 	pptDownloadsIdx: index("ppt_download_count_idx").on(table.downloadCount),
 	pptViewsIdx: index("ppt_view_count_idx").on(table.viewCount),
 }));
+
+/**
+ * 广告观看记录表
+ * 用于记录用户观看广告的状态和验证
+ */
+export const adWatchRecord = pgTable("ad_watch_record", {
+	id: text("id").primaryKey(),
+	userId: text("user_id").references(() => user.id, { onDelete: 'cascade' }),
+	ipAddress: text("ip_address"),
+	pptId: text("ppt_id"),
+	watchToken: text("watch_token").unique().notNull(),
+	downloadToken: text("download_token"),
+	startedAt: timestamp("started_at").notNull().defaultNow(),
+	completedAt: timestamp("completed_at"),
+	status: text("status").notNull().default('pending'), // pending, completed, expired
+	creditsAwarded: integer("credits_awarded").default(0),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => ({
+	adWatchUserIdIdx: index("ad_watch_user_id_idx").on(table.userId),
+	adWatchIpIdx: index("ad_watch_ip_idx").on(table.ipAddress),
+	adWatchTokenIdx: index("ad_watch_token_idx").on(table.watchToken),
+	adWatchCreatedIdx: index("ad_watch_created_idx").on(table.createdAt),
+	adWatchStatusIdx: index("ad_watch_status_idx").on(table.status),
+}));
+
+/**
+ * 用户下载历史表
+ * 用于记录用户下载 PPT 的历史，支持首次免费检查
+ */
+export const userDownloadHistory = pgTable("user_download_history", {
+	id: text("id").primaryKey(),
+	userId: text("user_id").references(() => user.id, { onDelete: 'cascade' }),
+	pptId: text("ppt_id").notNull(),
+	downloadMethod: text("download_method").notNull(), // firstFree, credits, ad
+	creditsSpent: integer("credits_spent").default(0),
+	ipAddress: text("ip_address"),
+	downloadedAt: timestamp("downloaded_at").notNull().defaultNow(),
+}, (table) => ({
+	downloadUserPptIdx: index("download_user_ppt_idx").on(table.userId, table.pptId),
+	downloadUserIdx: index("download_user_idx").on(table.userId),
+	downloadPptIdx: index("download_ppt_idx").on(table.pptId),
+	downloadMethodIdx: index("download_method_idx").on(table.downloadMethod),
+}));

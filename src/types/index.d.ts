@@ -21,6 +21,7 @@ export type WebsiteConfig = {
   payment: PaymentConfig;
   price: PriceConfig;
   credits: CreditsConfig;
+  adReward: AdRewardConfig;
 };
 
 /**
@@ -185,6 +186,19 @@ export interface CreditsConfig {
     expireDays?: number;             // The number of days to expire the credits, undefined means no expire
   };
   packages: Record<string, CreditPackage>;  // Packages indexed by ID
+}
+
+/**
+ * Ad reward configuration for watching ads to earn credits
+ */
+export interface AdRewardConfig {
+  enable: boolean;                   // Whether to enable ad reward feature
+  creditsPerWatch: number;           // Credits awarded per ad watch
+  watchDuration: number;             // Required watch duration in seconds (frontend countdown)
+  minWatchDuration: number;          // Minimum elapsed time for backend validation in seconds
+  tokenExpireMinutes: number;        // Watch token expiration time in minutes
+  dailyLimitPerUser: number;         // Maximum ad watches per user per day
+  dailyLimitPerIP: number;           // Maximum ad watches per IP per day
 }
 
 /**

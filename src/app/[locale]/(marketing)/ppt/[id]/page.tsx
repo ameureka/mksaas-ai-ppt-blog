@@ -1,5 +1,11 @@
 'use client';
 
+import {
+  BlogBannerAd,
+  MultiplexAd,
+  NativeAdCard,
+  mockNativeAd,
+} from '@/components/ads';
 import { LoginModal } from '@/components/ppt/auth/login-modal';
 import { DownloadModal } from '@/components/ppt/download/download-modal';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -654,15 +660,8 @@ export default function PPTDetailPage() {
           </div>
         </div>
 
-        {/* 广告位 1 */}
-        <div className="my-12 flex justify-center">
-          <div className="w-full max-w-3xl h-20 md:h-24 rounded-lg border-2 border-dashed border-muted-foreground/20 bg-muted/10 flex items-center justify-center text-muted-foreground">
-            <div className="text-center">
-              <div className="text-sm font-medium">广告位 728x90</div>
-              <div className="text-xs">Google AdSense</div>
-            </div>
-          </div>
-        </div>
+        {/* 广告位 - 评价区域上方 */}
+        <BlogBannerAd className="my-12" />
 
         {/* 用户评价区域 */}
         <Card className="my-12">
@@ -759,40 +758,69 @@ export default function PPTDetailPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {recommendations.slice(0, 6).map((rec) => (
-                <Card
-                  key={rec.id}
-                  className="group cursor-pointer hover:shadow-lg transition-shadow"
-                  onClick={() => router.push(PublicRoutes.PPTDetail(rec.id))}
-                >
-                  <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
-                    <img
-                      src={rec.previewUrls[0] || '/placeholder.svg'}
-                      alt={rec.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                  <CardContent className="p-3">
-                    <h4 className="font-medium line-clamp-2 text-sm mb-1">
-                      {rec.title}
-                    </h4>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Download className="h-3 w-3" />
-                        <span>{(rec.downloads / 1000).toFixed(1)}k</span>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {(() => {
+                const items = [...recommendations.slice(0, 6)];
+                // 在第 4 位插入原生广告
+                if (items.length >= 3) {
+                  items.splice(3, 0, null as any);
+                }
+                return items.map((rec, index) => {
+                  if (rec === null) {
+                    return (
+                      <NativeAdCard
+                        key="native-ad-recommended"
+                        ad={mockNativeAd}
+                        position="detail_recommended_4"
+                        onImpression={(adId) =>
+                          console.log('Native ad impression:', adId)
+                        }
+                        onClick={(adId) =>
+                          console.log('Native ad click:', adId)
+                        }
+                      />
+                    );
+                  }
+                  return (
+                    <Card
+                      key={rec.id}
+                      className="group cursor-pointer hover:shadow-lg transition-shadow"
+                      onClick={() =>
+                        router.push(PublicRoutes.PPTDetail(rec.id))
+                      }
+                    >
+                      <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
+                        <img
+                          src={rec.previewUrls[0] || '/placeholder.svg'}
+                          alt={rec.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        <span>{rec.rating.toFixed(1)}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      <CardContent className="p-3">
+                        <h4 className="font-medium line-clamp-2 text-sm mb-1">
+                          {rec.title}
+                        </h4>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Download className="h-3 w-3" />
+                            <span>{(rec.downloads / 1000).toFixed(1)}k</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            <span>{rec.rating.toFixed(1)}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                });
+              })()}
             </div>
           </CardContent>
         </Card>
+
+        {/* 广告位 - 推荐模板下方 */}
+        <MultiplexAd className="my-8" />
 
         {/* 相关推荐区域 */}
         <div className="my-12">
@@ -843,27 +871,19 @@ export default function PPTDetailPage() {
               </Card>
             ))}
             {/* 原生广告 */}
-            <Card className="border-2 border-dashed border-muted-foreground/20 bg-muted/10">
-              <CardContent className="p-6 h-full flex flex-col items-center justify-center text-center">
-                <div className="text-sm font-medium text-muted-foreground mb-2">
-                  广告位
-                </div>
-                <div className="text-xs text-muted-foreground">280x210</div>
-                <div className="text-xs text-muted-foreground">原生广告</div>
-              </CardContent>
-            </Card>
+            <NativeAdCard
+              ad={mockNativeAd}
+              position="detail_related_8"
+              onImpression={(adId) =>
+                console.log('Native ad impression:', adId)
+              }
+              onClick={(adId) => console.log('Native ad click:', adId)}
+            />
           </div>
         </div>
 
         {/* 底部广告位 */}
-        <div className="my-12 flex justify-center">
-          <div className="w-full max-w-3xl h-20 md:h-24 rounded-lg border-2 border-dashed border-muted-foreground/20 bg-muted/10 flex items-center justify-center text-muted-foreground">
-            <div className="text-center">
-              <div className="text-sm font-medium">广告位 728x90</div>
-              <div className="text-xs">Google AdSense</div>
-            </div>
-          </div>
-        </div>
+        <BlogBannerAd className="my-12" />
       </div>
 
       {/* 悬浮下载按钮 */}
