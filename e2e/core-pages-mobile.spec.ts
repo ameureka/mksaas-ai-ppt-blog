@@ -29,18 +29,24 @@ test.describe('Core Pages Mobile Compatibility', () => {
       for (const el of textElements) {
         const fontSize = await el.evaluate((e) => {
           const computed = window.getComputedStyle(e);
-          const size = parseFloat(computed.fontSize);
+          const size = Number.parseFloat(computed.fontSize);
           const display = computed.display;
           return { size, display };
         });
 
         if (fontSize.size > 0 && fontSize.display !== 'none') {
-          expect(fontSize.size, `${name}: text should be >= 14px`).toBeGreaterThanOrEqual(14);
+          expect(
+            fontSize.size,
+            `${name}: text should be >= 14px`
+          ).toBeGreaterThanOrEqual(14);
           checkedCount++;
         }
       }
 
-      expect(checkedCount, `${name}: should have checked text elements`).toBeGreaterThan(0);
+      expect(
+        checkedCount,
+        `${name}: should have checked text elements`
+      ).toBeGreaterThan(0);
     });
 
     test(`${name}: buttons have 44x44px touch targets`, async ({ page }) => {
@@ -52,7 +58,10 @@ test.describe('Core Pages Mobile Compatibility', () => {
         const box = await button.boundingBox();
 
         if (box) {
-          expect(box.height, `${name}: button height >= 44px`).toBeGreaterThanOrEqual(44);
+          expect(
+            box.height,
+            `${name}: button height >= 44px`
+          ).toBeGreaterThanOrEqual(44);
         }
       }
     });
@@ -60,10 +69,16 @@ test.describe('Core Pages Mobile Compatibility', () => {
     test(`${name}: no horizontal overflow`, async ({ page }) => {
       await page.goto(path);
 
-      const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
-      const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
+      const scrollWidth = await page.evaluate(
+        () => document.documentElement.scrollWidth
+      );
+      const clientWidth = await page.evaluate(
+        () => document.documentElement.clientWidth
+      );
 
-      expect(scrollWidth, `${name}: no horizontal scroll`).toBeLessThanOrEqual(clientWidth + 1);
+      expect(scrollWidth, `${name}: no horizontal scroll`).toBeLessThanOrEqual(
+        clientWidth + 1
+      );
     });
 
     test(`${name}: images are responsive`, async ({ page }) => {
@@ -75,7 +90,10 @@ test.describe('Core Pages Mobile Compatibility', () => {
         const box = await img.boundingBox();
 
         if (box) {
-          expect(box.width, `${name}: image width <= viewport`).toBeLessThanOrEqual(mobileViewport.width);
+          expect(
+            box.width,
+            `${name}: image width <= viewport`
+          ).toBeLessThanOrEqual(mobileViewport.width);
         }
       }
     });

@@ -8,16 +8,31 @@ import type { Locale } from 'next-intl';
 import { getBaseUrl } from '../lib/urls/urls';
 
 type Href = Parameters<typeof getLocalePathname>[0]['href'];
-type ChangeFreq = 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+type ChangeFreq =
+  | 'always'
+  | 'hourly'
+  | 'daily'
+  | 'weekly'
+  | 'monthly'
+  | 'yearly'
+  | 'never';
 
 /**
  * static routes for sitemap with priority config
  */
-const staticRoutes: { path: string; priority: number; changeFreq: ChangeFreq }[] = [
+const staticRoutes: {
+  path: string;
+  priority: number;
+  changeFreq: ChangeFreq;
+}[] = [
   { path: '/', priority: 1.0, changeFreq: 'daily' },
   { path: '/about', priority: 0.7, changeFreq: 'monthly' },
-  ...(websiteConfig.blog.enable ? [{ path: '/blog', priority: 0.9, changeFreq: 'daily' as ChangeFreq }] : []),
-  ...(websiteConfig.docs.enable ? [{ path: '/docs', priority: 0.8, changeFreq: 'weekly' as ChangeFreq }] : []),
+  ...(websiteConfig.blog.enable
+    ? [{ path: '/blog', priority: 0.9, changeFreq: 'daily' as ChangeFreq }]
+    : []),
+  ...(websiteConfig.docs.enable
+    ? [{ path: '/docs', priority: 0.8, changeFreq: 'weekly' as ChangeFreq }]
+    : []),
 ];
 
 /**

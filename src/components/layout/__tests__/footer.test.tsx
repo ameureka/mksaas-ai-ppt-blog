@@ -4,7 +4,9 @@ import { Footer } from '../footer';
 
 // Mock dependencies
 vi.mock('@/components/layout/container', () => ({
-  default: ({ children, className }: any) => <div className={className}>{children}</div>,
+  default: ({ children, className }: any) => (
+    <div className={className}>{children}</div>
+  ),
 }));
 
 vi.mock('@/components/layout/logo', () => ({

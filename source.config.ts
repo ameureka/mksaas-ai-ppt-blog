@@ -103,5 +103,6 @@ export const blog = defineCollections({
     tags: z.array(z.string()).optional().default([]),
     seoKeywords: z.array(z.string()).optional().default([]),
     relatedPosts: z.array(z.string()).optional().default([]),
+    updatedAt: z.string().date().optional(),
   }),
 });

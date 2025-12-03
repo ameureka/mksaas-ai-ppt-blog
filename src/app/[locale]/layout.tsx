@@ -9,9 +9,11 @@ import AffonsoScript from '@/components/affiliate/affonso';
 import PromotekitScript from '@/components/affiliate/promotekit';
 import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 import { routing } from '@/i18n/routing';
+import { ADSENSE_CONFIG } from '@/lib/config/adsense';
 import { cn } from '@/lib/utils';
 import { type Locale, NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
@@ -47,6 +49,15 @@ export default async function LocaleLayout({
       <head>
         <AffonsoScript />
         <PromotekitScript />
+        {/* Google AdSense */}
+        {ADSENSE_CONFIG.enabled && ADSENSE_CONFIG.publisherId && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CONFIG.publisherId}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link
