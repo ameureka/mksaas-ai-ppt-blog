@@ -51,13 +51,6 @@ export function ModeSwitcher() {
           <MoonIcon className="mr-2 size-4" />
           <span>{t('dark')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => setTheme('system')}
-          className="cursor-pointer"
-        >
-          <LaptopIcon className="mr-2 size-4" />
-          <span>{t('system')}</span>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

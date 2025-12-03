@@ -57,7 +57,7 @@ export function Providers({ children, locale }: ProvidersProps) {
         <ThemeProvider
           attribute="class"
           defaultTheme={defaultMode}
-          enableSystem={true}
+          enableSystem={false}
           disableTransitionOnChange
         >
           <RootProvider theme={theme} i18n={{ locale, locales, translations }}>

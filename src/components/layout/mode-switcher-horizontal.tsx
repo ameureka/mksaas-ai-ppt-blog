@@ -62,19 +62,6 @@ export function ModeSwitcherHorizontal() {
       >
         <MoonIcon className="size-4" />
       </Button>
-
-      <Button
-        variant="ghost"
-        size="icon"
-        className={cn(
-          'size-6 px-0 rounded-full cursor-pointer',
-          theme === 'system' && 'bg-muted text-foreground'
-        )}
-        onClick={() => setTheme('system')}
-        aria-label={t('system')}
-      >
-        <LaptopIcon className="size-4" />
-      </Button>
     </div>
   );
 }
