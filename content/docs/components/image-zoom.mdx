@@ -1,12 +1,12 @@
 ---
-title: Zoomable Image
-description: Allow zoom-in images in your documentation
+title: 可缩放图片
+description: 在文档中允许放大图片
 preview: zoomImage
 ---
 
-## Usage
+## 使用方法
 
-Replace `img` with `ImageZoom` in your MDX components.
+在 MDX 组件中用 `ImageZoom` 替换 `img`。
 
 ```tsx title="app/docs/[[...slug]]/page.tsx"
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
@@ -17,18 +17,18 @@ return (
     components={{
       ...defaultMdxComponents,
       img: (props) => <ImageZoom {...(props as any)} />,
-      // other Mdx components
+      // 其他 Mdx 组件
     }}
   />
 );
 ```
 
-Now image zoom will be automatically enabled on all images.
+现在，所有图片都将自动启用图片缩放功能。
 
 ```mdx
 ![Test](/banner.png)
 ```
 
-### Image Optimization
+### 图片优化
 
-A default [`sizes` property](https://nextjs.org/docs/app/api-reference/components/image#sizes) will be defined for Next.js `<Image />` component if not specified.
+如果未指定，将为 Next.js `<Image />` 组件定义默认的 [`sizes` 属性](https://nextjs.org/docs/app/api-reference/components/image#sizes)。 

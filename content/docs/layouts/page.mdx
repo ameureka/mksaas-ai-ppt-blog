@@ -1,217 +1,238 @@
 ---
-title: Docs Page
-description: A page in your documentation
+title: 文档页面
+description: 文档中的页面
 ---
 
-Page is the base element of a documentation, it includes Table of contents,
-Footer, and Breadcrumb.
+可以渲染完整页面的组件（标题、目录等）。
 
-## Usage
-
-```tsx title="page.tsx"
-import {
-  DocsPage,
-  DocsDescription,
-  DocsTitle,
-  DocsBody,
-} from 'fumadocs-ui/page';
-
-<DocsPage>
-  <DocsTitle>title</DocsTitle>
-  <DocsDescription>description</DocsDescription>
-  <DocsBody>...</DocsBody>
-</DocsPage>;
-```
-
-<Callout type='info' title='Good to know'>
-
-Instead of rendering the title with `DocsTitle` in `page.tsx`, you can put the title into MDX file.
-This will render the title in the MDX body.
-
-</Callout>
-
-### Body
-
-It applies the [Typography](/docs/theme#typography) styles, wrap your content inside.
-
-```tsx
-import { DocsBody } from 'fumadocs-ui/page';
-
-<DocsBody>
-  <h1>This heading looks good!</h1>
-</DocsBody>;
-```
-
-### Category
-
-Optional, link the other pages in its (page tree) folder with cards.
-
-> You can use this component without `<DocsPage />`.
+## 正文
 
 ```tsx title="page.tsx"
-import { source } from '@/lib/source';
-import { DocsCategory } from 'fumadocs-ui/page';
+import { DocsPage } from 'fumadocs-ui/page';
 
-const page = source.getPage(['...']);
+export default function Page({ params }: { params: { slug?: string[] } }) {
+  const page = getPage(params);
 
-<DocsCategory page={page} from={source} />;
+  return (
+    <DocsPage
+      title={page.title}
+      description={page.description}
+      mdx={page.body}
+      toc={page.toc}
+    />
+  );
+}
 ```
 
-**Demo:**
+{/* <AutoTypeTable
+  path="./content/docs/props.ts"
+  type="Omit<DocsPageProps, 'children'>"
+/> */}
 
-{/* DocsCategory is not supported */}
-{/* <DocsCategory /> */}
+### SEO
 
-## Configurations
+为页面添加 SEO 优化，有几种方法。首先，允许文档生成器提供 `metadata` 帮助程序：
 
-### Full Mode
+```tsx title="api.ts"
+export { createMetadata } from 'fumadocs-core/docs';
+```
 
-To extend the page to fill up all available space, pass `full` to the page component.
-This will force TOC to be shown as a popover.
+默认值包括 **标题**、**描述**、**开放图形**（Open Graph）和 **Twitter** 图片、**规范**（Canonical）URL 和 locale 元数据。
+
+现在您可以直接使用它：
+
+```tsx title="page.tsx"
+import type { Metadata } from 'next';
+import { createMetadata } from '@/app/api';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string[] };
+}): Promise<Metadata> {
+  const page = await getPage(params);
+
+  return createMetadata({
+    page,
+    params,
+  });
+}
+```
+
+或者您可以手动构建它：
+
+```tsx title="page.tsx"
+import type { Metadata } from 'next';
+import { absoluteUrl } from 'fumadocs-core/utils/absolute-url';
+
+export const metadata: Metadata = {
+  title: 'My Page',
+  description: 'Page Description',
+  openGraph: {
+    title: 'My Page',
+    description: 'Page Description',
+    type: 'article',
+    url: absoluteUrl('/docs/my-page'),
+  },
+  twitter: {
+    title: 'My Page',
+    description: 'Page Description',
+    card: 'summary_large_image',
+  },
+  alternates: {
+    canonical: absoluteUrl('/docs/my-page'),
+  },
+};
+```
+
+## 内容目录
+
+支持无限级别的标题。从页面内容中提取，您应该通过 `toc` 字段传递它。
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+import { getToc } from 'fumadocs-core';
+
+export default function Page() {
+  const toc = getToc(content);
+
+  return <DocsPage toc={toc} />;
+}
+```
+
+{/* <AutoTypeTable path="./content/docs/props.ts" name="TOCItemProps[]" /> */}
+
+### 自定义内容目录
+
+可以定制 TOC（目录）的呈现方式，但您仍然需要通过 `toc` 字段传递真实的 TOC 项目。
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+
+export default function Page() {
+  return (
+    <DocsPage tocClassName="hidden lg:block" toc={toc}>
+      <div>Custom TOC</div>
+    </DocsPage>
+  );
+}
+```
+
+## 最后更新时间
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+
+export default function Page() {
+  return <DocsPage lastUpdatedAt={new Date()} />;
+}
+```
+
+## 页脚
+
+```tsx title="layout.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+import { baseOptions } from '@/app/layout.config';
+
+export default function Page() {
+  return (
+    <DocsPage
+      footer={{
+        text: 'Built with Fumadocs',
+      }}
+    />
+  );
+}
+```
+
+### 使用基础配置
+
+您可以创建一个 `baseOptions` 对象，用于所有页面和布局组件。
+
+```tsx title="layout.config.ts"
+import type { BasePageConfig } from 'fumadocs-ui/page';
+
+export const baseOptions: BasePageConfig = {
+  githubUrl: 'https://github.com/fuma-nama/fumadocs',
+  footer: {
+    text: 'Built with Fumadocs',
+  },
+};
+```
+
+```tsx title="page.tsx"
+import { DocsPage } from 'fumadocs-ui/page';
+import { baseOptions } from '@/app/layout.config';
+
+export default function Page() {
+  return <DocsPage {...baseOptions} />;
+}
+```
+
+### 编辑链接
 
 ```tsx
 import { DocsPage } from 'fumadocs-ui/page';
 
-<DocsPage full>...</DocsPage>;
+export default function Page() {
+  return (
+    <DocsPage
+      gitTimestamp={true}
+      footer={{
+        // Edit Link
+        editLink: {
+          text: 'Edit this page',
+          url: 'https://github.com/username/repo/blob/main',
+        },
+      }}
+    />
+  );
+}
 ```
 
-### Table of Contents
-
-An overview of all the headings in your article, it requires an array of headings.
-
-For Markdown and MDX documents, You can obtain it using the
-[TOC Utility](/docs/headless/utils/get-toc). Content sources like Fumadocs MDX offer this out-of-the-box.
+### 页面导航
 
 ```tsx
 import { DocsPage } from 'fumadocs-ui/page';
+import { getPagesPath } from 'fumadocs-core';
 
-<DocsPage toc={headings}>...</DocsPage>;
+export default function Page({ params }: { params: { slug?: string[] } }) {
+  const pagePath = getPagesPath(params);
+  const prev = getAdjacentPages({ current: pagePath, dir: 'prev' });
+  const next = getAdjacentPages({ current: pagePath, dir: 'next' });
+
+  return (
+    <DocsPage
+      footer={{
+        navigation: {
+          prev: prev?.url
+            ? {
+                title: prev.title,
+                href: prev.url,
+              }
+            : undefined,
+          next: next?.url
+            ? {
+                title: next.title,
+                href: next.url,
+              }
+            : undefined,
+        },
+      }}
+    />
+  );
+}
 ```
 
-Customise or disable TOC from your documentation with the `tableOfContent` option.
+#### 自定义获取相邻页面
 
-```tsx
-import { DocsPage } from 'fumadocs-ui/page';
+您可以在 `createAdjacentPages` 方法中应用 `includeInPageNav` 过滤器，该方法由文档生成器创建：
 
-<DocsPage tableOfContent={options}>...</DocsPage>;
-```
+```tsx title="api.ts"
+import { createAdjacentPages } from 'fumadocs-core/docs';
+import { tree } from '@/app/source';
 
-{/* <AutoTypeTable path="./content/docs/props.ts" name="TOCProps" /> */}
-
-#### Style
-
-You can choose another style for TOC, like `clerk` inspired by https://clerk.com:
-
-```tsx
-import { DocsPage } from 'fumadocs-ui/page';
-
-<DocsPage
-  tableOfContent={{
-    style: 'clerk',
-  }}
->
-  ...
-</DocsPage>;
-```
-
-#### Popover Mode
-
-On smaller devices, it is shown on a popover instead.
-Customise it with the `tableOfContentPopover` option.
-
-```tsx
-import { DocsPage } from 'fumadocs-ui/page';
-
-<DocsPage tableOfContentPopover={options}>...</DocsPage>;
-```
-
-{/* <AutoTypeTable path="./content/docs/props.ts" name="TOCPopoverProps" /> */}
-
-### Last Updated Time
-
-Display last updated time of the page.
-
-```tsx
-import { DocsPage } from 'fumadocs-ui/page';
-
-<DocsPage lastUpdate={new Date(lastModifiedTime)} />;
-```
-
-Since you might have different version controls (e.g. Github) or it's from
-remote sources like Sanity, Fumadocs UI doesn't display the last updated time by
-default.
-
-For Github hosted documents, you can use
-the [`getGithubLastEdit`](/docs/headless/utils/git-last-edit) utility.
-
-```tsx
-import { DocsPage } from 'fumadocs-ui/page';
-import { getGithubLastEdit } from 'fumadocs-core/server';
-
-const time = await getGithubLastEdit({
-  owner: 'fuma-nama',
-  repo: 'fumadocs',
-  path: `content/docs/${page.file.path}`,
+export const getAdjacentPages = createAdjacentPages(tree, {
+  includeInPageNav: (page) => !page.data.preview,
 });
-
-<DocsPage lastUpdate={new Date(time)} />;
-```
-
-<Callout type='info' title='Note'>
-
-    You can also specify the last updated time of documents (e.g. using frontmatter).
-    Don't forget to [update the schema type](/docs/mdx/collections#schema) on Fumadocs MDX first.
-
-</Callout>
-
-### Edit on GitHub
-
-Add "Edit on GitHub" button to the page.
-
-```tsx
-import { DocsPage } from 'fumadocs-ui/page';
-
-<DocsPage
-  editOnGithub={{
-    owner: 'fuma-nama',
-    repo: 'fumadocs',
-    sha: 'main',
-    // file path, make sure it's valid
-    path: `content/docs/${page.file.path}`,
-  }}
-/>;
-```
-
-### Footer
-
-Footer is a navigation element that has two buttons to jump to the next and previous pages. When not specified, it shows the neighbour pages found from page tree.
-
-Customise the footer with the `footer` option.
-
-```tsx
-import { DocsPage, DocsBody } from 'fumadocs-ui/page';
-
-<DocsPage footer={options}>
-  <DocsBody>...</DocsBody>
-</DocsPage>;
-```
-
-{/* <AutoTypeTable path="./content/docs/props.ts" name="FooterProps" /> */}
-
-### Breadcrumb
-
-A navigation element, shown only when user is navigating in folders.
-
-{/* <AutoTypeTable path="./content/docs/props.ts" name="BreadcrumbProps" /> */}
-
-### MDX Page
-
-In conjunction of Fumadocs MDX, you may create a `page.mdx` file and add the following.
-
-```mdx
-export { withArticle as default } from 'fumadocs-ui/page';
-
-## Hello World
-```
-
-This creates a page with MDX, with proper typography styles applied.
+``` 

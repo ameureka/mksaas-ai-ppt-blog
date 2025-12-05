@@ -18,8 +18,10 @@ export function generateStaticParams() {
           .getPages(locale)
           .filter(
             (post) =>
-              post.data.published &&
-              post.data.categories.some((cat) => cat === category.slugs[0])
+              (post.data as any)?.published &&
+              ((post.data as any)?.categories ?? []).some(
+                (cat: string) => cat === category.slugs[0]
+              )
           ).length / websiteConfig.blog.paginationSize
       );
       for (let page = 2; page <= totalPages; page++) {
@@ -37,12 +39,13 @@ export async function generateMetadata({ params }: BlogCategoryPageProps) {
   if (!category) {
     notFound();
   }
+  const categoryData = (category.data as any) || {};
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const canonicalPath = `/blog/category/${slug}/page/${page}`;
 
   return constructMetadata({
-    title: `${category.data.name} | ${t('title')}`,
-    description: category.data.description,
+    title: `${categoryData.name ?? slug} | ${t('title')}`,
+    description: categoryData.description,
     locale,
     pathname: canonicalPath,
   });
@@ -61,12 +64,18 @@ export default async function BlogCategoryPage({
 }: BlogCategoryPageProps) {
   const { locale, slug, page } = await params;
   const localePosts = blogSource.getPages(locale);
-  const publishedPosts = localePosts.filter((post) => post.data.published);
+  const publishedPosts = localePosts.filter(
+    (post) => (post.data as any)?.published
+  );
   const filteredPosts = publishedPosts.filter((post) =>
-    post.data.categories.some((cat) => cat === slug)
+    ((post.data as any)?.categories ?? []).some(
+      (cat: string) => cat === slug
+    )
   );
   const sortedPosts = filteredPosts.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    const dateA = new Date((a.data as any)?.date).getTime();
+    const dateB = new Date((b.data as any)?.date).getTime();
+    return dateB - dateA;
   });
   const currentPage = Number(page);
   const blogPageSize = websiteConfig.blog.paginationSize;

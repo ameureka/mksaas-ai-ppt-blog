@@ -13,7 +13,7 @@ export function generateStaticParams() {
   for (const locale of LOCALES) {
     const publishedPosts = blogSource
       .getPages(locale)
-      .filter((post) => post.data.published);
+      .filter((post) => (post.data as any)?.published);
     const totalPages = Math.max(
       1,
       Math.ceil(publishedPosts.length / paginationSize)
@@ -48,9 +48,13 @@ interface BlogListPageProps {
 export default async function BlogListPage({ params }: BlogListPageProps) {
   const { locale, page } = await params;
   const localePosts = blogSource.getPages(locale);
-  const publishedPosts = localePosts.filter((post) => post.data.published);
+  const publishedPosts = localePosts.filter(
+    (post) => (post.data as any)?.published
+  );
   const sortedPosts = publishedPosts.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    const dateA = new Date((a.data as any)?.date).getTime();
+    const dateB = new Date((b.data as any)?.date).getTime();
+    return dateB - dateA;
   });
   const currentPage = Number(page);
   const blogPageSize = websiteConfig.blog.paginationSize;

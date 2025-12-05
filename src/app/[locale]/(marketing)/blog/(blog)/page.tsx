@@ -33,9 +33,13 @@ interface BlogPageProps {
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;
   const localePosts = blogSource.getPages(locale);
-  const publishedPosts = localePosts.filter((post) => post.data.published);
+  const publishedPosts = localePosts.filter(
+    (post) => (post.data as any)?.published
+  );
   const sortedPosts = publishedPosts.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    const dateA = new Date((a.data as any)?.date).getTime();
+    const dateB = new Date((b.data as any)?.date).getTime();
+    return dateB - dateA;
   });
   const currentPage = 1;
   const blogPageSize = websiteConfig.blog.paginationSize;

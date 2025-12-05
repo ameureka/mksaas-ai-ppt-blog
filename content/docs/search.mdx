@@ -1,26 +1,26 @@
 ---
-title: Search
-description: Implement document search in your docs
+title: 搜索
+description: 在您的文档中实现文档搜索
 ---
 
-Fumadocs UI provides a good-looking search UI for your docs, the search functionality is instead provided and documented on Fumadocs Core.
+Fumadocs UI 为您的文档提供了一个美观的搜索界面，而搜索功能则由 Fumadocs Core 提供和记录。
 
-See [Document Search](/docs/headless/search).
+参见[文档搜索](/docs/headless/search)。
 
-## Search UI
+## 搜索 UI
 
-Open with <kbd>⌘</kbd> <kbd>K</kbd> or <kbd>Ctrl</kbd> <kbd>K</kbd>.
+使用 <kbd>⌘</kbd> <kbd>K</kbd> 或 <kbd>Ctrl</kbd> <kbd>K</kbd> 打开。
 
-### Configurations
+### 配置
 
-You can customize search UI from the [Root Provider](/docs/layouts/root-provider) component in root layout.
+您可以通过根布局中的 [Root Provider](/docs/layouts/root-provider) 组件自定义搜索 UI。
 
-When not specified, it uses the Default [`fetch` Search Client](/docs/headless/search/orama) powered by Orama.
+当未指定时，它使用由 Orama 提供支持的默认 [`fetch` 搜索客户端](/docs/headless/search/orama)。
 
-### Custom Links
+### 自定义链接
 
-Add custom link items to search dialog.
-They are shown as fallbacks when the query is empty.
+向搜索对话框添加自定义链接项。
+当查询为空时，它们会显示为备选项。
 
 ```tsx title="app/layout.tsx"
 import { RootProvider } from 'fumadocs-ui/root-provider';
@@ -37,9 +37,9 @@ import { RootProvider } from 'fumadocs-ui/root-provider';
 </RootProvider>;
 ```
 
-### Disable Search
+### 禁用搜索
 
-To opt-out of document search, disable it from root provider.
+要禁用文档搜索，请在根提供程序中禁用它。
 
 ```tsx
 import { RootProvider } from 'fumadocs-ui/root-provider';
@@ -53,9 +53,9 @@ import { RootProvider } from 'fumadocs-ui/root-provider';
 </RootProvider>;
 ```
 
-### Hot Keys
+### 热键
 
-Customise the hot keys to trigger search dialog.
+自定义触发搜索对话框的热键。
 
 ```tsx
 import { RootProvider } from 'fumadocs-ui/root-provider';
@@ -74,10 +74,10 @@ import { RootProvider } from 'fumadocs-ui/root-provider';
 </RootProvider>;
 ```
 
-### Tag Filter
+### 标签过滤器
 
-Add UI to change filters.
-Make sure to configure [Tag Filter](/docs/headless/search/orama#tag-filter) on search server first.
+添加 UI 以更改过滤器。
+确保首先在搜索服务器上配置[标签过滤器](/docs/headless/search/orama#tag-filter)。
 
 ```tsx
 import { RootProvider } from 'fumadocs-ui/root-provider';
@@ -99,9 +99,9 @@ import { RootProvider } from 'fumadocs-ui/root-provider';
 </RootProvider>;
 ```
 
-### Search Options
+### 搜索选项
 
-Pass options to the search client, like changing the API endpoint for Orama search server:
+向搜索客户端传递选项，例如更改 Orama 搜索服务器的 API 端点：
 
 ```tsx
 import { RootProvider } from 'fumadocs-ui/root-provider';
@@ -117,9 +117,9 @@ import { RootProvider } from 'fumadocs-ui/root-provider';
 </RootProvider>;
 ```
 
-### Replace Search Dialog
+### 替换搜索对话框
 
-You can replace the default Search Dialog with:
+您可以用以下内容替换默认搜索对话框：
 
 ```tsx title="components/search.tsx"
 'use client';
@@ -132,7 +132,7 @@ export default function CustomDialog(props: SharedProps) {
 }
 ```
 
-To pass it to the Root Provider, you need a wrapper with `use client` directive.
+要将其传递给 Root Provider，您需要一个带有 `use client` 指令的包装器。
 
 ```tsx title="provider.tsx"
 'use client';
@@ -155,7 +155,7 @@ export function Provider({ children }: { children: ReactNode }) {
 }
 ```
 
-Use it instead of your previous Root Provider
+使用它替代您之前的 Root Provider
 
 ```tsx title="layout.tsx"
 import { Provider } from './provider';
@@ -172,14 +172,13 @@ export default function Layout({ children }: { children: ReactNode }) {
 }
 ```
 
-## Other Solutions
+## 其他解决方案
 
 ### Algolia
 
-For the setup guide, see [Integrate Algolia Search](/docs/headless/search/algolia).
+关于设置指南，请参见[集成 Algolia 搜索](/docs/headless/search/algolia)。
 
-While generally we recommend building your own search with their client-side
-SDK, you can also plug the built-in dialog interface.
+虽然我们通常建议使用他们的客户端 SDK 构建您自己的搜索，但您也可以插入内置的对话框接口。
 
 ```tsx title="components/search.tsx"
 'use client';
@@ -195,20 +194,19 @@ export default function CustomSearchDialog(props: SharedProps) {
 }
 ```
 
-1. Replace `appId`, `apiKey` and `indexName` with your desired values.
+1. 将 `appId`、`apiKey` 和 `indexName` 替换为您想要的值。
 
-2. [Replace the default search dialog](#replace-search-dialog) with your new component.
+2. 用您的新组件[替换默认搜索对话框](#replace-search-dialog)。
 
-<Callout title="Note" className='mt-4'>
+<Callout title="注意" className='mt-4'>
 
-    The built-in implementation doesn't use instant search (their official
-    javascript client).
+    内置实现不使用即时搜索（他们的官方 JavaScript 客户端）。
 
 </Callout>
 
-#### Tag Filter
+#### 标签过滤器
 
-Same as default search client, you can configure [Tag Filter](/docs/headless/search/algolia#tag-filter) on the dialog.
+与默认搜索客户端相同，您可以在对话框上配置[标签过滤器](/docs/headless/search/algolia#tag-filter)。
 
 ```tsx title="components/search.tsx"
 import SearchDialog from 'fumadocs-ui/components/dialog/search-algolia';
@@ -226,7 +224,7 @@ import SearchDialog from 'fumadocs-ui/components/dialog/search-algolia';
 
 ### Orama Cloud
 
-For the setup guide, see [Integrate Orama Cloud](/docs/headless/search/orama-cloud).
+关于设置指南，请参见[集成 Orama Cloud](/docs/headless/search/orama-cloud)。
 
 ```tsx title="components/search.tsx"
 'use client';
@@ -245,31 +243,5 @@ export default function CustomSearchDialog(props: SharedProps) {
 }
 ```
 
-1. Replace `endpoint`, `apiKey` with your desired values.
-2. [Replace the default search dialog](#replace-search-dialog) with your new component.
-
-### Community Integrations
-
-A list of integrations maintained by community.
-
-- [Trieve Search](/docs/headless/search/trieve)
-
-## Built-in UI
-
-If you want to use the built-in search dialog UI instead of building your own,
-you may use the `SearchDialog` component.
-
-```tsx
-import {
-  SearchDialog,
-  type SharedProps,
-} from 'fumadocs-ui/components/dialog/search';
-
-export default function CustomSearchDialog(props: SharedProps) {
-  return <SearchDialog {...props} />;
-}
-```
-
-<Callout type="warn" title="Unstable">
-  It is an internal API, might break during iterations
-</Callout>
+1. 将 `endpoint`、`apiKey` 替换为您想要的值。
+2. 用您的新组件[替换默认搜索对话框](#replace-search-dialog)。 

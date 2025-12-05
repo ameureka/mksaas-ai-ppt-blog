@@ -1,12 +1,12 @@
 ---
-title: Card
-description: Use the Card component in your MDX documentation
+title: 卡片
+description: 在 MDX 文档中使用卡片组件
 preview: card
 ---
 
-## Usage
+## 使用方法
 
-Add it to your MDX components.
+将其添加到您的 MDX 组件中。
 
 ```tsx
 import { Card, Cards } from 'fumadocs-ui/components/card';
@@ -19,30 +19,30 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 />;
 ```
 
-See [Markdown](/docs/markdown#cards) for usages.
+有关用法，请参见 [Markdown](/docs/markdown#cards)。
 
 ### Cards
 
-The container of cards.
+卡片的容器。
 
 ### Card
 
-Based on Next.js `<Link />`.
+基于 Next.js 的 `<Link />`。
 
 {/* <AutoTypeTable path="./content/docs/props.ts" name="CardProps" /> */}
 
-<Callout title="Tree Shaking on icons" type="warn">
+<Callout title="图标的树摇优化" type="warn">
 
-If you're not using Fumadocs MDX for rendering MDX (e.g. using Contentlayer), ensure that
-tree shaking is working properly.
+如果您没有使用 Fumadocs MDX 来渲染 MDX（例如，使用 Contentlayer），请确保
+树摇优化正常工作。
 
-Most of the icon libraries support importing icons individually.
+大多数图标库支持单独导入图标。
 
 ```tsx
 import HomeIcon from 'lucide-react/dist/esm/icons/home';
 ```
 
-As a workaround, you can pass icons to MDX Components too. (this uses Next.js bundler instead of content source)
+作为解决方法，您也可以将图标传递给 MDX 组件。（这使用 Next.js 打包器而不是内容源）
 
 ```tsx title="page.tsx"
 import { HomeIcon } from 'lucide-react';
@@ -53,4 +53,4 @@ const components = {
 };
 ```
 
-</Callout>
+</Callout> 

@@ -177,9 +177,8 @@ const withMDX = createMDX();
 const config = withMDX(withNextIntl(nextConfig));
 
 // Remove unsupported keys that may be injected by plugins (e.g. turbopack)
-if ('turbopack' in (config as any)) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-delete
-  (config as any).turbopack = undefined;
+if ('turbopack' in (config as Record<string, unknown>)) {
+  delete (config as Record<string, unknown>).turbopack;
 }
 
 export default config;

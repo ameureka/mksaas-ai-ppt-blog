@@ -39,13 +39,14 @@ import '@/styles/mdx.css';
  * max size is websiteConfig.blog.relatedPostsSize
  */
 async function getRelatedPosts(post: BlogType) {
+  const data = post.data as any;
   const allPosts = blogSource
     .getPages(post.locale)
-    .filter((p) => p.data.published)
+    .filter((p) => (p.data as any)?.published)
     .filter((p) => p.slugs.join('/') !== post.slugs.join('/'));
 
   // If frontmatter has relatedPosts, use them first
-  const manualRelatedSlugs = post.data.relatedPosts || [];
+  const manualRelatedSlugs = data.relatedPosts || [];
   const manualRelatedPosts: BlogType[] = [];
 
   if (manualRelatedSlugs.length > 0) {
@@ -81,7 +82,7 @@ async function getRelatedPosts(post: BlogType) {
 export function generateStaticParams() {
   return blogSource
     .getPages()
-    .filter((post) => post.data.published)
+    .filter((post) => (post.data as any)?.published)
     .flatMap((post) => {
       return {
         locale: post.locale,
@@ -99,14 +100,16 @@ export async function generateMetadata({
     notFound();
   }
 
+  const data = post.data as any;
+
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return constructMetadata({
-    title: `${post.data.title} | ${t('title')}`,
-    description: post.data.description,
+    title: `${data.title} | ${t('title')}`,
+    description: data.description,
     locale,
     pathname: `/blog/${slug}`,
-    image: post.data.image,
+    image: data.image,
   });
 }
 
@@ -124,14 +127,18 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
     notFound();
   }
 
-  const { date, title, description, image, author, categories, premium } =
-    post.data;
+  const data = post.data as any;
+  const { date, title, description, image, author, categories, premium } = data;
   const publishDate = formatDate(new Date(date));
 
   const blogAuthor = authorSource.getPage([author], locale);
   const blogCategories = categorySource
     .getPages(locale)
     .filter((category) => categories.includes(category.slugs[0] ?? ''));
+  const authorData = (blogAuthor?.data as any) || {};
+  const categoriesData = blogCategories.map((category) => {
+    return (category?.data as any) || {};
+  });
 
   // Check premium access for premium posts
   const session = await getSession();
@@ -140,7 +147,7 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
       ? await checkPremiumAccess(session.user.id)
       : !premium; // Non-premium posts are always accessible
 
-  const MDX = post.data.body;
+  const MDX = data.body;
 
   // getTranslations may cause error DYNAMIC_SERVER_USAGE, so we set dynamic to force-static
   const t = await getTranslations('BlogPage');
@@ -221,16 +228,16 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
                 <h2 className="text-lg font-semibold mb-4">{t('author')}</h2>
                 <div className="flex items-center gap-4">
                   <div className="relative h-8 w-8 shrink-0">
-                    {blogAuthor.data.avatar && (
+                    {authorData.avatar && (
                       <Image
-                        src={blogAuthor.data.avatar}
-                        alt={`avatar for ${blogAuthor.data.name}`}
+                        src={authorData.avatar}
+                        alt={`avatar for ${authorData.name}`}
                         className="rounded-full object-cover border"
                         fill
                       />
                     )}
                   </div>
-                  <span className="line-clamp-1">{blogAuthor.data.name}</span>
+                  <span className="line-clamp-1">{authorData.name}</span>
                 </div>
               </div>
             )}
@@ -240,14 +247,14 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
               <h2 className="text-lg font-semibold mb-4">{t('categories')}</h2>
               <ul className="flex flex-wrap gap-4">
                 {blogCategories.map(
-                  (category) =>
+                  (category, idx) =>
                     category && (
                       <li key={category.slugs[0]}>
                         <LocaleLink
                           href={`/blog/category/${category.slugs[0]}`}
                           className="text-sm font-medium text-muted-foreground hover:text-primary"
                         >
-                          {category.data.name}
+                          {categoriesData[idx]?.name}
                         </LocaleLink>
                       </li>
                     )
@@ -257,9 +264,9 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
 
             {/* table of contents */}
             <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
-              {post.data.toc && (
+              {data.toc && (
                 <InlineTOC
-                  items={post.data.toc}
+                  items={data.toc}
                   open={true}
                   defaultOpen={true}
                   className="bg-muted/50 border-none"

@@ -98,7 +98,7 @@ export const defaultImageTaskConfig: ImageTaskConfig = {
   contentDir: 'content/blog',
   outputDir: '深入细化调整/006-01-博客内容创作/流水线设计-博文生产',
   coverCount: 1,
-  inlineCount: 3,
+  inlineCount: 0,
   textStrategy: 'short-zh',
 };
 

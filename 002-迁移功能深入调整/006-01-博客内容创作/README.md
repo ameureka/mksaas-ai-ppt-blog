@@ -59,9 +59,11 @@ graph TD
 
 ---
 
-## 4. 标准操作流程 (SOP)
+## 4. 标准操作流程 (SOP) — 仅中文
 
-请严格按照以下 5 步执行：
+当前策略：**仅中文博客，不再生成英文版本；如无必要，不新增新稿，维护现有 121 篇基线**。
+
+如需新增，请严格按照以下 4 步执行：
 
 ### Step 1: 领任务 (Pick)
 打开 `topics.json`，选择一个 `status: "pending"` 的选题。
@@ -80,17 +82,12 @@ graph TD
 1. 复制 **"2. 阶段 B：生成正文"** 的 Prompt。
 2. 将 `{id}` 替换为选题 ID (如 `ppt-page-count-golden-rule`)。
 3. 附带上一步生成的**大纲**，发送给 Gemini。
-4. **保存文件**: 将输出内容保存为 `content/blog/{id}.zh.mdx`。
+4. **保存文件**: 将输出内容保存为 `content/blog/{id}.mdx`（单语中文，不写 .zh/.en）。
 
-### Step 4: 英文翻译 (Translate)
-1. 复制 **"3. 阶段 C：多语言翻译"** 的 Prompt。
-2. 附带上一步生成的**中文 MDX 内容**，发送给 Gemini。
-3. **保存文件**: 将输出内容保存为 `content/blog/{id}.mdx`。
-
-### Step 5: 资源填充 (Assets)
-1. **图片**: 检查 MDX 中的图片路径 (如 `/images/blog/xxx-cover.jpg`)。
-2. **占位**: 在 `public/images/blog/` 下创建对应文件（可用 Canva 制作或先用占位图）。
-3. **验证**: 运行 `pnpm content` 确保无报错。
+### Step 4: 资源填充与校验 (Assets & QA)
+1. **图片**: 检查 MDX 中的图片路径 (如 `/images/blog/{slug}-cover.jpg`)，生成或占位后放入 `public/images/blog/`。
+2. **验证**: 运行 `pnpm content`（仅生成中文路由），必要时再跑 `pnpm build`。
+3. **发布**: AdSense 由环境变量控制，开启前确认 `ads.txt` 与 slot/ID。
 
 ---
 
@@ -102,7 +99,8 @@ graph TD
 - [ ] **组件**: 是否使用了 `<Callout>` 等增强组件？代码是否闭合？
 - [ ] **数据引用**: 文章是否包含 "根据 xxx 研究..." 这样的权威背书？(GEO 关键点)
 - [ ] **内链**: 是否自然地提到了其他文章或模板分类页？
-- [ ] **双语一致**: 中英文版本的文件名、图片路径是否完全一致？
+- [ ] **图片**: 封面路径真实存在，尺寸/大小符合规范（封面 1200x630 <200KB，内容图 800-1000 宽 <150KB）。
+- [ ] **发布开关**: AdSense 开关/ads.txt 是否按环境要求设置。
 
 ---
 
@@ -116,6 +114,13 @@ A: MDX 构建会报错。请务必确保 Frontmatter 中的 `image` 路径在 `p
 
 **Q: 想要修改文章结构？**
 A: 请在 **Step 2 (大纲)** 阶段进行干预。一旦生成正文，修改成本较高。
+
+---
+
+## 7. 执行注意（脚本与缺图）
+- 不再调用任何翻译/英文生成脚本；如有旧脚本带 .en/.zh 输出需暂时禁用。
+- 可保留缺图检测/占位生成脚本，目标目录为 `public/images/blog/`，封面命名 `{slug}-cover.jpg`。
+- 开启 AdSense 前确认 `ads.txt` 与环境变量，测试模式用 `NEXT_PUBLIC_ADSENSE_TEST_MODE=true`。
 
 ---
 

@@ -1,7 +1,10 @@
 export const ADSENSE_CONFIG = {
   publisherId: process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || '',
   enabled: process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true',
-  testMode: process.env.NODE_ENV === 'development',
+  // Allow forcing placeholder/test mode in non-dev via NEXT_PUBLIC_ADSENSE_TEST_MODE=true
+  testMode:
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_ADSENSE_TEST_MODE === 'true',
 
   // Ad slot IDs - configure after AdSense approval
   slots: {

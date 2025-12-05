@@ -1,9 +1,18 @@
+import type { I18nConfig } from 'fumadocs-core/i18n';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { createMDXSource } from 'fumadocs-mdx/runtime/next';
 import * as LucideIcons from 'lucide-react';
 import { createElement } from 'react';
 import { author, blog, category, changelog, docs, pages } from '../../.source';
 import { docsI18nConfig } from './docs/i18n';
+
+// Blog/author/category 仅保留中文，避免生成英文路由展示同一中文内容
+const blogI18nConfig: I18nConfig = {
+  defaultLanguage: 'zh',
+  languages: ['zh'],
+  hideLocale: 'default-locale',
+  parser: 'dot' as const,
+};
 
 /**
  * Turn a content source into a unified interface
@@ -55,7 +64,7 @@ export const pagesSource = loader({
  */
 export const authorSource = loader({
   baseUrl: '/author',
-  i18n: docsI18nConfig,
+  i18n: blogI18nConfig,
   source: createMDXSource(author),
 });
 
@@ -64,7 +73,7 @@ export const authorSource = loader({
  */
 export const categorySource = loader({
   baseUrl: '/category',
-  i18n: docsI18nConfig,
+  i18n: blogI18nConfig,
   source: createMDXSource(category),
 });
 
@@ -73,7 +82,7 @@ export const categorySource = loader({
  */
 export const blogSource = loader({
   baseUrl: '/blog',
-  i18n: docsI18nConfig,
+  i18n: blogI18nConfig,
   source: createMDXSource(blog),
 });
 

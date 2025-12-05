@@ -1,32 +1,32 @@
 ---
-title: Manual Installation
-description: Create a new fumadocs project from scratch.
+title: 手动安装
+description: 从零开始创建一个新的 Fumadocs 项目
 ---
 
-> Read the [Quick Start](/docs) guide first for basic concept.
+> 请先阅读[快速入门](/docs)指南了解基本概念。
 
-## Getting Started
+## 入门
 
-Create a new Next.js application with `create-next-app`, and install required packages.
+使用 `create-next-app` 创建一个新的 Next.js 应用程序，并安装所需的包。
 
 ```mdx
 fumadocs-ui fumadocs-core
 ```
 
-### Content Source
+### 内容源
 
-Fumadocs supports different content sources, you can choose one you prefer.
+Fumadocs 支持不同的内容源，您可以选择您喜欢的一种。
 
-There is a list of officially supported sources:
+以下是官方支持的源列表：
 
-- [Setup Fumadocs MDX](/docs/mdx)
-- [Setup Content Collections](/docs/headless/content-collections)
+- [设置 Fumadocs MDX](/docs/mdx)
+- [设置 Content Collections](/docs/headless/content-collections)
 
-Make sure to configure the library correctly following their setup guide before continuing, we will import the source adapter using `@/lib/source.ts` in this guide.
+请确保在继续之前按照其设置指南正确配置库，我们将在本指南中使用 `@/lib/source.ts` 导入源适配器。
 
-### Root Layout
+### 根布局
 
-Wrap the entire application inside [Root Provider](/docs/layouts/root-provider), and add required styles to `body`.
+将整个应用程序包装在 [Root Provider](/docs/layouts/root-provider) 中，并为 `body` 添加所需的样式。
 
 ```tsx
 import { RootProvider } from 'fumadocs-ui/provider';
@@ -50,9 +50,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 }
 ```
 
-### Styles
+### 样式
 
-Setup Tailwind CSS v4 on your Next.js app, add the following to `global.css`.
+在您的 Next.js 应用程序上设置 Tailwind CSS v4，将以下内容添加到 `global.css`。
 
 ```css title="Tailwind CSS"
 @import 'tailwindcss';
@@ -63,11 +63,11 @@ Setup Tailwind CSS v4 on your Next.js app, add the following to `global.css`.
 @source '../node_modules/fumadocs-ui/dist/**/*.js';
 ```
 
-> It doesn't come with a default font, you may choose one from `next/font`.
+> 它不附带默认字体，您可以从 `next/font` 中选择一个。
 
-### Layout
+### 布局
 
-Create a `app/layout.config.tsx` file to put the shared options for our layouts.
+创建一个 `app/layout.config.tsx` 文件，放置我们布局的共享选项。
 
 ```json doc-gen:file
 {
@@ -78,7 +78,7 @@ Create a `app/layout.config.tsx` file to put the shared options for our layouts.
 }
 ```
 
-Create a folder `/app/docs` for our docs, and give it a proper layout.
+为我们的文档创建一个文件夹 `/app/docs`，并给它一个适当的布局。
 
 ```json doc-gen:file
 {
@@ -89,14 +89,14 @@ Create a folder `/app/docs` for our docs, and give it a proper layout.
 }
 ```
 
-> `pageTree` refers to Page Tree, it should be provided by your content source.
+> `pageTree` 指的是页面树，应该由您的内容源提供。
 
-### Page
+### 页面
 
-Create a catch-all route `/app/docs/[[...slug]]` for docs pages.
+为文档页面创建一个捕获所有路由 `/app/docs/[[...slug]]`。
 
-In the page, wrap your content in the [Page](/docs/layouts/page) component.
-It may vary depending on your content source. You should configure static rendering with `generateStaticParams` and metadata with `generateMetadata`.
+在页面中，将您的内容包装在 [Page](/docs/layouts/page) 组件中。
+这可能因您的内容源而异。您应该使用 `generateStaticParams` 配置静态渲染，并使用 `generateMetadata` 配置元数据。
 
 <Tabs items={['Fumadocs MDX', 'Content Collections']}>
 
@@ -121,12 +121,11 @@ It may vary depending on your content source. You should configure static render
 }
 ```
 </Tab>
-
 </Tabs>
 
-### Search
+### 搜索
 
-Use the default document search based on Orama.
+使用基于 Orama 的默认文档搜索。
 
 <Tabs items={['Fumadocs MDX', 'Content Collections']}>
 
@@ -151,14 +150,13 @@ Use the default document search based on Orama.
 }
 ```
 </Tab>
-
 </Tabs>
 
-Learn more about [Document Search](/docs/headless/search).
+了解更多关于[文档搜索](/docs/headless/search)的信息。
 
-### Done
+### 完成
 
-You can start the dev server and create MDX files.
+您可以启动开发服务器并创建 MDX 文件。
 
 ```mdx title="content/docs/index.mdx"
 ---
@@ -170,18 +168,18 @@ title: Hello World
 I love Anime.
 ```
 
-## Customise
+## 自定义
 
-You can use [Home Layout](/docs/layouts/home-layout) for other pages of the site, it includes a navbar with theme toggle.
+您可以为网站的其他页面使用 [Home Layout](/docs/layouts/home-layout)，它包含一个带有主题切换的导航栏。
 
-## Deploying
+## 部署
 
-It should work out-of-the-box with Vercel & Netlify.
+它应该在 Vercel 和 Netlify 上开箱即用。
 
-### Docker Deployment
+### Docker 部署
 
-If you want to deploy your Fumadocs app using Docker with **Fumadocs MDX configured**, make sure to add the `source.config.ts` file to the `WORKDIR` in the Dockerfile.
-The following snippet is taken from the official [Next.js Dockerfile Example](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile):
+如果您想使用 Docker 部署您的 Fumadocs 应用程序，并且已**配置了 Fumadocs MDX**，请确保将 `source.config.ts` 文件添加到 Dockerfile 中的 `WORKDIR`。
+以下片段取自官方 [Next.js Dockerfile 示例](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)：
 
 ```zsh title="Dockerfile"
 WORKDIR /app
@@ -190,4 +188,4 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* source.config.ts ./
 ```
 
-This ensures Fumadocs MDX can access your configuration file during builds.
+这确保 Fumadocs MDX 在构建期间可以访问您的配置文件。

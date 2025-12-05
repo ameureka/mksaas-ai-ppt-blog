@@ -44,15 +44,6 @@ export const categoryStyles: CategoryStyle[] = [
     coverKeywords: ['教育培训', '课件', 'PPT'],
   },
   {
-    category: '培训课件',
-    categoryEn: 'training',
-    styleHint: '企业风、专业培训、结构化、清晰',
-    palette: '蓝/灰/白',
-    paletteHex: ['#2B6CB0', '#718096', '#FFFFFF'],
-    sceneElements: ['培训场景', '流程图', '知识卡片', '讲师', '白板'],
-    coverKeywords: ['培训课件', '企业培训', 'PPT'],
-  },
-  {
     category: '产品营销',
     categoryEn: 'marketing',
     styleHint: '高对比、大标题、渐变霓虹、情境mock、吸引力',
@@ -69,6 +60,15 @@ export const categoryStyles: CategoryStyle[] = [
     paletteHex: ['#ED8936', '#4299E1', '#FFFFFF'],
     sceneElements: ['策略图', '渠道分析', '预算分配', '时间节点', '目标达成'],
     coverKeywords: ['营销方案', '推广策略', 'PPT'],
+  },
+  {
+    category: '付费搜索',
+    categoryEn: 'paid-search',
+    styleHint: '现代、资源导向、搜索感、价值感',
+    palette: '紫/粉/青',
+    paletteHex: ['#9F7AEA', '#ED64A6', '#38B2AC'],
+    sceneElements: ['搜索框', '锁/徽章', '模板预览', '付费标识', '资源库'],
+    coverKeywords: ['模板搜索', '付费模板', 'PPT'],
   },
   {
     category: '项目提案',
@@ -96,24 +96,6 @@ export const categoryStyles: CategoryStyle[] = [
     paletteHex: ['#4299E1', '#48BB78', '#F6E05E'],
     sceneElements: ['工具', '流程', '清单', '技巧', '对比', '步骤'],
     coverKeywords: ['PPT技巧', '制作指南', 'PPT'],
-  },
-  {
-    category: '模板技巧',
-    categoryEn: 'tips',
-    styleHint: '现代、资源导向、信息图、锁/徽章元素',
-    palette: '紫/粉/青',
-    paletteHex: ['#9F7AEA', '#ED64A6', '#4FD1C5'],
-    sceneElements: ['搜索框', '模板库', '锁/徽章', '对比表', '技巧卡片'],
-    coverKeywords: ['模板技巧', '模板选择', 'PPT'],
-  },
-  {
-    category: '付费搜索',
-    categoryEn: 'paid-search',
-    styleHint: '现代、资源导向、搜索感、价值感',
-    palette: '紫/粉/青',
-    paletteHex: ['#9F7AEA', '#ED64A6', '#38B2AC'],
-    sceneElements: ['搜索框', '锁/徽章', '模板预览', '付费标识', '资源库'],
-    coverKeywords: ['模板搜索', '付费模板', 'PPT'],
   },
 ];
 

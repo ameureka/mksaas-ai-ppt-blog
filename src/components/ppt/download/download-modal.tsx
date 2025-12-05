@@ -72,7 +72,7 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [downloadLink, setDownloadLink] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  // const [agreedToTerms, setAgreedToTerms] = useState(false); // UX optimization: removed
   const [adCountdown, setAdCountdown] = useState(adRewardConfig.watchDuration);
   const [adCompleted, setAdCompleted] = useState(false);
   const [userDownloadStatus, setUserDownloadStatus] =
@@ -90,7 +90,7 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
       setIsProcessing(false);
       setDownloadLink(null);
       setError(null);
-      setAgreedToTerms(false);
+      // setAgreedToTerms(false); // UX optimization: removed
       setAdCountdown(adRewardConfig.watchDuration);
       setAdCompleted(false);
       setWatchToken(null);
@@ -494,21 +494,9 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
                   <li>• 下载链接48小时内有效</li>
                   <li>• 模板仅供个人学习和商业使用</li>
                 </ul>
-                <div className="flex items-center gap-2 pt-2">
-                  <Checkbox
-                    id="terms"
-                    checked={agreedToTerms}
-                    onCheckedChange={(checked) =>
-                      setAgreedToTerms(checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="text-xs text-muted-foreground cursor-pointer"
-                  >
-                    我已阅读并同意相关条款
-                  </label>
-                </div>
+                <p className="text-xs text-muted-foreground pt-2">
+                  点击"确认下载"即表示您已阅读并同意以上条款
+                </p>
               </div>
               {error && (
                 <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-4">
@@ -532,9 +520,7 @@ export function DownloadModal({ open, onOpenChange, ppt }: DownloadModalProps) {
                   size="lg"
                   onClick={handleConfirmMethod}
                   disabled={
-                    isProcessing ||
-                    !agreedToTerms ||
-                    (selectedMethod === 'ad' && !adCompleted)
+                    isProcessing || (selectedMethod === 'ad' && !adCompleted)
                   }
                 >
                   {isProcessing ? (

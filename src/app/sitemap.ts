@@ -67,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     routing.locales.forEach((locale) => {
       const posts = blogSource
         .getPages(locale)
-        .filter((post) => post.data.published);
+        .filter((post) => (post.data as any)?.published);
       const totalPages = Math.max(
         1,
         Math.ceil(posts.length / websiteConfig.blog.paginationSize)
@@ -90,12 +90,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     routing.locales.forEach((locale) => {
       const localeCategories = categorySource.getPages(locale);
       localeCategories.forEach((category) => {
+        const categoryData = (category.data as any) || {};
         // posts in this category and locale
         const postsInCategory = blogSource
           .getPages(locale)
-          .filter((post) => post.data.published)
+          .filter((post) => (post.data as any)?.published)
           .filter((post) =>
-            post.data.categories.some((cat) => cat === category.slugs[0])
+            ((post.data as any)?.categories ?? []).some(
+              (cat: string) => cat === category.slugs[0]
+            )
           );
         const totalPages = Math.max(
           1,
@@ -137,9 +140,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     routing.locales.forEach((locale) => {
       const posts = blogSource
         .getPages(locale)
-        .filter((post) => post.data.published);
+        .filter((post) => (post.data as any)?.published);
       posts.forEach((post) => {
-        const lastMod = post.data.updatedAt || post.data.date || now;
+        const data = post.data as any;
+        const lastMod = data?.updatedAt || data?.date || now;
         sitemapList.push({
           url: getUrl(`/blog/${post.slugs.join('/')}`, locale),
           lastModified: lastMod,

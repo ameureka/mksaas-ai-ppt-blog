@@ -1,11 +1,11 @@
 ---
-title: Static Export
-description: Enable static export with Fumadocs
+title: 静态导出
+description: 使用 Fumadocs 启用静态导出
 ---
 
-## Overview
+## 概览
 
-Fumadocs is fully compatible with Next.js static export, allowing you to export the app as a static HTML site without a Node.js server.
+Fumadocs 完全兼容 Next.js 静态导出，允许您将应用程序导出为不需要 Node.js 服务器的静态 HTML 站点。
 
 ```js title="next.config.mjs"
 /**
@@ -16,18 +16,18 @@ const nextConfig = {
 };
 ```
 
-## Search
+## 搜索
 
-### Cloud Solutions
+### 云解决方案
 
-Since the search functionality is powered by remote servers, static export works without configuration.
+由于搜索功能由远程服务器提供支持，静态导出无需配置即可工作。
 
-### Built-in Search
+### 内置搜索
 
-The default search config of Orama Search uses route handlers, which is not supported by static export.
+Orama 搜索的默认搜索配置使用路由处理器，静态导出不支持这种方式。
 
-Instead, you can build the search indexes statically following the [Orama Search](/docs/headless/search/orama#static-export) guide.
-And enable static mode on search client from Root Provider:
+相反，您可以按照 [Orama 搜索](/docs/headless/search/orama#static-export) 指南静态构建搜索索引。
+并从 Root Provider 在搜索客户端上启用静态模式：
 
 ```tsx title="app/layout.tsx"
 import { RootProvider } from 'fumadocs-ui/provider';
@@ -52,4 +52,4 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 ```
 
-This allows the route handler to be statically cached into a single file, and search will be computed on browser instead.
+这允许路由处理器被静态缓存到单个文件中，搜索将在浏览器中计算。 

@@ -1,8 +1,8 @@
 # 博客内容批量生产流水线设计方案 (Content Pipeline Design)
 
-> **文档状态**: 2025-11-28 草案
+> **文档状态**: 2025-11-28 草案（单语化修订）
 > **执行引擎**: Gemini CLI (Gemini 3)
-> **核心策略**: 中文优先 -> 交互式批处理 -> 双语发布
+> **核心策略**: **仅中文** -> 交互式批处理 -> 资源补齐（默认不新增）
 
 ## 1. 流水线架构概览
 
@@ -17,9 +17,7 @@ graph TD
     C -- 人工审核/微调 --> D[批量生成正文 (Content)];
     D --> E[组件与图片占位 (Assets)];
     E --> F[中文 MDX 成品];
-    F --> G[AI 翻译 (Translation)];
-    G --> H[英文 MDX 成品];
-    H --> I[发布 (Publish)];
+    F --> G[发布 (Publish)];
 ```
 
 ---
@@ -46,7 +44,7 @@ graph TD
 
 ---
 
-## 3. 阶段二：分步生成策略 (Gemini Interaction)
+## 3. 阶段二：分步生成策略 (Gemini Interaction，仅中文)
 
 我们将利用 Gemini CLI 的对话能力，分两步完成生成，确保质量可控。
 
@@ -81,7 +79,7 @@ graph TD
 
 技术规范：
 1. **格式**: 使用 MDX 格式。
-2. **Frontmatter**: 包含 title, description, date (today), image (占位), published: true, premium: false, categories, author: "pptx-team"。
+2. **Frontmatter**: 包含 title, description, date (today), image (占位), published: true, premium: false, categories, author: "pptx-team"。输出文件名：`content/blog/{slug}.mdx`（仅中文，不再生成 .zh/.en）。
 3. **组件使用**: 
    - 关键提示使用 `<Callout type="tip">内容</Callout>`。
    - 警告信息使用 `<Callout type="warn">内容</Callout>`。
@@ -89,31 +87,10 @@ graph TD
    - 正文自然融入关键词。
    - 必须包含 "权威数据引用" (即使是模拟的，也要看起来真实，例如 "根据 2024 年职场报告...")。
    - 语言简洁有力，适合 AI 搜索提取摘要。
-5. **图片占位**: 使用 `![描述](/images/blog/{slug}-{index}.png)` 格式。
+5. **图片占位**: 使用 `![描述](/images/blog/{slug}-{index}.png)` 格式；封面固定 `/images/blog/{slug}-cover.jpg`。
 ```
 
----
-
-## 4. 阶段三：多语言翻译 (Translation)
-
-**Input**: 中文 MDX 文件内容。
-**Prompt 目标**: 翻译为英文，保留 MDX 结构和 Frontmatter 变量名。
-
-**Prompt 模板**:
-```markdown
-将以下 MDX 内容翻译为英文：
-
-要求：
-1. **保留 Frontmatter 结构**，但翻译 title 和 description 的值。
-2. **保留组件代码** (如 <Callout>) 不变，只翻译组件内的文本。
-3. **保留图片路径** 不变。
-4. 语言风格：Native American English，专业、商务。
-5. 输出文件名建议: {slug}.mdx (原文件为 {slug}.zh.mdx)。
-```
-
----
-
-## 5. 工程化支持 (Scripting)
+## 4. 工程化支持 (Scripting)
 
 为了支撑 Gemini CLI 高效工作，我们需要准备一些辅助脚本或命令别名。
 
@@ -125,8 +102,8 @@ graph TD
 
 ---
 
-## 6. 下一步行动
+## 5. 下一步行动（单语版）
 
-1.  **建立选题库**: 从 `/广告-博文` 目录中提取 10 个高优先级选题，填入 `topics.json`。
-2.  **测试生产**: 选取 1 个选题，跑通 "大纲 -> 正文 -> 翻译" 全流程，验证质量。
-3.  **批量执行**: 验证无误后，批量生成剩余 9 篇。
+1. **维持基线**: 默认不新增稿件，保持 121 篇中文基线；如需新增，按“大纲 → 正文”执行。
+2. **图片补齐**: 基于 frontmatter 缺图清单生成或占位封面 `/images/blog/{slug}-cover.jpg`，尺寸 1200x630 <200KB。
+3. **验证链路**: `pnpm content`（仅中文路由）→ 必要时 `pnpm build`；AdSense 开启前检查 `ads.txt` 与环境变量。

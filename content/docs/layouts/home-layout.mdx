@@ -1,11 +1,11 @@
 ---
-title: Home Layout
-description: Shared layout for other pages
+title: 主页布局
+description: 其他页面的共享布局
 ---
 
-## Usage
+## 使用方法
 
-Add a navbar and search dialog across other pages.
+在其他页面上添加导航栏和搜索对话框。
 
 ```tsx title="/app/(home)/layout.tsx"
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 }
 ```
 
-Create a [Route Group](https://nextjs.org/docs/app/building-your-application/routing/route-groups) to share the same layout across multiple pages.
+创建一个[路由组](https://nextjs.org/docs/app/building-your-application/routing/route-groups)来在多个页面之间共享相同的布局。
 
 <Files>
   <Folder name="(home)" defaultOpen>
@@ -30,4 +30,4 @@ Create a [Route Group](https://nextjs.org/docs/app/building-your-application/rou
     </Folder>
     <File name="layout.tsx" />
   </Folder>
-</Files>
+</Files> 

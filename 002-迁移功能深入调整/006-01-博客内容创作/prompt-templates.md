@@ -4,7 +4,7 @@
 
 ---
 
-## 1. 阶段 A：生成大纲 (Outline)
+## 1. 阶段 A：生成大纲 (Outline，中文)
 
 **Input Prompt:**
 
@@ -30,7 +30,7 @@ Output Format: Markdown list.
 
 ---
 
-## 2. 阶段 B：生成正文 (Content)
+## 2. 阶段 B：生成正文 (Content，中文)
 
 **Input Prompt:**
 
@@ -53,6 +53,7 @@ Technical Specifications (Strictly Follow):
    author: "pptx-team"
    ---
    ```
+   文件输出：`content/blog/{id}.mdx`（单语中文，不再生成 .zh/.en）。
 3. **Components**:
    - Use `<Callout type="tip">Tip content</Callout>` for pro tips.
    - Use `<Callout type="warn">Warning content</Callout>` for common mistakes.
@@ -62,33 +63,8 @@ Technical Specifications (Strictly Follow):
    - **Tone**: Professional, helpful, encouraging, and concise.
    - **Length**: 1500-2000 words.
 5. **Image Placeholders**:
-   - Insert `![Image Description](/images/blog/{id}-{index}.png)` at logical breaks (at least 3 images).
+   - 封面固定 `/images/blog/{id}-cover.jpg`（1200x630 <200KB）
+   - 正文占位 `![Image Description](/images/blog/{id}-{index}.png)`（800-1000px 宽，<150KB）
 
 Action: Write the full MDX content now in Chinese.
-```
-
----
-
-## 3. 阶段 C：多语言翻译 (Translation)
-
-**Input Prompt:**
-
-```markdown
-Role: Expert Translator (Chinese to English).
-Task: Translate the following MDX content into Native American English.
-
-Constraints:
-1. **Frontmatter**:
-   - Translate `title` and `description`.
-   - KEEP `date`, `image`, `published`, `premium`, `categories`, `author` UNCHANGED.
-   - `categories` values should map to English slugs (e.g., "商务汇报" -> "business").
-2. **Components**:
-   - KEEP structure `<Callout ...>...</Callout>` exactly as is.
-   - Only translate the text content *inside* the tags.
-3. **Images**:
-   - KEEP all image paths `![...](...)` EXACTLY as is.
-4. **Tone**: Business professional, native, fluent.
-
-Content to Translate:
-[Paste Chinese MDX Here]
 ```

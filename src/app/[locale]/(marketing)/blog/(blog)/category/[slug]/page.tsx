@@ -31,10 +31,12 @@ export async function generateMetadata({ params }: BlogCategoryPageProps) {
   }
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const canonicalPath = `/blog/category/${slug}`;
+  const categoryName = (category.data as any)?.name ?? slug;
+  const categoryDescription = (category.data as any)?.description;
 
   return constructMetadata({
-    title: `${category.data.name} | ${t('title')}`,
-    description: category.data.description,
+    title: `${categoryName} | ${t('title')}`,
+    description: categoryDescription,
     locale,
     pathname: canonicalPath,
   });
@@ -57,12 +59,18 @@ export default async function BlogCategoryPage({
   }
 
   const localePosts = blogSource.getPages(locale);
-  const publishedPosts = localePosts.filter((post) => post.data.published);
+  const publishedPosts = localePosts.filter(
+    (post) => (post.data as any)?.published
+  );
   const filteredPosts = publishedPosts.filter((post) =>
-    post.data.categories.some((cat) => cat === category.slugs[0])
+    ((post.data as any)?.categories ?? []).some(
+      (cat: string) => cat === category.slugs[0]
+    )
   );
   const sortedPosts = filteredPosts.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    const dateA = new Date((a.data as any)?.date).getTime();
+    const dateB = new Date((b.data as any)?.date).getTime();
+    return dateB - dateA;
   });
   const currentPage = 1;
   const blogPageSize = websiteConfig.blog.paginationSize;

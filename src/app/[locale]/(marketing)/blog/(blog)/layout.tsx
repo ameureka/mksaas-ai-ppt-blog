@@ -20,8 +20,8 @@ export default async function BlogListLayout({
   const language = locale as string;
   const categoryList = categorySource.getPages(language).map((category) => ({
     slug: category.slugs[0],
-    name: category.data.name,
-    description: category.data.description || '',
+    name: (category.data as any)?.name,
+    description: (category.data as any)?.description || '',
   }));
   // console.log('categoryList', categoryList);
 

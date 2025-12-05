@@ -11,163 +11,47 @@
 
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { getCategoryStyleBySlug } from '../../config/category-styles';
+import { fileURLToPath } from 'node:url';
+import { getCategoryStyleBySlug } from '../../config/category-styles.ts';
 import {
   type TextStrategy,
-  detectSceneType,
   extractArticleKeywords,
   generateCoverPrompt,
-  generateInlinePrompt,
-  getSceneElements,
-} from '../../config/prompt-templates';
-import type { ImageTask, ImageTasksData, SceneType } from './types';
+} from '../../config/prompt-templates.ts';
+import type { ImageTask, ImageTasksData } from './types';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 配置
+type Mode = 'cover-only' | 'cover-and-inline';
+
+// 命令行模式：--mode=cover-only / cover-and-inline
+const argvMode = process.argv
+  .find((arg) => arg.startsWith('--mode='))
+  ?.split('=')[1] as Mode | undefined;
+
 const CONFIG = {
-  mdxDir: path.resolve(
-    __dirname,
-    '../../../../006-blogs-seo-博文设计/广告-博文'
-  ),
+  // 使用实际内容目录，仅中文
+  mdxDir: path.resolve(__dirname, '../../../../../content/blog'),
   outputDir: path.resolve(__dirname, '../../data'),
   outputJson: 'image-tasks.json',
   outputMd: 'image-tasks.md',
+  mode: (argvMode || 'cover-only') as Mode,
+  maxInline: 3, // cover-and-inline 时的内页上限
 };
 
 // 目录名 -> 分类 slug 映射
 const DIR_TO_CATEGORY: Record<string, string> = {
-  商务汇报PPT: 'business',
-  年终总结PPT: 'year-end',
-  教育培训与课件PPT: 'education',
-  产品营销与营销方案PPT: 'marketing',
-  项目提案PPT: 'proposal',
-  述职报告PPT: 'report',
-  通用与混合场景: 'general',
-  付费模板搜索与产品视角: 'tips',
+  business: 'business',
+  'year-end': 'year-end',
+  education: 'education',
+  marketing: 'marketing',
+  proposal: 'proposal',
+  report: 'report',
+  general: 'general',
+  'paid-search': 'paid-search',
 };
-
-// 中文关键词 -> 英文翻译映射
-const TITLE_TRANSLATIONS: Record<string, string> = {
-  商务汇报: 'business-report',
-  年终总结: 'year-end-summary',
-  教育培训: 'education-training',
-  培训课件: 'training-courseware',
-  产品营销: 'product-marketing',
-  营销方案: 'marketing-plan',
-  项目提案: 'project-proposal',
-  述职报告: 'work-report',
-  述职: 'work-report',
-  PPT模板: 'ppt-template',
-  PPT: 'ppt',
-  一般包含哪些内容: 'content-guide',
-  推荐页数: 'page-count',
-  推荐字体和配色: 'font-color',
-  字体和配色: 'font-color',
-  怎么做: 'how-to',
-  怎么写: 'how-to-write',
-  怎么选: 'how-to-choose',
-  怎么设计: 'how-to-design',
-  如何: 'how-to',
-  什么时候: 'when-to',
-  为什么: 'why',
-  下载: 'download',
-  模板: 'template',
-  快速: 'quick',
-  修改: 'modify',
-  改成: 'convert',
-  更专业: 'professional',
-  数据: 'data',
-  图表: 'chart',
-  结构: 'structure',
-  内容: 'content',
-  设计: 'design',
-  风格: 'style',
-  分类: 'category',
-  页数: 'pages',
-  场景: 'scenario',
-  技巧: 'tips',
-  指南: 'guide',
-  清单: 'checklist',
-  案例: 'case-study',
-  实战: 'practical',
-  新手: 'beginner',
-  入门: 'getting-started',
-  免费: 'free',
-  付费: 'paid',
-  搜索: 'search',
-  选择: 'choose',
-  合适: 'suitable',
-  互动: 'interactive',
-  课堂: 'classroom',
-  线上: 'online',
-  线下: 'offline',
-  复盘: 'review',
-  总结: 'summary',
-  计划: 'plan',
-  目标: 'goal',
-  成绩: 'achievement',
-  失败: 'failure',
-  决策层: 'decision-maker',
-  老板: 'boss',
-  领导: 'leader',
-  同事: 'colleague',
-  受众: 'audience',
-  用户: 'user',
-  产品: 'product',
-  品牌: 'brand',
-  转化: 'conversion',
-  卖点: 'selling-point',
-  创意: 'creative',
-  策略: 'strategy',
-  执行: 'execution',
-  效果: 'effect',
-  评估: 'evaluation',
-  预算: 'budget',
-  渠道: 'channel',
-  路演: 'roadshow',
-  汇报: 'report',
-  演讲: 'presentation',
-  会议: 'meeting',
-  投影: 'projection',
-  录屏: 'recording',
-  发送: 'send',
-  文件: 'file',
-};
-
-/**
- * 将中文标题转换为英文 slug
- */
-function titleToSlug(title: string, categorySlug: string): string {
-  let slug = title.replace(/[？?！!。，,：:""''「」【】（）()]/g, '').trim();
-
-  // 按优先级替换关键词
-  const sortedKeys = Object.keys(TITLE_TRANSLATIONS).sort(
-    (a, b) => b.length - a.length
-  );
-  for (const zh of sortedKeys) {
-    const en = TITLE_TRANSLATIONS[zh];
-    slug = slug.replace(new RegExp(zh, 'g'), `-${en}-`);
-  }
-
-  // 清理多余字符
-  slug = slug
-    .replace(/[\u4e00-\u9fa5]/g, '') // 移除剩余中文
-    .replace(/[^a-zA-Z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-    .toLowerCase();
-
-  // 如果 slug 太短或为空，使用分类 + 随机后缀
-  if (slug.length < 5) {
-    slug = `${categorySlug}-${Date.now().toString(36)}`;
-  }
-
-  // 限制长度
-  if (slug.length > 60) {
-    slug = slug.slice(0, 60).replace(/-$/, '');
-  }
-
-  return slug;
-}
 
 /**
  * 从文件路径获取分类 slug
@@ -270,12 +154,20 @@ function extractH2Scenes(body: string): string[] {
 
   while ((match = h2Regex.exec(body)) !== null) {
     const h2 = match[1].trim();
-    if (!/FAQ|常见问题|总结|结语|写在最后|参考|相关/.test(h2)) {
-      scenes.push(h2);
+    // 过滤通用标题
+    if (/FAQ|常见问题|总结|结语|写在最后|参考|相关/i.test(h2)) {
+      continue;
     }
+    scenes.push(h2);
   }
 
-  return scenes.slice(0, 4);
+  // 去重并限制数量
+  const uniq: string[] = [];
+  for (const s of scenes) {
+    if (!uniq.includes(s)) uniq.push(s);
+    if (uniq.length >= CONFIG.maxInline) break;
+  }
+  return uniq;
 }
 
 /**
@@ -297,7 +189,7 @@ async function scanMdxFiles(): Promise<ImageTask[]> {
 
       if (entry.isDirectory()) {
         scanDir(fullPath);
-      } else if (entry.name.endsWith('.zh.mdx')) {
+      } else if (entry.name.endsWith('.mdx')) {
         try {
           const task = processFile(fullPath);
           if (task) tasks.push(task);
@@ -326,28 +218,24 @@ function processFile(filePath: string): ImageTask | null {
 
   const title = String(data.title);
 
-  // 从路径获取分类
-  const categorySlug = getCategoryFromPath(filePath);
+  // 优先使用 frontmatter 中的分类 slug
+  const categories = Array.isArray(data.categories)
+    ? (data.categories as unknown[])
+    : [];
+  const frontmatterCategory =
+    categories.find((c) => typeof c === 'string' && c.trim()) as
+      | string
+      | undefined;
+
+  // 从路径获取分类作为兜底
+  const categorySlug = frontmatterCategory || getCategoryFromPath(filePath);
   const style = getCategoryStyleBySlug(categorySlug);
 
-  // 生成英文 slug
-  const slug = titleToSlug(title, categorySlug);
+  // 使用文件名作为 slug，确保与现有路径一致
+  const slug = path.basename(filePath, path.extname(filePath));
 
   const textStrategy: TextStrategy = 'short-zh';
   const textToRender = extractCoreKeywords(title);
-
-  // 英文短标题
-  const shortTitleEnMap: Record<string, string> = {
-    business: 'Business Report PPT',
-    'year-end': 'Year-End Summary PPT',
-    education: 'Education Training PPT',
-    marketing: 'Product Marketing PPT',
-    proposal: 'Project Proposal PPT',
-    report: 'Work Report PPT',
-    general: 'PPT Tips',
-    tips: 'Template Tips',
-  };
-  const shortTitleEn = shortTitleEnMap[categorySlug] || 'PPT Guide';
 
   // 从文章内容提取关键词，与分类关键词合并
   const articleKeywords = extractArticleKeywords(title, body);
@@ -364,40 +252,56 @@ function processFile(filePath: string): ImageTask | null {
     textToRender,
   });
 
-  const h2Scenes = extractH2Scenes(body);
-  const inlineImages = h2Scenes.map((scene, i) => {
-    // 提取该 H2 下的段落内容
-    const paragraph = extractParagraphAfterH2(body, scene);
-    // 传入段落内容进行场景类型判断
-    const sceneType = detectSceneType(scene, paragraph);
-    // 传入段落内容生成针对性元素
-    const elements = getSceneElements(sceneType, scene, paragraph);
+  let inlineImages: Array<{
+    filename: string;
+    scene: string;
+    sceneType: string;
+    prompt: string;
+    status: 'pending';
+  }> = [];
 
-    return {
-      filename: `${slug}-${i + 1}.png`,
-      scene,
-      sceneType: sceneType as SceneType,
-      prompt: generateInlinePrompt({ scene, sceneType, elements, style }),
-      status: 'pending' as const,
-    };
-  });
+  if (CONFIG.mode === 'cover-and-inline') {
+    const h2Scenes = extractH2Scenes(body);
+    inlineImages = h2Scenes.map((scene, i) => {
+      const paragraph = extractParagraphAfterH2(body, scene);
+      const sceneType = detectSceneType(scene, paragraph);
+      const elements = getSceneElements(sceneType, scene, paragraph);
 
-  // 确保至少 3 张内页图
-  while (inlineImages.length < 3) {
-    const i = inlineImages.length;
-    const defaultScene = `${style.category}核心要点 ${i + 1}`;
-    inlineImages.push({
-      filename: `${slug}-${i + 1}.png`,
-      scene: defaultScene,
-      sceneType: 'concept',
-      prompt: generateInlinePrompt({
+      return {
+        filename: `${slug}-${i + 1}.png`,
+        scene,
+        sceneType: sceneType as string,
+        prompt: generateInlinePrompt({ scene, sceneType, elements, style }),
+        status: 'pending' as const,
+      };
+    });
+
+    // 过滤通用/冗余场景
+    inlineImages = inlineImages.filter(
+      (img) =>
+        !/总结|结语|FAQ|常见问题|参考|致谢|感谢/.test(img.scene)
+    );
+
+    // 限制数量
+    inlineImages = inlineImages.slice(0, CONFIG.maxInline);
+
+    // 兜底补足
+    while (inlineImages.length < CONFIG.maxInline) {
+      const i = inlineImages.length;
+      const defaultScene = `${style.category} 核心要点 ${i + 1}`;
+      inlineImages.push({
+        filename: `${slug}-${i + 1}.png`,
         scene: defaultScene,
         sceneType: 'concept',
-        elements: style.sceneElements.slice(0, 3),
-        style,
-      }),
-      status: 'pending',
-    });
+        prompt: generateInlinePrompt({
+          scene: defaultScene,
+          sceneType: 'concept',
+          elements: style.sceneElements.slice(0, 3),
+          style,
+        }),
+        status: 'pending',
+      });
+    }
   }
 
   const now = new Date().toISOString();
@@ -406,7 +310,6 @@ function processFile(filePath: string): ImageTask | null {
     slug,
     title,
     shortTitleZh: textToRender,
-    shortTitleEn,
     category: style.category,
     categoryEn: categorySlug,
     styleHint: style.styleHint,
@@ -460,10 +363,11 @@ function generateMarkdown(tasks: ImageTask[]): string {
 
       lines.push('#### 封面 Prompt');
       lines.push('');
+      lines.push(`**文件名**: \`${task.cover.filename}\``);
+      lines.push('');
       lines.push('```');
       lines.push(task.cover.prompt);
       lines.push('```');
-      lines.push(`**文件名**: \`${task.cover.filename}\``);
       lines.push('');
 
       lines.push('#### 内页 Prompt');
@@ -491,6 +395,7 @@ function generateMarkdown(tasks: ImageTask[]): string {
 async function main() {
   console.log('🚀 开始生成图片 Prompt...');
   console.log(`📁 MDX 目录: ${CONFIG.mdxDir}`);
+  console.log(`🎛️ 模式: ${CONFIG.mode}`);
 
   if (!fs.existsSync(CONFIG.outputDir)) {
     fs.mkdirSync(CONFIG.outputDir, { recursive: true });

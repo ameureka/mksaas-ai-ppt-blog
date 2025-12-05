@@ -1,12 +1,19 @@
 # Repository Guidelines
 
-Working notes for the MkSaaS blog + AI tools codebase. Keep changes small, typed, and production-friendly.
+Working notes for the PPTHub Blog & AI PPT tools codebase, based on the MkSaaS blog + AI starter. Keep changes small, typed, and production-friendly.
 
 ## Quick Orientation
 - Stack: Next.js 15 App Router (React 19, TypeScript strict) with pnpm. i18n via next-intl (en, zh). Dev server runs on port 3005.
 - Data: PostgreSQL via Drizzle; Better Auth with admin plugin and optional email verification; Stripe Checkout/Portal; credits ledger in `user_credit` + `credit_transaction` (disabled by default in `websiteConfig`).
 - Services: Resend for email/newsletter, S3/R2 storage driver, ai-sdk providers (OpenAI, Fireworks, Replicate, Fal, DeepSeek/Gemini/OpenRouter) plus Firecrawl scraping for the web content analyzer.
 - Content: MDX blog/docs under `content/`; translations in `messages/`; diagrams and specs in `docs/`; static assets in `public/`.
+
+## PPTHub / PPT Flavor
+- PPT templates: public listing/search lives under `src/app/[locale]/(marketing)/ppt/*`; detail/category pages and category listings are also in this subtree.
+- PPT admin: management screens live under `src/app/[locale]/(protected)/admin/ppt/*`; backing table is `ppt` in `src/db/schema.ts`.
+- PPT API: JSON/search/download endpoints live under `src/app/api/ppts/*`; the PPT front page calls `/api/ppts` for initial data and search.
+- Ads & monetization: ad components live in `src/components/ads`; PPT pages use banner/native ads and JSON-LD SEO blocks for template search.
+- Working notes: high-level migration and launch notes are in `001-v0-ui-迁移分析`, `002-迁移功能深入调整`, and `003-上线调试记录` (see `Pre-Launch Checklist.md` for Vercel/production guidance).
 
 ## Project Structure
 - `src/app`: App Router routes (locale-aware), marketing pages, AI demos, auth flows, dashboard/admin, API routes (chat, image/text analysis, storage upload, Stripe webhook, search, credit distribution, ping).
@@ -40,6 +47,11 @@ Working notes for the MkSaaS blog + AI tools codebase. Keep changes small, typed
 - `NEXT_PUBLIC_BASE_URL` should match the served host; flip `NEXT_PUBLIC_DEMO_WEBSITE` when masking live data. Disable image optimization with `DISABLE_IMAGE_OPTIMIZATION=true` if needed.
 
 ## Feature Notes
+- PPTHub flavor / current toggles:
+  - Credits ledger is wired but off by default (`websiteConfig.credits.enableCredits = false`); packages for the free plan are also disabled.
+  - Docs are currently disabled in `websiteConfig.docs.enable`; blog remains the main content surface.
+  - Ad reward feature is enabled in `websiteConfig.adReward` (watch-to-earn credits flow), but depends on the credits tables and config.
+  - Most optional analytics/chat providers (Crisp, Turnstile, etc.) are disabled by default and should be explicitly turned on when needed.
 - Auth: Better Auth with admin plugin, email verification, and optional auto-newsletter opt-in. Cookies carry locale hints for email templates.
 - Payments: Stripe Checkout/Portal via actions (`create-checkout-session`, `create-customer-portal-session`); plans defined in `src/config/price-config.tsx` and `websiteConfig`.
 - Credits: Ledger helpers in `src/credits/`; opt-in via `websiteConfig.credits.enableCredits` with gift credits on signup and package pricing in `src/config/credits-config.tsx`.

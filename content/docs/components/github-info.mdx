@@ -1,10 +1,10 @@
 ---
-title: GitHub Info
-description: Display your GitHub repository information
+title: GitHub 信息
+description: 显示您的 GitHub 仓库信息
 preview: githubInfo
 ---
 
-## Usage
+## 使用方法
 
 ```tsx
 import { GithubInfo } from 'fumadocs-ui/components/github-info';
@@ -12,12 +12,12 @@ import { GithubInfo } from 'fumadocs-ui/components/github-info';
 <GithubInfo
   owner="fuma-nama"
   repo="fumadocs"
-  // your own GitHub access token (optional)
+  // 您自己的 GitHub 访问令牌（可选）
   token={process.env.GITHUB_TOKEN}
 />;
 ```
 
-It's recommended to add it to your docs layout with `links` option:
+建议将其添加到您的文档布局中，使用 `links` 选项：
 
 ```tsx title="app/docs/layout.tsx"
 import { DocsLayout, type DocsLayoutProps } from 'fumadocs-ui/layouts/notebook';
@@ -42,4 +42,4 @@ const docsOptions: DocsLayoutProps = {
 export default function Layout({ children }: { children: ReactNode }) {
   return <DocsLayout {...docsOptions}>{children}</DocsLayout>;
 }
-```
+``` 

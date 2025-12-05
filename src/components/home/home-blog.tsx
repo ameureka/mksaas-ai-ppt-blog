@@ -19,17 +19,19 @@ export default async function HomeBlogSection({
   // Filter posts by locale
   const localePosts = blogSource
     .getPages(locale)
-    .filter((post) => post.data.published);
+    .filter((post) => (post.data as any)?.published);
 
   // If no posts found for the current locale, show all published posts
   const filteredPosts =
     localePosts.length > 0
       ? localePosts
-      : blogSource.getPages().filter((post) => post.data.published);
+      : blogSource.getPages().filter((post) => (post.data as any)?.published);
 
   // Sort posts by date (newest first)
   const sortedPosts = [...filteredPosts].sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    (a, b) =>
+      new Date((b.data as any)?.date).getTime() -
+      new Date((a.data as any)?.date).getTime()
   );
 
   // Paginate posts, but only show 8 posts at most
