@@ -1,7 +1,7 @@
 # 功能设计：PPT 核心链路修复
 
 ## 概述
-本设计旨在解决系统分析中发现的数据链路断裂问题。它统一了 API 验证逻辑与共享常量库，实现了数组类型（标签）的正确 DTO 映射，并将搜索查询范围扩展到包含标签。
+本设计旨在解决系统分析中发现的数据链路断裂问题。当前状态：API/类型已接入共享常量并映射 tags/language，首页/分类页仍未引用常量，搜索尚未扩展到标签，`file_size` 仍为空串。
 
 ## 架构
 
@@ -11,12 +11,12 @@
 ## 组件与接口
 
 ### 1. 共享常量 (`src/lib/constants/ppt.ts`)
-现有组件。将被 API Route 引用。
+现有组件。已被 API Route / 类型引用，前端尚未落地。
 
 ### 2. 服务端操作 (`src/actions/ppt/ppt.ts`)
 
 #### DTO 映射更新
-`toPPTDto` 函数需要显式处理 `tags` 的映射和回退值 (fallback values)。
+`toPPTDto` 已映射 `tags`/`language`，`description` 回填 title，`file_size` 仍为空串，需后续补字段或前端兼容。
 
 ```typescript
 // 数据模型参考 (DB Schema)
@@ -30,14 +30,14 @@ interface DB_PPT_Row {
 // 输出接口 (Frontend)
 interface PPT {
   // ...
-  tags: string[];
-  description: string;
-  file_size: string;
+  tags: string[];      // ✅ 已映射
+  description: string; // ✅ 回填 title
+  file_size: string;   // ⚠️ 仍为空串
 }
 ```
 
 #### 搜索查询更新
-`buildWhere` 函数需要构建更复杂的 `OR` 子句。
+`buildWhere` 当前仅匹配 title/author；需要扩展到 tags。
 
 ```typescript
 // 逻辑伪代码
@@ -51,7 +51,7 @@ or(
 ## 正确性属性 (Correctness Properties)
 
 ### 属性 1: 分类一致性 (Category Consistency)
-*For any* (对于任何) 在 `PPT_CATEGORIES` 中定义的分类 `c`，API Route 的验证逻辑都应该接受 `c` 作为有效的筛选参数。
+*For any* (对于任何) 在 `PPT_CATEGORIES` 中定义的分类 `c`，API Route 的验证逻辑都应该接受 `c` 作为有效的筛选参数。——当前满足（API 引用常量）。
 
 **验证需求: 1.1, 1.2**
 

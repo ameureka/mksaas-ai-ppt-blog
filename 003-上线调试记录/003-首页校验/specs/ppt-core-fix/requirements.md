@@ -2,13 +2,22 @@
 
 ## 简介
 
-本文档规定了修复 PPT 核心业务流程数据链路的需求。目标是将 API 验证逻辑与统一常量对齐，确保从数据库到前端的数据传输（如标签）完整，并增强搜索能力。
+本文档规定了修复 PPT 核心业务流程数据链路的需求。目标是：
+1. 建立单一数据源（SSOT）架构，统一分类定义（常量裁剪为 12 类，前后端已落地）
+2. 将 API 验证逻辑与统一常量对齐（✅ 已对齐）
+3. 确保从数据库到前端的数据传输完整（tags/language/description 回填已接入，file_size 仍为空）
+4. 前端页面引用统一常量，消除硬编码（✅ 已落地）
+5. 清理重复的类型定义文件（⏳ 待清理）
+6. 增强搜索能力（⏳ tags 未加入搜索/前端筛选）
 
 ## 术语表
 
 - **PPT_DTO**: 用于将 PPT 数据发送到前端的数据传输对象 (Data Transfer Object)。
+- **SSOT** (Single Source of Truth): 单一数据源，指 `src/lib/constants/ppt.ts` 作为分类定义的唯一来源。
 - **Centralized_Constants** (统一常量): 定义有效分类和语言的单一事实来源配置文件 (`src/lib/constants/ppt.ts`)。
 - **Search_Keyword** (搜索关键词): 用户提供的用于筛选 PPT 的文本字符串。
+- **Category_Slug**: 分类的英文标识符（如 `business`、`education`），用于 URL 和 API 参数。
+- **Frontend_Page**: 前端页面组件，包括首页 (`ppt/page.tsx`) 和分类页 (`ppt/categories/page.tsx`)。
 
 ## 需求 (Requirements)
 
@@ -18,9 +27,9 @@
 
 #### 验收标准 (Acceptance Criteria)
 
-1. **THE** (该) API **SHALL** (必须) 使用 **Centralized_Constants** 中的 `PPT_CATEGORIES` 列表来验证 `category` 查询参数。
-2. **IF** (如果) 一个分类参数与 `PPT_CATEGORIES` 中的某个值匹配，**THEN THE** (那么该) API **SHALL** (必须) 将其传递给后端查询服务。
-3. **IF** (如果) 一个分类参数与 `PPT_CATEGORIES` 中的任何值都不匹配，**THEN THE** (那么该) API **SHALL** (必须) 忽略该参数（视为“全部”）。
+1. **THE** API **SHALL** 使用 **Centralized_Constants** 中的 `PPT_CATEGORIES` 列表来验证 `category` 查询参数。（当前：已实现，常量为 12 项）
+2. **IF** 一个分类参数与 `PPT_CATEGORIES` 中的某个值匹配，**THEN THE** API **SHALL** 将其传递给后端查询服务。（当前：满足）
+3. **IF** 一个分类参数与 `PPT_CATEGORIES` 中的任何值都不匹配，**THEN THE** API **SHALL** 忽略该参数（视为“全部”）。（当前：满足）
 
 ### 2. DTO 数据完整性
 
@@ -28,9 +37,9 @@
 
 #### 验收标准 (Acceptance Criteria)
 
-1. **THE** (该) 系统 **SHALL** (必须) 将数据库的 `tags` 数组 (text[]) 映射到 **PPT_DTO** 的 `tags` 字段。
-2. **WHERE** (当) 数据库的 `description` 字段缺失或为空时，**THE** (该) 系统 **SHALL** (必须) 将 **PPT_DTO** 的 `description` 字段映射为 PPT 标题或空字符串。
-3. **WHERE** (当) 数据库的 `file_size` 字段缺失或为空时，**THE** (该) 系统 **SHALL** (必须) 将 **PPT_DTO** 的 `file_size` 字段映射为默认值（例如 "未知"）。
+1. **THE** 系统 **SHALL** 将数据库的 `tags` 数组 (text[]) 映射到 **PPT_DTO** 的 `tags` 字段。（当前：已实现）
+2. **WHERE** 数据库的 `description` 字段缺失或为空时，**THE** 系统 **SHALL** 将 **PPT_DTO** 的 `description` 字段映射为 PPT 标题或空字符串。（当前：已回填标题）
+3. **WHERE** 数据库的 `file_size` 字段缺失或为空时，**THE** 系统 **SHALL** 将 **PPT_DTO** 的 `file_size` 字段映射为默认值（例如 "未知"）。（当前：回填“未知”，建议后续补字段）
 
 ### 3. 增强搜索逻辑
 
@@ -38,5 +47,5 @@
 
 #### 验收标准 (Acceptance Criteria)
 
-1. **WHERE** (当) 提供了 **Search_Keyword** (搜索关键词) 时，**THE** (该) 系统 **SHALL** (必须) 返回 `title` (标题) **OR** (或) `author` (作者) **OR** (或) `tags` (标签) 中包含该关键词的 PPT。
-2. **THE** (该) 搜索匹配 **SHALL** (必须) 不区分大小写。
+1. **WHERE** 提供了 **Search_Keyword** 时，**THE** 系统 **SHALL** 返回 `title` **OR** `author` **OR** `tags` 中包含该关键词的 PPT。（当前：后端已覆盖 tags，前端筛选待同步）
+2. **THE** 搜索匹配 **SHALL** 不区分大小写。（当前：title/author 满足）

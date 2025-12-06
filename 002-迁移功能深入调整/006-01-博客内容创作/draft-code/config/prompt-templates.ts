@@ -3,7 +3,7 @@
  * 封面和内页的 Prompt 模板及生成函数
  */
 
-import type { CategoryStyle } from './category-styles';
+import type { CategoryConfig } from './category-config';
 
 export type TextStrategy = 'short-zh' | 'english' | 'blank';
 export type SceneType =
@@ -18,7 +18,7 @@ export interface CoverPromptParams {
   title: string;
   shortTitle: string;
   keywords: string[];
-  style: CategoryStyle;
+  style: CategoryConfig;
   textStrategy: TextStrategy;
   textToRender: string;
 }
@@ -27,7 +27,7 @@ export interface InlinePromptParams {
   scene: string;
   sceneType: SceneType;
   elements: string[];
-  style: CategoryStyle;
+  style: CategoryConfig;
 }
 
 /**
@@ -136,10 +136,10 @@ export function generateCoverPrompt(params: CoverPromptParams): string {
     .replace(/{shortTitle}/g, shortTitle)
     .replace(/{keywords}/g, keywords.join('、'))
     .replace(/{textToRender}/g, finalTextToRender)
-    .replace(/{styleHint}/g, style.styleHint)
+    .replace(/{styleHint}/g, style.style)
     .replace(/{palette}/g, style.palette)
-    .replace(/{sceneElements}/g, style.sceneElements.slice(0, 4).join('、'))
-    .replace(/{category}/g, style.category);
+    .replace(/{sceneElements}/g, style.elements.slice(0, 4).join('、'))
+    .replace(/{category}/g, style.name);
 }
 
 /**
@@ -161,7 +161,7 @@ export function generateInlinePrompt(params: InlinePromptParams): string {
     .replace(/{scene}/g, scene)
     .replace(/{sceneType}/g, typeDescriptions[sceneType] || '信息图')
     .replace(/{elements}/g, elements.join('、'))
-    .replace(/{styleHint}/g, style.styleHint)
+    .replace(/{styleHint}/g, style.style)
     .replace(/{palette}/g, style.palette);
 }
 

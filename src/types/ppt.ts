@@ -1,17 +1,5 @@
+import type { PPTCategory } from '@/lib/constants/ppt';
 import type { ListParams, ListResult } from './server-action';
-
-export type PPTCategory =
-  | 'business'
-  | 'product'
-  | 'education'
-  | 'technology'
-  | 'creative'
-  | 'marketing'
-  | 'medical'
-  | 'finance'
-  | 'hr'
-  | 'lifestyle'
-  | 'general';
 
 export type PPTStatus = 'draft' | 'published' | 'archived';
 
@@ -21,6 +9,8 @@ export interface PPT {
   category: PPTCategory;
   author: string;
   description?: string;
+  tags?: string[];
+  language?: string;
   slides_count: number;
   file_size: string;
   file_url: string;
@@ -67,6 +57,8 @@ export interface CreatePPTInput {
   description?: string;
   file_url: string;
   preview_url?: string;
+  tags?: string[];
+  language?: string;
 }
 
 export interface UpdatePPTInput {
@@ -74,4 +66,6 @@ export interface UpdatePPTInput {
   category?: PPTCategory;
   description?: string;
   status?: PPTStatus;
+  tags?: string[];
+  language?: string;
 }

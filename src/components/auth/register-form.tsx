@@ -158,8 +158,14 @@ export const RegisterForm = ({
         },
         onError: (ctx) => {
           // sign up fail, display the error message
-          // console.error('register, error:', ctx.error);
-          setError(`${ctx.error.status}: ${ctx.error.message}`);
+          console.error('register, error:', ctx.error);
+          const message =
+            ctx.error?.message ||
+            ctx.error?.statusText ||
+            ctx.error?.cause?.message ||
+            (typeof ctx.error === 'string' ? ctx.error : '') ||
+            '注册失败，请稍后重试';
+          setError(`${ctx.error?.status ?? 500}: ${message}`);
           // Reset captcha on registration error
           if (captchaConfigured) {
             resetCaptcha();

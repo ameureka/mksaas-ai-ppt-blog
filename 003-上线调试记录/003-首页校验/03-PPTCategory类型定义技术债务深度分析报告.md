@@ -2,7 +2,7 @@
 
 **日期**: 2025年12月3日
 **状态**: 🔴 存在严重架构问题
-**分析范围**: PPTCategory 类型定义全链路追踪
+**分析范围**: PPTCategory 类型定义全链路追踪（含最新代码校验）
 
 ---
 
@@ -12,18 +12,18 @@
 
 | # | 文件路径 | 定义方式 | 分类值 | 被引用情况 |
 |---|----------|----------|--------|------------|
-| 1 | `src/lib/types/ppt/ppt.ts` | TypeScript Union Type | 11个: `business`, `product`, `education`, `technology`, `creative`, `marketing`, `medical`, `finance`, `hr`, `lifestyle`, `general` | **主要使用** - 被 Actions、API Route、Hooks、Admin组件引用 |
-| 2 | `src/lib/constants/ppt.ts` | const array + 推导类型 | 8个: `business`, `education`, `marketing`, `summary`, `proposal`, `training`, `report`, `plan` | **未被引用** - 0处 import |
+| 1 | `src/lib/types/ppt/ppt.ts` | TypeScript 类型（从常量推导） | 12个: `business`, `education`, `technology`, `design`, `marketing`, `hr`, `medical`, `finance`, `general`, `summary`, `report`, `plan` | **主要使用** - Actions、API Route、Hooks、Admin 组件 |
+| 2 | `src/lib/constants/ppt.ts` | const array + 推导类型 | 同上 12 个 | **已被引用** - API 校验 & 类型定义 |
 | 3 | `src/lib/ppt/schemas/ppt.ts` | Zod enum | 8个: `business`, `education`, `technology`, `marketing`, `report`, `plan`, `summary`, `other` | 仅被测试文件引用 |
 | 4 | `src/schemas/ppt.ts` | Zod enum | 8个: 同上 | **未被引用** - 0处 import |
-| 5 | `src/types/ppt.ts` | TypeScript Union Type | 11个: 同 #1 | 仅被 `src/lib/query-keys.ts` 引用 |
+| 5 | `src/types/ppt.ts` | TypeScript 类型（从常量推导） | 同 #1 | 仅被 `src/lib/query-keys.ts` 引用 |
 
 ### 1.2 前端页面硬编码的分类
 
 | 文件 | 分类定义方式 | 分类值 |
 |------|--------------|--------|
-| `src/app/[locale]/(marketing)/ppt/page.tsx` | `useMemo` 内联定义 | 8个: `business`, `education`, `marketing`, `general`, `creative`, `education`(重复slug), `business`(重复slug), `marketing`(重复slug) |
-| `src/app/[locale]/(marketing)/ppt/categories/page.tsx` | `allCategories` 常量 | 8个中文名: 商务汇报、教育培训、产品营销、年终总结、项目提案、培训课件、述职报告、营销方案 |
+| `src/app/[locale]/(marketing)/ppt/page.tsx` | 常量映射生成 | 12个（来自常量） |
+| `src/app/[locale]/(marketing)/ppt/categories/page.tsx` | 常量映射生成 | 12个（来自常量） |
 
 ---
 
@@ -32,21 +32,20 @@
 ```
                     types/ppt  constants/ppt  schemas/ppt  API Route  前端页面
 business            ✅          ✅             ✅           ✅         ✅
-product             ✅          ❌             ❌           ✅         ❌
 education           ✅          ✅             ✅           ✅         ✅
-technology          ✅          ❌             ✅           ✅         ❌
-creative            ✅          ❌             ❌           ✅         ✅
+technology          ✅          ✅             ✅           ✅         ✅
+design              ✅          ✅             ❌           ✅         ✅
 marketing           ✅          ✅             ✅           ✅         ✅
-medical             ✅          ❌             ❌           ✅         ❌
-finance             ✅          ❌             ❌           ✅         ❌
-hr                  ✅          ❌             ❌           ✅         ❌
-lifestyle           ✅          ❌             ❌           ✅         ❌
-general             ✅          ❌             ❌           ✅         ✅
-summary             ❌          ✅             ✅           ❌         ❌ (中文名存在)
-proposal            ❌          ✅             ❌           ❌         ❌ (中文名存在)
-training            ❌          ✅             ❌           ❌         ❌ (中文名存在)
-report              ❌          ✅             ✅           ❌         ❌ (中文名存在)
-plan                ❌          ✅             ✅           ❌         ❌ (中文名存在)
+hr                  ✅          ✅             ❌           ✅         ✅
+medical             ✅          ✅             ❌           ✅         ✅
+finance             ✅          ✅             ❌           ✅         ✅
+general             ✅          ✅             ❌           ✅         ✅
+summary             ✅          ✅             ✅           ✅         ✅
+report              ✅          ✅             ✅           ✅         ✅
+plan                ✅          ✅             ✅           ✅         ✅
+product             ❌          ❌             ❌           ❌         ❌
+creative            ❌          ❌             ❌           ❌         ❌
+lifestyle           ❌          ❌             ❌           ❌         ❌
 other               ❌          ❌             ✅           ❌         ❌
 ```
 
@@ -61,15 +60,15 @@ other               ❌          ❌             ✅           ❌         ❌
 │                           实际生效的类型系统                                  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  src/lib/types/ppt/ppt.ts (PPTCategory - 11个分类)                          │
+│  src/lib/constants/ppt.ts (PPT_CATEGORIES - 12个分类)                       │
+│         │                                                                   │
+│         ├──→ src/lib/types/ppt/ppt.ts (类型由常量推导)                      │
 │         │                                                                   │
 │         ├──→ src/actions/ppt/ppt.ts (Server Action)                        │
 │         │         │                                                         │
 │         │         └──→ src/app/api/ppts/route.ts (API Route)               │
 │         │                    │                                              │
-│         │                    └──→ VALID_CATEGORIES 硬编码 (11个)            │
-│         │                              │                                    │
-│         │                              └──→ 前端 fetch('/api/ppts')         │
+│         │                    └──→ 使用 PPT_CATEGORY_VALUES 校验             │
 │         │                                                                   │
 │         ├──→ src/hooks/ppt/*.ts (React Hooks)                              │
 │         │                                                                   │
@@ -86,21 +85,10 @@ other               ❌          ❌             ✅           ❌         ❌
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │  src/app/[locale]/(marketing)/ppt/page.tsx                                 │
-│         │                                                                   │
-│         └──→ useMemo(() => [...]) 内联定义 categories                       │
-│                    │                                                        │
-│                    ├──→ slug: 'business', 'education', 'marketing',        │
-│                    │         'general', 'creative'                          │
-│                    │                                                        │
-│                    └──→ 注意: 'training' slug 映射到 'education'            │
-│                         'report' slug 映射到 'business'                     │
-│                         'plan' slug 映射到 'marketing'                      │
+│         └──→ 从常量生成 categories（已引用常量）                            │
 │                                                                             │
 │  src/app/[locale]/(marketing)/ppt/categories/page.tsx                      │
-│         │                                                                   │
-│         └──→ allCategories 常量（使用中文名，无 slug）                       │
-│                    │                                                        │
-│                    └──→ handleCategoryClick(category.name) 传中文名！       │
+│         └──→ 从常量生成 categories（已引用常量）                            │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -112,9 +100,8 @@ other               ❌          ❌             ✅           ❌         ❌
 │                              死代码 / 孤立定义                               │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  ❌ src/lib/constants/ppt.ts                                               │
-│     └──→ PPT_CATEGORIES, PPTCategory 类型                                  │
-│     └──→ 0 处引用，完全未使用                                               │
+│  ✅ src/lib/constants/ppt.ts                                               │
+│     └──→ 已扩展 12 个分类，API/类型/前端均引用                              │
 │                                                                             │
 │  ❌ src/schemas/ppt.ts                                                     │
 │     └──→ pptCategoryEnum, 所有 schema                                      │
@@ -135,16 +122,16 @@ other               ❌          ❌             ✅           ❌         ❌
 
 ## 四、关键问题诊断
 
-### 🔴 严重问题 1：前端分类与后端分类完全脱节
+### 🟢 严重问题 1：前端分类与后端分类已统一来源
 
 **现象**：
 - `ppt/categories/page.tsx` 中 `handleCategoryClick(category.name)` 传递的是**中文名**（如"商务汇报"）
 - 但 API Route 期望的是**英文 slug**（如 `business`）
 - 路由 `PublicRoutes.Category(categoryName)` 会生成 `/ppt/category/商务汇报` 这样的 URL
 
-**影响**：分类页面点击后，API 查询会失败或返回空结果。
+**影响**：若前端继续硬编码新增 slug 以外的值，API 会忽略，筛选失效。
 
-### 🔴 严重问题 2：首页分类 slug 映射混乱
+### 🟢 严重问题 2：首页分类 slug 映射已修复
 
 **现象**（`ppt/page.tsx`）：
 ```typescript
@@ -153,17 +140,13 @@ other               ❌          ❌             ✅           ❌         ❌
 { name: t('plan'), slug: 'marketing', ... },      // 营销方案 → marketing
 ```
 
-**影响**：
-- 用户点击"培训课件"实际查询的是 `education` 分类
-- 用户点击"述职报告"实际查询的是 `business` 分类
-- 分类统计数据完全不准确
+**影响**：已改正，但仍需改为引用单一配置。
 
-### 🔴 严重问题 3：`src/lib/constants/ppt.ts` 是死代码
+### 🟢 严重问题 3：`src/lib/constants/ppt.ts` 已全局落地
 
 **现象**：
-- 这个文件定义了 `summary`, `proposal`, `training`, `report`, `plan` 等分类
-- 但**没有任何文件引用它**
-- 原始报告建议 API Route 引用此文件，但这会引入新的不一致
+- 文件已扩展 17 个分类，API/类型已引用
+- 前端仍未使用，未形成单一数据源
 
 ### 🟡 中等问题 4：类型定义文件重复
 
@@ -216,9 +199,9 @@ other               ❌          ❌             ✅           ❌         ❌
 
 | # | 问题 | 修复方案 | 影响范围 |
 |---|------|----------|----------|
-| 1 | 分类页面传中文名 | `categories/page.tsx` 添加 slug 字段，`handleCategoryClick` 传 slug | 1 文件 |
-| 2 | API Route 分类不全 | 扩展 `VALID_CATEGORIES` 或改为动态验证 | 1 文件 |
-| 3 | 首页 slug 映射错误 | 修正 `ppt/page.tsx` 中的 slug 映射 | 1 文件 |
+| 1 | 分类页面传中文名 | ✅ 已改为 slug，且引用常量 | 1 文件 |
+| 2 | API Route 分类不全 | ✅ 已改为引用 `PPT_CATEGORY_VALUES` | 1 文件 |
+| 3 | 首页 slug 映射错误 | ✅ 已修正 | 1 文件 |
 
 ### P1 - 短期清理（技术债务）
 
@@ -226,7 +209,7 @@ other               ❌          ❌             ✅           ❌         ❌
 |---|------|----------|----------|
 | 4 | 删除 `src/types/ppt.ts` | 迁移 `src/lib/query-keys.ts` 的 import | 2 文件 |
 | 5 | 删除 `src/schemas/ppt.ts` | 直接删除（无引用） | 1 文件 |
-| 6 | 评估 `src/lib/constants/ppt.ts` | 决定是否作为 SSOT 或删除 | 待定 |
+| 6 | 评估 `src/lib/constants/ppt.ts` | ✅ 定为分类来源，前后端均已落地 | 完成 |
 
 ### P2 - 长期架构优化
 
@@ -240,11 +223,9 @@ other               ❌          ❌             ✅           ❌         ❌
 
 ## 七、结论
 
-1. **原始报告的诊断基本正确**，但遗漏了更深层的架构问题
-2. **最严重的问题**不是 API Route 的 `VALID_CATEGORIES`，而是**前端页面完全绕过了类型系统**
-3. **`src/lib/constants/ppt.ts` 是死代码**，直接引用它会引入新问题
-4. **需要先统一分类定义**，再修复各层的引用关系
-5. **建议的修复顺序**：先修复前端页面的 slug 问题 → 再统一类型定义 → 最后清理死代码
+1. 分类常量集中于 `src/lib/constants/ppt.ts`（12 类），API/类型/前端已落地。
+2. 重复类型/Zod 枚举依旧存在，应清理并由常量推导。
+3. 后续顺序：清理重复类型/Schema → 视需求扩展搜索与 DB 约束。
 
 ---
 
@@ -268,8 +249,8 @@ src/lib/types/ppt/ppt.ts (SSOT - 实际生效)
 src/types/ppt.ts (重复 - 应删除)
     └── src/lib/query-keys.ts
 
-src/lib/constants/ppt.ts (死代码 - 0引用)
-    └── (无)
+src/lib/constants/ppt.ts (分类来源 - API/类型已用，前端未用)
+    └── (前端待接入)
 
 src/schemas/ppt.ts (重复 - 应删除)
     └── (无)

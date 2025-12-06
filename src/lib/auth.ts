@@ -4,6 +4,7 @@ import {
   addRegisterGiftCredits,
 } from '@/credits/credits';
 import { getDb } from '@/db/index';
+import * as schema from '@/db/schema';
 import { defaultMessages } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { sendEmail } from '@/mail';
@@ -26,8 +27,9 @@ import { getBaseUrl, getUrlWithLocaleInCallbackUrl } from './urls/urls';
 export const auth = betterAuth({
   baseURL: getBaseUrl(),
   appName: defaultMessages.Metadata.name,
-  database: drizzleAdapter(getDb, {
+  database: drizzleAdapter(getDb(), {
     provider: 'pg', // or "mysql", "sqlite"
+    schema,
   }),
   session: {
     // https://www.better-auth.com/docs/concepts/session-management#cookie-cache

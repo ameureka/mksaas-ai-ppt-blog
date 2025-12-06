@@ -12,11 +12,14 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getCategoryStyleBySlug } from '../../config/category-styles.ts';
+import { getCategoryBySlug } from '../../config/category-config.ts';
 import {
   type TextStrategy,
+  detectSceneType,
   extractArticleKeywords,
   generateCoverPrompt,
+  generateInlinePrompt,
+  getSceneElements,
 } from '../../config/prompt-templates.ts';
 import type { ImageTask, ImageTasksData } from './types';
 
@@ -222,14 +225,13 @@ function processFile(filePath: string): ImageTask | null {
   const categories = Array.isArray(data.categories)
     ? (data.categories as unknown[])
     : [];
-  const frontmatterCategory =
-    categories.find((c) => typeof c === 'string' && c.trim()) as
-      | string
-      | undefined;
+  const frontmatterCategory = categories.find(
+    (c) => typeof c === 'string' && c.trim()
+  ) as string | undefined;
 
   // 从路径获取分类作为兜底
   const categorySlug = frontmatterCategory || getCategoryFromPath(filePath);
-  const style = getCategoryStyleBySlug(categorySlug);
+  const style = getCategoryBySlug(categorySlug);
 
   // 使用文件名作为 slug，确保与现有路径一致
   const slug = path.basename(filePath, path.extname(filePath));
@@ -239,9 +241,10 @@ function processFile(filePath: string): ImageTask | null {
 
   // 从文章内容提取关键词，与分类关键词合并
   const articleKeywords = extractArticleKeywords(title, body);
-  const keywords = [
-    ...new Set([...articleKeywords, ...style.coverKeywords]),
-  ].slice(0, 5);
+  const keywords = [...new Set([...articleKeywords, ...style.keywords])].slice(
+    0,
+    5
+  );
 
   const coverPrompt = generateCoverPrompt({
     title,
@@ -278,8 +281,7 @@ function processFile(filePath: string): ImageTask | null {
 
     // 过滤通用/冗余场景
     inlineImages = inlineImages.filter(
-      (img) =>
-        !/总结|结语|FAQ|常见问题|参考|致谢|感谢/.test(img.scene)
+      (img) => !/总结|结语|FAQ|常见问题|参考|致谢|感谢/.test(img.scene)
     );
 
     // 限制数量
@@ -288,7 +290,7 @@ function processFile(filePath: string): ImageTask | null {
     // 兜底补足
     while (inlineImages.length < CONFIG.maxInline) {
       const i = inlineImages.length;
-      const defaultScene = `${style.category} 核心要点 ${i + 1}`;
+      const defaultScene = `${style.name} 核心要点 ${i + 1}`;
       inlineImages.push({
         filename: `${slug}-${i + 1}.png`,
         scene: defaultScene,
@@ -296,7 +298,7 @@ function processFile(filePath: string): ImageTask | null {
         prompt: generateInlinePrompt({
           scene: defaultScene,
           sceneType: 'concept',
-          elements: style.sceneElements.slice(0, 3),
+          elements: style.elements.slice(0, 3),
           style,
         }),
         status: 'pending',
@@ -310,9 +312,9 @@ function processFile(filePath: string): ImageTask | null {
     slug,
     title,
     shortTitleZh: textToRender,
-    category: style.category,
+    category: style.name,
     categoryEn: categorySlug,
-    styleHint: style.styleHint,
+    styleHint: style.style,
     palette: style.palette,
     keywords,
     cover: {

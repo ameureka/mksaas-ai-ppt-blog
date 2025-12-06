@@ -1,20 +1,7 @@
 import { getPPTs } from '@/actions/ppt/ppt';
+import { PPT_CATEGORY_VALUES } from '@/lib/constants/ppt';
 import type { PPTCategory, PPTStatus } from '@/lib/types/ppt/ppt';
 import type { NextRequest } from 'next/server';
-
-const VALID_CATEGORIES: PPTCategory[] = [
-  'business',
-  'product',
-  'education',
-  'technology',
-  'creative',
-  'marketing',
-  'medical',
-  'finance',
-  'hr',
-  'lifestyle',
-  'general',
-];
 
 const VALID_STATUSES: PPTStatus[] = ['draft', 'published', 'archived'];
 
@@ -25,7 +12,8 @@ export async function GET(req: NextRequest) {
   const params = {
     search: searchParams.get('search') ?? undefined,
     category:
-      categoryParam && VALID_CATEGORIES.includes(categoryParam as PPTCategory)
+      categoryParam &&
+      PPT_CATEGORY_VALUES.includes(categoryParam as PPTCategory)
         ? (categoryParam as PPTCategory)
         : undefined,
     status:

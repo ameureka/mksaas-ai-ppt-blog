@@ -48,7 +48,11 @@ const buildWhere = (params?: PPTListParams) => {
   if (params.search?.trim()) {
     const keyword = `%${params.search.trim()}%`;
     conditions.push(
-      or(ilike(pptTable.title, keyword), ilike(pptTable.author, keyword))
+      or(
+        ilike(pptTable.title, keyword),
+        ilike(pptTable.author, keyword),
+        sql`coalesce(array_to_string(${pptTable.tags}, ','), '') ILIKE ${keyword}`
+      )
     );
   }
 
@@ -95,9 +99,11 @@ const toPPTDto = (row: typeof pptTable.$inferSelect): PPT => ({
   title: row.title,
   category: (row.category ?? 'general') as PPT['category'],
   author: row.author ?? 'Unknown',
-  description: undefined,
+  description: row.title ?? '',
+  tags: row.tags ?? [],
+  language: row.language ?? '',
   slides_count: row.slidesCount ?? 0,
-  file_size: '',
+  file_size: '未知',
   file_url: row.fileUrl,
   preview_url: row.thumbnailUrl ?? row.coverImageUrl ?? undefined,
   downloads: row.downloadCount ?? 0,
@@ -178,6 +184,8 @@ export async function createPPT(
         fileUrl: data.file_url,
         coverImageUrl: data.preview_url,
         thumbnailUrl: data.preview_url,
+        tags: data.tags ?? [],
+        language: data.language,
         downloadCount: 0,
         viewCount: 0,
         status: data.status ?? 'draft',
@@ -210,6 +218,8 @@ export async function updatePPT(
       updates.coverImageUrl = data.preview_url;
       updates.thumbnailUrl = data.preview_url;
     }
+    if (data.tags !== undefined) updates.tags = data.tags;
+    if (data.language !== undefined) updates.language = data.language;
     if (data.slides_count !== undefined)
       updates.slidesCount = data.slides_count;
 

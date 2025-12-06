@@ -4,6 +4,7 @@ import Container from '@/components/layout/container';
 import { Logo } from '@/components/layout/logo';
 import { useSocialLinks } from '@/config/social-config';
 import { LocaleLink } from '@/i18n/navigation';
+import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import type React from 'react';
@@ -68,54 +69,16 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               {t('categories.title')}
             </h4>
             <ul className="space-y-3 md:space-y-2 text-base md:text-sm">
-              <li>
-                <LocaleLink
-                  href="/ppt/category/business"
-                  className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
-                >
-                  {t('categories.business')}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink
-                  href="/ppt/category/education"
-                  className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
-                >
-                  {t('categories.education')}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink
-                  href="/ppt/category/year-end"
-                  className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
-                >
-                  {t('categories.yearEnd')}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink
-                  href="/ppt/category/proposal"
-                  className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
-                >
-                  {t('categories.proposal')}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink
-                  href="/ppt/category/marketing"
-                  className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
-                >
-                  {t('categories.marketing')}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink
-                  href="/ppt/category/report"
-                  className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
-                >
-                  {t('categories.report')}
-                </LocaleLink>
-              </li>
+              {PPT_CATEGORIES.slice(0, 6).map((cat) => (
+                <li key={cat.value}>
+                  <LocaleLink
+                    href={`/ppt/category/${cat.value}`}
+                    className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
+                  >
+                    {cat.label}
+                  </LocaleLink>
+                </li>
+              ))}
               <li>
                 <LocaleLink
                   href="/ppt/categories"

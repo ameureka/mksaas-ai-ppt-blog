@@ -8,7 +8,11 @@ import * as schema from './schema';
 
 let db: ReturnType<typeof drizzle> | null = null;
 
-export async function getDb() {
+/**
+ * Get a singleton Drizzle instance (synchronous)
+ * Better Auth drizzleAdapter expects a DB instance, not a Promise.
+ */
+export function getDb() {
   if (db) return db;
   const connectionString = process.env.DATABASE_URL!;
   const client = postgres(connectionString, { prepare: false });

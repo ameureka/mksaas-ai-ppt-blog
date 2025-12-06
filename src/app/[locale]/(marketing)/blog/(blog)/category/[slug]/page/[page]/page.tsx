@@ -68,9 +68,7 @@ export default async function BlogCategoryPage({
     (post) => (post.data as any)?.published
   );
   const filteredPosts = publishedPosts.filter((post) =>
-    ((post.data as any)?.categories ?? []).some(
-      (cat: string) => cat === slug
-    )
+    ((post.data as any)?.categories ?? []).some((cat: string) => cat === slug)
   );
   const sortedPosts = filteredPosts.sort((a, b) => {
     const dateA = new Date((a.data as any)?.date).getTime();

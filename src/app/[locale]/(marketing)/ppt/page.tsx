@@ -8,13 +8,18 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
 import {
   Briefcase,
   Calendar,
   Clock,
+  Cpu,
+  DollarSign,
   FileText,
   GraduationCap,
+  Heart,
+  Palette,
   Presentation,
   Search,
   Target,
@@ -97,66 +102,89 @@ export default function SearchHomePage() {
   const { logAction } = useAuditLog();
 
   // Categories using translations
+  const categoryMeta: Record<
+    string,
+    { count: number; icon: any; preview: string }
+  > = {
+    business: {
+      count: 12345,
+      icon: Briefcase,
+      preview: '/ppt/business-presentation-template.png',
+    },
+    education: {
+      count: 8234,
+      icon: GraduationCap,
+      preview: '/ppt/education-training-template.jpg',
+    },
+    technology: {
+      count: 3200,
+      icon: Cpu,
+      preview: '/placeholder.svg',
+    },
+    design: {
+      count: 2100,
+      icon: Palette,
+      preview: '/placeholder.svg',
+    },
+    marketing: {
+      count: 6789,
+      icon: TrendingUp,
+      preview: '/ppt/product-marketing-template.jpg',
+    },
+    hr: {
+      count: 1800,
+      icon: Users,
+      preview: '/placeholder.svg',
+    },
+    medical: {
+      count: 1400,
+      icon: Heart,
+      preview: '/placeholder.svg',
+    },
+    finance: {
+      count: 900,
+      icon: DollarSign,
+      preview: '/placeholder.svg',
+    },
+    general: {
+      count: 15678,
+      icon: Calendar,
+      preview: '/ppt/year-end-summary-template.jpg',
+    },
+    summary: {
+      count: 15678,
+      icon: Calendar,
+      preview: '/ppt/year-end-summary-template.jpg',
+    },
+    report: {
+      count: 11234,
+      icon: Presentation,
+      preview: '/ppt/job-report-template.jpg',
+    },
+    plan: {
+      count: 5678,
+      icon: Target,
+      preview: '/ppt/marketing-plan-template.png',
+    },
+  };
+
   const categories = useMemo(
-    () => [
-      {
-        name: t('business'),
-        slug: 'business',
-        count: 12345,
-        icon: Briefcase,
-        preview: '/ppt/business-presentation-template.png',
-      },
-      {
-        name: t('education'),
-        slug: 'education',
-        count: 8234,
-        icon: GraduationCap,
-        preview: '/ppt/education-training-template.jpg',
-      },
-      {
-        name: t('marketing'),
-        slug: 'marketing',
-        count: 6789,
-        icon: TrendingUp,
-        preview: '/ppt/product-marketing-template.jpg',
-      },
-      {
-        name: t('general'),
-        slug: 'general',
-        count: 15678,
-        icon: Calendar,
-        preview: '/ppt/year-end-summary-template.jpg',
-      },
-      {
-        name: t('creative'),
-        slug: 'creative',
-        count: 9456,
-        icon: Target,
-        preview: '/ppt/project-proposal-template.png',
-      },
-      {
-        name: t('training'),
-        slug: 'education',
-        count: 7123,
-        icon: FileText,
-        preview: '/ppt/training-courseware-template.jpg',
-      },
-      {
-        name: t('report'),
-        slug: 'business',
-        count: 11234,
-        icon: Presentation,
-        preview: '/ppt/job-report-template.jpg',
-      },
-      {
-        name: t('plan'),
-        slug: 'marketing',
-        count: 5678,
-        icon: Users,
-        preview: '/ppt/marketing-plan-template.png',
-      },
-    ],
-    [t]
+    () =>
+      PPT_CATEGORIES.map((cat) => {
+        const meta = categoryMeta[cat.value] ?? {
+          count: 0,
+          icon: FileText,
+          preview: '/placeholder.svg',
+        };
+        return {
+          name: cat.label ?? t(cat.value as any) ?? cat.value,
+          slug: cat.value,
+          count: meta.count,
+          icon: meta.icon,
+          preview: meta.preview,
+        };
+      }),
+    [categoryMeta, t]
   );
 
   const transform = (items: any[]): PPT[] =>

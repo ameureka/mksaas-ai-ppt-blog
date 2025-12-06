@@ -64,22 +64,32 @@ export const getMailProvider = (): MailProvider => {
  * @returns initialized mail provider
  */
 export const initializeMailProvider = (): MailProvider => {
-  if (!mailProvider) {
-    if (websiteConfig.mail.provider === 'resend') {
-      if (!process.env.RESEND_API_KEY || !websiteConfig.mail.fromEmail) {
-        console.warn(
-          '[mail] RESEND_API_KEY or fromEmail not set; using NoopMailProvider (emails will not be sent).'
-        );
-        mailProvider = new NoopMailProvider();
-      } else {
-        mailProvider = new ResendProvider();
-      }
-    } else {
-      throw new Error(
-        `Unsupported mail provider: ${websiteConfig.mail.provider}`
-      );
-    }
+  if (mailProvider) return mailProvider;
+
+  const isDev =
+    process.env.NODE_ENV !== 'production' ||
+    process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true';
+
+  // 在本地/演示环境直接使用 Noop，避免网络/域名配置问题导致 500
+  if (isDev) {
+    console.warn('[mail] Using NoopMailProvider in dev/demo environment.');
+    mailProvider = new NoopMailProvider();
+    return mailProvider;
   }
+
+  if (websiteConfig.mail.provider === 'resend') {
+    if (!process.env.RESEND_API_KEY || !websiteConfig.mail.fromEmail) {
+      console.warn(
+        '[mail] RESEND_API_KEY or fromEmail not set; using NoopMailProvider (emails will not be sent).'
+      );
+      mailProvider = new NoopMailProvider();
+    } else {
+      mailProvider = new ResendProvider();
+    }
+  } else {
+    throw new Error(`Unsupported mail provider: ${websiteConfig.mail.provider}`);
+  }
+
   return mailProvider;
 };
 

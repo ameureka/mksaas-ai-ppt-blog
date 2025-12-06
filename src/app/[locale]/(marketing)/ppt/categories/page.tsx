@@ -9,15 +9,20 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
 import {
   ArrowLeft,
   Briefcase,
   Calendar,
   ChevronRight,
+  Cpu,
+  DollarSign,
   FileText,
   GraduationCap,
+  Heart,
   Home,
+  Palette,
   Presentation,
   Target,
   TrendingUp,
@@ -25,9 +30,20 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-const allCategories = [
+const categoryMeta: Record<
+  string,
   {
-    name: '商务汇报',
+    count: number;
+    icon: any;
+    preview: string;
+    description: string;
+    useCases: string[];
+    avgPages: string;
+    style: string;
+    difficulty: string;
+  }
+> = {
+  business: {
     count: 12345,
     icon: Briefcase,
     preview: '/ppt/business-presentation.png',
@@ -37,8 +53,7 @@ const allCategories = [
     style: '简约专业',
     difficulty: '中等',
   },
-  {
-    name: '教育培训',
+  education: {
     count: 8234,
     icon: GraduationCap,
     preview: '/ppt/education-training.png',
@@ -48,8 +63,27 @@ const allCategories = [
     style: '清新活泼',
     difficulty: '简单',
   },
-  {
-    name: '产品营销',
+  technology: {
+    count: 3200,
+    icon: Cpu,
+    preview: '/placeholder.svg',
+    description: '科技互联网主题模板，支持技术方案与产品架构展示',
+    useCases: ['技术方案', '产品架构', '路演汇报'],
+    avgPages: '18-30页',
+    style: '科技感',
+    difficulty: '中等',
+  },
+  design: {
+    count: 2100,
+    icon: Palette,
+    preview: '/placeholder.svg',
+    description: '设计创意类模板，突出视觉与创意呈现',
+    useCases: ['视觉展示', '创意提案', '作品集'],
+    avgPages: '15-25页',
+    style: '创意视觉',
+    difficulty: '中等',
+  },
+  marketing: {
     count: 6789,
     icon: TrendingUp,
     preview: '/ppt/product-marketing.jpg',
@@ -59,8 +93,47 @@ const allCategories = [
     style: '时尚创意',
     difficulty: '中等',
   },
-  {
-    name: '年终总结',
+  hr: {
+    count: 1800,
+    icon: Users,
+    preview: '/placeholder.svg',
+    description: '人力资源类模板，涵盖招聘与培训',
+    useCases: ['招聘培训', '人事汇报', '团队建设'],
+    avgPages: '15-25页',
+    style: '商务简洁',
+    difficulty: '中等',
+  },
+  medical: {
+    count: 1400,
+    icon: Heart,
+    preview: '/placeholder.svg',
+    description: '医疗健康主题模板，适用于医疗报告与健康宣传',
+    useCases: ['医疗报告', '健康宣传', '科普讲座'],
+    avgPages: '15-30页',
+    style: '稳重专业',
+    difficulty: '中等',
+  },
+  finance: {
+    count: 900,
+    icon: DollarSign,
+    preview: '/placeholder.svg',
+    description: '金融财务类模板，支持财务分析与投资报告',
+    useCases: ['财务分析', '投资报告', '预算计划'],
+    avgPages: '20-30页',
+    style: '数据可视化',
+    difficulty: '中等',
+  },
+  general: {
+    count: 15678,
+    icon: Calendar,
+    preview: '/ppt/year-end-summary.jpg',
+    description: '通用模板集合，适配多种场景',
+    useCases: ['通用汇报', '日常展示'],
+    avgPages: '15-30页',
+    style: '通用简洁',
+    difficulty: '中等',
+  },
+  summary: {
     count: 15678,
     icon: Calendar,
     preview: '/ppt/year-end-summary.jpg',
@@ -70,30 +143,7 @@ const allCategories = [
     style: '正式庄重',
     difficulty: '复杂',
   },
-  {
-    name: '项目提案',
-    count: 9456,
-    icon: Target,
-    preview: '/ppt/project-proposal.png',
-    description: '专业的项目提案模板，提升通过率',
-    useCases: ['商业计划', '项目申报', '投资路演', '创业提案'],
-    avgPages: '20-30页',
-    style: '数据可视化',
-    difficulty: '复杂',
-  },
-  {
-    name: '培训课件',
-    count: 7123,
-    icon: FileText,
-    preview: '/ppt/training-courseware.jpg',
-    description: '系统的培训课件，知识传递更高效',
-    useCases: ['员工培训', '技能提升', '入职引导', '安全培训'],
-    avgPages: '30-50页',
-    style: '实用简洁',
-    difficulty: '中等',
-  },
-  {
-    name: '述职报告',
+  report: {
     count: 11234,
     icon: Presentation,
     preview: '/ppt/job-report.jpg',
@@ -103,26 +153,43 @@ const allCategories = [
     style: '专业稳重',
     difficulty: '中等',
   },
-  {
-    name: '营销方案',
+  plan: {
     count: 5678,
     icon: Users,
     preview: '/ppt/marketing-plan.png',
-    description: '创意营销方案，打动客户',
+    description: '创意营销/计划方案，打动客户',
     useCases: ['活动策划', '推广方案', '市场分析', '渠道策略'],
     avgPages: '20-30页',
     style: '创意丰富',
     difficulty: '中等',
   },
-];
+};
 
 export default function CategoriesPage() {
   const router = useRouter();
 
-  const handleCategoryClick = (categoryName: string) => {
-    console.log('[PPT] Navigating to category:', categoryName);
-    router.push(PublicRoutes.Category(categoryName));
+  const handleCategoryClick = (categorySlug: string) => {
+    console.log('[PPT] Navigating to category:', categorySlug);
+    router.push(PublicRoutes.Category(categorySlug));
   };
+
+  const categories = PPT_CATEGORIES.map((cat) => {
+    const meta = categoryMeta[cat.value] ?? {
+      count: 0,
+      icon: FileText,
+      preview: '/placeholder.svg',
+      description: '分类描述待更新',
+      useCases: [],
+      avgPages: '—',
+      style: '—',
+      difficulty: '—',
+    };
+    return {
+      name: cat.label,
+      slug: cat.value,
+      ...meta,
+    };
+  });
 
   return (
     <>
@@ -150,15 +217,15 @@ export default function CategoriesPage() {
             },
             mainEntity: {
               '@type': 'ItemList',
-              numberOfItems: allCategories.length,
-              itemListElement: allCategories.map((cat, i) => ({
+              numberOfItems: categories.length,
+              itemListElement: categories.map((cat, i) => ({
                 '@type': 'ListItem',
                 position: i + 1,
                 item: {
                   '@type': 'CreativeWork',
                   name: cat.name,
                   description: cat.description,
-                  url: `https://ppt-ai.com/category/${encodeURIComponent(cat.name)}`,
+                  url: `https://ppt-ai.com/category/${encodeURIComponent(cat.slug)}`,
                 },
               })),
             },
@@ -211,7 +278,7 @@ export default function CategoriesPage() {
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {allCategories.map((category, index) => {
+          {categories.map((category, index) => {
             const Icon = category.icon;
 
             if (index === 4) {
@@ -229,7 +296,7 @@ export default function CategoriesPage() {
                 <Card
                   key={category.name}
                   className="group cursor-pointer overflow-hidden transition-all hover:shadow-xl hover:border-primary hover:-translate-y-1"
-                  onClick={() => handleCategoryClick(category.name)}
+                  onClick={() => handleCategoryClick(category.slug)}
                 >
                   <CardContent className="p-0">
                     <div className="relative h-48 overflow-hidden bg-muted">
@@ -266,7 +333,7 @@ export default function CategoriesPage() {
               <Card
                 key={category.name}
                 className="group cursor-pointer overflow-hidden transition-all hover:shadow-xl hover:border-primary hover:-translate-y-1"
-                onClick={() => handleCategoryClick(category.name)}
+                onClick={() => handleCategoryClick(category.slug)}
               >
                 <CardContent className="p-0">
                   <div className="relative h-48 overflow-hidden bg-muted">
@@ -303,13 +370,13 @@ export default function CategoriesPage() {
         <div className="mt-8 lg:hidden">
           <h3 className="text-lg font-semibold mb-4">快速导航</h3>
           <div className="space-y-2">
-            {allCategories.map((category) => {
+            {categories.map((category) => {
               const Icon = category.icon;
               return (
                 <Card
                   key={`mobile-${category.name}`}
                   className="cursor-pointer hover:shadow-md transition-shadow"
-                  onClick={() => handleCategoryClick(category.name)}
+                  onClick={() => handleCategoryClick(category.slug)}
                 >
                   <CardContent className="flex items-center gap-4 p-4">
                     <img

@@ -7,14 +7,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  PPT_CATEGORIES,
+  PPT_LANGUAGES,
+  PPT_SORTS,
+} from '@/lib/constants/ppt';
 import type { LucideIcon } from 'lucide-react';
 
 interface Category {
   name: string;
-  slug?: string;
-  count: number;
-  icon: LucideIcon;
-  preview: string;
+  slug: string;
+  count?: number;
+  icon?: LucideIcon;
+  preview?: string;
 }
 
 interface Filters {
@@ -34,6 +39,11 @@ export function SearchFilters({
   categories,
   onFiltersChange,
 }: SearchFiltersProps) {
+  const availableCategories =
+    categories.length > 0
+      ? categories
+      : PPT_CATEGORIES.map((cat) => ({ name: cat.label, slug: cat.value }));
+
   return (
     <div className="flex flex-wrap gap-3">
       <Select
@@ -45,8 +55,8 @@ export function SearchFilters({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">全部分类</SelectItem>
-          {categories.map((cat) => (
-            <SelectItem key={cat.name} value={cat.slug ?? cat.name}>
+          {availableCategories.map((cat) => (
+            <SelectItem key={cat.slug} value={cat.slug}>
               {cat.name}
             </SelectItem>
           ))}
@@ -62,8 +72,11 @@ export function SearchFilters({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">全部语言</SelectItem>
-          <SelectItem value="中文">中文</SelectItem>
-          <SelectItem value="English">English</SelectItem>
+          {PPT_LANGUAGES.map((lang) => (
+            <SelectItem key={lang.value} value={lang.value}>
+              {lang.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 
@@ -75,9 +88,11 @@ export function SearchFilters({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="popular">最受欢迎</SelectItem>
-          <SelectItem value="newest">最新上传</SelectItem>
-          <SelectItem value="downloads">下载最多</SelectItem>
+          {PPT_SORTS.map((sort) => (
+            <SelectItem key={sort.value} value={sort.value}>
+              {sort.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>
