@@ -14,7 +14,8 @@ import { type NextRequest, NextResponse } from 'next/server';
  * Intended to be slightly less than the maximum execution time allowed by the
  * runtime so that we can gracefully terminate our request.
  */
-const TIMEOUT_MILLIS = 55 * 1000;
+export const maxDuration = 300;
+const TIMEOUT_MILLIS = 295 * 1000;
 
 const DEFAULT_IMAGE_SIZE = '1024x1024';
 const DEFAULT_ASPECT_RATIO = '1:1';

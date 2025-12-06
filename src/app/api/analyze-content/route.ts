@@ -28,6 +28,7 @@ import { z } from 'zod';
 // Constants from configuration
 const TIMEOUT_MILLIS = webContentAnalyzerConfig.timeoutMillis;
 const MAX_CONTENT_LENGTH = webContentAnalyzerConfig.maxContentLength;
+export const maxDuration = 300;
 
 // Initialize Firecrawl client
 const getFirecrawlClient = () => {

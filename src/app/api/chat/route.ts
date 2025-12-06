@@ -1,7 +1,7 @@
 import { type UIMessage, convertToModelMessages, streamText } from 'ai';
 
 // Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
+export const maxDuration = 300;
 
 export async function POST(req: Request) {
   const {
