@@ -1,12 +1,12 @@
 
 import os
 import re
+from pathlib import Path
 import yaml
-import math
-from collections import Counter
 
 # Configuration
-CONTENT_DIR = "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/content/blog"
+ROOT = Path(__file__).resolve().parents[4]
+CONTENT_DIR = ROOT / "content" / "blog"
 RELATED_COUNT = 4
 
 def parse_frontmatter(content):
@@ -41,8 +41,8 @@ def load_posts(directory):
     for root, dirs, files in os.walk(directory):
         for file in files:
             if file.endswith(".mdx"):
-                file_path = os.path.join(root, file)
-                slug = os.path.splitext(file)[0]
+                file_path = Path(root) / file
+                slug = file_path.stem
 
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
@@ -53,8 +53,8 @@ def load_posts(directory):
                     body = content[end_idx:]
                     # Weight Title and Keywords (Tags/Category) heavily
                     title = str(fm.get('title', ''))
-                    tags = fm.get('tags', [])
-                    categories = fm.get('categories', [])
+                    tags = fm.get('tags', []) or []
+                    categories = fm.get('categories', []) or []
 
                     # Create a feature text
                     # Repeat title 3 times to boost importance

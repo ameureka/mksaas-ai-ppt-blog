@@ -33,7 +33,7 @@ export default function CreditsPageClient() {
       'amount',
       'remainingAmount',
       'description',
-      'paymentId',
+      'stripeInvoiceId',
       'expirationDate',
       'expirationDateProcessedAt',
       'createdAt',

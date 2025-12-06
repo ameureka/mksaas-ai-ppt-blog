@@ -1,66 +1,46 @@
-# 广告 AdSense 目前现状 (2025-12-06 更新)
+# 广告 / AdSense 目前现状（2025-02）
 
-## 📊 总体状态：✅ 代码就绪 (Code Ready)
+## 📊 总体状态：✅ 代码就绪（本地可用）；需配置上线参数
 
-经过对代码库的最新审查，之前报告中提到的关键缺失项（博客广告位、组件冲突等）均**已完成开发和修复**。目前系统已具备上线申请 AdSense 的所有技术条件。
-
----
-
-## ✅ 已完成项目 (Completed)
-
-### 1. 页面广告植入 (全面覆盖)
-*   **博客详情页**: ✅ 已植入。代码位于 `src/app/[locale]/(marketing)/blog/[...slug]/page.tsx`。
-    *   包含了顶部横幅 (`BlogBannerAd`)
-    *   侧边栏矩形 (`BlogSidebarAd`)
-    *   侧边栏摩天楼 (`VerticalSidebarAd`)
-    *   底部多路广告 (`MultiplexAd`)
-*   **PPT 首页/列表页**: ✅ 已植入。代码位于 `src/app/[locale]/(marketing)/ppt/page.tsx`。
-    *   实现了在列表特定位置（第5、11位）动态插入原生广告卡片 (`NativeAdCard`)。
-*   **PPT 详情页**: ✅ 已植入。代码位于 `src/app/[locale]/(marketing)/ppt/[id]/page.tsx`。
-    *   包含评价区上方的横幅广告及推荐列表中的原生广告。
-*   **下载组件**: ✅ 已集成。代码位于 `src/components/ppt/download/download-modal.tsx`。
-    *   实现了 "观看广告解锁下载" 的完整前端流程及后端防刷逻辑。
-
-### 2. 核心架构优化
-*   **组件统一**: ✅ 已删除冲突的 `src/components/ppt/ads/` 目录，全站统一使用 `src/components/ads/` 下的标准组件。
-*   **防布局偏移 (CLS)**: ✅ 广告组件已配置默认占位高度，有效防止广告加载时的页面跳动。
-*   **关键配置**:
-    *   **脚本注入**: `src/app/[locale]/layout.tsx` 中已包含 AdSense 核心脚本逻辑。
-    *   **Headers 配置**: `next.config.ts` 已正确添加 `/ads.txt` 的 `Content-Type: text/plain` 响应头。
-    *   **法律链接**: `src/components/layout/footer.tsx` 中已确认包含指向 `/privacy-policy` 和 `/terms` 的链接。
+博客 / PPT 页面广告位、组件冲突等问题已修复，前后端“看广告换下载”链路可用。当前默认仅开启 AdSense 渲染开关；积分发放总开关保持关闭。
 
 ---
 
-## 🚀 剩余待执行操作 (Action Required)
+## ✅ 已完成（代码与结构）
 
-目前仅剩**配置与部署**层面的操作，**无需编写新代码**。
+### 页面广告位
+- 博客详情：顶部横幅、侧栏矩形/摩天楼、底部 Multiplex，组件在 `src/components/ads`，入口 `src/app/[locale]/(marketing)/blog/[...slug]/page.tsx`。
+- PPT 列表：第 5/11 位插入原生卡片 `NativeAdCard`，入口 `src/app/[locale]/(marketing)/ppt/page.tsx`。
+- PPT 详情：评价区上方横幅 + 推荐列表原生广告，入口 `src/app/[locale]/(marketing)/ppt/[id]/page.tsx`。
+- 下载弹窗：集成“观看广告解锁下载”流程，逻辑在 `src/components/ppt/download/download-modal.tsx`。
 
-### 1. 数据库迁移 (Critical)
-下载组件的新功能依赖于新的数据库表结构。
-*   **操作**: 请在终端运行数据库迁移命令（例如 `pnpm db:push` 或 `pnpm db:migrate`）。
-*   **目的**: 创建 `ad_watch_record` (广告观看记录) 和 `user_download_history` (用户下载历史) 表。
+### 架构与配置
+- 组件统一：已清理旧的 `src/components/ppt/ads/`，仅使用 `src/components/ads`。
+- CLS 占位：广告组件带默认高度，避免布局抖动。
+- 脚本与 headers：`src/app/[locale]/layout.tsx` 注入 AdSense script；`next.config.ts` 配置 `/ads.txt` 头。
+- 法律链接：页脚含 `/privacy-policy`、`/terms`。
 
-### 2. 生产环境配置
-在项目上线部署时，请在环境变量中配置：
-```bash
-# 开启广告功能
-NEXT_PUBLIC_ADSENSE_ENABLED=true
+---
 
-# 填入 AdSense 审核通过后获得的真实 ID
-NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXX
+## 🚀 待执行（上线前动作）
 
-# 各个广告位的 Slot ID (在 AdSense 后台创建单元后获取)
-NEXT_PUBLIC_ADSENSE_BLOG_BANNER=...
-NEXT_PUBLIC_ADSENSE_BLOG_SIDEBAR=...
-# ... 其他 Slot ID
-```
+### 1) 数据库同步
+- 运行 `pnpm db:push` 或 `pnpm db:migrate`，确保存在 `ad_watch_record`、`user_download_history`、`user_credit`、`credit_transaction`、`download_record` 等表。
 
-### 3. 最终文件更新
-*   **操作**: 编辑项目根目录下的 `public/ads.txt` 文件。
-*   **内容**: 将文件中的占位符 `pub-XXXXXXXXXXXXXXXX` 替换为您真实的 AdSense 发布商 ID。
+### 2) 环境变量
+- `NEXT_PUBLIC_ADSENSE_ENABLED=true` 打开渲染；`NEXT_PUBLIC_ADSENSE_TEST_MODE=true` 可预览占位。
+- `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXX`。
+- Slot IDs：`NEXT_PUBLIC_ADSENSE_BLOG_BANNER`、`_BLOG_SIDEBAR`、`_BLOG_VERTICAL`、`_BLOG_MULTIPLEX`、`_PPT_NATIVE` 等按单元填充。
+
+### 3) ads.txt
+- 更新 `public/ads.txt` 中的 `pub-XXXXXXXXXXXXXXXX` 为真实 Publisher ID。
+
+### 4) 功能开关与文案
+- `websiteConfig.adReward.enable=true`（默认）；`websiteConfig.credits.enableCredits=false`，当前“看广告”只解锁下载，不写积分流水。若要发积分需同时开启 credits 并配置 Stripe 价格/余额策略。
+- 前端倒计时用 `watchDuration`，后端校验用 `minWatchDuration`，需保持文案/引导一致。
 
 ---
 
 ## 📝 结论
 
-之前的“缺失”和“冲突”问题已全部解决。项目代码层面已完全符合 AdSense 的接入标准。下一步请专注于**数据库同步**和**上线申请**。
+代码与页面广告位已就绪；上线前需完成 DB 同步、环境变量、ads.txt 填充。若需“看广告得积分”，需同时打开 credits 配置；否则默认只提供广告解锁下载。此前组件冲突/缺失已解决。

@@ -1,9 +1,12 @@
 
 import os
 import re
+from pathlib import Path
+
 import yaml
 
-CONTENT_DIR = "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/content/blog"
+ROOT = Path(__file__).resolve().parents[4]
+CONTENT_DIR = ROOT / "content" / "blog"
 
 # Links extracted from PDF and categorized
 LINKS_DB = {
@@ -31,32 +34,29 @@ LINKS_DB = {
 DEFAULT_LINKS = LINKS_DB['design']
 
 def get_category_links(fm):
-    cats = fm.get('categories', [])
-    tags = fm.get('tags', [])
+    cats = fm.get('categories', []) or []
+    tags = fm.get('tags', []) or []
 
-    # Normalize
-    cats = [str(c).lower() for c in cats]
-    tags = [str(t).lower() for t in tags]
-
-    combined = set(cats + tags)
-
+    combined = {str(c).lower() for c in cats + tags}
     selected_links = []
 
+    # 分类映射（与当前英文 slug 对齐）
     if any(k in combined for k in ['education', 'training', 'school', 'courseware', 'teaching']):
         selected_links.extend(LINKS_DB['education'])
 
-    if any(k in combined for k in ['marketing', 'business', 'report', 'job-report', 'year-end', 'proposal', 'paid-search']):
+    if any(k in combined for k in ['marketing', 'product', 'business', 'report', 'job-report', 'year-end', 'proposal', 'paid-search']):
         selected_links.extend(LINKS_DB['marketing'])
 
     if any(k in combined for k in ['design', 'style', 'color', 'font', 'layout', 'template']):
         selected_links.extend(LINKS_DB['design'])
 
-    # If technically oriented (maybe not many), add technical.
-    # For now, if empty, default to design.
+    if any(k in combined for k in ['schema', 'structured-data', 'json-ld']):
+        selected_links.extend(LINKS_DB['technical'])
+
     if not selected_links:
         selected_links.extend(DEFAULT_LINKS)
 
-    # Deduplicate and limit to 3
+    # Deduplicate, limit 3
     seen = set()
     final = []
     for link in selected_links:
@@ -82,7 +82,7 @@ def main():
     for root, dirs, files in os.walk(CONTENT_DIR):
         for file in files:
             if file.endswith(".mdx"):
-                filepath = os.path.join(root, file)
+                filepath = Path(root) / file
 
                 with open(filepath, 'r', encoding='utf-8') as f:
                     content = f.read()

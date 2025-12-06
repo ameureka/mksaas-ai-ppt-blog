@@ -1,12 +1,15 @@
 
 import os
 import re
+from pathlib import Path
+
 import yaml
 
 # Configuration
-CONTENT_DIR = "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/content/blog"
-OUTPUT_DIR = "/Users/ameureka/Desktop/mksaas-ai-ppt-blog/003-上线调试记录/006-blog 页面内容完善/A000-status-quo/内链外链"
-REPORT_FILE = os.path.join(OUTPUT_DIR, "seo_link_audit_report.md")
+ROOT = Path(__file__).resolve().parents[4]
+CONTENT_DIR = ROOT / "content" / "blog"
+OUTPUT_DIR = Path(__file__).resolve().parent
+REPORT_FILE = OUTPUT_DIR / "seo_link_audit_report.md"
 
 def parse_frontmatter(content):
     match = re.match(r'^---\n(.*?)\n---', content, re.DOTALL)
@@ -25,8 +28,8 @@ def get_all_slugs_and_titles(directory):
     for root, dirs, files in os.walk(directory):
         for file in files:
             if file.endswith(".mdx"):
-                file_path = os.path.join(root, file)
-                slug = os.path.splitext(file)[0]
+                file_path = Path(root) / file
+                slug = file_path.stem
                 slugs.add(slug)
                 file_map[slug] = file_path
 
@@ -112,7 +115,7 @@ def process_files(all_slugs, title_map, file_map):
             fixed_count += 1
 
         if file_issues:
-            report_lines.append(f"## File: {os.path.basename(filepath)}")
+            report_lines.append(f"## File: {filepath.name}")
             report_lines.extend(file_issues)
             warning_count += len(file_issues)
 

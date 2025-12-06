@@ -87,7 +87,9 @@ export const initializeMailProvider = (): MailProvider => {
       mailProvider = new ResendProvider();
     }
   } else {
-    throw new Error(`Unsupported mail provider: ${websiteConfig.mail.provider}`);
+    throw new Error(
+      `Unsupported mail provider: ${websiteConfig.mail.provider}`
+    );
   }
 
   return mailProvider;

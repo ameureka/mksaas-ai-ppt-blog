@@ -42,7 +42,7 @@ const sortFieldMap = {
   updatedAt: creditTransaction.updatedAt,
   expirationDate: creditTransaction.expirationDate,
   expirationDateProcessedAt: creditTransaction.expirationDateProcessedAt,
-  paymentId: creditTransaction.paymentId,
+  stripeInvoiceId: creditTransaction.stripeInvoiceId, // R5: 重命名
 } as const;
 
 // Create a safe action for getting credit transactions
@@ -62,7 +62,7 @@ export const getCreditTransactionsAction = userActionClient
         // Always search text fields
         searchConditions.push(
           ilike(creditTransaction.type, `%${search}%`),
-          ilike(creditTransaction.paymentId, `%${search}%`),
+          ilike(creditTransaction.stripeInvoiceId, `%${search}%`), // R5: 重命名
           ilike(creditTransaction.description, `%${search}%`)
         );
 
@@ -114,7 +114,7 @@ export const getCreditTransactionsAction = userActionClient
             description: creditTransaction.description,
             amount: creditTransaction.amount,
             remainingAmount: creditTransaction.remainingAmount,
-            paymentId: creditTransaction.paymentId,
+            stripeInvoiceId: creditTransaction.stripeInvoiceId, // R5: 重命名
             expirationDate: creditTransaction.expirationDate,
             expirationDateProcessedAt:
               creditTransaction.expirationDateProcessedAt,

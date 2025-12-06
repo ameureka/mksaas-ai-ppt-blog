@@ -744,7 +744,7 @@
           "error": "获取积分交易记录失败",
           "search": "搜索积分交易记录...",
           "clearSearch": "清除搜索",
-          "paymentIdCopied": "支付ID已复制到剪贴板",
+          "stripeInvoiceIdCopied": "Stripe 发票 ID 已复制到剪贴板",
           "noResults": "没有找到结果",
           "columns": {
             "columns": "列",
@@ -753,7 +753,7 @@
             "description": "描述",
             "amount": "金额",
             "remainingAmount": "剩余金额",
-            "paymentId": "支付编号",
+            "stripeInvoiceId": "Stripe 发票编号",
             "expirationDate": "过期日期",
             "expirationDateProcessedAt": "过期处理时间",
             "createdAt": "创建时间",

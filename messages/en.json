@@ -744,7 +744,7 @@
           "error": "Failed to get credit transactions",
           "search": "Search credit transactions...",
           "clearSearch": "Clear search",
-          "paymentIdCopied": "Payment ID copied to clipboard",
+          "stripeInvoiceIdCopied": "Stripe Invoice ID copied to clipboard",
           "noResults": "No results found",
           "columns": {
             "columns": "Columns",
@@ -753,7 +753,7 @@
             "description": "Description",
             "amount": "Amount",
             "remainingAmount": "Remaining Amount",
-            "paymentId": "Payment ID",
+            "stripeInvoiceId": "Stripe Invoice ID",
             "expirationDate": "Expiration Date",
             "expirationDateProcessedAt": "Expiration Processed At",
             "createdAt": "Created At",

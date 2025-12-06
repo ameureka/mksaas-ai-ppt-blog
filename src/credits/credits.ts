@@ -58,14 +58,14 @@ export async function saveCreditTransaction({
   type,
   amount,
   description,
-  paymentId,
+  stripeInvoiceId, // R5: 重命名 paymentId -> stripeInvoiceId
   expirationDate,
 }: {
   userId: string;
   type: string;
   amount: number;
   description: string;
-  paymentId?: string;
+  stripeInvoiceId?: string; // R5: 重命名
   expirationDate?: Date;
 }) {
   if (!userId || !type || !description) {
@@ -91,7 +91,7 @@ export async function saveCreditTransaction({
     // remaining amount is null for spend transactions
     remainingAmount: amount > 0 ? amount : null,
     description,
-    paymentId,
+    stripeInvoiceId, // R5: 重命名
     expirationDate,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -107,14 +107,14 @@ export async function addCredits({
   amount,
   type,
   description,
-  paymentId,
+  stripeInvoiceId, // R5: 重命名 paymentId -> stripeInvoiceId
   expireDays,
 }: {
   userId: string;
   amount: number;
   type: string;
   description: string;
-  paymentId?: string;
+  stripeInvoiceId?: string; // R5: 重命名
   expireDays?: number;
 }) {
   if (!userId || !type || !description) {
@@ -167,7 +167,7 @@ export async function addCredits({
     type,
     amount,
     description,
-    paymentId,
+    stripeInvoiceId, // R5: 重命名
     expirationDate: expireDays ? addDays(new Date(), expireDays) : undefined,
   });
 }

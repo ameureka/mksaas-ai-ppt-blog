@@ -7,11 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  PPT_CATEGORIES,
-  PPT_LANGUAGES,
-  PPT_SORTS,
-} from '@/lib/constants/ppt';
+import { PPT_CATEGORIES, PPT_LANGUAGES, PPT_SORTS } from '@/lib/constants/ppt';
 import type { LucideIcon } from 'lucide-react';
 
 interface Category {

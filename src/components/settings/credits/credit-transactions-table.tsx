@@ -76,7 +76,7 @@ function TableRowSkeleton({ columns }: { columns: number }) {
           );
         }
         if (index === 4) {
-          // PaymentId column: Badge structure
+          // stripeInvoiceId column: Badge structure
           return (
             <TableCell key={index} className="py-3">
               <div className="flex items-center gap-2">
@@ -322,28 +322,30 @@ export function CreditTransactionsTable({
         size: 160,
       },
       {
-        id: 'paymentId',
-        accessorKey: 'paymentId',
+        id: 'stripeInvoiceId',
+        accessorKey: 'stripeInvoiceId',
         header: ({ column }) => (
           <DataTableColumnHeader
             column={column}
-            label={t('columns.paymentId')}
+            label={t('columns.stripeInvoiceId')}
           />
         ),
         cell: ({ row }) => {
           const transaction = row.original;
           return (
             <div className="flex items-center gap-2">
-              {transaction.paymentId ? (
+              {transaction.stripeInvoiceId ? (
                 <Badge
                   variant="outline"
                   className="text-sm px-1.5 cursor-pointer hover:bg-accent max-w-[150px]"
                   onClick={() => {
-                    navigator.clipboard.writeText(transaction.paymentId!);
-                    toast.success(t('paymentIdCopied'));
+                    navigator.clipboard.writeText(transaction.stripeInvoiceId!);
+                    toast.success(t('stripeInvoiceIdCopied'));
                   }}
                 >
-                  <span className="truncate">{transaction.paymentId}</span>
+                  <span className="truncate">
+                    {transaction.stripeInvoiceId}
+                  </span>
                 </Badge>
               ) : (
                 <span className="text-gray-400">-</span>
@@ -352,7 +354,7 @@ export function CreditTransactionsTable({
           );
         },
         meta: {
-          label: t('columns.paymentId'),
+          label: t('columns.stripeInvoiceId'),
         },
         minSize: 120,
         size: 140,

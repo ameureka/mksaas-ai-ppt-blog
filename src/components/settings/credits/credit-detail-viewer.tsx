@@ -33,7 +33,7 @@ export interface CreditTransaction {
   description: string | null;
   amount: number;
   remainingAmount: number | null;
-  paymentId: string | null;
+  stripeInvoiceId: string | null; // R5: 重命名 paymentId -> stripeInvoiceId
   expirationDate: Date | null;
   expirationDateProcessedAt: Date | null;
   createdAt: Date;
@@ -164,19 +164,21 @@ export function CreditDetailViewer({ transaction }: CreditDetailViewerProps) {
                 </div>
               )}
 
-              {transaction.paymentId && (
+              {transaction.stripeInvoiceId && (
                 <div className="grid gap-3">
                   <span className="text-muted-foreground text-xs">
-                    {t('columns.paymentId')}:
+                    {t('columns.stripeInvoiceId')}:
                   </span>
                   <span
                     className="font-mono text-sm cursor-pointer hover:bg-accent px-2 py-1 rounded border break-all"
                     onClick={() => {
-                      navigator.clipboard.writeText(transaction.paymentId!);
-                      toast.success(t('paymentIdCopied'));
+                      navigator.clipboard.writeText(
+                        transaction.stripeInvoiceId!
+                      );
+                      toast.success(t('stripeInvoiceIdCopied'));
                     }}
                   >
-                    {transaction.paymentId}
+                    {transaction.stripeInvoiceId}
                   </span>
                 </div>
               )}

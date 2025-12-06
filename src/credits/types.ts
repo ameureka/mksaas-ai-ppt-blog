@@ -46,7 +46,7 @@ export interface CreditTransaction {
   description: string | null;              // Transaction description
   amount: number;                          // Credit amount (positive for earning, negative for spending)
   remainingAmount: number | null;          // Remaining credit amount (for tracking expiration)
-  paymentId: string | null;                // Associated invoice ID
+  stripeInvoiceId: string | null;          // R5: 重命名 - Associated Stripe invoice ID
   expirationDate: Date | null;             // Credit expiration date
   expirationDateProcessedAt: Date | null;  // Timestamp when expiration was processed
   createdAt: Date;                         // Transaction creation timestamp
