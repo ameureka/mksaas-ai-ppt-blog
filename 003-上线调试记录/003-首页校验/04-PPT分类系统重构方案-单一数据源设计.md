@@ -1,563 +1,310 @@
 # PPT 分类系统重构方案 - 单一数据源设计
 
 **日期**: 2025年12月3日
-**状态**: 📋 待实施（常量裁剪为 12 类，API/前端已接入）
-**关联问题**: `03-PPTCategory类型定义技术债务深度分析报告.md`
+**更新**: 2025年12月7日 (基于数据库优化 R1-R10 校验)
+**状态**: 🟡 部分已实施，DTO 映射待修复
 
 ---
 
-## 一、现状分析
+## 一、现状分析 (2025-12-07 更新)
 
-### 1.1 数据库实际数据（2025年12月3日查询，需现库复核）
+### 1.1 数据库实际数据
 
-| 分类 slug | 数量 | 占比 | 样本数据 |
-|-----------|------|------|----------|
-| `business` | 743 | 50.5% | 弥散风、小清新 |
-| `education` | 550 | 37.4% | 企业培训、红色英雄故事 |
-| `technology` | 73 | 5.0% | 弥散风 |
-| `design` | 44 | 3.0% | 岗位竞聘 |
-| `marketing` | 28 | 1.9% | 设计行业 |
-| `hr` | 15 | 1.0% | - |
-| `medical` | 14 | 1.0% | - |
-| `finance` | 3 | 0.2% | - |
-| `general` | 1 | 0.1% | - |
+| 分类 slug | 数量 | 占比 |
+|-----------|------|------|
+| business | 743 | 50.5% |
+| education | 550 | 37.4% |
+| technology | 73 | 5.0% |
+| design | 44 | 3.0% |
+| marketing | 28 | 1.9% |
+| hr | 15 | 1.0% |
+| medical | 14 | 1.0% |
+| finance | 3 | 0.2% |
+| general | 1 | 0.1% |
 
-**总计**: 9 个分类，1471 条记录
+**总计**: 9 个分类有数据，1,471 条 PPT 记录，36,497 条 Slide 记录
 
-### 1.2 现有代码问题（最新校验）
+### 1.2 数据库 ppt 表字段 (R10 已优化)
 
-| 文件 | 分类值 | 问题 |
-|------|--------|------|
-| `src/lib/constants/ppt.ts` | 12个 | 已作为 API/类型来源，前端已引用 |
-| `src/lib/types/ppt/ppt.ts` | 12个（由常量推导） | 与常量一致 |
-| `src/app/api/ppts/route.ts` | 12个（引用常量） | 校验已放宽，依赖常量列表 |
-| 前端页面 | 常量驱动 | 首页/分类页均引用常量 |
+| 字段 | 类型 | 状态 | 说明 |
+|------|------|------|------|
+| description | text | ✅ 已添加 | R10 SEO 描述 |
+| file_size | **integer** | ✅ 已添加 | R10 文件大小（字节） |
+| file_format | text | ✅ 已添加 | R10 默认 'pptx' |
+| deleted_at | timestamp | ✅ 已添加 | R6 软删除 |
+| category | text | ⚠️ 无约束 | 应用层校验 |
 
+### 1.3 代码现状
+
+| 模块 | 状态 | 问题 |
+|------|------|------|
+| 分类常量 | ✅ 已统一 | 12 类，SSOT |
+| API 校验 | ✅ 已落地 | 引用常量 |
+| 类型定义 | ⚠️ 需修复 | file_size 应为 number |
+| DTO 映射 | 🔴 需修复 | 未使用 DB 字段 |
+| 重复文件 | 🔴 待清理 | 3 个文件 |
 
 ---
 
-## 二、目标分类体系设计
+## 二、目标分类体系 (12类)
 
-### 2.1 最终分类列表（12个，已收敛常量）
-
-基于数据库现有数据 + 业务需求扩展：
-
-| # | slug | 中文名 | 英文名 | 图标 | 数据库 | 说明 |
-|---|------|--------|--------|------|--------|------|
-| 1 | `business` | 商务汇报 | Business | Briefcase | ✅ 743条 | 企业汇报、客户提案 |
-| 2 | `education` | 教育培训 | Education | GraduationCap | ✅ 550条 | 课程讲解、知识分享 |
-| 3 | `technology` | 科技互联网 | Technology | Cpu | ✅ 73条 | 技术方案、产品架构 |
-| 4 | `design` | 设计创意 | Design | Palette | ✅ 44条 | 创意设计、视觉展示 |
-| 5 | `marketing` | 产品营销 | Marketing | TrendingUp | ✅ 28条 | 营销方案、品牌推广 |
-| 6 | `hr` | 人力资源 | HR | Users | ✅ 15条 | 招聘培训、团队建设 |
-| 7 | `medical` | 医疗健康 | Medical | Heart | ✅ 14条 | 医疗报告、健康宣传 |
-| 8 | `finance` | 金融财务 | Finance | DollarSign | ✅ 3条 | 财务分析、投资报告 |
-| 9 | `general` | 通用模板 | General | FileText | ✅ 1条 | 其他通用场景 |
-| 10 | `summary` | 年终总结 | Summary | Calendar | 🆕 新增 | 年度回顾、工作总结 |
-| 11 | `report` | 述职报告 | Report | ClipboardList | 🆕 新增 | 晋升述职、绩效汇报 |
-| 12 | `plan` | 工作计划 | Plan | Target | 🆕 新增 | 项目计划、目标规划 |
-
-### 2.2 废弃/待裁剪的分类（与现常量差异）
-
-| slug | 原因/动作 |
-|------|----------|
-| `product` | 常量中存在，建议并入 `marketing` 或待数据复核 |
-| `creative` | 常量中存在，建议并入 `design` |
-| `lifestyle` | 常量中存在，建议并入 `general` |
-| `hr`/`medical`/`finance` | 常量中存在，需确认业务与数据覆盖 |
+| # | slug | 中文名 | 英文名 | DB 数据 |
+|---|------|--------|--------|---------|
+| 1 | business | 商务汇报 | Business | ✅ 743条 |
+| 2 | education | 教育培训 | Education | ✅ 550条 |
+| 3 | technology | 科技互联网 | Technology | ✅ 73条 |
+| 4 | design | 设计创意 | Design | ✅ 44条 |
+| 5 | marketing | 产品营销 | Marketing | ✅ 28条 |
+| 6 | hr | 人力资源 | HR | ✅ 15条 |
+| 7 | medical | 医疗健康 | Medical | ✅ 14条 |
+| 8 | finance | 金融财务 | Finance | ✅ 3条 |
+| 9 | general | 通用模板 | General | ✅ 1条 |
+| 10 | summary | 年终总结 | Summary | 🆕 待填充 |
+| 11 | report | 述职报告 | Report | 🆕 待填充 |
+| 12 | plan | 工作计划 | Plan | 🆕 待填充 |
 
 ---
 
 ## 三、架构设计
 
-### 3.1 数据流架构（SEO 优化版）
+### 3.1 数据流架构
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    新架构：Server Component + Client 交互                    │
+│                           单一数据源架构                                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  src/lib/constants/ppt.ts 或 src/config/ppt-categories.ts (单一数据源 SSOT) │
+│  src/lib/constants/ppt.ts (SSOT - 12类)                                    │
 │         │                                                                   │
-│         ├──→ src/lib/types/ppt/ppt.ts (类型推导)                           │
+│         ├──→ src/lib/types/ppt/ppt.ts (类型推导) ✅                         │
 │         │                                                                   │
-│         ├──→ src/actions/ppt/ppt.ts (Server Action + 验证)                 │
+│         ├──→ src/actions/ppt/ppt.ts (Server Action) ⚠️ DTO 待修复          │
 │         │         │                                                         │
-│         │         ├──→ PPT 首页 (Server Component)                         │
-│         │         │         └──→ 首屏数据服务端渲染 (SEO ✅)                │
-│         │         │                                                         │
-│         │         └──→ PPT 交互组件 (Client Component)                     │
-│         │                   └──→ 搜索/筛选等交互                            │
+│         │         └──→ src/app/api/ppts/route.ts (API) ✅                   │
 │         │                                                                   │
-│         ├──→ src/app/api/ppts/route.ts (基于常量校验)                      │
-│         │                                                                   │
-│         └──→ 前端组件 (从配置读取分类列表)                                  │
+│         └──→ 前端组件 (首页/分类页) ✅                                       │
+│                                                                             │
+│  数据库 ppt 表                                                              │
+│         ├── description (text) ✅ R10                                       │
+│         ├── file_size (integer) ✅ R10                                      │
+│         ├── file_format (text) ✅ R10                                       │
+│         └── deleted_at (timestamp) ✅ R6                                    │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 3.2 验证逻辑位置
 
-| 层级 | 是否验证 | 说明 |
+| 层级 | 验证方式 | 说明 |
 |------|----------|------|
-| API Route | ❌ 不验证 | 只做参数透传，简化代码 |
-| Server Action | ✅ 验证 | 使用 `isValidCategory()` 统一验证 |
-| 前端组件 | ✅ 类型约束 | 使用配置生成选项，TypeScript 编译时检查 |
-
-### 3.3 文件结构（可复用现有常量）
-
-```
-src/
-├── lib/constants/ppt.ts        # ✅ 现有分类来源，可作为 SSOT（或迁移到 config/）
-├── lib/
-│   └── types/
-│       └── ppt/
-│           └── ppt.ts         # ✅ 已从常量推导
-├── actions/
-│   └── ppt/
-│       └── ppt.ts             # ✅ 使用常量校验
-├── app/
-│   ├── api/
-│   │   └── ppts/
-│   │       └── route.ts       # ✅ 使用常量校验
-│   └── [locale]/
-│       └── (marketing)/
-│           └── ppt/
-│               ├── page.tsx           # ⏳ 待引用常量、可拆分 Server/Client
-│               └── categories/page.tsx# ⏳ 待引用常量
-└── 待删除/收敛文件：
-    ├── src/types/ppt.ts               # ⚠️ 重复，迁移后可删
-    ├── src/schemas/ppt.ts             # ⚠️ 重复，无引用
-    └── src/lib/ppt/schemas/ppt.ts     # ⚠️ 仅测试使用，需与常量同步或移除
-```
+| 数据库 | ❌ 不验证 | category 为 text，保持灵活 |
+| API Route | ✅ 验证 | 使用 `PPT_CATEGORY_VALUES` |
+| Server Action | ✅ 验证 | 同上 |
+| 前端组件 | ✅ 类型约束 | TypeScript 编译时检查 |
 
 ---
 
-## 四、核心代码设计
+## 四、核心代码修复
 
-### 4.1 单一数据源配置文件
+### 4.1 DTO 映射修复 (P0) 🔴
 
-**文件**: `src/config/ppt-categories.ts`
+**文件**: `src/actions/ppt/ppt.ts`
 
 ```typescript
-import {
-  Briefcase,
-  GraduationCap,
-  Cpu,
-  Palette,
-  TrendingUp,
-  Users,
-  Heart,
-  DollarSign,
-  FileText,
-  Calendar,
-  ClipboardList,
-  Target,
-  type LucideIcon,
-} from 'lucide-react';
-
-/**
- * PPT 分类配置 - 单一数据源 (Single Source of Truth)
- */
-export interface PPTCategoryConfig {
-  slug: string;
-  label: { zh: string; en: string };
-  icon: LucideIcon;
-  description?: { zh: string; en: string };
-  order: number;
-}
-
-export const PPT_CATEGORIES = [
-  { slug: 'business', label: { zh: '商务汇报', en: 'Business' }, icon: Briefcase, order: 1 },
-  { slug: 'education', label: { zh: '教育培训', en: 'Education' }, icon: GraduationCap, order: 2 },
-  { slug: 'technology', label: { zh: '科技互联网', en: 'Technology' }, icon: Cpu, order: 3 },
-  { slug: 'design', label: { zh: '设计创意', en: 'Design' }, icon: Palette, order: 4 },
-  { slug: 'marketing', label: { zh: '产品营销', en: 'Marketing' }, icon: TrendingUp, order: 5 },
-  { slug: 'hr', label: { zh: '人力资源', en: 'HR' }, icon: Users, order: 6 },
-  { slug: 'medical', label: { zh: '医疗健康', en: 'Medical' }, icon: Heart, order: 7 },
-  { slug: 'finance', label: { zh: '金融财务', en: 'Finance' }, icon: DollarSign, order: 8 },
-  { slug: 'general', label: { zh: '通用模板', en: 'General' }, icon: FileText, order: 9 },
-  { slug: 'summary', label: { zh: '年终总结', en: 'Summary' }, icon: Calendar, order: 10 },
-  { slug: 'report', label: { zh: '述职报告', en: 'Report' }, icon: ClipboardList, order: 11 },
-  { slug: 'plan', label: { zh: '工作计划', en: 'Plan' }, icon: Target, order: 12 },
-] as const;
-
-// 自动推导类型
-export type PPTCategorySlug = (typeof PPT_CATEGORIES)[number]['slug'];
-
-// 验证函数
-export const isValidCategory = (value: string): value is PPTCategorySlug => {
-  return PPT_CATEGORIES.some((c) => c.slug === value);
-};
-
-// 获取分类配置
-export const getCategoryConfig = (slug: string) => {
-  return PPT_CATEGORIES.find((c) => c.slug === slug);
-};
-
-// 获取分类标签
-export const getCategoryLabel = (slug: string, locale: 'zh' | 'en' = 'zh') => {
-  return getCategoryConfig(slug)?.label[locale] ?? slug;
-};
-
-// 导出 slug 列表
-export const VALID_CATEGORY_SLUGS = PPT_CATEGORIES.map((c) => c.slug);
+const toPPTDto = (row: typeof pptTable.$inferSelect): PPT => ({
+  id: row.id,
+  title: row.title,
+  category: (row.category ?? 'general') as PPT['category'],
+  author: row.author ?? 'Unknown',
+  // ✅ 修复: 使用 DB 字段
+  description: row.description ?? row.title ?? '',
+  tags: row.tags ?? [],
+  language: row.language ?? '',
+  slides_count: row.slidesCount ?? 0,
+  // ✅ 修复: 使用 DB 字段 (integer)
+  file_size: row.fileSize ?? 0,
+  file_url: row.fileUrl,
+  preview_url: row.thumbnailUrl ?? row.coverImageUrl ?? undefined,
+  downloads: row.downloadCount ?? 0,
+  views: row.viewCount ?? 0,
+  status: (row.status ?? 'draft') as PPT['status'],
+  uploaded_at: row.createdAt?.toISOString() ?? '',
+  created_at: row.createdAt?.toISOString() ?? '',
+  updated_at: row.updatedAt?.toISOString() ?? '',
+});
 ```
 
-### 4.2 类型定义更新
+### 4.2 类型定义修复 (P0) 🔴
 
 **文件**: `src/lib/types/ppt/ppt.ts`
 
 ```typescript
-import type { PPTCategorySlug } from '@/config/ppt-categories';
-
-// 使用从配置推导的类型，保持向后兼容
-export type PPTCategory = PPTCategorySlug;
-
 export interface PPT {
   id: string;
   title: string;
   category: PPTCategory;
   author: string;
-  // ... 其他字段保持不变
+  description?: string;
+  tags?: string[];
+  language?: string;
+  slides_count: number;
+  // ✅ 修复: 改为 number，与 DB integer 对应
+  file_size: number;
+  file_url: string;
+  preview_url?: string;
+  downloads: number;
+  views: number;
+  status?: PPTStatus;
+  uploaded_at: string;
+  created_at: string;
+  updated_at: string;
 }
 ```
 
-### 4.3 Server Action 验证
+### 4.3 查询过滤软删除 (P1) 🟡
 
 **文件**: `src/actions/ppt/ppt.ts`
 
 ```typescript
-import { isValidCategory } from '@/config/ppt-categories';
+import { isNull } from 'drizzle-orm';
 
 const buildWhere = (params?: PPTListParams) => {
-  if (!params) return undefined;
   const conditions = [];
-
-  // 分类验证：使用统一配置
-  if (params.category && isValidCategory(params.category)) {
+  
+  // ✅ 过滤软删除记录
+  conditions.push(isNull(pptTable.deletedAt));
+  
+  if (params?.search?.trim()) {
+    // ... 搜索条件
+  }
+  
+  if (params?.category) {
     conditions.push(eq(pptTable.category, params.category));
   }
-
+  
   // ... 其他条件
+  
   return conditions.length ? and(...conditions) : undefined;
 };
 ```
 
-### 4.4 API Route 简化
+### 4.4 文件清理 (P1) 🟡
 
-**文件**: `src/app/api/ppts/route.ts`
+```bash
+# 1. 迁移 query-keys 引用
+# src/lib/query-keys.ts: @/types/ppt → @/lib/types/ppt/ppt
 
-```typescript
-import { getPPTs } from '@/actions/ppt/ppt';
-import type { NextRequest } from 'next/server';
+# 2. 删除重复文件
+rm src/types/ppt.ts
+rm src/schemas/ppt.ts
 
-// 简化：移除硬编码验证，让 Server Action 处理
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-
-  const params = {
-    search: searchParams.get('search') ?? undefined,
-    category: searchParams.get('category') ?? undefined, // 不在这里验证
-    sortBy: searchParams.get('sortBy') ?? undefined,
-    sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') ?? undefined,
-    page: searchParams.get('page') ? Number(searchParams.get('page')) : undefined,
-    pageSize: searchParams.get('pageSize') ? Number(searchParams.get('pageSize')) : undefined,
-  };
-
-  const result = await getPPTs(params);
-  return Response.json(result, { status: result.success ? 200 : 400 });
-}
-```
-
-### 4.5 首页重构为 Server Component + Client 交互
-
-**文件**: `src/app/[locale]/(marketing)/ppt/page.tsx` (Server Component)
-
-```typescript
-import { getPPTs } from '@/actions/ppt/ppt';
-import { PPT_CATEGORIES, getCategoryLabel } from '@/config/ppt-categories';
-import { PPTClientSection } from './ppt-client';
-
-// Server Component - 首屏数据服务端渲染，SEO 友好
-export default async function PPTPage({
-  params: { locale }
-}: {
-  params: { locale: string }
-}) {
-  // 服务端获取初始数据
-  const [featuredResult, newResult] = await Promise.all([
-    getPPTs({ pageSize: 8, sortBy: 'downloads', sortOrder: 'desc' }),
-    getPPTs({ pageSize: 12, sortBy: 'created_at', sortOrder: 'desc' }),
-  ]);
-
-  const featuredPPTs = featuredResult.success ? featuredResult.data.items : [];
-  const newPPTs = newResult.success ? newResult.data.items : [];
-
-  // 从配置生成分类列表
-  const categories = PPT_CATEGORIES.map((cat) => ({
-    slug: cat.slug,
-    name: getCategoryLabel(cat.slug, locale as 'zh' | 'en'),
-    icon: cat.icon,
-  }));
-
-  return (
-    <>
-      {/* SEO: JSON-LD 结构化数据 */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'PPT-AI',
-            // ...
-          }),
-        }}
-      />
-
-      {/* Hero Section - 静态内容，服务端渲染 */}
-      <HeroSection />
-
-      {/* Client Component - 处理搜索、筛选等交互 */}
-      <PPTClientSection
-        initialFeatured={featuredPPTs}
-        initialNew={newPPTs}
-        categories={categories}
-        locale={locale}
-      />
-    </>
-  );
-}
-```
-
-**文件**: `src/app/[locale]/(marketing)/ppt/ppt-client.tsx` (Client Component)
-
-```typescript
-'use client';
-
-import { useState } from 'react';
-import { PPTCard } from '@/components/ppt/ppt-card';
-import { SearchFilters } from '@/components/ppt/search-filters';
-import type { PPT } from '@/lib/types/ppt/ppt';
-
-interface PPTClientSectionProps {
-  initialFeatured: PPT[];
-  initialNew: PPT[];
-  categories: Array<{ slug: string; name: string; icon: any }>;
-  locale: string;
-}
-
-export function PPTClientSection({
-  initialFeatured,
-  initialNew,
-  categories,
-  locale,
-}: PPTClientSectionProps) {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<PPT[]>([]);
-  const [hasSearched, setHasSearched] = useState(false);
-  const [filters, setFilters] = useState({
-    category: 'all',
-    language: 'all',
-    sort: 'popular',
-  });
-
-  const handleSearch = async (searchQuery: string) => {
-    if (!searchQuery.trim()) return;
-    setHasSearched(true);
-
-    // 调用 API 搜索
-    const res = await fetch(`/api/ppts?search=${encodeURIComponent(searchQuery)}`);
-    const json = await res.json();
-    if (json.success) {
-      setResults(json.data.items);
-    }
-  };
-
-  const handleCategoryClick = (slug: string) => {
-    // 使用 slug 而非中文名
-    router.push(`/${locale}/ppt/category/${slug}`);
-  };
-
-  return (
-    <>
-      {/* 搜索区域 */}
-      <SearchSection query={query} onSearch={handleSearch} />
-
-      {/* 搜索结果或默认内容 */}
-      {hasSearched ? (
-        <SearchResults results={results} filters={filters} categories={categories} />
-      ) : (
-        <>
-          {/* 热门分类 - 使用配置数据 */}
-          <CategoryGrid categories={categories} onCategoryClick={handleCategoryClick} />
-
-          {/* 编辑精选 - 使用服务端数据 */}
-          <FeaturedSection ppts={initialFeatured} />
-
-          {/* 本周新品 - 使用服务端数据 */}
-          <NewSection ppts={initialNew} />
-        </>
-      )}
-    </>
-  );
-}
-```
-
-### 4.6 分类页面更新
-
-**文件**: `src/app/[locale]/(marketing)/ppt/categories/page.tsx`
-
-```typescript
-import { PPT_CATEGORIES, getCategoryLabel } from '@/config/ppt-categories';
-
-export default function CategoriesPage({
-  params: { locale }
-}: {
-  params: { locale: string }
-}) {
-  // 从配置生成分类列表，不再硬编码
-  const categories = PPT_CATEGORIES.map((cat) => ({
-    slug: cat.slug,
-    name: getCategoryLabel(cat.slug, locale as 'zh' | 'en'),
-    icon: cat.icon,
-    // count 可以从 API 获取或使用静态数据
-  }));
-
-  const handleCategoryClick = (slug: string) => {
-    // 使用 slug 而非中文名
-    router.push(`/${locale}/ppt/category/${slug}`);
-  };
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {categories.map((category) => {
-        const Icon = category.icon;
-        return (
-          <Card
-            key={category.slug}
-            onClick={() => handleCategoryClick(category.slug)}
-          >
-            <Icon className="h-6 w-6" />
-            <h3>{category.name}</h3>
-          </Card>
-        );
-      })}
-    </div>
-  );
-}
+# 3. 同步 Zod 枚举 (可选)
+# src/lib/ppt/schemas/ppt.ts: 8类 → 12类
 ```
 
 ---
 
-## 五、实施步骤（结合现状调整）
+## 五、实施步骤
 
-### 阶段 1：单一数据源（30分钟）
+### 阶段 1：DTO 与类型修复 (10分钟) 🔴
 
-| 步骤 | 操作 | 文件 | 说明 |
-|------|------|------|------|
-| 1.1 | 复用/迁移配置 | `src/lib/constants/ppt.ts` → 目标 12 类，或迁移到 `src/config/ppt-categories.ts` | 保持现有 API/类型引用 |
-| 1.2 | 添加 i18n 翻译 | `messages/zh.json`, `messages/en.json` | 分类名称翻译 |
+| 步骤 | 操作 | 文件 |
+|------|------|------|
+| 1.1 | 修改 file_size 类型为 number | `src/lib/types/ppt/ppt.ts` |
+| 1.2 | 更新 toPPTDto 映射 description | `src/actions/ppt/ppt.ts` |
+| 1.3 | 更新 toPPTDto 映射 file_size | `src/actions/ppt/ppt.ts` |
 
-### 阶段 2：类型/Schema 同步（20分钟）
+### 阶段 2：查询优化 (5分钟) 🟡
 
-| 步骤 | 操作 | 文件 | 说明 |
-|------|------|------|------|
-| 2.1 | 更新类型定义 | `src/lib/types/ppt/ppt.ts` | 已引用常量，随裁剪同步 |
-| 2.2 | 更新 Zod Schema | `src/lib/ppt/schemas/ppt.ts` | 同步分类枚举 |
+| 步骤 | 操作 | 文件 |
+|------|------|------|
+| 2.1 | buildWhere 添加 deleted_at 过滤 | `src/actions/ppt/ppt.ts` |
 
-### 阶段 3：后端同步（20分钟）
+### 阶段 3：文件清理 (10分钟) 🟡
 
-| 步骤 | 操作 | 文件 | 说明 |
-|------|------|------|------|
-| 3.1 | 更新 Server Action | `src/actions/ppt/ppt.ts` | 已使用常量，随裁剪同步 |
-| 3.2 | API Route 校验 | `src/app/api/ppts/route.ts` | 已使用常量，随裁剪同步 |
+| 步骤 | 操作 | 文件 |
+|------|------|------|
+| 3.1 | 迁移 query-keys 引用 | `src/lib/query-keys.ts` |
+| 3.2 | 删除 src/types/ppt.ts | - |
+| 3.3 | 删除 src/schemas/ppt.ts | - |
+| 3.4 | 同步 Zod 枚举 (可选) | `src/lib/ppt/schemas/ppt.ts` |
 
-### 阶段 4：前端落地（60分钟）
+### 阶段 4：验证 (10分钟)
 
-| 步骤 | 操作 | 文件 | 说明 |
-|------|------|------|------|
-| 4.1 | 首页/分类页 | `src/app/[locale]/(marketing)/ppt/page.tsx` / `categories/page.tsx` | 引用常量，去硬编码 |
-| 4.2 | 筛选组件 | `src/components/ppt/search-filters.tsx` | 从常量读取选项 |
-| 4.3 | 其他 | Footer/导航使用统一 slug |
-
-### 阶段 5：清理重复/测试（10分钟）
-
-| 步骤 | 操作 | 文件 | 说明 |
-|------|------|------|------|
-| 5.1 | 删除重复文件 | `src/types/ppt.ts` | 迁移引用后删除 |
-| 5.2 | 删除重复文件 | `src/schemas/ppt.ts` | 无引用，直接删除 |
-| 5.3 | 同步/下线测试 Schema | `src/lib/ppt/schemas/ppt.ts` | 与常量同步或移除 |
-| 5.4 | 迁移引用 | `src/lib/query-keys.ts` | 随收敛调整引用路径 |
-
-### 阶段 6：测试验证（30分钟）
-
-| 步骤 | 操作 | 验证点 |
-|------|------|--------|
-| 6.1 | 运行 lint | `pnpm lint`（需先处理现有 Biome 报告） |
-| 6.2 | 运行 build | `pnpm build` 成功 |
-| 6.3 | 测试首页 | 分类显示正确，点击跳转正确 |
-| 6.4 | 测试搜索 | 搜索功能正常 |
-| 6.5 | 测试分类筛选 | 筛选结果正确 |
-| 6.6 | 测试 SEO | 查看页面源码，确认首屏数据已渲染 |
+| 步骤 | 操作 |
+|------|------|
+| 4.1 | `pnpm lint` 通过 |
+| 4.2 | `pnpm build` 成功 |
+| 4.3 | 手动测试首页/分类/搜索 |
 
 ---
 
-## 六、风险评估与缓解
+## 六、风险评估
 
 | 风险 | 影响 | 概率 | 缓解措施 |
 |------|------|------|----------|
-| 类型不兼容 | 编译失败 | 中 | 保持 `PPTCategory` 类型别名向后兼容 |
-| 首页重构影响交互 | 用户体验 | 中 | 充分测试搜索、筛选功能 |
-| SEO 变化 | 搜索排名 | 低 | 保持 URL 结构不变 |
-| 数据库分类不存在 | 查询为空 | 低 | 新增分类暂时无数据是正常的 |
+| file_size 类型变更 | 前端显示 | 低 | 前端格式化为可读字符串 |
+| 软删除过滤 | 查询结果变化 | 低 | 当前无软删除数据 |
+| 重复文件删除 | 编译失败 | 中 | 先迁移引用再删除 |
 
 ---
 
 ## 七、预期收益
 
-### 7.1 技术收益
+### 技术收益
 
 | 收益 | 说明 |
 |------|------|
-| 单一数据源 | 所有分类定义集中在 `src/lib/constants/ppt.ts`（或迁移后单点） |
-| 类型安全 | TypeScript 自动推导，编译时检查 |
-| 易于维护 | 新增/修改分类只需改一处 |
-| 代码简化 | 删除 3 个重复文件，减少混乱 |
+| 数据库与代码同步 | DTO 使用真实 DB 字段 |
+| 类型安全 | file_size 类型正确 |
+| 代码简化 | 删除 3 个重复文件 |
+| 软删除支持 | 查询自动过滤 |
 
-### 7.2 业务收益
+### 业务收益
 
 | 收益 | 说明 |
 |------|------|
-| SEO 优化 | 首屏服务端渲染，搜索引擎可索引 |
-| 性能提升 | 减少客户端请求，首屏加载更快 |
-| 分类准确 | 前端展示与数据库一致 |
-| 国际化支持 | 内置中英文标签 |
+| SEO 优化 | description 字段可用 |
+| 文件信息 | file_size 真实显示 |
+| 数据完整性 | 软删除不影响统计 |
 
 ---
 
-## 八、后续优化（可选）
+## 八、检查清单
 
-| 优化项 | 说明 | 优先级 |
-|--------|------|--------|
-| 分类数量统计 | 从数据库实时获取各分类 PPT 数量 | P2 |
-| 分类图片 | 为每个分类添加封面图 | P3 |
-| 数据库约束 | 添加 PostgreSQL enum 或 check constraint | P3 |
-| 分类管理后台 | 支持动态添加/编辑分类 | P4 |
+### 已完成 ✅
+
+- [x] 分类常量统一 (12类)
+- [x] API 校验引用常量
+- [x] 类型定义从常量推导
+- [x] 前端引用常量
+- [x] 数据库添加 description 字段 (R10)
+- [x] 数据库添加 file_size 字段 (R10)
+- [x] 数据库添加 deleted_at 字段 (R6)
+
+### 待完成 ⏳
+
+- [ ] toPPTDto 映射 description
+- [ ] toPPTDto 映射 file_size
+- [ ] PPT 接口 file_size 改为 number
+- [ ] buildWhere 过滤 deleted_at
+- [ ] 迁移 query-keys 引用
+- [ ] 删除 src/types/ppt.ts
+- [ ] 删除 src/schemas/ppt.ts
+- [ ] 同步 Zod 枚举为 12 类
 
 ---
 
-## 九、检查清单
+## 九、数据库与代码同步状态
 
-实施完成后，确认以下项目：
+```
+数据库 (已完善)              代码 (待同步)
+─────────────────────────────────────────────
+ppt.description ✅      →   toPPTDto 未映射 ❌
+ppt.file_size ✅        →   toPPTDto 未映射 ❌
+ppt.file_format ✅      →   接口未定义 ⚠️
+ppt.deleted_at ✅       →   查询未过滤 ⚠️
+重复文件                →   待清理 ❌
+```
 
-- [ ] `src/lib/constants/ppt.ts` 裁剪/迁移并作为唯一分类来源
-- [ ] 前端引用常量，去硬编码（首页/分类页/筛选/导航）
-- [ ] `src/lib/types/ppt/ppt.ts` 同步常量
-- [ ] `src/actions/ppt/ppt.ts` / `src/app/api/ppts/route.ts` 同步常量
-- [ ] `src/types/ppt.ts` / `src/schemas/ppt.ts` 清理
-- [ ] `src/lib/ppt/schemas/ppt.ts` 同步或下线
-- [ ] `pnpm lint` 通过
-- [ ] `pnpm build` 成功
-- [ ] 手动测试通过（分类筛选/搜索/首屏渲染）
+**目标**: 完成代码同步后，数据库设计与应用层完全对齐。

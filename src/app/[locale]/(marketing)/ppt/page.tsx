@@ -109,62 +109,62 @@ export default function SearchHomePage() {
     business: {
       count: 12345,
       icon: Briefcase,
-      preview: '/ppt/business-presentation-template.png',
+      preview: '/ppt/category-business.png',
     },
     education: {
       count: 8234,
       icon: GraduationCap,
-      preview: '/ppt/education-training-template.jpg',
+      preview: '/ppt/category-education.png',
     },
     technology: {
       count: 3200,
       icon: Cpu,
-      preview: '/placeholder.svg',
+      preview: '/ppt/category-technology.png',
     },
     design: {
       count: 2100,
       icon: Palette,
-      preview: '/placeholder.svg',
+      preview: '/ppt/category-design.png',
     },
     marketing: {
       count: 6789,
       icon: TrendingUp,
-      preview: '/ppt/product-marketing-template.jpg',
+      preview: '/ppt/category-marketing.png',
     },
     hr: {
       count: 1800,
       icon: Users,
-      preview: '/placeholder.svg',
+      preview: '/ppt/category-hr.png',
     },
     medical: {
       count: 1400,
       icon: Heart,
-      preview: '/placeholder.svg',
+      preview: '/ppt/category-medical.png',
     },
     finance: {
       count: 900,
       icon: DollarSign,
-      preview: '/placeholder.svg',
+      preview: '/ppt/category-finance.png',
     },
     general: {
       count: 15678,
       icon: Calendar,
-      preview: '/ppt/year-end-summary-template.jpg',
+      preview: '/ppt/category-general.png',
     },
     summary: {
       count: 15678,
       icon: Calendar,
-      preview: '/ppt/year-end-summary-template.jpg',
+      preview: '/ppt/category-summary.png',
     },
     report: {
       count: 11234,
       icon: Presentation,
-      preview: '/ppt/job-report-template.jpg',
+      preview: '/ppt/category-report.png',
     },
     plan: {
       count: 5678,
       icon: Target,
-      preview: '/ppt/marketing-plan-template.png',
+      preview: '/ppt/category-plan.png',
     },
   };
 
@@ -208,14 +208,24 @@ export default function SearchHomePage() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(
-          '/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc'
-        );
-        const json = await res.json();
-        if (json.success) {
-          const items = transform(json.data.items ?? []);
-          setFeaturedPPTs(items.slice(0, 8));
-          setNewPPTs(items.slice(0, 12));
+        // 独立请求：编辑精选按下载量排序，本周新品按创建时间排序
+        const [featuredRes, newRes] = await Promise.all([
+          fetch('/api/ppts?page=1&pageSize=8&sortBy=downloads&sortOrder=desc'),
+          fetch(
+            '/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc'
+          ),
+        ]);
+
+        const [featuredJson, newJson] = await Promise.all([
+          featuredRes.json(),
+          newRes.json(),
+        ]);
+
+        if (featuredJson.success) {
+          setFeaturedPPTs(transform(featuredJson.data.items ?? []));
+        }
+        if (newJson.success) {
+          setNewPPTs(transform(newJson.data.items ?? []));
         }
       } catch (error) {
         console.error(error);
@@ -289,11 +299,7 @@ export default function SearchHomePage() {
   };
 
   const handleDownload = (ppt: PPT) => {
-    toast.success(`正在准备下载《${ppt.title}》...`, {
-      description: '下载功能需要后端支持，当前为演示模式',
-      duration: 3000,
-    });
-    logAction('download_attempt', { pptId: ppt.id, title: ppt.title });
+    router.push(`/ppt/${ppt.id}`);
   };
 
   const handleViewMore = (section: 'featured' | 'new') => {

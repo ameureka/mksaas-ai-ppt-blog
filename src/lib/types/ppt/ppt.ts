@@ -13,7 +13,8 @@ export interface PPT {
   tags?: string[];
   language?: string;
   slides_count: number;
-  file_size: string;
+  file_size: number;
+  file_format?: string;
   file_url: string;
   preview_url?: string;
   downloads: number;

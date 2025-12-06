@@ -7,6 +7,7 @@ import * as fc from 'fast-check';
  * 验证所有迁移的类型定义和 schema 文件能够正确编译
  */
 import { describe, expect, it } from 'vitest';
+import { z } from 'zod';
 
 import type { AdminAuditLog, AdminUser } from '@/lib/types/ppt/admin';
 // 导入所有类型定义，验证编译正确性
@@ -23,8 +24,20 @@ import type {
 } from '@/lib/types/ppt/user';
 
 // 导入 schema 验证函数
-import { pptCategoryEnum, pptStatusEnum } from '@/lib/ppt/schemas/ppt';
 import { userRoleEnum, userStatusEnum } from '@/lib/ppt/schemas/user';
+
+// 内联定义 PPT 相关 schema（原文件已删除，统一到 types 目录）
+const pptStatusEnum = z.enum(['draft', 'published', 'archived']);
+const pptCategoryEnum = z.enum([
+  'business',
+  'education',
+  'technology',
+  'marketing',
+  'report',
+  'plan',
+  'summary',
+  'other',
+]);
 
 describe('Property 6: 编译正确性', () => {
   /**

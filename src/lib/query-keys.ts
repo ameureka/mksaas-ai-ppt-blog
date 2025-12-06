@@ -1,4 +1,4 @@
-import type { PPTListParams } from '@/types/ppt';
+import type { PPTListParams } from '@/lib/types/ppt/ppt';
 
 export const pptKeys = {
   all: ['ppts'] as const,

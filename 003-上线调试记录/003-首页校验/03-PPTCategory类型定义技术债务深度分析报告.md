@@ -1,8 +1,8 @@
 # PPTCategory 类型定义技术债务深度分析报告
 
 **日期**: 2025年12月3日
-**状态**: 🔴 存在严重架构问题
-**分析范围**: PPTCategory 类型定义全链路追踪（含最新代码校验）
+**更新**: 2025年12月7日 (基于数据库优化 R1-R10 校验)
+**状态**: 🟡 部分待清理
 
 ---
 
@@ -10,157 +10,105 @@
 
 ### 1.1 发现的所有 PPTCategory 定义位置
 
-| # | 文件路径 | 定义方式 | 分类值 | 被引用情况 |
-|---|----------|----------|--------|------------|
-| 1 | `src/lib/types/ppt/ppt.ts` | TypeScript 类型（从常量推导） | 12个: `business`, `education`, `technology`, `design`, `marketing`, `hr`, `medical`, `finance`, `general`, `summary`, `report`, `plan` | **主要使用** - Actions、API Route、Hooks、Admin 组件 |
-| 2 | `src/lib/constants/ppt.ts` | const array + 推导类型 | 同上 12 个 | **已被引用** - API 校验 & 类型定义 |
-| 3 | `src/lib/ppt/schemas/ppt.ts` | Zod enum | 8个: `business`, `education`, `technology`, `marketing`, `report`, `plan`, `summary`, `other` | 仅被测试文件引用 |
-| 4 | `src/schemas/ppt.ts` | Zod enum | 8个: 同上 | **未被引用** - 0处 import |
-| 5 | `src/types/ppt.ts` | TypeScript 类型（从常量推导） | 同 #1 | 仅被 `src/lib/query-keys.ts` 引用 |
+| # | 文件路径 | 定义方式 | 分类值 | 被引用情况 | 状态 |
+|---|----------|----------|--------|------------|------|
+| 1 | `src/lib/constants/ppt.ts` | const array + 推导类型 | **12个** | ✅ SSOT - API/类型/前端 | ✅ 保留 |
+| 2 | `src/lib/types/ppt/ppt.ts` | 从常量推导 | 12个 | ✅ 主要使用 | ✅ 保留 |
+| 3 | `src/types/ppt.ts` | 从常量推导 | 12个 | ⚠️ 仅 query-keys 引用 | ❌ 待删除 |
+| 4 | `src/schemas/ppt.ts` | Zod enum | **8个** (含 other) | ❌ 无引用 | ❌ 待删除 |
+| 5 | `src/lib/ppt/schemas/ppt.ts` | Zod enum | **8个** (含 other) | ⚠️ 仅测试引用 | ⚠️ 待同步 |
 
-### 1.2 前端页面硬编码的分类
+### 1.2 数据库 category 字段设计
 
-| 文件 | 分类定义方式 | 分类值 |
-|------|--------------|--------|
-| `src/app/[locale]/(marketing)/ppt/page.tsx` | 常量映射生成 | 12个（来自常量） |
-| `src/app/[locale]/(marketing)/ppt/categories/page.tsx` | 常量映射生成 | 12个（来自常量） |
+根据 `src/db/schema.ts`：
+
+```typescript
+category: text("category"), // 无约束，任意字符串
+```
+
+**设计说明**:
+- 数据库层不做枚举约束，保持灵活性
+- 应用层通过 `PPT_CATEGORY_VALUES` 校验
+- 这是**有意设计**，便于后续扩展分类
 
 ---
 
-## 二、分类值对比矩阵
+## 二、分类值对比矩阵 (2025-12-07 更新)
 
 ```
-                    types/ppt  constants/ppt  schemas/ppt  API Route  前端页面
-business            ✅          ✅             ✅           ✅         ✅
-education           ✅          ✅             ✅           ✅         ✅
-technology          ✅          ✅             ✅           ✅         ✅
-design              ✅          ✅             ❌           ✅         ✅
-marketing           ✅          ✅             ✅           ✅         ✅
-hr                  ✅          ✅             ❌           ✅         ✅
-medical             ✅          ✅             ❌           ✅         ✅
-finance             ✅          ✅             ❌           ✅         ✅
-general             ✅          ✅             ❌           ✅         ✅
-summary             ✅          ✅             ✅           ✅         ✅
-report              ✅          ✅             ✅           ✅         ✅
-plan                ✅          ✅             ✅           ✅         ✅
-product             ❌          ❌             ❌           ❌         ❌
-creative            ❌          ❌             ❌           ❌         ❌
-lifestyle           ❌          ❌             ❌           ❌         ❌
-other               ❌          ❌             ✅           ❌         ❌
+                    constants  types/ppt  schemas/ppt  lib/ppt/schemas  DB
+business            ✅          ✅         ✅           ✅               text
+education           ✅          ✅         ✅           ✅               text
+technology          ✅          ✅         ✅           ✅               text
+design              ✅          ✅         ❌           ❌               text
+marketing           ✅          ✅         ✅           ✅               text
+hr                  ✅          ✅         ❌           ❌               text
+medical             ✅          ✅         ❌           ❌               text
+finance             ✅          ✅         ❌           ❌               text
+general             ✅          ✅         ❌           ❌               text
+summary             ✅          ✅         ✅           ✅               text
+report              ✅          ✅         ✅           ✅               text
+plan                ✅          ✅         ✅           ✅               text
+other               ❌          ❌         ✅           ✅               text
 ```
+
+**问题**: Zod Schema 枚举与常量不一致（8类 vs 12类，且多了 `other`）
 
 ---
 
 ## 三、数据流链路分析
 
-### 3.1 实际生效的数据链路
+### 3.1 正确链路 (已落地) ✅
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           实际生效的类型系统                                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  src/lib/constants/ppt.ts (PPT_CATEGORIES - 12个分类)                       │
-│         │                                                                   │
-│         ├──→ src/lib/types/ppt/ppt.ts (类型由常量推导)                      │
-│         │                                                                   │
-│         ├──→ src/actions/ppt/ppt.ts (Server Action)                        │
-│         │         │                                                         │
-│         │         └──→ src/app/api/ppts/route.ts (API Route)               │
-│         │                    │                                              │
-│         │                    └──→ 使用 PPT_CATEGORY_VALUES 校验             │
-│         │                                                                   │
-│         ├──→ src/hooks/ppt/*.ts (React Hooks)                              │
-│         │                                                                   │
-│         └──→ src/components/ppt/admin/*.tsx (Admin 组件)                    │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+src/lib/constants/ppt.ts (SSOT - 12类)
+    │
+    ├──→ src/lib/types/ppt/ppt.ts (类型推导)
+    │         │
+    │         ├──→ src/actions/ppt/ppt.ts (Server Action)
+    │         │
+    │         └──→ src/app/api/ppts/route.ts (API 校验)
+    │
+    └──→ src/app/[locale]/(marketing)/ppt/page.tsx (首页分类)
 ```
 
-### 3.2 前端页面的分类来源（完全独立！）
+### 3.2 问题链路 (待清理) ❌
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        前端页面硬编码分类（孤岛）                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  src/app/[locale]/(marketing)/ppt/page.tsx                                 │
-│         └──→ 从常量生成 categories（已引用常量）                            │
-│                                                                             │
-│  src/app/[locale]/(marketing)/ppt/categories/page.tsx                      │
-│         └──→ 从常量生成 categories（已引用常量）                            │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+src/types/ppt.ts (重复)
+    └──→ src/lib/query-keys.ts (唯一引用，需迁移)
 
-### 3.3 死代码（未被使用）
+src/schemas/ppt.ts (重复，8类)
+    └──→ (无引用，直接删除)
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              死代码 / 孤立定义                               │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  ✅ src/lib/constants/ppt.ts                                               │
-│     └──→ 已扩展 12 个分类，API/类型/前端均引用                              │
-│                                                                             │
-│  ❌ src/schemas/ppt.ts                                                     │
-│     └──→ pptCategoryEnum, 所有 schema                                      │
-│     └──→ 0 处引用，与 src/lib/ppt/schemas/ppt.ts 完全重复                   │
-│                                                                             │
-│  ⚠️ src/types/ppt.ts                                                       │
-│     └──→ 与 src/lib/types/ppt/ppt.ts 几乎完全重复                           │
-│     └──→ 仅 1 处引用 (src/lib/query-keys.ts)                               │
-│                                                                             │
-│  ⚠️ src/lib/ppt/schemas/ppt.ts                                             │
-│     └──→ pptCategoryEnum                                                   │
-│     └──→ 仅测试文件引用，生产代码未使用                                      │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+src/lib/ppt/schemas/ppt.ts (8类，不同步)
+    └──→ (仅测试引用，需同步为12类)
 ```
 
 ---
 
-## 四、关键问题诊断
+## 四、关键问题诊断 (2025-12-07 更新)
 
-### 🟢 严重问题 1：前端分类与后端分类已统一来源
+### ✅ 已解决: 分类源统一
+- API/类型/首页/分类页均引用 `src/lib/constants/ppt.ts`
 
-**现象**：
-- `ppt/categories/page.tsx` 中 `handleCategoryClick(category.name)` 传递的是**中文名**（如"商务汇报"）
-- 但 API Route 期望的是**英文 slug**（如 `business`）
-- 路由 `PublicRoutes.Category(categoryName)` 会生成 `/ppt/category/商务汇报` 这样的 URL
+### 🔴 待解决: 重复文件未清理
 
-**影响**：若前端继续硬编码新增 slug 以外的值，API 会忽略，筛选失效。
-
-### 🟢 严重问题 2：首页分类 slug 映射已修复
-
-**现象**（`ppt/page.tsx`）：
-```typescript
-{ name: t('training'), slug: 'education', ... },  // 培训课件 → education
-{ name: t('report'), slug: 'business', ... },     // 述职报告 → business
-{ name: t('plan'), slug: 'marketing', ... },      // 营销方案 → marketing
-```
-
-**影响**：已改正，但仍需改为引用单一配置。
-
-### 🟢 严重问题 3：`src/lib/constants/ppt.ts` 已全局落地
-
-**现象**：
-- 文件已扩展 17 个分类，API/类型已引用
-- 前端仍未使用，未形成单一数据源
-
-### 🟡 中等问题 4：类型定义文件重复
-
-| 文件 | 状态 | 建议 |
+| 文件 | 问题 | 操作 |
 |------|------|------|
-| `src/types/ppt.ts` | 与 `src/lib/types/ppt/ppt.ts` 重复 | 删除，迁移唯一引用 |
-| `src/schemas/ppt.ts` | 与 `src/lib/ppt/schemas/ppt.ts` 重复 | 删除 |
-| `src/lib/constants/ppt.ts` | 未被使用 | 评估后决定保留或删除 |
+| `src/types/ppt.ts` | 与 `src/lib/types/ppt/ppt.ts` 重复 | 迁移引用后删除 |
+| `src/schemas/ppt.ts` | 无引用，8类枚举过时 | 直接删除 |
+| `src/lib/ppt/schemas/ppt.ts` | 8类枚举，与常量不同步 | 同步为12类或删除 |
 
-### 🟡 中等问题 5：Zod Schema 与 TypeScript 类型不同步
+### 🔴 待解决: query-keys 引用旧路径
 
-`src/lib/ppt/schemas/ppt.ts` 中的 `pptCategoryEnum` 包含 `other`，但：
-- `src/lib/types/ppt/ppt.ts` 的 `PPTCategory` 不包含 `other`
-- 数据库 schema 的 `category` 是 `text()` 无约束
+```typescript
+// 当前 (src/lib/query-keys.ts)
+import type { PPTListParams } from '@/types/ppt';
+
+// 应改为
+import type { PPTListParams } from '@/lib/types/ppt/ppt';
+```
 
 ---
 
@@ -171,22 +119,14 @@ other               ❌          ❌             ✅           ❌         ❌
 │                              技术债务根因                                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  1. 缺乏单一数据源 (Single Source of Truth)                                 │
-│     └──→ 分类定义散落在 5+ 个文件中                                         │
-│     └──→ 每个文件独立维护，无同步机制                                        │
-│                                                                             │
-│  2. 前后端开发脱节                                                          │
-│     └──→ 前端页面硬编码分类，未引用共享类型                                  │
-│     └──→ 后端类型系统与前端展示层完全独立                                    │
-│                                                                             │
-│  3. 迁移/重构不彻底                                                         │
+│  1. 迁移/重构不彻底                                                         │
 │     └──→ src/types/ 和 src/lib/types/ 并存                                 │
 │     └──→ src/schemas/ 和 src/lib/ppt/schemas/ 并存                         │
 │     └──→ 旧文件未清理                                                       │
 │                                                                             │
-│  4. 业务需求变更未同步                                                       │
-│     └──→ 中文分类名（年终总结、述职报告）是业务需求                          │
-│     └──→ 但类型系统仍使用旧的英文分类（general, business）                   │
+│  2. Zod Schema 未与常量同步                                                 │
+│     └──→ 常量扩展到 12 类后，Zod 枚举未更新                                 │
+│     └──→ Zod 仍包含 `other`，常量已移除                                     │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -195,66 +135,116 @@ other               ❌          ❌             ✅           ❌         ❌
 
 ## 六、修复建议（优先级排序）
 
-### P0 - 立即修复（阻断性问题）
+### P0 - 立即修复
 
-| # | 问题 | 修复方案 | 影响范围 |
-|---|------|----------|----------|
-| 1 | 分类页面传中文名 | ✅ 已改为 slug，且引用常量 | 1 文件 |
-| 2 | API Route 分类不全 | ✅ 已改为引用 `PPT_CATEGORY_VALUES` | 1 文件 |
-| 3 | 首页 slug 映射错误 | ✅ 已修正 | 1 文件 |
+| # | 问题 | 修复方案 | 文件 |
+|---|------|----------|------|
+| 1 | query-keys 引用旧路径 | 改为 `@/lib/types/ppt/ppt` | `src/lib/query-keys.ts` |
+| 2 | 删除重复类型文件 | 直接删除 | `src/types/ppt.ts` |
+| 3 | 删除重复 Schema 文件 | 直接删除 | `src/schemas/ppt.ts` |
 
-### P1 - 短期清理（技术债务）
+### P1 - 短期清理
 
-| # | 问题 | 修复方案 | 影响范围 |
-|---|------|----------|----------|
-| 4 | 删除 `src/types/ppt.ts` | 迁移 `src/lib/query-keys.ts` 的 import | 2 文件 |
-| 5 | 删除 `src/schemas/ppt.ts` | 直接删除（无引用） | 1 文件 |
-| 6 | 评估 `src/lib/constants/ppt.ts` | ✅ 定为分类来源，前后端均已落地 | 完成 |
+| # | 问题 | 修复方案 | 文件 |
+|---|------|----------|------|
+| 4 | Zod 枚举不同步 | 改为 12 类，移除 `other` | `src/lib/ppt/schemas/ppt.ts` |
 
-### P2 - 长期架构优化
+### P2 - 可选优化
 
 | # | 问题 | 修复方案 |
 |---|------|----------|
-| 7 | 建立单一数据源 | 创建 `src/config/ppt-categories.ts` 作为唯一分类定义 |
-| 8 | 类型自动推导 | 从配置文件推导 TypeScript 类型和 Zod Schema |
-| 9 | 数据库约束 | 考虑使用 PostgreSQL enum 或 check constraint |
+| 5 | 数据库无分类约束 | 可考虑添加 CHECK 约束（非必须） |
 
 ---
 
-## 七、结论
+## 七、文件清理计划
 
-1. 分类常量集中于 `src/lib/constants/ppt.ts`（12 类），API/类型/前端已落地。
-2. 重复类型/Zod 枚举依旧存在，应清理并由常量推导。
-3. 后续顺序：清理重复类型/Schema → 视需求扩展搜索与 DB 约束。
+### 删除文件
+
+```bash
+# 1. 删除重复类型文件
+rm src/types/ppt.ts
+
+# 2. 删除重复 Schema 文件
+rm src/schemas/ppt.ts
+```
+
+### 迁移引用
+
+```typescript
+// src/lib/query-keys.ts
+- import type { PPTListParams } from '@/types/ppt';
++ import type { PPTListParams } from '@/lib/types/ppt/ppt';
+```
+
+### 同步 Zod 枚举
+
+```typescript
+// src/lib/ppt/schemas/ppt.ts
+export const pptCategoryEnum = z.enum([
+  'business',
+  'education',
+  'technology',
+  'design',      // 新增
+  'marketing',
+  'hr',          // 新增
+  'medical',     // 新增
+  'finance',     // 新增
+  'general',     // 新增
+  'summary',
+  'report',
+  'plan',
+  // 移除 'other'
+]);
+```
 
 ---
 
-## 八、附录：文件引用关系图
+## 八、结论
+
+### 当前状态
+
+| 维度 | 状态 | 说明 |
+|------|------|------|
+| 分类常量 | ✅ 已统一 | 12 类，SSOT |
+| API 校验 | ✅ 已落地 | 引用常量 |
+| 类型定义 | ✅ 已落地 | 从常量推导 |
+| 前端引用 | ✅ 已落地 | 首页/分类页 |
+| 重复文件 | ❌ 待清理 | 3 个文件 |
+| Zod 枚举 | ❌ 待同步 | 8类 vs 12类 |
+
+### 清理后的目标架构
 
 ```
-src/lib/types/ppt/ppt.ts (SSOT - 实际生效)
-    ├── src/actions/ppt/ppt.ts
-    ├── src/app/api/ppts/route.ts
-    ├── src/hooks/ppt/use-create-ppt.ts
-    ├── src/hooks/ppt/use-get-ppts.ts
-    ├── src/hooks/ppt/use-update-ppt.ts
-    ├── src/components/ppt/admin/ppt-delete-dialog.tsx
-    ├── src/components/ppt/admin/ppt-list-table.tsx
-    ├── src/components/ppt/admin/ppt-edit-form.tsx
-    ├── src/lib/ppt/api/services/ppt.service.ts
-    ├── src/lib/ppt/query-keys.ts
-    ├── src/lib/ppt/mock-data/ppts.ts
-    └── src/lib/mock-data/ppts.ts
+src/lib/constants/ppt.ts (SSOT - 唯一分类定义)
+    │
+    ├──→ src/lib/types/ppt/ppt.ts (类型推导)
+    │
+    ├──→ src/lib/ppt/schemas/ppt.ts (Zod 从常量推导)
+    │
+    ├──→ src/actions/ppt/ppt.ts
+    │
+    ├──→ src/app/api/ppts/route.ts
+    │
+    └──→ 前端组件
+```
 
-src/types/ppt.ts (重复 - 应删除)
-    └── src/lib/query-keys.ts
+---
 
-src/lib/constants/ppt.ts (分类来源 - API/类型已用，前端未用)
-    └── (前端待接入)
+## 九、附录：文件引用关系图 (清理后)
 
-src/schemas/ppt.ts (重复 - 应删除)
-    └── (无)
+```
+src/lib/constants/ppt.ts (SSOT)
+    ├── src/lib/types/ppt/ppt.ts
+    │       ├── src/actions/ppt/ppt.ts
+    │       ├── src/app/api/ppts/route.ts
+    │       ├── src/hooks/ppt/*.ts
+    │       ├── src/components/ppt/admin/*.tsx
+    │       └── src/lib/query-keys.ts (迁移后)
+    │
+    └── src/lib/ppt/schemas/ppt.ts (同步后)
 
-src/lib/ppt/schemas/ppt.ts (仅测试使用)
-    └── src/lib/ppt/__tests__/compile-correctness.test.ts
+已删除:
+    ├── src/types/ppt.ts ❌
+    └── src/schemas/ppt.ts ❌
 ```

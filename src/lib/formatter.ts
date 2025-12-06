@@ -25,3 +25,18 @@ export function formatDate(date: Date): string {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}/${month}/${day}`;
 }
+
+/**
+ * Format file size for display
+ * @param bytes File size in bytes
+ * @returns Formatted file size string (e.g., "11.8 MB", "500 KB", "未知")
+ */
+export function formatFileSize(bytes: number): string {
+  if (bytes === 0 || bytes == null) return '未知';
+  const mb = bytes / (1024 * 1024);
+  if (mb >= 1) {
+    return `${mb.toFixed(1)} MB`;
+  }
+  const kb = bytes / 1024;
+  return `${Math.round(kb)} KB`;
+}

@@ -19,18 +19,23 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
 import {
   BookOpen,
   Briefcase,
   Calendar,
   ChevronRight,
+  Cpu,
+  DollarSign,
   Download,
   FileText,
   Filter,
   Flame,
   GraduationCap,
+  Heart,
   Home,
+  Palette,
   Presentation,
   Sparkles,
   Star,
@@ -210,24 +215,138 @@ const categoryMetadata: Record<
       '市场推广',
     ],
   },
+  科技互联网: {
+    icon: Cpu,
+    description: '科技互联网主题模板，支持技术方案与产品架构展示',
+    totalTemplates: 3200,
+    totalDownloads: '180k+',
+    avgRating: 4.6,
+    avgPages: '18-30',
+    style: '科技感',
+    useCases: [
+      '技术方案',
+      '产品架构',
+      '路演汇报',
+      '技术分享',
+      '产品发布',
+      '数据报告',
+    ],
+  },
+  设计创意: {
+    icon: Palette,
+    description: '设计创意类模板，突出视觉与创意呈现',
+    totalTemplates: 2100,
+    totalDownloads: '120k+',
+    avgRating: 4.7,
+    avgPages: '15-25',
+    style: '创意视觉',
+    useCases: [
+      '视觉展示',
+      '创意提案',
+      '作品集',
+      '品牌设计',
+      '广告创意',
+      '艺术展示',
+    ],
+  },
+  人力资源: {
+    icon: Users,
+    description: '人力资源类模板，涵盖招聘与培训',
+    totalTemplates: 1800,
+    totalDownloads: '95k+',
+    avgRating: 4.5,
+    avgPages: '15-25',
+    style: '商务简洁',
+    useCases: [
+      '招聘培训',
+      '人事汇报',
+      '团队建设',
+      '绩效考核',
+      '员工手册',
+      '组织架构',
+    ],
+  },
+  医疗健康: {
+    icon: Heart,
+    description: '医疗健康主题模板，适用于医疗报告与健康宣传',
+    totalTemplates: 1400,
+    totalDownloads: '75k+',
+    avgRating: 4.6,
+    avgPages: '15-30',
+    style: '稳重专业',
+    useCases: [
+      '医疗报告',
+      '健康宣传',
+      '科普讲座',
+      '病例分析',
+      '医学研究',
+      '健康管理',
+    ],
+  },
+  金融财务: {
+    icon: DollarSign,
+    description: '金融财务类模板，支持财务分析与投资报告',
+    totalTemplates: 900,
+    totalDownloads: '60k+',
+    avgRating: 4.5,
+    avgPages: '20-30',
+    style: '数据可视化',
+    useCases: [
+      '财务分析',
+      '投资报告',
+      '预算计划',
+      '审计报告',
+      '风险评估',
+      '财务汇报',
+    ],
+  },
+  通用模板: {
+    icon: FileText,
+    description: '通用模板集合，适配多种场景',
+    totalTemplates: 5000,
+    totalDownloads: '250k+',
+    avgRating: 4.5,
+    avgPages: '15-30',
+    style: '通用简洁',
+    useCases: [
+      '通用汇报',
+      '日常展示',
+      '会议记录',
+      '工作安排',
+      '信息传达',
+      '简单演示',
+    ],
+  },
+  工作计划: {
+    icon: Target,
+    description: '工作计划类模板，助力目标规划与执行',
+    totalTemplates: 4500,
+    totalDownloads: '220k+',
+    avgRating: 4.6,
+    avgPages: '15-25',
+    style: '清晰条理',
+    useCases: [
+      '年度计划',
+      '月度计划',
+      '项目计划',
+      'OKR规划',
+      '战略规划',
+      '执行方案',
+    ],
+  },
 };
 
 // Note: generateMetadata moved to layout.tsx or a separate server component
 export default function CategoryPage() {
   const params = useParams<{ name: string }>();
   const slug = decodeURIComponent(params?.name ?? '');
-  const slugToName: Record<string, string> = {
-    business: '商务汇报',
-    education: '教育培训',
-    marketing: '产品营销',
-    creative: '创意设计',
-    technology: '科技互联网',
-    medical: '医疗健康',
-    finance: '金融财务',
-    hr: '人力资源',
-    lifestyle: '生活休闲',
-    general: '通用模板',
-  };
+  // 从 PPT_CATEGORIES 自动生成映射，保证一致性
+  const slugToName = Object.fromEntries(
+    PPT_CATEGORIES.map((cat) => [cat.value, cat.label])
+  );
+  const nameToSlug = Object.fromEntries(
+    PPT_CATEGORIES.map((cat) => [cat.label, cat.value])
+  );
   const categoryName = slugToName[slug] ?? slug;
 
   const router = useRouter();
@@ -244,41 +363,76 @@ export default function CategoryPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // 排序映射
+  const sortByMap: Record<string, string> = {
+    popular: 'downloads',
+    newest: 'created_at',
+    downloads: 'downloads',
+    rating: 'downloads', // 暂无评分字段，用下载量代替
+  };
+
+  // 数据映射函数
+  const mapItems = (items: any[]): PPT[] =>
+    items.map((item: any) => ({
+      id: item.id,
+      title: item.title,
+      category: item.category ?? categoryName,
+      subcategory: item.category ?? categoryName,
+      thumbnail: item.preview_url ?? item.cover_image_url,
+      downloads: item.downloads ?? item.download_count ?? 0,
+      views: item.views ?? item.view_count ?? 0,
+      rating: 4.5,
+      reviewCount: 0,
+      price: undefined,
+      language: item.language ?? '中文',
+      slides: item.slides_count ?? 0,
+      tags: item.tags ?? [],
+      previewUrl: item.preview_url ?? '/placeholder.svg',
+      pages: item.slides_count ?? 0,
+    }));
+
+  const [totalCount, setTotalCount] = useState(0);
+
   useEffect(() => {
     const fetchCategoryPPTs = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(
-          `/api/ppts?category=${encodeURIComponent(slug)}&page=${page}&pageSize=12&sortBy=created_at&sortOrder=desc`
-        );
-        const json = await res.json();
-        if (json.success) {
-          const items: PPT[] = (json.data.items ?? []).map((item: any) => ({
-            id: item.id,
-            title: item.title,
-            category: item.category ?? categoryName,
-            subcategory: item.category ?? categoryName,
-            thumbnail: item.preview_url ?? item.cover_image_url,
-            downloads: item.downloads ?? item.download_count ?? 0,
-            views: item.views ?? item.view_count ?? 0,
-            rating: 4.5,
-            reviewCount: 0,
-            price: undefined,
-            language: item.language ?? '中文',
-            slides: item.slides_count ?? 0,
-            tags: item.tags ?? [],
-            previewUrl: item.preview_url ?? '/placeholder.svg',
-            pages: item.slides_count ?? 0,
-          }));
+        const apiSortBy = sortByMap[sortBy] ?? 'downloads';
 
-          setHotPPTs(items.slice(0, 8));
-          setFeaturedPPTs(items.slice(0, 8));
-          setNewPPTs(items.slice(0, 8));
-          setAllPPTs(items);
-          setTotalPages(
-            Math.max(1, Math.ceil((json.data.total ?? items.length) / 12))
-          );
-        } else {
+        // 并行请求：热门、最新、全部
+        const [hotRes, newRes, allRes] = await Promise.all([
+          fetch(
+            `/api/ppts?category=${encodeURIComponent(slug)}&pageSize=8&sortBy=downloads&sortOrder=desc`
+          ),
+          fetch(
+            `/api/ppts?category=${encodeURIComponent(slug)}&pageSize=8&sortBy=created_at&sortOrder=desc`
+          ),
+          fetch(
+            `/api/ppts?category=${encodeURIComponent(slug)}&page=${page}&pageSize=12&sortBy=${apiSortBy}&sortOrder=desc`
+          ),
+        ]);
+
+        const [hotJson, newJson, allJson] = await Promise.all([
+          hotRes.json(),
+          newRes.json(),
+          allRes.json(),
+        ]);
+
+        if (hotJson.success) {
+          setHotPPTs(mapItems(hotJson.data.items ?? []));
+          setFeaturedPPTs(mapItems(hotJson.data.items ?? [])); // 精选暂用热门
+        }
+        if (newJson.success) {
+          setNewPPTs(mapItems(newJson.data.items ?? []));
+        }
+        if (allJson.success) {
+          setAllPPTs(mapItems(allJson.data.items ?? []));
+          const total = allJson.data.total ?? 0;
+          setTotalCount(total);
+          setTotalPages(Math.max(1, Math.ceil(total / 12)));
+        }
+
+        if (!hotJson.success && !newJson.success && !allJson.success) {
           toast.error('加载分类数据失败');
         }
       } catch (error) {
@@ -290,10 +444,10 @@ export default function CategoryPage() {
     };
 
     fetchCategoryPPTs();
-  }, [categoryName, slug, sortBy, page]);
+  }, [slug, sortBy, page]);
 
   const handleDownload = (ppt: PPT) => {
-    alert(`准备下载《${ppt.title}》...`);
+    router.push(`/ppt/${ppt.id}`);
   };
 
   if (!categoryName) {
@@ -309,12 +463,40 @@ export default function CategoryPage() {
     );
   }
 
+  // 空状态：分类无数据时显示友好提示
+  if (!isLoading && allPPTs.length === 0) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center max-w-md mx-auto">
+            <div className="mb-6">
+              <FileText className="h-16 w-16 mx-auto text-muted-foreground/50" />
+            </div>
+            <h1 className="text-2xl font-bold mb-4">该分类暂无内容</h1>
+            <p className="text-muted-foreground mb-8">
+              「{categoryName}」分类的模板正在准备中，敬请期待！
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button onClick={() => router.push(PublicRoutes.Home)}>
+                <Home className="h-4 w-4 mr-2" />
+                返回首页
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => router.push(PublicRoutes.Categories)}
+              >
+                浏览其他分类
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <link
-        rel="canonical"
-        href={`https://ppt-ai.com/category/${encodeURIComponent(categoryName)}`}
-      />
+      <link rel="canonical" href={`https://ppt-ai.com/ppt/category/${slug}`} />
 
       <script
         type="application/ld+json"
@@ -604,7 +786,7 @@ export default function CategoryPage() {
               <p className="text-muted-foreground">
                 共找到{' '}
                 <span className="font-semibold text-foreground">
-                  {allPPTs.length * totalPages}
+                  {totalCount}
                 </span>{' '}
                 个模板
               </p>
@@ -924,11 +1106,14 @@ export default function CategoryPage() {
               .slice(0, 4)
               .map(([name, meta]) => {
                 const Icon = meta.icon;
+                const categorySlug = nameToSlug[name] ?? name;
                 return (
                   <Card
                     key={name}
                     className="cursor-pointer hover:shadow-md hover:border-primary transition-all"
-                    onClick={() => router.push(PublicRoutes.Category(name))}
+                    onClick={() =>
+                      router.push(PublicRoutes.Category(categorySlug))
+                    }
                   >
                     <CardContent className="p-6 text-center">
                       <Icon className="h-8 w-8 mx-auto mb-3 text-primary" />

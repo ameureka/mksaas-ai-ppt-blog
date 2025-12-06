@@ -8,7 +8,7 @@ export const mockPPTs: PPT[] = [
     author: '张三',
     description: '专业的年度商务汇报模板，适用于企业年终总结、季度汇报等场景',
     slides_count: 25,
-    file_size: '5.2 MB',
+    file_size: 5452595, // 5.2 MB
     file_url: 'https://example.com/files/ppt_001.pptx',
     downloads: 1234,
     views: 5678,
@@ -23,7 +23,7 @@ export const mockPPTs: PPT[] = [
     author: '李四',
     description: '新产品发布会专用PPT，包含产品介绍、功能展示、市场分析等内容',
     slides_count: 32,
-    file_size: '8.7 MB',
+    file_size: 9122611, // 8.7 MB
     file_url: 'https://example.com/files/ppt_002.pptx',
     downloads: 987,
     views: 3456,
@@ -38,7 +38,7 @@ export const mockPPTs: PPT[] = [
     author: '王五',
     description: '适用于企业培训、学校教学的通用课件模板',
     slides_count: 18,
-    file_size: '3.4 MB',
+    file_size: 3565158, // 3.4 MB
     file_url: 'https://example.com/files/ppt_003.pptx',
     downloads: 2345,
     views: 7890,
@@ -53,7 +53,7 @@ export const mockPPTs: PPT[] = [
     author: '赵六',
     description: '全面的市场营销策划方案模板，包含市场分析、策略制定、执行计划',
     slides_count: 28,
-    file_size: '6.8 MB',
+    file_size: 7130317, // 6.8 MB
     file_url: 'https://example.com/files/ppt_004.pptx',
     downloads: 1567,
     views: 4523,
@@ -68,7 +68,7 @@ export const mockPPTs: PPT[] = [
     author: '孙七',
     description: '项目管理专用PPT，清晰展示项目进度、里程碑、风险管理',
     slides_count: 22,
-    file_size: '4.6 MB',
+    file_size: 4823449, // 4.6 MB
     file_url: 'https://example.com/files/ppt_005.pptx',
     downloads: 876,
     views: 2341,
@@ -83,7 +83,7 @@ export const mockPPTs: PPT[] = [
     author: '周八',
     description: '团队建设活动策划方案，包含活动安排、预算规划、效果评估',
     slides_count: 16,
-    file_size: '2.9 MB',
+    file_size: 3040870, // 2.9 MB
     file_url: 'https://example.com/files/ppt_006.pptx',
     downloads: 654,
     views: 1890,
@@ -98,7 +98,7 @@ export const mockPPTs: PPT[] = [
     author: '吴九',
     description: '专业的财务分析报告模板，包含财务指标、趋势分析、预测建议',
     slides_count: 30,
-    file_size: '7.3 MB',
+    file_size: 7654932, // 7.3 MB
     file_url: 'https://example.com/files/ppt_007.pptx',
     downloads: 2109,
     views: 6234,
@@ -113,7 +113,7 @@ export const mockPPTs: PPT[] = [
     author: '郑十',
     description: '新员工入职培训完整课件，包含公司介绍、制度讲解、岗位培训',
     slides_count: 35,
-    file_size: '9.1 MB',
+    file_size: 9542041, // 9.1 MB
     file_url: 'https://example.com/files/ppt_008.pptx',
     downloads: 1432,
     views: 4567,

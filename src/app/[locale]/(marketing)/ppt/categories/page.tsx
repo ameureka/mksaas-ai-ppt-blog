@@ -66,7 +66,7 @@ const categoryMeta: Record<
   technology: {
     count: 3200,
     icon: Cpu,
-    preview: '/placeholder.svg',
+    preview: '/ppt/category-technology.png',
     description: '科技互联网主题模板，支持技术方案与产品架构展示',
     useCases: ['技术方案', '产品架构', '路演汇报'],
     avgPages: '18-30页',
@@ -76,7 +76,7 @@ const categoryMeta: Record<
   design: {
     count: 2100,
     icon: Palette,
-    preview: '/placeholder.svg',
+    preview: '/ppt/category-design.png',
     description: '设计创意类模板，突出视觉与创意呈现',
     useCases: ['视觉展示', '创意提案', '作品集'],
     avgPages: '15-25页',
@@ -96,7 +96,7 @@ const categoryMeta: Record<
   hr: {
     count: 1800,
     icon: Users,
-    preview: '/placeholder.svg',
+    preview: '/ppt/category-hr.png',
     description: '人力资源类模板，涵盖招聘与培训',
     useCases: ['招聘培训', '人事汇报', '团队建设'],
     avgPages: '15-25页',
@@ -106,7 +106,7 @@ const categoryMeta: Record<
   medical: {
     count: 1400,
     icon: Heart,
-    preview: '/placeholder.svg',
+    preview: '/ppt/category-medical.png',
     description: '医疗健康主题模板，适用于医疗报告与健康宣传',
     useCases: ['医疗报告', '健康宣传', '科普讲座'],
     avgPages: '15-30页',
@@ -116,7 +116,7 @@ const categoryMeta: Record<
   finance: {
     count: 900,
     icon: DollarSign,
-    preview: '/placeholder.svg',
+    preview: '/ppt/category-finance.png',
     description: '金融财务类模板，支持财务分析与投资报告',
     useCases: ['财务分析', '投资报告', '预算计划'],
     avgPages: '20-30页',
@@ -155,8 +155,8 @@ const categoryMeta: Record<
   },
   plan: {
     count: 5678,
-    icon: Users,
-    preview: '/ppt/marketing-plan.png',
+    icon: Target,
+    preview: '/ppt/category-plan.png',
     description: '创意营销/计划方案，打动客户',
     useCases: ['活动策划', '推广方案', '市场分析', '渠道策略'],
     avgPages: '20-30页',
@@ -201,7 +201,7 @@ export default function CategoriesPage() {
             '@type': 'CollectionPage',
             name: 'PPT模板分类总览',
             description:
-              '浏览所有PPT模板分类，包括商务汇报、教育培训、产品营销等8大类别，超过70000+精选模板',
+              '浏览所有PPT模板分类，包括商务汇报、教育培训、产品营销等12大类别，超过70000+精选模板',
             url: 'https://ppt-ai.com/categories',
             breadcrumb: {
               '@type': 'BreadcrumbList',

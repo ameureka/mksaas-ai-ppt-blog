@@ -24,6 +24,7 @@ import {
   eq,
   gte,
   ilike,
+  isNull,
   lte,
   or,
   sql,
@@ -42,10 +43,12 @@ const normalizePagination = (page?: number, pageSize?: number) => {
 };
 
 const buildWhere = (params?: PPTListParams) => {
-  if (!params) return undefined;
   const conditions = [];
 
-  if (params.search?.trim()) {
+  // 始终过滤软删除记录
+  conditions.push(isNull(pptTable.deletedAt));
+
+  if (params?.search?.trim()) {
     const keyword = `%${params.search.trim()}%`;
     conditions.push(
       or(
@@ -56,29 +59,28 @@ const buildWhere = (params?: PPTListParams) => {
     );
   }
 
-  if (params.category) {
+  if (params?.category) {
     conditions.push(eq(pptTable.category, params.category));
   }
 
-  if (params.status) {
+  if (params?.status) {
     conditions.push(eq(pptTable.status, params.status));
   }
 
-  if (params.dateFrom) {
+  if (params?.dateFrom) {
     const from = new Date(params.dateFrom);
     if (!Number.isNaN(from.getTime())) {
       conditions.push(gte(pptTable.createdAt, from));
     }
   }
 
-  if (params.dateTo) {
+  if (params?.dateTo) {
     const to = new Date(params.dateTo);
     if (!Number.isNaN(to.getTime())) {
       conditions.push(lte(pptTable.createdAt, to));
     }
   }
 
-  if (conditions.length === 0) return undefined;
   return and(...conditions);
 };
 
@@ -86,11 +88,19 @@ const resolveOrder = (sortBy?: string, sortOrder?: 'asc' | 'desc') => {
   const direction = sortOrder === 'asc' ? asc : desc;
   switch (sortBy) {
     case 'downloads':
-      return direction(pptTable.downloadCount);
+      // 多级排序：下载量 → 浏览量 → ID
+      return [
+        direction(pptTable.downloadCount),
+        direction(pptTable.viewCount),
+        desc(pptTable.id),
+      ];
+    case 'created_at':
+      // 多级排序：创建时间 → ID
+      return [direction(pptTable.createdAt), desc(pptTable.id)];
     case 'title':
-      return direction(pptTable.title);
+      return [direction(pptTable.title), desc(pptTable.id)];
     default:
-      return direction(pptTable.createdAt);
+      return [direction(pptTable.createdAt), desc(pptTable.id)];
   }
 };
 
@@ -99,11 +109,12 @@ const toPPTDto = (row: typeof pptTable.$inferSelect): PPT => ({
   title: row.title,
   category: (row.category ?? 'general') as PPT['category'],
   author: row.author ?? 'Unknown',
-  description: row.title ?? '',
+  description: row.description ?? row.title ?? '',
   tags: row.tags ?? [],
   language: row.language ?? '',
   slides_count: row.slidesCount ?? 0,
-  file_size: '未知',
+  file_size: row.fileSize ?? 0,
+  file_format: row.fileFormat ?? 'pptx',
   file_url: row.fileUrl,
   preview_url: row.thumbnailUrl ?? row.coverImageUrl ?? undefined,
   downloads: row.downloadCount ?? 0,
@@ -136,7 +147,7 @@ export async function getPPTs(
       .select()
       .from(pptTable)
       .where(where)
-      .orderBy(orderBy)
+      .orderBy(...orderBy)
       .limit(pageSize)
       .offset((page - 1) * pageSize);
 
@@ -155,7 +166,7 @@ export async function getPPTById(id: string): Promise<ServerActionResult<PPT>> {
     const [row] = await db
       .select()
       .from(pptTable)
-      .where(eq(pptTable.id, id))
+      .where(and(eq(pptTable.id, id), isNull(pptTable.deletedAt)))
       .limit(1);
     if (!row) {
       return errorResult('PPT not found', 'NOT_FOUND');
