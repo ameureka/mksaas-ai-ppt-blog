@@ -28,6 +28,15 @@ export const websiteConfig: WebsiteConfig = {
       discord: 'https://mksaas.link/discord',
       youtube: 'https://mksaas.link/youtube',
     },
+    partners: [
+      {
+        name: 'Microsoft PowerPoint',
+        url: 'https://www.microsoft.com/powerpoint',
+      },
+      { name: 'Canva', url: 'https://www.canva.com' },
+      { name: 'Figma', url: 'https://www.figma.com' },
+      { name: 'Google Slides', url: 'https://www.google.com/slides' },
+    ],
   },
   features: {
     enableUpgradeCard: false,
@@ -77,7 +86,7 @@ export const websiteConfig: WebsiteConfig = {
   mail: {
     provider: 'resend',
     fromEmail: 'PPTHub Team <blog@ppthub.shop>',
-    supportEmail: 'PPTHub Team <blog@ppthub.shop>',
+    supportEmail: 'blog@ppthub.shop',
   },
   newsletter: {
     enable: true,

@@ -3,6 +3,7 @@
 import Container from '@/components/layout/container';
 import { Logo } from '@/components/layout/logo';
 import { useSocialLinks } from '@/config/social-config';
+import { websiteConfig } from '@/config/website';
 import { LocaleLink } from '@/i18n/navigation';
 import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { cn } from '@/lib/utils';
@@ -147,7 +148,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               </li>
               <li>
                 <a
-                  href="mailto:support@ppthub.shop"
+                  href={`mailto:${websiteConfig.mail.supportEmail}`}
                   className="text-muted-foreground hover:text-primary transition-colors py-1 block md:inline"
                 >
                   {t('support.email')}
@@ -206,38 +207,17 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             {t('partners.title')}
           </h4>
           <div className="flex flex-wrap gap-4 text-sm md:text-xs text-muted-foreground">
-            <a
-              href="https://www.microsoft.com/powerpoint"
-              target="_blank"
-              rel="noreferrer nofollow noopener"
-              className="hover:text-primary transition-colors"
-            >
-              Microsoft PowerPoint
-            </a>
-            <a
-              href="https://www.canva.com"
-              target="_blank"
-              rel="noreferrer nofollow noopener"
-              className="hover:text-primary transition-colors"
-            >
-              Canva
-            </a>
-            <a
-              href="https://www.figma.com"
-              target="_blank"
-              rel="noreferrer nofollow noopener"
-              className="hover:text-primary transition-colors"
-            >
-              Figma
-            </a>
-            <a
-              href="https://www.google.com/slides"
-              target="_blank"
-              rel="noreferrer nofollow noopener"
-              className="hover:text-primary transition-colors"
-            >
-              Google Slides
-            </a>
+            {websiteConfig.metadata.partners?.map((partner) => (
+              <a
+                key={partner.name}
+                href={partner.url}
+                target="_blank"
+                rel="noreferrer nofollow noopener"
+                className="hover:text-primary transition-colors"
+              >
+                {partner.name}
+              </a>
+            ))}
           </div>
         </div>
 

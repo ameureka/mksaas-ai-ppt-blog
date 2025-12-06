@@ -37,6 +37,12 @@ export interface UiConfig {
 export interface MetadataConfig {
   images?: ImagesConfig;
   social?: SocialConfig;
+  partners?: PartnerConfig[];
+}
+
+export interface PartnerConfig {
+  name: string;
+  url: string;
 }
 
 export interface ModeConfig {
