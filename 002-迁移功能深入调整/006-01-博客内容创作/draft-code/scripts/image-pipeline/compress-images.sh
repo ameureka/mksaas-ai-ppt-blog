@@ -5,7 +5,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-INPUT_DIR="$SCRIPT_DIR/../../generated-images"
+INPUT_DIR="${1:-$SCRIPT_DIR/../../generated-images}"
 OUTPUT_DIR="$SCRIPT_DIR/../../compressed"
 
 # 颜色输出
@@ -80,7 +80,8 @@ process_images() {
   local total_after=0
 
   # 处理封面（JPG）
-  for img in "$INPUT_DIR"/*-cover.{jpg,jpeg,JPG,JPEG} 2>/dev/null; do
+  shopt -s nullglob
+  for img in "$INPUT_DIR"/*-cover.{jpg,jpeg,JPG,JPEG}; do
     [ -f "$img" ] || continue
 
     local filename=$(basename "$img")
@@ -101,7 +102,7 @@ process_images() {
   done
 
   # 处理内页（PNG）
-  for img in "$INPUT_DIR"/*.png "$INPUT_DIR"/*.PNG 2>/dev/null; do
+  for img in "$INPUT_DIR"/*.png "$INPUT_DIR"/*.PNG; do
     [ -f "$img" ] || continue
     [[ "$img" == *"-cover"* ]] && continue
 
