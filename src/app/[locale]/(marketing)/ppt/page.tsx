@@ -171,20 +171,24 @@ export default function SearchHomePage() {
   const categories = useMemo(
     () =>
       PPT_CATEGORIES.map((cat) => {
-        const meta = categoryMeta[cat.value] ?? {
+        const categoryValue = cat.value as string;
+        const meta = categoryMeta[
+          categoryValue as keyof typeof categoryMeta
+        ] ?? {
           count: 0,
           icon: FileText,
           preview: '/placeholder.svg',
         };
         return {
-          name: cat.label ?? t(cat.value as any) ?? cat.value,
-          slug: cat.value,
+          name: cat.label ?? t(categoryValue as any) ?? categoryValue,
+          slug: categoryValue,
           count: meta.count,
           icon: meta.icon,
           preview: meta.preview,
         };
       }),
-    [categoryMeta, t]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t]
   );
 
   const transform = (items: any[]): PPT[] =>

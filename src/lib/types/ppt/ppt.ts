@@ -1,4 +1,5 @@
 import type { PPTCategory } from '@/lib/constants/ppt';
+export type { PPTCategory } from '@/lib/constants/ppt';
 import type { ListParams, ListResult } from './server-action';
 
 export type PPTStatus = 'draft' | 'published' | 'archived';

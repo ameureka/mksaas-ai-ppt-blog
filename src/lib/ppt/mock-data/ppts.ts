@@ -19,7 +19,7 @@ export const mockPPTs: PPT[] = [
   {
     id: 'ppt_002',
     title: '产品发布会演示文稿',
-    category: 'product',
+    category: 'marketing',
     author: '李四',
     description: '新产品发布会专用PPT，包含产品介绍、功能展示、市场分析等内容',
     slides_count: 32,
@@ -126,8 +126,9 @@ export const mockPPTs: PPT[] = [
 export const categoryOptions = [
   { value: 'all', label: '全部分类' },
   { value: 'business', label: '商务汇报' },
-  { value: 'product', label: '产品介绍' },
   { value: 'education', label: '教育培训' },
-  { value: 'marketing', label: '市场营销' },
+  { value: 'technology', label: '科技互联网' },
+  { value: 'design', label: '设计创意' },
+  { value: 'marketing', label: '产品营销' },
   { value: 'general', label: '通用模板' },
 ];

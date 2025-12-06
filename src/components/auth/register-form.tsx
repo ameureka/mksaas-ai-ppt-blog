@@ -162,7 +162,7 @@ export const RegisterForm = ({
           const message =
             ctx.error?.message ||
             ctx.error?.statusText ||
-            ctx.error?.cause?.message ||
+            (ctx.error?.cause as { message?: string })?.message ||
             (typeof ctx.error === 'string' ? ctx.error : '') ||
             '注册失败，请稍后重试';
           setError(`${ctx.error?.status ?? 500}: ${message}`);

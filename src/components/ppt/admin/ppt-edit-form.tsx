@@ -38,16 +38,17 @@ const pptEditSchema = z.object({
     .max(255, ADMIN_I18N.validation.titleMax),
   category: z.enum([
     'business',
-    'product',
     'education',
     'technology',
-    'creative',
+    'design',
     'marketing',
+    'hr',
     'medical',
     'finance',
-    'hr',
-    'lifestyle',
     'general',
+    'summary',
+    'report',
+    'plan',
   ] as const),
   author: z.string().max(100, ADMIN_I18N.validation.authorMax).optional(),
   description: z.string().max(1000, ADMIN_I18N.validation.descMax).optional(),
@@ -55,18 +56,19 @@ const pptEditSchema = z.object({
 
 type PPTEditFormValues = z.infer<typeof pptEditSchema>;
 
-const categoryLabels: Record<PPTCategory, string> = {
+const categoryLabels: Record<string, string> = {
   business: ADMIN_I18N.categories.business,
-  product: ADMIN_I18N.categories.product,
   education: ADMIN_I18N.categories.education,
   technology: ADMIN_I18N.categories.technology,
-  creative: ADMIN_I18N.categories.creative,
+  design: '设计创意',
   marketing: ADMIN_I18N.categories.marketing,
+  hr: ADMIN_I18N.categories.hr,
   medical: ADMIN_I18N.categories.medical,
   finance: ADMIN_I18N.categories.finance,
-  hr: ADMIN_I18N.categories.hr,
-  lifestyle: ADMIN_I18N.categories.lifestyle,
   general: ADMIN_I18N.categories.general,
+  summary: '年终总结',
+  report: '述职报告',
+  plan: '工作计划',
 };
 
 interface PPTEditFormProps {
