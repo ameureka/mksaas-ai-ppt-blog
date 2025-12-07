@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PPT_CATEGORIES } from '@/lib/constants/ppt';
+import { categoryMeta } from '@/lib/constants/ppt-category-meta';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
 import {
   BookOpen,

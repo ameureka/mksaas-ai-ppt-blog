@@ -9,6 +9,7 @@ import {
   CircleUserRoundIcon,
   CoinsIcon,
   CreditCardIcon,
+  FlameIcon,
   LayoutDashboardIcon,
   ListIcon,
   LockKeyholeIcon,
@@ -64,6 +65,12 @@ export function useSidebarLinks(): NestedMenuItem[] {
           title: t('admin.pptList.title'),
           icon: <ListIcon className="size-4 shrink-0" />,
           href: Routes.AdminPPTList,
+          external: false,
+        },
+        {
+          title: t('admin.hotKeywords.title'),
+          icon: <FlameIcon className="size-4 shrink-0" />,
+          href: Routes.AdminHotKeywords,
           external: false,
         },
         {

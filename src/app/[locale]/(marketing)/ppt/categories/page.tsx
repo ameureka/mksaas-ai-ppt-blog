@@ -10,160 +10,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { PPT_CATEGORIES } from '@/lib/constants/ppt';
+import { CATEGORY_META } from '@/lib/constants/ppt-category-meta';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
-import {
-  ArrowLeft,
-  Briefcase,
-  Calendar,
-  ChevronRight,
-  Cpu,
-  DollarSign,
-  FileText,
-  GraduationCap,
-  Heart,
-  Home,
-  Palette,
-  Presentation,
-  Target,
-  TrendingUp,
-  Users,
-} from 'lucide-react';
+import { ArrowLeft, ChevronRight, FileText, Home } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-const categoryMeta: Record<
-  string,
-  {
-    count: number;
-    icon: any;
-    preview: string;
-    description: string;
-    useCases: string[];
-    avgPages: string;
-    style: string;
-    difficulty: string;
-  }
-> = {
-  business: {
-    count: 12345,
-    icon: Briefcase,
-    preview: '/ppt/business-presentation.png',
-    description: '专业的商务汇报模板，助力工作展示',
-    useCases: ['企业年度总结', '季度业绩展示', '部门工作汇报', '客户提案演示'],
-    avgPages: '20-30页',
-    style: '简约专业',
-    difficulty: '中等',
-  },
-  education: {
-    count: 8234,
-    icon: GraduationCap,
-    preview: '/ppt/education-training.png',
-    description: '丰富的教育培训课件，提升教学质量',
-    useCases: ['课程讲解', '知识分享', '培训教材', '学术答辩'],
-    avgPages: '15-25页',
-    style: '清新活泼',
-    difficulty: '简单',
-  },
-  technology: {
-    count: 3200,
-    icon: Cpu,
-    preview: '/ppt/category-technology.png',
-    description: '科技互联网主题模板，支持技术方案与产品架构展示',
-    useCases: ['技术方案', '产品架构', '路演汇报'],
-    avgPages: '18-30页',
-    style: '科技感',
-    difficulty: '中等',
-  },
-  design: {
-    count: 2100,
-    icon: Palette,
-    preview: '/ppt/category-design.png',
-    description: '设计创意类模板，突出视觉与创意呈现',
-    useCases: ['视觉展示', '创意提案', '作品集'],
-    avgPages: '15-25页',
-    style: '创意视觉',
-    difficulty: '中等',
-  },
-  marketing: {
-    count: 6789,
-    icon: TrendingUp,
-    preview: '/ppt/product-marketing.jpg',
-    description: '精美的营销模板，助力产品推广',
-    useCases: ['新品发布', '营销方案', '品牌宣传', '产品介绍'],
-    avgPages: '15-20页',
-    style: '时尚创意',
-    difficulty: '中等',
-  },
-  hr: {
-    count: 1800,
-    icon: Users,
-    preview: '/ppt/category-hr.png',
-    description: '人力资源类模板，涵盖招聘与培训',
-    useCases: ['招聘培训', '人事汇报', '团队建设'],
-    avgPages: '15-25页',
-    style: '商务简洁',
-    difficulty: '中等',
-  },
-  medical: {
-    count: 1400,
-    icon: Heart,
-    preview: '/ppt/category-medical.png',
-    description: '医疗健康主题模板，适用于医疗报告与健康宣传',
-    useCases: ['医疗报告', '健康宣传', '科普讲座'],
-    avgPages: '15-30页',
-    style: '稳重专业',
-    difficulty: '中等',
-  },
-  finance: {
-    count: 900,
-    icon: DollarSign,
-    preview: '/ppt/category-finance.png',
-    description: '金融财务类模板，支持财务分析与投资报告',
-    useCases: ['财务分析', '投资报告', '预算计划'],
-    avgPages: '20-30页',
-    style: '数据可视化',
-    difficulty: '中等',
-  },
-  general: {
-    count: 15678,
-    icon: Calendar,
-    preview: '/ppt/year-end-summary.jpg',
-    description: '通用模板集合，适配多种场景',
-    useCases: ['通用汇报', '日常展示'],
-    avgPages: '15-30页',
-    style: '通用简洁',
-    difficulty: '中等',
-  },
-  summary: {
-    count: 15678,
-    icon: Calendar,
-    preview: '/ppt/year-end-summary.jpg',
-    description: '年终总结必备，展现工作成果',
-    useCases: ['年度工作总结', '个人述职', '部门总结', '项目回顾'],
-    avgPages: '25-40页',
-    style: '正式庄重',
-    difficulty: '复杂',
-  },
-  report: {
-    count: 11234,
-    icon: Presentation,
-    preview: '/ppt/job-report.jpg',
-    description: '述职报告专用，展现个人价值',
-    useCases: ['晋升述职', '转正汇报', '年度述职', '工作总结'],
-    avgPages: '15-25页',
-    style: '专业稳重',
-    difficulty: '中等',
-  },
-  plan: {
-    count: 5678,
-    icon: Target,
-    preview: '/ppt/category-plan.png',
-    description: '创意营销/计划方案，打动客户',
-    useCases: ['活动策划', '推广方案', '市场分析', '渠道策略'],
-    avgPages: '20-30页',
-    style: '创意丰富',
-    difficulty: '中等',
-  },
-};
 
 export default function CategoriesPage() {
   const router = useRouter();
@@ -174,7 +24,7 @@ export default function CategoriesPage() {
   };
 
   const categories = PPT_CATEGORIES.map((cat) => {
-    const meta = categoryMeta[cat.value] ?? {
+    const meta = CATEGORY_META[cat.value] ?? {
       count: 0,
       icon: FileText,
       preview: '/placeholder.svg',

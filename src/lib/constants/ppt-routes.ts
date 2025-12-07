@@ -22,6 +22,7 @@ export const AdminRoutes = {
   PPTs: '/admin/ppt/list',
   PPTEdit: (id: string) => `/admin/ppt/list/${id}/edit`,
   PPTCreate: '/admin/ppt/list/create',
+  HotKeywords: '/admin/hot-keywords',
   Users: '/admin/users', // 原来是 "/admin/ppt/users"
   Stats: '/admin/stats', // 原来是 "/admin/ppt/stats"
   Settings: '/admin/settings', // 原来是 "/admin/ppt/settings"

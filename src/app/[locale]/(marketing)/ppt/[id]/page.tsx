@@ -24,12 +24,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
+import { getCategoryLabel, getCategoryMeta } from '@/lib/constants/ppt-category-meta';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
+import { formatFileSize } from '@/lib/formatter';
 import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
-  Clock,
   Download,
   FileText,
   Heart,
@@ -51,10 +52,11 @@ interface PPTDetail {
   description: string;
   tags: string[];
   category: string;
+  categoryLabel: string;
   subcategory: string;
   downloads: number;
   views: number;
-  rating: number;
+  rating: number | null;
   reviewCount: number;
   language: string;
   pages: number;
@@ -67,7 +69,7 @@ interface PPTDetail {
   updatedAt: string;
   isFeatured: boolean;
   isFirstDownloadFree: boolean;
-  price?: number;
+  price: number;
 }
 
 interface Review {
@@ -83,6 +85,19 @@ interface Review {
 }
 
 export default function PPTDetailPage() {
+  const DEFAULT_USE_CASES = [
+    '工作汇报',
+    '项目总结',
+    '方案提案',
+    '年度计划',
+  ];
+  const DEFAULT_FEATURES = [
+    '全矢量可编辑',
+    '统一配色与字体',
+    '含基础图表占位符',
+    '16:9 标准比例',
+  ];
+
   const params = useParams();
   const router = useRouter();
   const { data: session } = authClient.useSession();
@@ -115,36 +130,96 @@ export default function PPTDetailPage() {
         const json = await res.json();
         if (json.success) {
           const data = json.data;
+          const category = data.category ?? 'general';
+          const categoryMeta = getCategoryMeta(category);
+          const previewUrls =
+            data.preview_urls ??
+            (data.preview_url ? [data.preview_url] : ['/placeholder.svg']);
+          const totalSlides = Math.max(
+            1,
+            data.slides_count ?? 0,
+            previewUrls.length
+          );
           const detail: PPTDetail = {
             id: data.id,
             title: data.title,
-            description: data.description || '暂无简介',
+            description:
+              data.description?.trim() ||
+              categoryMeta.description ||
+              '暂无简介',
             tags: data.tags ?? [],
-            category: data.category ?? '其他',
-            subcategory: data.category ?? '其他',
+            category,
+            categoryLabel: getCategoryLabel(category),
+            subcategory: category,
             downloads: data.downloads ?? 0,
             views: data.views ?? 0,
-            rating: 4.5,
+            rating: null,
             reviewCount: 0,
             language: data.language ?? '中文',
-            pages: data.slides_count ?? 0,
-            fileSize: data.file_size || '未知',
+            pages: totalSlides,
+            fileSize: formatFileSize(data.file_size ?? 0),
             format: 'PPTX',
             aspectRatio: '16:9',
-            previewUrls:
-              data.preview_url && data.slides_count
-                ? Array(Math.max(1, data.slides_count)).fill(data.preview_url)
-                : [data.preview_url || '/placeholder.svg'],
+            previewUrls,
             author: data.author || '未知',
             uploadedAt: data.created_at || '',
             updatedAt: data.updated_at || '',
             isFeatured: false,
             isFirstDownloadFree: true,
-            price: undefined,
+            price: data.price ?? 5,
           };
           setPpt(detail);
-          setRecommendations([]);
           setReviews([]);
+
+          // 记录浏览量 (静默处理错误)
+          fetch(`/api/ppts/${params.id}/view`, { method: 'POST' }).catch(
+            () => {}
+          );
+
+          // 获取推荐模板
+          try {
+            const recRes = await fetch(
+              `/api/ppts?category=${encodeURIComponent(category)}&status=published&pageSize=4&sortBy=downloads&sortOrder=desc`
+            );
+            const recJson = await recRes.json();
+            if (recJson.success && recJson.data.items) {
+              // 排除当前 PPT
+              const recs = recJson.data.items
+                .filter((item: any) => item.id !== data.id)
+                .slice(0, 4)
+                .map((item: any) => ({
+                  id: item.id,
+                  title: item.title,
+                  description: item.description || '暂无简介',
+                  tags: item.tags ?? [],
+                  category: item.category ?? 'general',
+                  categoryLabel: getCategoryLabel(item.category ?? 'general'),
+                  subcategory: item.category ?? 'general',
+                  downloads: item.downloads ?? 0,
+                  views: item.views ?? 0,
+                  rating: null,
+                  reviewCount: 0,
+                  language: item.language ?? '中文',
+                  pages: item.slides_count ?? 0,
+                  fileSize: formatFileSize(item.file_size ?? 0),
+                  format: 'PPTX',
+                  aspectRatio: '16:9',
+                  previewUrls: [item.preview_url || '/placeholder.svg'],
+                  author: item.author || '未知',
+                  uploadedAt: item.created_at || '',
+                  updatedAt: item.updated_at || '',
+                  isFeatured: false,
+                  isFirstDownloadFree: true,
+                  price: item.price ?? 5,
+                }));
+              setRecommendations(recs);
+            } else {
+              setRecommendations([]);
+            }
+          } catch (error) {
+            console.error('Failed to fetch recommendations', error);
+            setRecommendations([]);
+          }
         } else {
           setPpt(null);
           toast.error('未找到该模板');
@@ -259,6 +334,25 @@ export default function PPTDetailPage() {
 
   if (!ppt) return null;
 
+  const categoryMeta = getCategoryMeta(ppt.category);
+  const useCases =
+    categoryMeta.useCases && categoryMeta.useCases.length > 0
+      ? categoryMeta.useCases
+      : DEFAULT_USE_CASES;
+  const features =
+    (categoryMeta as { features?: string[] }).features &&
+    (categoryMeta as { features?: string[] }).features?.length
+      ? (categoryMeta as { features?: string[] }).features!
+      : DEFAULT_FEATURES;
+  const totalSlides = Math.max(1, ppt.pages, ppt.previewUrls.length);
+  const currentPreviewUrl =
+    ppt.previewUrls.length > 0
+      ? ppt.previewUrls[currentSlide % ppt.previewUrls.length]
+      : '/placeholder.svg';
+  const ratingText =
+    ppt.rating !== null ? ppt.rating.toFixed(1) : '暂无评分';
+  const ratingValue = ppt.rating !== null ? ppt.rating : 0;
+
   return (
     <>
       <div className="border-b bg-muted/30">
@@ -293,17 +387,7 @@ export default function PPTDetailPage() {
                 onClick={() => router.push(PublicRoutes.Category(ppt.category))}
                 className="hover:text-foreground transition-colors whitespace-nowrap"
               >
-                {ppt.category}
-              </button>
-              <span>/</span>
-              <button
-                type="button"
-                onClick={() =>
-                  router.push(PublicRoutes.Category(ppt.subcategory))
-                }
-                className="hover:text-foreground transition-colors whitespace-nowrap"
-              >
-                {ppt.subcategory}
+                {ppt.categoryLabel}
               </button>
               <span className="hidden sm:inline">/</span>
               <span className="text-foreground font-medium truncate max-w-[150px] sm:max-w-md hidden sm:inline">
@@ -322,8 +406,8 @@ export default function PPTDetailPage() {
             {/* 主预览图 */}
             <div className="relative aspect-video rounded-xl border bg-muted overflow-hidden group w-full">
               <img
-                src={ppt.previewUrls[currentSlide] || '/placeholder.svg'}
-                alt={`${ppt.title} - 第${currentSlide + 1}页`}
+                src={currentPreviewUrl || '/placeholder.svg'}
+                alt={`${ppt.title} - 第${(currentSlide % totalSlides) + 1}页`}
                 className="w-full h-full object-contain"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
@@ -343,16 +427,16 @@ export default function PPTDetailPage() {
                 size="icon"
                 className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
                 onClick={() =>
-                  setCurrentSlide(Math.min(ppt.pages - 1, currentSlide + 1))
+                  setCurrentSlide(Math.min(totalSlides - 1, currentSlide + 1))
                 }
-                disabled={currentSlide === ppt.pages - 1}
+                disabled={currentSlide === totalSlides - 1}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
 
               {/* 页码指示 */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                {currentSlide + 1} / {ppt.pages}
+                {(currentSlide % totalSlides) + 1} / {totalSlides}
               </div>
 
               {/* 全屏预览按钮 */}
@@ -404,7 +488,7 @@ export default function PPTDetailPage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
-                  {ppt.description}
+                  {ppt.description || categoryMeta.description || '暂无简介'}
                 </p>
 
                 <div>
@@ -413,11 +497,9 @@ export default function PPTDetailPage() {
                     适用场景
                   </h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• 企业年终总结汇报</li>
-                    <li>• 个人工作述职报告</li>
-                    <li>• 项目成果展示</li>
-                    <li>• 团队业绩汇报</li>
-                    <li>• 部门工作总结</li>
+                    {useCases.map((item, index) => (
+                      <li key={index}>• {item}</li>
+                    ))}
                   </ul>
                 </div>
 
@@ -428,14 +510,10 @@ export default function PPTDetailPage() {
                     包含内容
                   </h3>
                   <div className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                    <div>• 封面页（1页）</div>
-                    <div>• 目录页（1页）</div>
-                    <div>• 工作回顾（5页）</div>
-                    <div>• 数据分析（6页）</div>
-                    <div>• 成果展示（4页）</div>
-                    <div>• 问题与改进（3页）</div>
-                    <div>• 明年规划（3页）</div>
-                    <div>• 感谢页（1页）</div>
+                    <div>• 结构化章节（封面/目录/正文/总结）</div>
+                    <div>• 约 {totalSlides} 页，可自由增删</div>
+                    <div>• 图表与占位符，便于快速替换</div>
+                    <div>• 统一样式与配色，保证版面一致</div>
                   </div>
                 </div>
 
@@ -446,11 +524,9 @@ export default function PPTDetailPage() {
                     模板特色
                   </h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• 专业商务设计风格</li>
-                    <li>• 完整的数据图表库</li>
-                    <li>• 可编辑的矢量图标</li>
-                    <li>• 统一的配色方案</li>
-                    <li>• 16:9标准比例</li>
+                    {features.map((item, index) => (
+                      <li key={index}>• {item}</li>
+                    ))}
                   </ul>
                 </div>
 
@@ -485,11 +561,11 @@ export default function PPTDetailPage() {
                       .map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-4 w-4 ${i < Math.floor(ppt.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-muted'}`}
+                          className={`h-4 w-4 ${ppt.rating !== null && i < Math.round(ratingValue) ? 'fill-yellow-400 text-yellow-400' : 'text-muted'}`}
                         />
                       ))}
                     <span className="ml-1 font-medium text-foreground">
-                      {ppt.rating}
+                      {ratingText}
                     </span>
                     <span>({ppt.reviewCount}条评价)</span>
                   </div>
@@ -616,24 +692,6 @@ export default function PPTDetailPage() {
 
                 <Separator />
 
-                {/* 实时数据 */}
-                <div className="rounded-lg bg-muted/50 p-4 space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <TrendingUp className="h-4 w-4 text-orange-500" />
-                    <span className="text-muted-foreground">刚刚有</span>
-                    <span className="font-semibold text-orange-500">3人</span>
-                    <span className="text-muted-foreground">下载</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Clock className="h-4 w-4 text-primary" />
-                    <span className="text-muted-foreground">今日已有</span>
-                    <span className="font-semibold text-primary">234人</span>
-                    <span className="text-muted-foreground">下载</span>
-                  </div>
-                </div>
-
-                <Separator />
-
                 {/* 操作按钮 */}
                 <div className="flex gap-2">
                   <Button
@@ -750,137 +808,153 @@ export default function PPTDetailPage() {
         </Card>
 
         {/* 推荐模板 */}
-        <Card className="my-12">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              推荐模板
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {(() => {
-                const items = [...recommendations.slice(0, 6)];
-                // 在第 4 位插入原生广告
-                if (items.length >= 3) {
-                  items.splice(3, 0, null as any);
-                }
-                return items.map((rec, index) => {
-                  if (rec === null) {
-                    return (
-                      <NativeAdCard
-                        key="native-ad-recommended"
-                        ad={mockNativeAd}
-                        position="detail_recommended_4"
-                        onImpression={(adId) =>
-                          console.log('Native ad impression:', adId)
-                        }
-                        onClick={(adId) =>
-                          console.log('Native ad click:', adId)
-                        }
-                      />
-                    );
-                  }
-                  return (
-                    <Card
-                      key={rec.id}
-                      className="group cursor-pointer hover:shadow-lg transition-shadow"
-                      onClick={() =>
-                        router.push(PublicRoutes.PPTDetail(rec.id))
+        {recommendations.length > 0 && (
+          <>
+            <Card className="my-12">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5" />
+                  推荐模板
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {(() => {
+                    const items = [...recommendations.slice(0, 6)];
+                    // 在第 4 位插入原生广告
+                    if (items.length >= 3) {
+                      items.splice(3, 0, null as any);
+                    }
+                    return items.map((rec, index) => {
+                      if (rec === null) {
+                        return (
+                          <NativeAdCard
+                            key="native-ad-recommended"
+                            ad={mockNativeAd}
+                            position="detail_recommended_4"
+                            onImpression={(adId) =>
+                              console.log('Native ad impression:', adId)
+                            }
+                            onClick={(adId) =>
+                              console.log('Native ad click:', adId)
+                            }
+                          />
+                        );
                       }
-                    >
-                      <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
-                        <img
-                          src={rec.previewUrls[0] || '/placeholder.svg'}
-                          alt={rec.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        />
-                      </div>
-                      <CardContent className="p-3">
-                        <h4 className="font-medium line-clamp-2 text-sm mb-1">
-                          {rec.title}
-                        </h4>
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Download className="h-3 w-3" />
-                            <span>{(rec.downloads / 1000).toFixed(1)}k</span>
+                      return (
+                        <Card
+                          key={rec.id}
+                          className="group cursor-pointer hover:shadow-lg transition-shadow"
+                          onClick={() =>
+                            router.push(PublicRoutes.PPTDetail(rec.id))
+                          }
+                        >
+                          <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
+                            <img
+                              src={rec.previewUrls[0] || '/placeholder.svg'}
+                              alt={rec.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            />
                           </div>
+                          <CardContent className="p-3">
+                            <h4 className="font-medium line-clamp-2 text-sm mb-1">
+                              {rec.title}
+                            </h4>
+                            <div className="flex items-center justify-between text-xs text-muted-foreground">
+                              <div className="flex items-center gap-1">
+                                <Download className="h-3 w-3" />
+                                <span>
+                                  {(rec.downloads / 1000).toFixed(1)}k
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                                <span>
+                                  {rec.rating !== null
+                                    ? rec.rating.toFixed(1)
+                                    : '暂无'}
+                                </span>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    });
+                  })()}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 广告位 - 推荐模板下方 */}
+            <MultiplexAd className="my-8" />
+
+            {/* 相关推荐区域 */}
+            <div className="my-12">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl lg:text-2xl font-bold flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 lg:h-6 lg:w-6" />
+                  相关推荐
+                </h2>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    router.push(PublicRoutes.Category(ppt.category))
+                  }
+                >
+                  <span className="hidden sm:inline">查看更多</span>
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {recommendations.slice(0, 7).map((rec, i) => (
+                  <Card
+                    key={rec.id}
+                    className="group cursor-pointer hover:shadow-lg transition-shadow"
+                    onClick={() => router.push(PublicRoutes.PPTDetail(rec.id))}
+                  >
+                    <CardContent className="p-0">
+              <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-muted">
+                <img
+                  src={rec.previewUrls[0] || '/placeholder.svg'}
+                  alt={rec.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                      </div>
+                      <div className="p-4 space-y-2">
+                        <h3 className="font-medium line-clamp-2 text-sm">
+                          {rec.title}
+                        </h3>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                            <span>{rec.rating.toFixed(1)}</span>
+                            <span>
+                              {rec.rating !== null
+                                ? rec.rating.toFixed(1)
+                                : '暂无'}
+                            </span>
                           </div>
+                          <span>•</span>
+                          <span>{(rec.downloads / 1000).toFixed(1)}k下载</span>
                         </div>
-                      </CardContent>
-                    </Card>
-                  );
-                });
-              })()}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 广告位 - 推荐模板下方 */}
-        <MultiplexAd className="my-8" />
-
-        {/* 相关推荐区域 */}
-        <div className="my-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl lg:text-2xl font-bold flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 lg:h-6 lg:w-6" />
-              相关推荐
-            </h2>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => router.push(PublicRoutes.Category(ppt.category))}
-            >
-              <span className="hidden sm:inline">查看更多</span>
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {recommendations.slice(0, 7).map((rec, i) => (
-              <Card
-                key={rec.id}
-                className="group cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => router.push(PublicRoutes.PPTDetail(rec.id))}
-              >
-                <CardContent className="p-0">
-                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-muted">
-                    <img
-                      src={rec.previewUrls[0] || '/placeholder.svg'}
-                      alt={rec.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                  <div className="p-4 space-y-2">
-                    <h3 className="font-medium line-clamp-2 text-sm">
-                      {rec.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        <span>{rec.rating.toFixed(1)}</span>
                       </div>
-                      <span>•</span>
-                      <span>{(rec.downloads / 1000).toFixed(1)}k下载</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-            {/* 原生广告 */}
-            <NativeAdCard
-              ad={mockNativeAd}
-              position="detail_related_8"
-              onImpression={(adId) =>
-                console.log('Native ad impression:', adId)
-              }
-              onClick={(adId) => console.log('Native ad click:', adId)}
-            />
-          </div>
-        </div>
+                    </CardContent>
+                  </Card>
+                ))}
+                {/* 原生广告 */}
+                <NativeAdCard
+                  ad={mockNativeAd}
+                  position="detail_related_8"
+                  onImpression={(adId) =>
+                    console.log('Native ad impression:', adId)
+                  }
+                  onClick={(adId) => console.log('Native ad click:', adId)}
+                />
+              </div>
+            </div>
+          </>
+        )}
 
         {/* 底部广告位 */}
         <BlogBannerAd className="my-12" />

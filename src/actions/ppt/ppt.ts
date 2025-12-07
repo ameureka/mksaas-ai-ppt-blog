@@ -3,6 +3,8 @@
 import { randomUUID } from 'node:crypto';
 import { getDb } from '@/db';
 import { ppt as pptTable } from '@/db/schema';
+import { getChineseVariants } from '@/lib/chinese-convert';
+import { generateEmbedding, generateEmbeddingInput } from '@/lib/embedding';
 import type {
   CreatePPTInput,
   PPT,
@@ -30,6 +32,30 @@ import {
   sql,
 } from 'drizzle-orm';
 
+/**
+ * 异步生成并保存 PPT Embedding（不阻塞主流程）
+ */
+async function generatePPTEmbeddingAsync(
+  pptId: string,
+  ppt: { title: string; description?: string | null; tags?: string[] | null }
+): Promise<void> {
+  try {
+    const inputText = generateEmbeddingInput(ppt);
+    const embedding = await generateEmbedding(inputText);
+    if (embedding) {
+      const db = await getDb();
+      await db.execute(sql`
+        UPDATE ppt 
+        SET embedding = ${`[${embedding.join(',')}]`}::vector,
+            embedding_model = 'BAAI/bge-m3'
+        WHERE id = ${pptId}
+      `);
+    }
+  } catch (error) {
+    console.error('[PPT] Failed to generate embedding:', error);
+  }
+}
+
 const DEFAULT_PAGE_SIZE = 12;
 const MAX_PAGE_SIZE = 50;
 
@@ -49,14 +75,17 @@ const buildWhere = (params?: PPTListParams) => {
   conditions.push(isNull(pptTable.deletedAt));
 
   if (params?.search?.trim()) {
-    const keyword = `%${params.search.trim()}%`;
-    conditions.push(
-      or(
-        ilike(pptTable.title, keyword),
-        ilike(pptTable.author, keyword),
-        sql`coalesce(array_to_string(${pptTable.tags}, ','), '') ILIKE ${keyword}`
-      )
-    );
+    const variants = getChineseVariants(params.search.trim());
+    const searchConditions = variants.flatMap((k) => {
+      const pattern = `%${k}%`;
+      return [
+        ilike(pptTable.title, pattern),
+        ilike(pptTable.description, pattern),
+        ilike(pptTable.author, pattern),
+        sql`coalesce(array_to_string(${pptTable.tags}, ','), '') ILIKE ${pattern}`,
+      ];
+    });
+    conditions.push(or(...searchConditions));
   }
 
   if (params?.category) {
@@ -205,6 +234,9 @@ export async function createPPT(
       })
       .returning();
 
+    // 异步生成 embedding（不阻塞响应）
+    generatePPTEmbeddingAsync(row.id, { title: data.title, tags: data.tags });
+
     return successResult(toPPTDto(row));
   } catch (error) {
     console.error('[PPT] Failed to create PPT', error);
@@ -248,6 +280,16 @@ export async function updatePPT(
 
     if (!rows.length) {
       return errorResult('PPT not found', 'NOT_FOUND');
+    }
+
+    // 如果 title/tags 变更，重新生成 embedding
+    if (data.title !== undefined || data.tags !== undefined) {
+      const row = rows[0];
+      generatePPTEmbeddingAsync(id, {
+        title: row.title,
+        description: row.description,
+        tags: row.tags,
+      });
     }
 
     return successResult(toPPTDto(rows[0]));

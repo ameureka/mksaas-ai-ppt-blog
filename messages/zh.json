@@ -616,6 +616,9 @@
       "pptList": {
         "title": "PPT 管理"
       },
+      "hotKeywords": {
+        "title": "热词管理"
+      },
       "stats": {
         "title": "数据统计"
       },

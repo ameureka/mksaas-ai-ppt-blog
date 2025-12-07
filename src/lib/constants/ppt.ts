@@ -33,3 +33,18 @@ export const PPT_LANGUAGES = [
 export type PPTCategory = (typeof PPT_CATEGORIES)[number]['value'];
 export type PPTSort = (typeof PPT_SORTS)[number]['value'];
 export type PPTLanguage = (typeof PPT_LANGUAGES)[number]['value'];
+
+// slug -> 中文名映射
+export const slugToLabel = Object.fromEntries(
+  PPT_CATEGORIES.map((cat) => [cat.value, cat.label])
+) as Record<string, string>;
+
+// 中文名 -> slug 映射
+export const labelToSlug = Object.fromEntries(
+  PPT_CATEGORIES.map((cat) => [cat.label, cat.value])
+) as Record<string, string>;
+
+// 获取分类中文名，fallback 到原值
+export function getCategoryLabel(slug: string): string {
+  return slugToLabel[slug] ?? slug;
+}

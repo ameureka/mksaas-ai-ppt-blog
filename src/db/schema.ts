@@ -12,7 +12,21 @@
  * - R10: 元数据字段 (ppt.description, file_size, file_format)
  */
 
-import { boolean, integer, pgTable, text, timestamp, index, unique } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, text, timestamp, index, unique, customType, numeric, uniqueIndex } from "drizzle-orm/pg-core";
+
+// pgvector 自定义类型 (1024 维向量)
+const vector = customType<{ data: number[]; driverData: string }>({
+	dataType() {
+		return 'vector(1024)';
+	},
+	toDriver(value: number[]): string {
+		return `[${value.join(',')}]`;
+	},
+	fromDriver(value: string): number[] {
+		const cleaned = value.replace(/^\[/, '').replace(/\]$/, '');
+		return cleaned.split(',').map(Number);
+	},
+});
 
 /**
  * 用户表 - Better Auth 核心表
@@ -181,6 +195,7 @@ export const ppt = pgTable("ppt", {
 	viewCount: integer("view_count").default(0),
 	embeddingId: text("embedding_id"), // 向量化 ID（预留）
 	embeddingModel: text("embedding_model"), // 向量化模型
+	embedding: vector("embedding"), // pgvector 1024维向量
 	reviewStatus: text("review_status"), // 审核状态
 	/** R6: 软删除字段 - NULL 表示未删除，有值表示删除时间 */
 	deletedAt: timestamp("deleted_at"),
@@ -257,4 +272,56 @@ export const userDownloadHistory = pgTable("user_download_history", {
 	downloadMethodIdx: index("download_method_idx").on(table.downloadMethod),
 	/** R4: 复合索引 - 优化按下载方式+时间的统计查询 */
 	downloadMethodDateIdx: index("download_method_date_idx").on(table.downloadMethod, table.downloadedAt),
+}));
+
+/**
+ * 搜索日志表 - 记录用户搜索行为
+ */
+export const searchLog = pgTable("search_log", {
+	id: text("id").primaryKey(),
+	userId: text("user_id").references(() => user.id, { onDelete: 'set null' }),
+	keyword: text("keyword").notNull(),
+	resultCount: integer("result_count").default(0),
+	clickedPptId: text("clicked_ppt_id"),
+	source: text("source").default('search'), // search, hot_keyword, suggestion
+	fromSuggestion: boolean("from_suggestion").default(false),
+	searchType: text("search_type"), // vector, sql, hybrid
+	durationMs: integer("duration_ms"),
+	ipAddress: text("ip_address"),
+	userAgent: text("user_agent"),
+	createdAt: timestamp("created_at").defaultNow(),
+}, (table) => ({
+	searchLogKeywordIdx: index("search_log_keyword_idx").on(table.keyword),
+	searchLogUserIdIdx: index("search_log_user_id_idx").on(table.userId),
+	searchLogCreatedAtIdx: index("search_log_created_at_idx").on(table.createdAt),
+	searchLogSearchTypeIdx: index("search_log_search_type_idx").on(table.searchType),
+}));
+
+/**
+ * 热门关键词缓存表
+ */
+export const hotKeywords = pgTable("hot_keywords", {
+	id: text("id").primaryKey(),
+	keyword: text("keyword").notNull(),
+	searchCount: integer("search_count").default(0),
+	downloadScore: numeric("download_score").default('0'),
+	finalScore: numeric("final_score").default('0'),
+	rank: integer("rank").notNull(),
+	updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => ({
+	hotKeywordsRankIdx: uniqueIndex("hot_keywords_rank_idx").on(table.rank),
+}));
+
+/**
+ * 置顶关键词表（运营配置，不被自动任务覆盖）
+ */
+export const pinnedKeywords = pgTable("pinned_keywords", {
+	id: text("id").primaryKey(),
+	keyword: text("keyword").notNull(),
+	rank: integer("rank").notNull(),
+	createdAt: timestamp("created_at").defaultNow(),
+	updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => ({
+	pinnedKeywordsRankIdx: uniqueIndex("pinned_keywords_rank_idx").on(table.rank),
+	pinnedKeywordsKeywordIdx: uniqueIndex("pinned_keywords_keyword_idx").on(table.keyword),
 }));

@@ -8,25 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
+import { categoryMeta } from '@/lib/constants/ppt-category-meta';
 import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
-import {
-  Briefcase,
-  Calendar,
-  Clock,
-  Cpu,
-  DollarSign,
-  FileText,
-  GraduationCap,
-  Heart,
-  Palette,
-  Presentation,
-  Search,
-  Target,
-  TrendingUp,
-  Users,
-  X,
-} from 'lucide-react';
+import { Clock, FileText, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -45,16 +30,24 @@ interface PPT {
   isAd?: boolean;
 }
 
-const hotKeywords: { text: string; size: 'large' | 'medium' | 'small' }[] = [
-  { text: '年终总结', size: 'large' },
-  { text: '工作汇报', size: 'medium' },
-  { text: '项目提案', size: 'large' },
-  { text: '述职报告', size: 'small' },
-  { text: '商业计划', size: 'medium' },
-  { text: '培训课件', size: 'small' },
-  { text: '产品介绍', size: 'medium' },
-  { text: '营销方案', size: 'small' },
+// 默认热词（API 加载前或失败时使用）
+const DEFAULT_HOT_KEYWORDS = [
+  '年终总结',
+  '工作汇报',
+  '项目提案',
+  '述职报告',
+  '商业计划',
+  '培训课件',
+  '产品介绍',
+  '营销方案',
 ];
+
+// 根据索引分配 size
+function getKeywordSize(index: number): 'large' | 'medium' | 'small' {
+  if (index === 0 || index === 2) return 'large';
+  if (index === 1 || index === 4 || index === 6) return 'medium';
+  return 'small';
+}
 
 function getErrorMessage(code: string, retryAfter?: number): string {
   const errorMap: Record<string, string> = {
@@ -97,83 +90,55 @@ export default function SearchHomePage() {
     sort: 'popular',
   });
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [hotKeywordTexts, setHotKeywordTexts] =
+    useState<string[]>(DEFAULT_HOT_KEYWORDS);
+  const [categoryStats, setCategoryStats] = useState(categoryMeta);
   const router = useRouter(); // Add navigation hook for view more buttons
 
   const { logAction } = useAuditLog();
 
-  // Categories using translations
-  const categoryMeta: Record<
-    string,
-    { count: number; icon: any; preview: string }
-  > = {
-    business: {
-      count: 12345,
-      icon: Briefcase,
-      preview: '/ppt/category-business.png',
-    },
-    education: {
-      count: 8234,
-      icon: GraduationCap,
-      preview: '/ppt/category-education.png',
-    },
-    technology: {
-      count: 3200,
-      icon: Cpu,
-      preview: '/ppt/category-technology.png',
-    },
-    design: {
-      count: 2100,
-      icon: Palette,
-      preview: '/ppt/category-design.png',
-    },
-    marketing: {
-      count: 6789,
-      icon: TrendingUp,
-      preview: '/ppt/category-marketing.png',
-    },
-    hr: {
-      count: 1800,
-      icon: Users,
-      preview: '/ppt/category-hr.png',
-    },
-    medical: {
-      count: 1400,
-      icon: Heart,
-      preview: '/ppt/category-medical.png',
-    },
-    finance: {
-      count: 900,
-      icon: DollarSign,
-      preview: '/ppt/category-finance.png',
-    },
-    general: {
-      count: 15678,
-      icon: Calendar,
-      preview: '/ppt/category-general.png',
-    },
-    summary: {
-      count: 15678,
-      icon: Calendar,
-      preview: '/ppt/category-summary.png',
-    },
-    report: {
-      count: 11234,
-      icon: Presentation,
-      preview: '/ppt/category-report.png',
-    },
-    plan: {
-      count: 5678,
-      icon: Target,
-      preview: '/ppt/category-plan.png',
-    },
-  };
+  // 从 API 获取热词
+  useEffect(() => {
+    fetch('/api/hot-keywords')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data?.length > 0) {
+          setHotKeywordTexts(data.data);
+        }
+      })
+      .catch(() => {}); // 失败时保持默认值
+  }, []);
+
+  // 获取分类统计数据
+  useEffect(() => {
+    fetch('/api/ppts/stats')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && json.data) {
+          const updated = { ...categoryMeta };
+          for (const [key, count] of Object.entries(json.data)) {
+            if (updated[key]) {
+              updated[key] = { ...updated[key], count: count as number };
+            }
+          }
+          setCategoryStats(updated);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // 转换为带 size 的格式
+  const hotKeywords = hotKeywordTexts.map((text, i) => ({
+    text,
+    size: getKeywordSize(i),
+  }));
 
   const categories = useMemo(
     () =>
       PPT_CATEGORIES.map((cat) => {
         const categoryValue = cat.value as string;
-        const meta = categoryMeta[
-          categoryValue as keyof typeof categoryMeta
+        const meta = categoryStats[
+          categoryValue as keyof typeof categoryStats
         ] ?? {
           count: 0,
           icon: FileText,
@@ -188,7 +153,7 @@ export default function SearchHomePage() {
         };
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t]
+    [t, categoryStats]
   );
 
   const transform = (items: any[]): PPT[] =>
@@ -196,11 +161,11 @@ export default function SearchHomePage() {
       id: item.id,
       title: item.title,
       tags: item.tags ?? [],
-      downloads: item.downloads ?? 0,
-      views: item.views ?? 0,
+      downloads: item.downloads ?? item.downloadCount ?? 0,
+      views: item.views ?? item.viewCount ?? 0,
       language: item.language ?? '中文',
-      previewUrl: item.preview_url ?? '/placeholder.svg',
-      pages: item.slides_count ?? 0,
+      previewUrl: item.preview_url ?? item.thumbnailUrl ?? '/placeholder.svg',
+      pages: item.slides_count ?? item.slidesCount ?? 0,
       category: item.category ?? '其他',
     }));
 
@@ -208,9 +173,9 @@ export default function SearchHomePage() {
   useEffect(() => {
     const load = async () => {
       try {
-        // 独立请求：编辑精选按下载量排序，本周新品按创建时间排序
+        // 独立请求：编辑精选使用随机排序，本周新品按创建时间排序
         const [featuredRes, newRes] = await Promise.all([
-          fetch('/api/ppts?page=1&pageSize=8&sortBy=downloads&sortOrder=desc'),
+          fetch('/api/ppts/featured?limit=8'),
           fetch(
             '/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc'
           ),
