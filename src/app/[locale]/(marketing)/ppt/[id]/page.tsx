@@ -24,7 +24,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { websiteConfig } from '@/config/website';
 import { authClient } from '@/lib/auth-client';
-import { getCategoryLabel, getCategoryMeta } from '@/lib/constants/ppt-category-meta';
+import {
+  getCategoryLabel,
+  getCategoryMeta,
+} from '@/lib/constants/ppt-category-meta';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
 import { formatFileSize } from '@/lib/formatter';
 import {
@@ -85,12 +88,7 @@ interface Review {
 }
 
 export default function PPTDetailPage() {
-  const DEFAULT_USE_CASES = [
-    '工作汇报',
-    '项目总结',
-    '方案提案',
-    '年度计划',
-  ];
+  const DEFAULT_USE_CASES = ['工作汇报', '项目总结', '方案提案', '年度计划'];
   const DEFAULT_FEATURES = [
     '全矢量可编辑',
     '统一配色与字体',
@@ -349,8 +347,7 @@ export default function PPTDetailPage() {
     ppt.previewUrls.length > 0
       ? ppt.previewUrls[currentSlide % ppt.previewUrls.length]
       : '/placeholder.svg';
-  const ratingText =
-    ppt.rating !== null ? ppt.rating.toFixed(1) : '暂无评分';
+  const ratingText = ppt.rating !== null ? ppt.rating.toFixed(1) : '暂无评分';
   const ratingValue = ppt.rating !== null ? ppt.rating : 0;
 
   return (
@@ -915,12 +912,12 @@ export default function PPTDetailPage() {
                     onClick={() => router.push(PublicRoutes.PPTDetail(rec.id))}
                   >
                     <CardContent className="p-0">
-              <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-muted">
-                <img
-                  src={rec.previewUrls[0] || '/placeholder.svg'}
-                  alt={rec.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
+                      <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-muted">
+                        <img
+                          src={rec.previewUrls[0] || '/placeholder.svg'}
+                          alt={rec.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
                       </div>
                       <div className="p-4 space-y-2">
                         <h3 className="font-medium line-clamp-2 text-sm">

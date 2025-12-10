@@ -122,11 +122,13 @@ export function getCategoryLabel(slug: string): string {
 }
 
 export function getCategoryMeta(slug: string) {
-  return CATEGORY_META[slug] ?? {
-    ...defaultMeta,
-    icon: FileText,
-    preview: '/placeholder.svg',
-  };
+  return (
+    CATEGORY_META[slug] ?? {
+      ...defaultMeta,
+      icon: FileText,
+      preview: '/placeholder.svg',
+    }
+  );
 }
 
 export async function getCategoryStats() {
