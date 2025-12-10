@@ -11,6 +11,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { categoryMeta } from '@/lib/constants/ppt-category-meta';
 import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { PublicRoutes } from '@/lib/constants/ppt-routes';
+import { HomeErrorBanner } from './home-error-banner';
+import { mapHomeItems } from './home-map';
+import { mergeCategoryStats, sortCategoriesByCount } from './home-categories-map';
 import { Clock, FileText, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -89,10 +92,20 @@ export default function SearchHomePage() {
     language: 'all',
     sort: 'popular',
   });
+  const defaultCounts = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.keys(categoryMeta).map((key) => [key, 0])
+      ) as Record<string, number>,
+    []
+  );
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [hotKeywordTexts, setHotKeywordTexts] =
     useState<string[]>(DEFAULT_HOT_KEYWORDS);
-  const [categoryStats, setCategoryStats] = useState(categoryMeta);
+  const [categoryStats, setCategoryStats] =
+    useState<Record<string, number>>(defaultCounts);
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
   const router = useRouter(); // Add navigation hook for view more buttons
 
   const { logAction } = useAuditLog();
@@ -111,20 +124,20 @@ export default function SearchHomePage() {
 
   // 获取分类统计数据
   useEffect(() => {
+    setCategoryLoading(true);
     fetch('/api/ppts/stats')
       .then((res) => res.json())
       .then((json) => {
         if (json.success && json.data) {
-          const updated = { ...categoryMeta };
-          for (const [key, count] of Object.entries(json.data)) {
-            if (updated[key]) {
-              updated[key] = { ...updated[key], count: count as number };
-            }
-          }
-          setCategoryStats(updated);
+          setCategoryStats(json.data as Record<string, number>);
+        } else {
+          setCategoryError(true);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        setCategoryError(true);
+      })
+      .finally(() => setCategoryLoading(false));
   }, []);
 
   // 转换为带 size 的格式
@@ -133,41 +146,18 @@ export default function SearchHomePage() {
     size: getKeywordSize(i),
   }));
 
-  const categories = useMemo(
-    () =>
-      PPT_CATEGORIES.map((cat) => {
-        const categoryValue = cat.value as string;
-        const meta = categoryStats[
-          categoryValue as keyof typeof categoryStats
-        ] ?? {
-          count: 0,
-          icon: FileText,
-          preview: '/placeholder.svg',
-        };
-        return {
-          name: cat.label ?? t(categoryValue as any) ?? categoryValue,
-          slug: categoryValue,
-          count: meta.count,
-          icon: meta.icon,
-          preview: meta.preview,
-        };
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, categoryStats]
-  );
-
-  const transform = (items: any[]): PPT[] =>
-    items.map((item) => ({
-      id: item.id,
-      title: item.title,
-      tags: item.tags ?? [],
-      downloads: item.downloads ?? item.downloadCount ?? 0,
-      views: item.views ?? item.viewCount ?? 0,
-      language: item.language ?? '中文',
-      previewUrl: item.preview_url ?? item.thumbnailUrl ?? '/placeholder.svg',
-      pages: item.slides_count ?? item.slidesCount ?? 0,
-      category: item.category ?? '其他',
+  const categories = useMemo(() => {
+    const merged = mergeCategoryStats(categoryStats);
+    return sortCategoriesByCount(merged).map((cat) => ({
+      ...cat,
+      name: cat.name ?? t(cat.slug as any) ?? cat.slug,
+      icon: cat.icon ?? FileText,
+      preview: cat.preview ?? '/placeholder.svg',
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryStats, t]);
+
+  const transform = (items: any[]): PPT[] => mapHomeItems(items) as PPT[];
 
   // Load initial data
   useEffect(() => {
@@ -175,9 +165,11 @@ export default function SearchHomePage() {
       try {
         // 独立请求：编辑精选使用随机排序，本周新品按创建时间排序
         const [featuredRes, newRes] = await Promise.all([
-          fetch('/api/ppts/featured?limit=8'),
           fetch(
-            '/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc'
+            '/api/ppts?sortBy=downloads&sortOrder=desc&status=published&pageSize=8'
+          ),
+          fetch(
+            '/api/ppts?page=1&pageSize=12&sortBy=created_at&sortOrder=desc&status=published'
           ),
         ]);
 
@@ -192,8 +184,12 @@ export default function SearchHomePage() {
         if (newJson.success) {
           setNewPPTs(transform(newJson.data.items ?? []));
         }
+        if (!featuredJson.success || !newJson.success) {
+          setError('HOME_FEED_ERROR');
+        }
       } catch (error) {
         console.error(error);
+        setError('HOME_FEED_ERROR');
       }
     };
     load();
@@ -302,6 +298,8 @@ export default function SearchHomePage() {
 
   return (
     <>
+      <HomeErrorBanner hasError={!!error} />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -620,37 +618,55 @@ export default function SearchHomePage() {
       {/* Quick Category Navigation */}
       {!hasSearched && (
         <section className="container mx-auto mb-16 px-4">
+          {categoryError && (
+            <div className="mb-4 rounded-md border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+              分类数据加载失败，已显示默认分类，稍后可刷新重试。
+            </div>
+          )}
           <h2 className="mb-8 text-center text-3xl font-bold">热门分类</h2>
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <Card
-                  key={category.name}
-                  className="group cursor-pointer overflow-hidden transition-all hover:shadow-lg hover:border-primary"
-                  onClick={() => handleCategoryClick(category.slug)}
-                >
-                  <CardContent className="p-0">
-                    <div className="relative h-40 overflow-hidden bg-muted">
-                      <img
-                        src={category.preview || '/placeholder.svg'}
-                        alt={category.name}
-                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <div className="mb-2 flex items-center gap-2">
-                        <Icon className="h-5 w-5 text-primary" />
-                        <h3 className="font-semibold">{category.name}</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        {category.count.toLocaleString()}个模板
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+            {categoryLoading
+              ? Array.from({ length: 8 }).map((_, i) => (
+                  <Card
+                    key={`cat-skeleton-${i}`}
+                    className="overflow-hidden border border-border"
+                  >
+                    <Skeleton className="h-40 w-full" />
+                    <CardContent className="p-4">
+                      <Skeleton className="mb-2 h-5 w-1/2" />
+                      <Skeleton className="h-4 w-1/3" />
+                    </CardContent>
+                  </Card>
+                ))
+              : categories.map((category) => {
+                  const Icon = category.icon ?? FileText;
+                  return (
+                    <Card
+                      key={category.name}
+                      className="group cursor-pointer overflow-hidden transition-all hover:shadow-lg hover:border-primary"
+                      onClick={() => handleCategoryClick(category.slug)}
+                    >
+                      <CardContent className="p-0">
+                        <div className="relative h-40 overflow-hidden bg-muted">
+                          <img
+                            src={category.preview || '/placeholder.svg'}
+                            alt={category.name}
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <div className="mb-2 flex items-center gap-2">
+                            <Icon className="h-5 w-5 text-primary" />
+                            <h3 className="font-semibold">{category.name}</h3>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {category.count.toLocaleString()}个模板
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
           </div>
         </section>
       )}

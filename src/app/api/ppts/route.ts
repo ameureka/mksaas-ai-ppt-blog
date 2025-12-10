@@ -1,5 +1,5 @@
 import { getPPTs } from '@/actions/ppt/ppt';
-import { hybridSearch } from '@/actions/ppt/search';
+import { hybridSearch, recordSearchLog } from '@/actions/ppt/search';
 import { PPT_CATEGORY_VALUES } from '@/lib/constants/ppt';
 import type { PPTCategory, PPTStatus } from '@/lib/types/ppt/ppt';
 import type { NextRequest } from 'next/server';
@@ -15,17 +15,25 @@ export async function GET(req: NextRequest) {
   // 如果有搜索查询且没有其他过滤条件，使用向量混合搜索
   if (searchQuery?.trim() && !categoryParam && !statusParam) {
     const startedAt = Date.now();
+    const keyword = searchQuery.trim();
     try {
       const pageSize = searchParams.get('pageSize')
         ? Number(searchParams.get('pageSize'))
         : 20;
 
-      const { results, searchType } = await hybridSearch(
-        searchQuery.trim(),
-        pageSize
-      );
+      const { results, searchType } = await hybridSearch(keyword, pageSize);
 
       const durationMs = Date.now() - startedAt;
+      await recordSearchLog({
+        keyword,
+        resultCount: results.length,
+        searchType,
+        durationMs,
+        ipAddress:
+          req.headers.get('x-forwarded-for')?.split(',')?.[0]?.trim() ?? null,
+        userAgent: req.headers.get('user-agent') ?? null,
+        source: 'home_search',
+      });
 
       return Response.json(
         {
@@ -46,7 +54,25 @@ export async function GET(req: NextRequest) {
       );
     } catch (error) {
       console.error('[API] Hybrid search failed, falling back to SQL:', error);
-      // 向量搜索失败时，降级到原有的 getPPTs
+      const durationMs = Date.now() - startedAt;
+      await recordSearchLog({
+        keyword,
+        resultCount: 0,
+        searchType: 'sql',
+        durationMs,
+        ipAddress:
+          req.headers.get('x-forwarded-for')?.split(',')?.[0]?.trim() ?? null,
+        userAgent: req.headers.get('user-agent') ?? null,
+        source: 'home_search_error',
+      });
+      return Response.json(
+        {
+          success: false,
+          code: 'INTERNAL_ERROR',
+          message: 'Search request failed',
+        },
+        { status: 500 }
+      );
     }
   }
 

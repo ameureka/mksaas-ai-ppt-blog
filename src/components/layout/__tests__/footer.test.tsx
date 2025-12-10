@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { Footer } from '../footer';
@@ -58,26 +59,26 @@ describe('Footer Component', () => {
   it('renders all navigation sections', () => {
     render(<Footer />);
 
-    expect(screen.getByText('Categories')).toBeInTheDocument();
-    expect(screen.getByText('Resources')).toBeInTheDocument();
-    expect(screen.getByText('Support')).toBeInTheDocument();
-    expect(screen.getByText('About')).toBeInTheDocument();
+    screen.getByText('Categories');
+    screen.getByText('Resources');
+    screen.getByText('Support');
+    screen.getByText('About');
   });
 
   it('renders brand section with logo and tagline', () => {
     render(<Footer />);
 
-    expect(screen.getByText('Logo')).toBeInTheDocument();
-    expect(screen.getByText('PPTHub')).toBeInTheDocument();
-    expect(screen.getByText('AI-powered PPT templates')).toBeInTheDocument();
+    screen.getByText('Logo');
+    screen.getByText('PPTHub');
+    screen.getByText('AI-powered PPT templates');
   });
 
   it('renders statistics', () => {
     render(<Footer />);
 
-    expect(screen.getByText(/Templates/)).toBeInTheDocument();
-    expect(screen.getByText(/Downloads/)).toBeInTheDocument();
-    expect(screen.getByText(/Users/)).toBeInTheDocument();
+    screen.getByText(/Templates/);
+    screen.getByText(/Downloads/);
+    screen.getByText(/Users/);
   });
 
   it('renders social icons when available', () => {
@@ -91,9 +92,9 @@ describe('Footer Component', () => {
     const { container } = render(<Footer />);
 
     const grid = container.querySelector('.grid');
-    expect(grid).toHaveClass('grid-cols-1');
-    expect(grid).toHaveClass('md:grid-cols-2');
-    expect(grid).toHaveClass('lg:grid-cols-6');
+    expect(grid?.classList.contains('grid-cols-1')).toBe(true);
+    expect(grid?.classList.contains('md:grid-cols-2')).toBe(true);
+    expect(grid?.classList.contains('lg:grid-cols-6')).toBe(true);
   });
 
   it('applies mobile-optimized font sizes', () => {
@@ -131,12 +132,12 @@ describe('Footer Component', () => {
   it('renders copyright section', () => {
     render(<Footer />);
 
-    expect(screen.getByText('© 2024 PPTHub')).toBeInTheDocument();
+    screen.getByText('© 2024 PPTHub');
   });
 
   it('renders partners section', () => {
     render(<Footer />);
 
-    expect(screen.getByText('Partners')).toBeInTheDocument();
+    screen.getByText('Partners');
   });
 });

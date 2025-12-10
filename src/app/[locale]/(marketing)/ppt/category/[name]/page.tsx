@@ -47,6 +47,8 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { mapCategoryItems } from '../map-items';
+import { CategoryErrorBanner } from '../category-error-banner';
 
 interface PPT {
   id: string;
@@ -363,6 +365,7 @@ export default function CategoryPage() {
   const [sortBy, setSortBy] = useState('popular');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [hasError, setHasError] = useState(false);
 
   // 排序映射
   const sortByMap: Record<string, string> = {
@@ -374,23 +377,7 @@ export default function CategoryPage() {
 
   // 数据映射函数
   const mapItems = (items: any[]): PPT[] =>
-    items.map((item: any) => ({
-      id: item.id,
-      title: item.title,
-      category: item.category ?? categoryName,
-      subcategory: item.category ?? categoryName,
-      thumbnail: item.preview_url ?? item.cover_image_url,
-      downloads: item.downloads ?? item.download_count ?? 0,
-      views: item.views ?? item.view_count ?? 0,
-      rating: 4.5,
-      reviewCount: 0,
-      price: undefined,
-      language: item.language ?? '中文',
-      slides: item.slides_count ?? 0,
-      tags: item.tags ?? [],
-      previewUrl: item.preview_url ?? '/placeholder.svg',
-      pages: item.slides_count ?? 0,
-    }));
+    mapCategoryItems(items, categoryName) as unknown as PPT[];
 
   const [totalCount, setTotalCount] = useState(0);
 
@@ -403,13 +390,19 @@ export default function CategoryPage() {
         // 并行请求：热门、最新、全部
         const [hotRes, newRes, allRes] = await Promise.all([
           fetch(
-            `/api/ppts?category=${encodeURIComponent(slug)}&pageSize=8&sortBy=downloads&sortOrder=desc`
+            `/api/ppts?category=${encodeURIComponent(
+              slug
+            )}&status=published&pageSize=8&sortBy=downloads&sortOrder=desc`
           ),
           fetch(
-            `/api/ppts?category=${encodeURIComponent(slug)}&pageSize=8&sortBy=created_at&sortOrder=desc`
+            `/api/ppts?category=${encodeURIComponent(
+              slug
+            )}&status=published&pageSize=8&sortBy=created_at&sortOrder=desc`
           ),
           fetch(
-            `/api/ppts?category=${encodeURIComponent(slug)}&page=${page}&pageSize=12&sortBy=${apiSortBy}&sortOrder=desc`
+            `/api/ppts?category=${encodeURIComponent(
+              slug
+            )}&status=published&page=${page}&pageSize=12&sortBy=${apiSortBy}&sortOrder=desc`
           ),
         ]);
 
@@ -435,10 +428,12 @@ export default function CategoryPage() {
 
         if (!hotJson.success && !newJson.success && !allJson.success) {
           toast.error('加载分类数据失败');
+          setHasError(true);
         }
       } catch (error) {
         console.error(error);
         toast.error('加载分类数据失败');
+        setHasError(true);
       } finally {
         setIsLoading(false);
       }
@@ -542,6 +537,8 @@ export default function CategoryPage() {
           }),
         }}
       />
+
+      <CategoryErrorBanner hasError={hasError} />
 
       <main className="container mx-auto px-4 py-8">
         <nav

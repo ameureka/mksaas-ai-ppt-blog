@@ -1,9 +1,10 @@
 'use server';
 
 import { getDb } from '@/db';
-import { ppt as pptTable } from '@/db/schema';
+import { ppt as pptTable, searchLog } from '@/db/schema';
 import { generateEmbedding } from '@/lib/embedding';
-import { and, desc, ilike, isNull, or, sql } from 'drizzle-orm';
+import { and, desc, ilike, isNull, or, sql, eq } from 'drizzle-orm';
+import { randomUUID } from 'crypto';
 
 export interface SearchResult {
   id: string;
@@ -41,7 +42,7 @@ export async function vectorSearch(
       created_at as "createdAt",
       1 - (embedding <=> ${embeddingStr}::vector) as similarity
     FROM ppt
-    WHERE deleted_at IS NULL AND embedding IS NOT NULL
+    WHERE deleted_at IS NULL AND status = 'published' AND embedding IS NOT NULL
     ORDER BY embedding <=> ${embeddingStr}::vector
     LIMIT ${limit}
   `);
@@ -76,6 +77,7 @@ export async function sqlSearch(
     .from(pptTable)
     .where(
       and(
+        eq(pptTable.status, 'published'),
         isNull(pptTable.deletedAt),
         or(
           ilike(pptTable.title, keyword),
@@ -88,7 +90,7 @@ export async function sqlSearch(
     .orderBy(desc(pptTable.downloadCount))
     .limit(limit);
 
-  return results;
+  return Array.isArray(results) ? results : [];
 }
 
 /**
@@ -101,26 +103,57 @@ export async function hybridSearch(
   results: SearchResult[];
   searchType: 'vector' | 'sql' | 'hybrid';
 }> {
-  // 1. 尝试向量搜索
-  const vectorResults = await vectorSearch(query, limit);
+  try {
+    // 1. 尝试向量搜索
+    const vectorResults = await vectorSearch(query, limit);
 
-  // 2. 向量搜索成功且结果充足
-  if (vectorResults.length >= 5) {
-    return { results: vectorResults, searchType: 'vector' };
+    // 2. 向量搜索成功且结果充足
+    if (vectorResults.length >= 5) {
+      return { results: vectorResults, searchType: 'vector' };
+    }
+
+    // 3. 向量搜索结果不足，SQL 补充
+    if (vectorResults.length > 0) {
+      const existingIds = new Set(vectorResults.map((r) => r.id));
+      const sqlResults = await sqlSearch(query, limit - vectorResults.length);
+      const additional = sqlResults.filter((r) => !existingIds.has(r.id));
+      return {
+        results: [...vectorResults, ...additional],
+        searchType: 'hybrid',
+      };
+    }
+
+    // 4. 向量搜索完全失败，降级到 SQL
+    const sqlResults = await sqlSearch(query, limit);
+    return { results: sqlResults, searchType: 'sql' };
+  } catch (error) {
+    const sqlResults = await sqlSearch(query, limit);
+    return { results: sqlResults, searchType: 'sql' };
   }
+}
 
-  // 3. 向量搜索结果不足，SQL 补充
-  if (vectorResults.length > 0) {
-    const existingIds = new Set(vectorResults.map((r) => r.id));
-    const sqlResults = await sqlSearch(query, limit - vectorResults.length);
-    const additional = sqlResults.filter((r) => !existingIds.has(r.id));
-    return {
-      results: [...vectorResults, ...additional],
-      searchType: 'hybrid',
-    };
+export async function recordSearchLog(params: {
+  keyword: string;
+  resultCount: number;
+  searchType: 'vector' | 'sql' | 'hybrid';
+  durationMs?: number;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+  source?: string;
+}) {
+  try {
+    const db = await getDb();
+    await db.insert(searchLog).values({
+      id: randomUUID(),
+      keyword: params.keyword,
+      resultCount: params.resultCount ?? 0,
+      searchType: params.searchType,
+      durationMs: params.durationMs ?? null,
+      ipAddress: params.ipAddress ?? null,
+      userAgent: params.userAgent ?? null,
+      source: params.source ?? 'search',
+    });
+  } catch (error) {
+    console.error('[search] failed to record search log', error);
   }
-
-  // 4. 向量搜索完全失败，降级到 SQL
-  const sqlResults = await sqlSearch(query, limit);
-  return { results: sqlResults, searchType: 'sql' };
 }

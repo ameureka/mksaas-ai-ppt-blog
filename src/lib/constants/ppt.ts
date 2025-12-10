@@ -16,6 +16,11 @@ export const PPT_CATEGORIES = [
 export const PPT_CATEGORY_VALUES = PPT_CATEGORIES.map(
   (category) => category.value
 );
+const PPT_CATEGORY_SET = new Set(PPT_CATEGORY_VALUES);
+
+export function isValidPPTCategory(value: string): value is PPTCategory {
+  return PPT_CATEGORY_SET.has(value as PPTCategory);
+}
 
 export const PPT_SORTS = [
   { label: '最受欢迎', value: 'popular' },

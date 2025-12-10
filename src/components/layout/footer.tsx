@@ -8,7 +8,7 @@ import { LocaleLink } from '@/i18n/navigation';
 import { PPT_CATEGORIES } from '@/lib/constants/ppt';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
-import type React from 'react';
+import React from 'react';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations('Marketing.footer');

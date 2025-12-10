@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,6 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LocaleLink } from '@/i18n/navigation';
+import { getCategoryLabel } from '@/lib/constants/ppt';
 import { Download, Eye, Globe } from 'lucide-react';
 
 interface PPTBase {
@@ -34,6 +36,13 @@ interface PPTCardProps {
   onDownload: (ppt: PPTBase) => void;
 }
 
+function formatCount(value?: number) {
+  const num = Number(value ?? 0);
+  if (Number.isNaN(num) || num <= 0) return '0';
+  if (Math.abs(num) < 1000) return `${Math.trunc(num)}`;
+  return `${(num / 1000).toFixed(1)}k`;
+}
+
 export function PPTCard({ ppt, onDownload }: PPTCardProps) {
   if (ppt.isAd) {
     return (
@@ -55,6 +64,7 @@ export function PPTCard({ ppt, onDownload }: PPTCardProps) {
   const pages = ppt.slides_count || ppt.pages || 0;
   const tags = ppt.tags || [];
   const language = ppt.language || '中文';
+  const categoryLabel = getCategoryLabel(ppt.category || '其他');
 
   return (
     <Card className="group overflow-hidden transition-all hover:shadow-lg hover:border-primary/50">
@@ -92,18 +102,18 @@ export function PPTCard({ ppt, onDownload }: PPTCardProps) {
               variant="outline"
               className="text-xs text-muted-foreground border-dashed"
             >
-              {ppt.category}
+              {categoryLabel}
             </Badge>
           )}
         </div>
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <span className="flex items-center gap-1">
             <Download className="h-3.5 w-3.5" />
-            {(ppt.downloads / 1000).toFixed(1)}k
+            {formatCount(ppt.downloads)}
           </span>
           <span className="flex items-center gap-1">
             <Eye className="h-3.5 w-3.5" />
-            {(ppt.views / 1000).toFixed(1)}k
+            {formatCount(ppt.views)}
           </span>
           <span>{pages}页</span>
         </div>

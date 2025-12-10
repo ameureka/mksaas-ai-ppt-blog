@@ -5,6 +5,7 @@ import { getDb } from '@/db';
 import { ppt as pptTable } from '@/db/schema';
 import { getChineseVariants } from '@/lib/chinese-convert';
 import { generateEmbedding, generateEmbeddingInput } from '@/lib/embedding';
+import { isValidPPTCategory } from '@/lib/constants/ppt';
 import type {
   CreatePPTInput,
   PPT,
@@ -92,9 +93,9 @@ const buildWhere = (params?: PPTListParams) => {
     conditions.push(eq(pptTable.category, params.category));
   }
 
-  if (params?.status) {
-    conditions.push(eq(pptTable.status, params.status));
-  }
+  // 分类页与列表默认仅返回已发布内容，除非显式请求其他状态
+  const statusValue = params?.status ?? 'published';
+  conditions.push(eq(pptTable.status, statusValue));
 
   if (params?.dateFrom) {
     const from = new Date(params.dateFrom);
@@ -211,6 +212,10 @@ export async function createPPT(
   data: CreatePPTInput
 ): Promise<ServerActionResult<PPT>> {
   try {
+    if (!isValidPPTCategory(data.category)) {
+      return errorResult('Invalid category', 'VALIDATION_ERROR');
+    }
+
     const db = await getDb();
     const now = new Date();
     const [row] = await db
@@ -249,6 +254,14 @@ export async function updatePPT(
   data: UpdatePPTInput
 ): Promise<ServerActionResult<PPT>> {
   try {
+    if (
+      data.category !== undefined &&
+      data.category !== null &&
+      !isValidPPTCategory(data.category)
+    ) {
+      return errorResult('Invalid category', 'VALIDATION_ERROR');
+    }
+
     const db = await getDb();
     const updates: Partial<typeof pptTable.$inferInsert> = {};
 
