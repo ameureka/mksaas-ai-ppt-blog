@@ -13,6 +13,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "db:baseline": "tsx scripts/baseline-drizzle-migrations.ts",
     "list-contacts": "tsx scripts/list-contacts.ts",
     "list-users": "tsx scripts/list-users.ts",
     "seed-plan": "tsx scripts/seed-plan-category.ts",

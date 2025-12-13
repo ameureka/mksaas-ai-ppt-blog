@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { getDb } from '@/db';
 import { ppt as pptTable } from '@/db/schema';
 import { getChineseVariants } from '@/lib/chinese-convert';
-import { generateEmbedding, generateEmbeddingInput } from '@/lib/embedding';
+import { generateAndPersist } from '@/lib/embedding-service';
 import { isValidPPTCategory } from '@/lib/constants/ppt';
 import type {
   CreatePPTInput,
@@ -35,26 +35,13 @@ import {
 
 /**
  * 异步生成并保存 PPT Embedding（不阻塞主流程）
+ * 兼容旧调用，内部委托给 EmbeddingService
  */
 async function generatePPTEmbeddingAsync(
   pptId: string,
   ppt: { title: string; description?: string | null; tags?: string[] | null }
 ): Promise<void> {
-  try {
-    const inputText = generateEmbeddingInput(ppt);
-    const embedding = await generateEmbedding(inputText);
-    if (embedding) {
-      const db = await getDb();
-      await db.execute(sql`
-        UPDATE ppt 
-        SET embedding = ${`[${embedding.join(',')}]`}::vector,
-            embedding_model = 'BAAI/bge-m3'
-        WHERE id = ${pptId}
-      `);
-    }
-  } catch (error) {
-    console.error('[PPT] Failed to generate embedding:', error);
-  }
+  void generateAndPersist(pptId, ppt);
 }
 
 const DEFAULT_PAGE_SIZE = 12;
@@ -225,6 +212,7 @@ export async function createPPT(
         title: data.title,
         category: data.category,
         author: data.author ?? 'Admin',
+        description: data.description,
         slidesCount: data.slides_count ?? 0,
         fileUrl: data.file_url,
         coverImageUrl: data.preview_url,
@@ -234,13 +222,18 @@ export async function createPPT(
         downloadCount: 0,
         viewCount: 0,
         status: data.status ?? 'draft',
+        embeddingStatus: 'pending',
         createdAt: now,
         updatedAt: now,
       })
       .returning();
 
-    // 异步生成 embedding（不阻塞响应）
-    generatePPTEmbeddingAsync(row.id, { title: data.title, tags: data.tags });
+    // 异步生成 embedding（不阻塞响应），包含 description
+    void generateAndPersist(row.id, {
+      title: row.title,
+      description: row.description,
+      tags: row.tags,
+    });
 
     return successResult(toPPTDto(row));
   } catch (error) {
@@ -267,6 +260,7 @@ export async function updatePPT(
 
     if (data.title !== undefined) updates.title = data.title;
     if (data.category !== undefined) updates.category = data.category;
+    if (data.description !== undefined) updates.description = data.description;
     if (data.status !== undefined) updates.status = data.status;
     if (data.author !== undefined) updates.author = data.author;
     if (data.file_url !== undefined) updates.fileUrl = data.file_url;
@@ -279,11 +273,24 @@ export async function updatePPT(
     if (data.slides_count !== undefined)
       updates.slidesCount = data.slides_count;
 
+    const shouldReembed =
+      data.title !== undefined ||
+      data.tags !== undefined ||
+      data.description !== undefined;
+    if (shouldReembed) {
+      updates.embeddingStatus = 'pending';
+      updates.embeddingError = null;
+    }
+
     if (Object.keys(updates).length === 0) {
       return errorResult('No fields to update', 'NO_UPDATES');
     }
 
-    updates.updatedAt = new Date();
+    const now = new Date();
+    updates.updatedAt = now;
+    if (shouldReembed) {
+      updates.embeddingUpdatedAt = now;
+    }
 
     const rows = await db
       .update(pptTable)
@@ -295,8 +302,8 @@ export async function updatePPT(
       return errorResult('PPT not found', 'NOT_FOUND');
     }
 
-    // 如果 title/tags 变更，重新生成 embedding
-    if (data.title !== undefined || data.tags !== undefined) {
+    // 如果 title/description/tags 变更，重新生成 embedding
+    if (shouldReembed) {
       const row = rows[0];
       generatePPTEmbeddingAsync(id, {
         title: row.title,

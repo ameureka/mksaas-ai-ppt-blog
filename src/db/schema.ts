@@ -196,6 +196,10 @@ export const ppt = pgTable("ppt", {
 	embeddingId: text("embedding_id"), // 向量化 ID（预留）
 	embeddingModel: text("embedding_model"), // 向量化模型
 	embedding: vector("embedding"), // pgvector 1024维向量
+	// Embedding 状态与失败记录（向量稳定性热修复）
+	embeddingStatus: text("embedding_status").default('pending'), // pending, success, failed
+	embeddingError: text("embedding_error"), // 最近一次失败原因
+	embeddingUpdatedAt: timestamp("embedding_updated_at"), // 最近一次 embedding 尝试时间
 	reviewStatus: text("review_status"), // 审核状态
 	/** R6: 软删除字段 - NULL 表示未删除，有值表示删除时间 */
 	deletedAt: timestamp("deleted_at"),
@@ -214,6 +218,8 @@ export const ppt = pgTable("ppt", {
 	pptCreatedAtIdx: index("ppt_created_at_idx").on(table.createdAt),
 	pptDownloadsIdx: index("ppt_download_count_idx").on(table.downloadCount),
 	pptViewsIdx: index("ppt_view_count_idx").on(table.viewCount),
+	pptEmbeddingStatusIdx: index("ppt_embedding_status_idx").on(table.embeddingStatus),
+	pptEmbeddingUpdatedAtIdx: index("ppt_embedding_updated_at_idx").on(table.embeddingUpdatedAt),
 	/** R4: 复合索引 - 优化按状态+时间排序的查询 */
 	pptStatusCreatedIdx: index("ppt_status_created_idx").on(table.status, table.createdAt),
 }));

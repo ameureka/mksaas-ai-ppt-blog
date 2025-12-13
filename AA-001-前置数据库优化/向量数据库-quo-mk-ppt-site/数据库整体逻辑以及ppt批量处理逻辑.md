@@ -13,7 +13,7 @@
 - 向量模型: BAAI/bge-m3 (1024维)
 - 前端框架: Next.js 15 (Vercel 部署)
 - 存储: S3/R2 兼容存储
-- 现状补充: 已建 HNSW 向量索引 `ppt_embedding_idx`（vector_cosine_ops），embedding 覆盖率当前为 100%（1471/1471）
+- 现状补充: 已建 HNSW 向量索引 `ppt_embedding_idx`（vector_cosine_ops）；向量覆盖口径以 `embedding IS NOT NULL AND embedding_status='success'` 为准，数量随线上数据实时变化；并已增加 `embedding_status/embedding_error/embedding_updated_at` 用于可观测与补漏。
 
 ### 1.2 核心需求
 - 批量导入 1k-10k PPT 数据
@@ -59,9 +59,9 @@
 **存储估算 (10,000 条)**:
 - 每条向量: 1024 维 × 4 字节 = 6KB
 - 总计: 6KB × 10,000 = 60MB
-- 索引: 已用 HNSW，约 100-150MB（视参数而定）；当前覆盖率 100%（1471/1471）
+- 索引: 已用 HNSW，约 100-150MB（视参数而定）；覆盖率口径同上，建议按 `embedding_status='success'` 持续统计
 
-**结论**: Neon 免费版 (512MB) 轻松承载（现量级 1471 条，embedding 全量，HNSW 已建）
+**结论**: Neon 免费版 (512MB) 轻松承载（现量级约 1k+ 条，HNSW 已建，按需持续监控向量覆盖率）
 
 ---
 
@@ -83,7 +83,7 @@
 | `category` | 分类 | **必须是 12 个有效 slug 之一** |
 | `tags` | 标签数组 | 建议 3-5 个，统一命名规范 |
 | `description` | 描述 | 用于 SEO + 向量化，建议 50-200 字 |
-| `language` | 语言 | `zh` / `en` / `其他` |
+| `language` | 语言 | `中文` / `English` / `其他`（数据库为 text，不强制枚举，初始化需与前端筛选一致） |
 | `thumbnail_url` | 缩略图 | 卡片展示必需，必须可访问 |
 | `slides_count` | 页数 | 前端展示 |
 
@@ -108,12 +108,15 @@
 
 | 字段 | 处理方式 |
 |------|----------|
-| `id` | 自动生成 `ppt_{uuid}` |
+| `id` | 默认自动生成 `ppt_{uuid}`；批量初始化推荐外部提供稳定的 `ppt_{aid}` |
 | `created_at` | 自动生成或保留原始时间 |
 | `updated_at` | 自动生成 |
 | `deleted_at` | 置空 (NULL) |
 | `embedding` | 批量脚本生成 |
 | `embedding_model` | 自动填充 `BAAI/bge-m3` |
+| `embedding_status` | 初始化为 `pending`，生成成功置 `success`，失败置 `failed` |
+| `embedding_error` | 失败时写入原因，成功清空 |
+| `embedding_updated_at` | 每次生成/重试时写入时间 |
 
 ---
 
@@ -142,27 +145,66 @@ const VALID_CATEGORIES = {
 
 ## 五、数据准备格式
 
-### 5.1 CSV 格式
-```csv
-title,category,tags,description,language,file_url,thumbnail_url,slides_count
-"2024年度工作总结","summary","年终总结,工作汇报,数据分析","适用于企业年度总结...","zh","https://...pptx","https://...png",24
+V5 之后，**标准初始化文件以 `ppthub-init.json` 为唯一权威格式**（由 piliang 工厂车间 F 导出），CSV 仅是其 items 的平铺版本。
+
+### 5.1 标准 JSON（推荐：ppthub-init.json）
+
+结构为 `{ meta, items }`：
+
+```json
+{
+  "meta": {
+    "schema_version": "ppt-import-v2",
+    "exported_at": "2025-12-12T00:00:00Z",
+    "natural_key": "file_url",
+    "source": "piliang",
+    "source_batch_id": "20251212-batch-01"
+  },
+  "items": [
+    {
+      "id": "ppt_139646",
+      "title": "2024年度工作总结",
+      "category": "summary",
+      "tags": ["年终总结", "工作汇报", "数据分析"],
+      "description": "适用于企业年度总结的专业模板",
+      "language": "中文",
+      "slides_count": 24,
+      "file_url": "https://pub-xxx.r2.dev/ppts/summary/ppt_139646.pptx",
+      "thumbnail_url": "https://pub-xxx.r2.dev/thumbs/summary/ppt_139646.jpg",
+      "cover_image_url": "https://pub-xxx.r2.dev/thumbs/summary/ppt_139646.jpg",
+      "file_size": 1382156,
+      "file_format": "pptx",
+      "author": "PPTHub",
+      "status": "published",
+      "visibility": "public",
+      "download_count": 0,
+      "view_count": 0,
+      "created_at": "2025-10-01T00:00:00Z",
+      "updated_at": "2025-12-12T00:00:00Z"
+    }
+  ]
+}
 ```
 
-### 5.2 JSON 格式
-```json
-[
-  {
-    "title": "2024年度工作总结",
-    "category": "summary",
-    "tags": ["年终总结", "工作汇报", "数据分析"],
-    "description": "适用于企业年度总结的专业模板",
-    "language": "zh",
-    "file_url": "https://cdn.xxx.com/ppt/xxx.pptx",
-    "thumbnail_url": "https://cdn.xxx.com/thumb/xxx.png",
-    "slides_count": 24
-  }
-]
+字段说明（items 内）：
+- **必填**：`title / file_url / category / thumbnail_url / status`，且 `deleted_at` 由导入脚本强制置空。
+- **强烈建议**：`description / tags / slides_count / language / author`。
+- **可选增强**：`id(推荐 ppt_{aid}) / cover_image_url / file_size(字节) / file_format / visibility / download_count / view_count / created_at / updated_at`。
+- `category` 必须为 12 个有效 slug（见第 4 章映射）。
+- `language` 取值必须与前端筛选一致：`中文 / English / 其他`。
+- `file_url/thumbnail_url/cover_image_url` 必须为 `STORAGE_PUBLIC_URL` 生成的**短公共链接**，禁止 pre‑signed 长链接。
+- 允许存在额外字段，导入器会忽略未知字段（用于溯源/调试）。
+
+### 5.2 CSV（从 JSON items 展平）
+
+CSV 不包含 meta，等价于 items 数组平铺。推荐字段全集如下（可按需省略可选列）：
+
+```csv
+id,title,category,tags,description,language,slides_count,file_url,thumbnail_url,cover_image_url,file_size,file_format,author,status,visibility,download_count,view_count,created_at,updated_at
+ppt_139646,"2024年度工作总结","summary","年终总结|工作汇报|数据分析","适用于企业年度总结的专业模板","中文",24,"https://pub-xxx.r2.dev/ppts/summary/ppt_139646.pptx","https://pub-xxx.r2.dev/thumbs/summary/ppt_139646.jpg","https://pub-xxx.r2.dev/thumbs/summary/ppt_139646.jpg",1382156,"pptx","PPTHub","published","public",0,0,"2025-10-01T00:00:00Z","2025-12-12T00:00:00Z"
 ```
+
+约束同 JSON。`tags` 以 `|` 或 `,` 分隔均可，导入时会 split+去重。
 
 ---
 
@@ -202,13 +244,17 @@ STORAGE_PUBLIC_URL="https://pub-xxx.r2.dev"
 
 # 向量化 API
 SILICONFLOW_API_KEY="sk-xxx"  # 或 OPENROUTER_API_KEY
+
+# embedding 补漏与质量门控
+CRON_SECRET="xxx"  # 保护 /api/cron/repair-embeddings
+VECTOR_SIMILARITY_THRESHOLD="0.3"  # 向量结果相似度阈值(0~1), 默认 0.3
 ```
 
 ### 7.2 API 限制
 
 | 服务 | 限制 | 策略 |
 |------|------|------|
-| 硅基流动 (BAAI/bge-m3) | 免费额度有限 | 批量限速 100ms/条 |
+| 硅基流动 (BAAI/bge-m3) | 免费额度有限 | 批量限速约 1s/条（按供应商限流动态调整） |
 | 数据库连接 | 连接池限制 | 批量 100 条/批 |
 
 
@@ -220,7 +266,7 @@ SILICONFLOW_API_KEY="sk-xxx"  # 或 OPENROUTER_API_KEY
 
 | 场景 | 策略 |
 |------|------|
-| 全新导入 | 生成新 `ppt_{uuid}` |
+| 全新导入 | 优先使用输入提供的 `ppt_{aid}`；缺失时再生成 `ppt_{uuid}` |
 | 更新现有 | 保留原 ID，用 `file_url` 或 `title` 做匹配 |
 
 ### 8.2 Upsert 规则
@@ -237,7 +283,7 @@ const naturalKey = 'title';     // 备选：标题唯一（可能有重名风险
 | 情况 | 处理 |
 |------|------|
 | 新数据 | INSERT |
-| 已存在（匹配自然键） | UPDATE（保留 id/统计数据） |
+| 已存在（匹配自然键） | UPDATE（保留 id/统计数据；若 title/description/tags 无变化则不重算 embedding） |
 | 废弃数据 | 软删除 (设置 deleted_at) |
 
 ---
@@ -256,15 +302,21 @@ const naturalKey = 'title';     // 备选：标题唯一（可能有重名风险
 - [ ] 各分类数量统计
 - [ ] 空 description 数量
 - [ ] 空 thumbnail_url 数量
-- [ ] 向量化覆盖率 (embedding IS NOT NULL)
+- [ ] 向量化覆盖率 (embedding 非空且 `embedding_status='success'`)
+- [ ] embedding pending/failed 数量（必要时触发 `/api/cron/repair-embeddings` 补漏重试）
 - [ ] 文件 404 检查
 - [ ] 搜索日志/热词：必要时触发热词更新，观测搜索结果是否正常返回（status+软删过滤生效）
 
 ---
 
-## 十、批量入库执行流水线（现状：embedding 覆盖 100% / 1471 条，已有向量则跳过生成）
+## 十、批量入库执行流水线（现状：HNSW 索引已建；已有成功向量记录则跳过生成）
 
 ```
+┌─────────────────────────────────────────────────────────────┐
+│  Phase 0: 数据库初始化                                       │
+│  空库先执行 pnpm db:migrate / 启用 vector 扩展 / 建 HNSW 索引 │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  Phase 1: 文件上传                                           │
 │  PPT 文件 + 缩略图 → S3/R2 → 获取 URL                        │
@@ -282,13 +334,13 @@ const naturalKey = 'title';     // 备选：标题唯一（可能有重名风险
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  Phase 4: 批量写入                                           │
-│  INSERT/UPSERT → ppt 表，每批 100 条                         │
+│  INSERT/UPSERT → ppt 表，每批 100 条（写入 embedding_status='pending'） │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  Phase 5: 向量化                                             │
-│  遍历 embedding IS NULL → 调用 API → 更新 embedding（已有向量跳过） │
-│  限速: 100ms/条，失败重试                                    │
+│  遍历 embedding IS NULL 或 embedding_status!='success' → 调用 API → 更新 embedding + status │
+│  限速: ~1s/条；失败可通过 repair cron 补漏重试               │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -545,11 +597,11 @@ Step 2: 上传文件
 
 Step 3: 批量导入
 ├── 运行导入脚本 → 写入数据库
-└── 运行向量化脚本 → 生成 embedding
+└── 运行向量化脚本/repair cron → 生成 embedding（落 embedding_status）
 
 Step 4: 验证
 ├── 检查分类统计
-├── 检查向量覆盖率
+├── 检查向量覆盖率（以 embedding_status='success' 统计）
 └── 更新热词缓存
 ```
 
@@ -577,6 +629,8 @@ Step 4: 验证
 | `check-categories.ts` | 检查分类数据分布 | `pnpm check-categories` |
 | `check-data-issues.ts` | 检查数据质量问题 | `pnpm check-data` |
 | `fix-data-issues.ts` | 修复数据问题 | `pnpm fix-data` |
+| `generate-embeddings.ts` | 批量生成 embedding | `pnpm generate-embeddings` |
+| `baseline-drizzle-migrations.ts` | 已存在库写入迁移基线（避免重放旧迁移） | `pnpm db:baseline` |
 | `seed-*.ts` | 种子数据 | `pnpm seed-all` |
 
 ### 待开发脚本
@@ -603,8 +657,61 @@ Step 4: 验证
 
 ### 下一步行动
 
+0. **初始化空库** - 执行 `pnpm db:migrate`，确保 `vector` 扩展与 `ppt_embedding_idx` 已创建（Neon 无权限时在控制台手动执行）
 1. **准备数据源** - CSV/JSON 格式的 PPT 元数据
 2. **上传文件** - PPT 文件和缩略图到 S3/R2
-3. **运行批量导入** - 执行导入脚本（已有向量则跳过）
+3. **运行批量导入** - 执行导入脚本（成功向量记录则跳过生成）
 4. **验证结果** - 检查数据质量、状态过滤、向量覆盖率；记录搜索/向量性能监控
 5. **后续治理** - 集成搜索日志/缓存（SQL 降级不分词）、评估全文索引或枚举约束（category/status 仍为可空 text）
+
+---
+
+## 附录：PPTHub 批量初始化导入器设计（V5 对齐）
+
+> 目标：消费 `ppthub-init.json/csv`，在空库或已存在库中幂等写入 `ppt` 表，并触发/补漏 embedding 生成，确保上线即用。
+
+### A.1 输入与校验
+
+- 支持读取 `ppthub-init.json`（推荐）或 CSV。
+- 校验 `meta.schema_version` 与 `natural_key`；不匹配则拒绝导入。
+- 对每条 item 做字段归一化：
+  - `title/description/tags` 去首尾空格、去 BOM、tags 去重收敛。
+  - `category` 必须命中 12 slug。
+  - `language` 必须为 `中文/English/其他`（若为 zh/en/other 则先映射）。
+  - `status` 默认 `published`；`visibility` 默认 `public`。
+  - `deleted_at` 一律置 NULL（初始化不允许软删）。
+
+### A.2 自然键与 Upsert 策略
+
+- **自然键**：优先 `file_url`（meta.natural_key），如缺失则回退 `title + category`。
+- 导入分为两种：
+  1. **INSERT 新记录**：自然键未命中时插入。
+  2. **UPDATE 已存在记录**：自然键命中时更新核心字段。
+
+更新规则：
+- 业务字段（`title/category/description/tags/language/author/file_url/thumbnail_url/cover_image_url/file_size/file_format/visibility/status`）按输入覆盖。
+- 统计字段（`download_count/view_count`）**默认保留库内旧值**；仅当输入显式提供且 `force_stats=true`（导入参数）时覆盖。
+- `created_at`：若输入提供则写入（用于保留来源上架时间），否则保持旧值/导入时间。
+- `updated_at`：无论输入是否提供，最终写为导入时间。
+
+### A.3 Embedding 状态初始化与触发
+
+- **新插入记录**：强制设置  
+  `embedding_status='pending'`, `embedding_error=NULL`, `embedding_updated_at=now`。
+- **更新记录**：若 `title/description/tags` 任一变化或库内 `embedding IS NULL/embedding_status!='success'`：
+  - 置 `embedding_status='pending'` 并更新 `embedding_updated_at=now`；
+  - 异步触发 `EmbeddingService.generateAndPersist`（不阻塞导入）。
+- 导入完成后可运行 PPTHub repair cron（`/api/cron/repair-embeddings`）批量补漏。
+
+### A.4 导入方式与兼容性
+
+- **SQL 批量导入**：直接写 `thumbnail_url/cover_image_url`。
+- **若走 createPPT action**：导入脚本需把 `thumbnail_url/cover_image_url` 兼容映射为 `preview_url`（防止卡片无封面）。
+
+### A.5 失败处理与报告
+
+- 以 batch（建议 100 条/批）事务写入；单批失败回滚但不影响其他批次。
+- 输出报告：
+  - `inserted / updated / skipped / failed` 数量
+  - failed 逐条原因（字段缺失/URL 不可访问/分类不合法/DB 异常）
+  - embedding 触发统计（pending 数量、直接 success 数量）

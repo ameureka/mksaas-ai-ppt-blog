@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ppt_xiazai",
+    "name": "PPT下载",
+    "baseUrl": "https://www.1ppt.com/xiazai/",
+    "pagePattern": "ppt_xiazai_{page}.html",
+    "perPage": 20,
+    "maxPage": 634
+  },
+  {
+    "id": "ppt_moban",
+    "name": "PPT模板",
+    "baseUrl": "https://www.1ppt.com/moban/",
+    "pagePattern": "ppt_moban_{page}.html",
+    "perPage": 20,
+    "maxPage": 281
+  },
+  {
+    "id": "ppt_hangye",
+    "name": "行业PPT",
+    "baseUrl": "https://www.1ppt.com/hangye/",
+    "pagePattern": "ppt_hangye_{page}.html",
+    "perPage": 20,
+    "maxPage": 282
+  },
+  {
+    "id": "ppt_jieri",
+    "name": "节日PPT",
+    "baseUrl": "https://www.1ppt.com/jieri/",
+    "pagePattern": "ppt_jieri_{page}.html",
+    "perPage": 20,
+    "maxPage": 305
+  }
+]

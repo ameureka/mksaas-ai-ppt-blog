@@ -57,6 +57,13 @@
       "when": 1765285157730,
       "tag": "0007_parched_wendell_rand",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1765523377041,
+      "tag": "0008_vector_db_stability_hotfix",
+      "breakpoints": true
     }
   ]
 }

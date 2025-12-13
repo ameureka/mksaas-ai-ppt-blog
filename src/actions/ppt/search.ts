@@ -6,6 +6,17 @@ import { generateEmbedding } from '@/lib/embedding';
 import { and, desc, ilike, isNull, or, sql, eq } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 
+const DEFAULT_SIMILARITY_THRESHOLD = 0.3;
+
+function getSimilarityThreshold(): number {
+  const raw = process.env.VECTOR_SIMILARITY_THRESHOLD;
+  const parsed = raw ? Number.parseFloat(raw) : Number.NaN;
+  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 1) {
+    return DEFAULT_SIMILARITY_THRESHOLD;
+  }
+  return parsed;
+}
+
 export interface SearchResult {
   id: string;
   title: string;
@@ -106,24 +117,34 @@ export async function hybridSearch(
   try {
     // 1. 尝试向量搜索
     const vectorResults = await vectorSearch(query, limit);
+    const similarityThreshold = getSimilarityThreshold();
+    const filteredVectorResults = vectorResults.filter(
+      (r) => (r.similarity ?? 0) >= similarityThreshold
+    );
 
-    // 2. 向量搜索成功且结果充足
-    if (vectorResults.length >= 5) {
-      return { results: vectorResults, searchType: 'vector' };
+    // 2. 向量搜索成功且结果充足（按 similarity 阈值过滤后）
+    const sufficientVectorCount = Math.min(5, limit);
+    if (filteredVectorResults.length >= sufficientVectorCount) {
+      return {
+        results: filteredVectorResults.slice(0, limit),
+        searchType: 'vector',
+      };
     }
 
     // 3. 向量搜索结果不足，SQL 补充
-    if (vectorResults.length > 0) {
-      const existingIds = new Set(vectorResults.map((r) => r.id));
-      const sqlResults = await sqlSearch(query, limit - vectorResults.length);
+    if (filteredVectorResults.length > 0) {
+      const existingIds = new Set(filteredVectorResults.map((r) => r.id));
+      const remaining = limit - filteredVectorResults.length;
+      const sqlResults =
+        remaining > 0 ? await sqlSearch(query, remaining) : [];
       const additional = sqlResults.filter((r) => !existingIds.has(r.id));
       return {
-        results: [...vectorResults, ...additional],
+        results: [...filteredVectorResults, ...additional].slice(0, limit),
         searchType: 'hybrid',
       };
     }
 
-    // 4. 向量搜索完全失败，降级到 SQL
+    // 4. 向量搜索完全失败或阈值过滤后无结果，降级到 SQL
     const sqlResults = await sqlSearch(query, limit);
     return { results: sqlResults, searchType: 'sql' };
   } catch (error) {

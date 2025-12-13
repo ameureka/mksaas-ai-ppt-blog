@@ -68,36 +68,25 @@ describe('hybridSearch 过滤与降级', () => {
     expect(statusCall?.[1]).toBe('published');
   });
 
-  it('P3: 向量不足阈值时补 SQL，向量失败降级 SQL', async () => {
-    const vectorRows: unknown[] = [{ id: 'ppt1' }];
+  it('P3: 向量结果不足 5 条时补 SQL，向量失败降级 SQL', async () => {
+    const vectorRows: unknown[] = [{ id: 'ppt1', similarity: 0.8 }];
     const sqlRows: unknown[] = [{ id: 'ppt2' }];
 
-    // 第一次 select 用于向量 → 返回1条；SQL 分支 select 再返回 sqlRows
-    const selectMock = vi
-      .fn()
-      .mockReturnValueOnce({
-        from: vi.fn().mockReturnThis(),
-        where: vi.fn().mockReturnThis(),
-        orderBy: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockReturnThis(),
-        offset: vi.fn().mockResolvedValue(vectorRows),
-      })
-      .mockReturnValue({
-        from: vi.fn().mockReturnThis(),
-        where: vi.fn().mockReturnThis(),
-        orderBy: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockReturnThis(),
-        offset: vi.fn().mockResolvedValue(sqlRows),
-      });
+    const selectChain = {
+      from: vi.fn().mockReturnThis(),
+      where: vi.fn().mockReturnThis(),
+      orderBy: vi.fn().mockReturnThis(),
+      limit: vi.fn().mockResolvedValue(sqlRows),
+    };
 
     asMock<typeof getDb>(getDb).mockResolvedValue({
-      select: selectMock,
+      select: vi.fn().mockReturnValue(selectChain),
       execute: vi.fn().mockResolvedValue(vectorRows),
     });
 
     const { results, searchType } = await hybridSearch('test', 5);
-    expect(results.length).toBeGreaterThanOrEqual(vectorRows.length);
-    expect(searchType === 'hybrid' || searchType === 'vector').toBe(true);
+    expect(results.map((r: any) => r.id)).toEqual(['ppt1', 'ppt2']);
+    expect(searchType).toBe('hybrid');
   });
 
   it('P6: 向量搜索失败时自动降级 SQL', async () => {

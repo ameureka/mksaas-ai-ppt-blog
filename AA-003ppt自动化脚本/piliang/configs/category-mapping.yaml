@@ -1,0 +1,179 @@
+# PPTHub 分类 slug 映射规则（V1）
+# 规则优先，AI 兜底；按 priority 从高到低匹配，命中即返回对应 slug。
+
+version: 1
+fallback: general
+
+categories:
+  summary:
+    priority: 100
+    keywords:
+      - 年终总结
+      - 年度总结
+      - 季度总结
+      - 月度总结
+      - 工作总结
+      - 项目总结
+      - 个人总结
+      - 复盘
+      - 总结汇报
+      - 期末总结
+
+  report:
+    priority: 90
+    keywords:
+      - 述职报告
+      - 述职
+      - 竞聘报告
+      - 竞聘
+      - 工作汇报
+      - 项目汇报
+      - 调研报告
+      - 运营汇报
+
+  plan:
+    priority: 80
+    keywords:
+      - 工作计划
+      - 年度计划
+      - 季度计划
+      - 月度计划
+      - 项目计划
+      - 行动计划
+      - 计划书
+      - 实施方案
+      - 规划
+      - 路线图
+
+  hr:
+    priority: 70
+    keywords:
+      - 人力资源
+      - 招聘
+      - 简历
+      - 面试
+      - 绩效
+      - 员工
+      - 入职
+      - 离职
+      - 团队建设
+      - 组织架构
+
+  education:
+    priority: 65
+    keywords:
+      - 教育
+      - 培训
+      - 课件
+      - 教学
+      - 学校
+      - 学生
+      - 课堂
+      - 开题
+      - 答辩
+      - 毕业
+      - 讲座
+
+  medical:
+    priority: 60
+    keywords:
+      - 医疗
+      - 医学
+      - 医院
+      - 健康
+      - 护理
+      - 医药
+      - 疾病
+      - 临床
+      - 疫情
+      - 防疫
+
+  finance:
+    priority: 60
+    keywords:
+      - 金融
+      - 财务
+      - 投资
+      - 理财
+      - 预算
+      - 报表
+      - 银行
+      - 保险
+      - 股票
+      - 审计
+      - 资产
+
+  marketing:
+    priority: 55
+    keywords:
+      - 营销
+      - 市场
+      - 品牌
+      - 推广
+      - 产品发布
+      - 新品发布
+      - 活动策划
+      - 广告
+      - 运营推广
+      - 用户增长
+
+  technology:
+    priority: 50
+    keywords:
+      - 科技
+      - 互联网
+      - 人工智能
+      - AI
+      - 大数据
+      - 云计算
+      - 区块链
+      - 物联网
+      - 5G
+      - 数字化
+      - 信息化
+      - IT
+      - 软件
+      - 网络
+
+  design:
+    priority: 45
+    keywords:
+      - 设计
+      - 创意
+      - 视觉
+      - UI
+      - 插画
+      - 艺术
+      - 作品集
+      - 色彩
+      - 平面
+      - 建筑
+      - 装饰
+
+  business:
+    priority: 40
+    keywords:
+      - 商务
+      - 商业
+      - 企业
+      - 公司
+      - 经营
+      - 战略
+      - 运营
+      - 商业计划
+      - 项目管理
+      - 管理咨询
+      - Roadshow
+      - Business
+
+  general:
+    priority: 1
+    keywords:
+      - 通用
+      - 模板
+      - 简约
+      - 扁平
+      - 卡通
+      - 中国风
+      - 节日
+      - 宣传
