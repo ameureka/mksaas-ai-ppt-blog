@@ -13,6 +13,7 @@ def test_property7_ai_meta_validation() -> None:
 
 	valid_payload = {
 		'ai_summary': '短摘要',
+		'ai_content_summary': '详细的SEO优化描述，包含更多内容用于搜索引擎优化',
 		'ai_keywords': ['k1', 'k2'],
 		'ai_scenario': 'biz',
 		'ai_color_scheme': 'blue',
@@ -23,6 +24,7 @@ def test_property7_ai_meta_validation() -> None:
 	}
 	meta = parser.parse(valid_payload)
 	assert meta.ai_summary == '短摘要'
+	assert meta.ai_content_summary == '详细的SEO优化描述，包含更多内容用于搜索引擎优化'
 
 	# Long summary: truncate + warning (no raise)
 	meta_long = parser.parse(

@@ -1,0 +1,15 @@
+{
+  "batch_id": "final-test-4",
+  "exported_at": "2025-12-18T17:43:22Z",
+  "total": 4,
+  "valid": 4,
+  "blocked": 0,
+  "valid_items": [
+    "ppt_100",
+    "ppt_1174",
+    "ppt_1203",
+    "ppt_1784"
+  ],
+  "blocked_items": [],
+  "blocked_reasons": []
+}

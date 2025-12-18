@@ -53,6 +53,7 @@ class CleanOutput:
 @dataclass(frozen=True)
 class AiMeta:
 	ai_summary: str
+	ai_content_summary: str
 	ai_keywords: list[str]
 	ai_scenario: str
 	ai_color_scheme: str
@@ -70,6 +71,7 @@ class PackedOutput:
 	output_dir: Path
 	pptx_path: Path
 	cover_path: Path | None
+	preview_path: Path | None
 	ai_meta_path: Path | None
 
 
@@ -115,6 +117,14 @@ class PpthubInitItem:
 	view_count: int | None = 0
 	created_at: str | None = None
 	updated_at: str | None = None
+	# AI enrichment fields
+	ai_summary: str | None = None
+	ai_content_summary: str | None = None
+	ai_keywords: list[str] | None = None
+	ai_scenario: str | None = None
+	ai_color_scheme: str | None = None
+	ai_structure_features: str | None = None
+	ai_template_features: str | None = None
 
 
 @dataclass(frozen=True)
@@ -128,4 +138,14 @@ class StageRecord:
 	error_message: str | None = None
 	warnings: list[str] = field(default_factory=list)
 	artifacts: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class CoverOutput:
+	"""Workshop Cover 的输出类型"""
+	aid: str
+	channel_id: str
+	cover_path: Path
+	preview_path: Path
+	source_slide: int = 0
 

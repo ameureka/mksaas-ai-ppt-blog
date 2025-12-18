@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from src.factory.ai.config_loader import (
+from factory.ai.config_loader import (
 	AIEnrichmentConfig,
 	ConfigLoader,
 	ConfigLoadResult,

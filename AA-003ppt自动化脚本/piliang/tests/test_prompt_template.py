@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from src.factory.ai.prompt_template import PromptTemplate, PromptTemplateConfig
+from factory.ai.prompt_template import PromptTemplate, PromptTemplateConfig
 
 
 @pytest.fixture

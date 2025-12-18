@@ -27,7 +27,8 @@ Piliang 是 PPTHub 的 PPT 批量处理与初始化导出工具：把爬虫下�
 | ✅ 封面生成 | Workshop Cover 从清洗后 PPTX 生成干净封面 |
 | ✅ AI 内容丰富 | Workshop C 支持 DeepSeek/Gemini 双提供商 |
 | ✅ S3/R2 上传 | Workshop E 真实上传到 Cloudflare R2 已验证 |
-| ✅ 测试通过 | `pytest tests` 70/70 passed |
+| ✅ 测试通过 | `pytest tests` 253/253 passed |
+| ✅ 跨平台支持 | macOS + Ubuntu (LibreOffice/unar 自动检测) |
 
 ---
 
@@ -422,8 +423,8 @@ data/input_raw/ppt_moban/139646/
       "view_count": 0,
       "created_at": "2024-12-13T12:00:00Z",
       "updated_at": "2024-12-13T12:00:00Z",
-      "ai_summary": "商务汇报PPT模板，简约风格",
-      "ai_content_summary": "这是一套专业的商务汇报PPT模板，采用简约大气的设计风格...",
+      "ai_summary": "商务汇报PPT模板，简约风格，适合企业季度汇报",
+      "ai_content_summary": "这是一套专业的商务汇报PPT模板，采用简约大气的设计风格，配色以蓝白灰为主调，整体视觉清爽专业。模板包含封面页、目录页、内容展示页和结尾页等完整结构，共24页精心设计的版式。内置丰富的图表组件，支持数据可视化展示，特别适合企业季度汇报、项目总结、工作计划等商务场景使用。",
       "ai_keywords": ["商务", "汇报", "简约", "企业"],
       "ai_scenario": "企业季度汇报、项目总结",
       "ai_color_scheme": "蓝白灰",
@@ -466,11 +467,12 @@ CSV 格式，包含与 JSON 相同的字段，便于 Excel 查看和批量导入
 |--------------|-------------|------|
 | `title` | `title` | 已清洗标题 |
 | `original_tags` + `ai_keywords` | `tags` | 合并去重 |
-| `ai_content_summary` | `description` | SEO/向量输入（300-800字） |
-| `ai_summary` | `ai_summary` | 卡片摘要（100字内） |
+| `ai_summary` | `description` | 列表页摘要（50-100字） |
+| `ai_content_summary` | `ai_content_summary` | SEO 长描述（300-500字） |
 | `file_url_remote` | `file_url` | 上传后的外链 |
-| `thumbnail_url_remote` | `thumbnail_url` | 封面外链（列表缩略图） |
-| `cover_url_remote` | `cover_image_url` | 封面外链（当前实现与 thumbnail_url 相同） |
+| `thumbnail_url_remote` | `thumbnail_url` | 封面外链 640×360（列表缩略图） |
+| `preview_url_remote` | `preview_url` | 预览外链 1920×1080（详情页大图） |
+| `cover_url_remote` | `cover_image_url` | 封面外链（当前与 thumbnail_url 相同） |
 | `pages_count` | `slides_count` | 页数 |
 | `ppthub_category` | `category` | 分类 slug |
 
@@ -505,8 +507,10 @@ pip install -e ".[dev]"
 ```
 
 > 说明：Piliang 会调用本机的 LibreOffice（用于 PPTX -> PDF/PNG），并优先使用 `pdftoppm`（用于从 PDF 导出多页图片并智能选封面页）。
-> - LibreOffice（macOS 默认路径）：`/Applications/LibreOffice.app/Contents/MacOS/soffice`
-> - `pdftoppm`：推荐通过 Homebrew 安装 `poppler`，确保终端可找到 `pdftoppm`
+> - LibreOffice（macOS）：`/Applications/LibreOffice.app/Contents/MacOS/soffice`
+> - LibreOffice（Ubuntu）：`sudo apt install libreoffice`
+> - `pdftoppm`（macOS）：`brew install poppler`
+> - `pdftoppm`（Ubuntu）：`sudo apt install poppler-utils`
 
 ### 2. 配置环境变量
 
@@ -519,7 +523,7 @@ cp .env.example .env
 
 ```bash
 pytest tests
-# 预期输出: 70 passed
+# 预期输出: 253 passed
 ```
 
 ### 4. 准备输入数据
@@ -658,6 +662,7 @@ STORAGE_REGION=ap-southeast-1
 STORAGE_PUBLIC_URL=https://cdn.ppthub.com
 STORAGE_PATH_PPTX=ppts/{category}/ppt_{aid}.pptx
 STORAGE_PATH_THUMB=thumbs/{category}/ppt_{aid}.webp
+STORAGE_PATH_PREVIEW=previews/{category}/ppt_{aid}.webp
 STORAGE_DRY_RUN=false
 ```
 
@@ -773,6 +778,8 @@ python scripts/investigate_ppt.py data/input_raw/ppt_moban/139646/main.pptx
 pip install rarfile
 # macOS
 brew install unar
+# Ubuntu/Linux
+sudo apt install unar
 ```
 
 ### Q: 如何处理 .ppt 文件（旧版 PowerPoint）？
@@ -782,6 +789,8 @@ brew install unar
 ```bash
 # macOS
 brew install --cask libreoffice
+# Ubuntu/Linux
+sudo apt install libreoffice
 ```
 
 转换后的文件会带有 `WARN_PPT_CONVERTED` 警告标记。

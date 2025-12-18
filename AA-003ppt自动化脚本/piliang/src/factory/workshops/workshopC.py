@@ -10,7 +10,7 @@ from ..ai import AIAdapter, AIAdapterConfig, AiParser, PromptBuilder, PromptBuil
 from ..db.dao import record_stage, upsert_processed_asset
 from ..rules import RuleEngine, RuleEngineConfig
 from ..stages import StageName, StageStatus
-from ..types import EtlOutput, StageRecord
+from ..types import CleanOutput, EtlOutput, StageRecord
 
 
 def _split_keywords(raw: str) -> list[str]:
@@ -82,18 +82,21 @@ class WorkshopC:
 			valid_categories=_load_valid_categories(category_mapping_path),
 		)
 
-	def run(self, etl_out: EtlOutput) -> dict[str, Any]:
+	def run(self, etl_out: EtlOutput, clean_out: CleanOutput | None = None) -> dict[str, Any]:
 		title = etl_out.meta.get('title') or ''
 		tags = etl_out.meta.get('original_tags') or []
 
 		rule_slug = self._rule_engine.match(title=title, tags=tags)
+
+		# Use cleaned PPTX if available (watermarks removed), otherwise fall back to original
+		pptx_path = clean_out.clean_pptx_path if clean_out else etl_out.local_pptx_path
 
 		# Always call AI to enrich metadata; rule engine only decides category priority.
 		prompt_path = self._prompt_builder.build(
 			aid=etl_out.aid,
 			title=title,
 			meta=etl_out.meta,
-			pptx_path=etl_out.local_pptx_path,
+			pptx_path=pptx_path,
 		)
 		output_path = self._config.ai_output_dir / f'{etl_out.aid}.json'
 		ai_payload = self._ai_adapter.run(prompt_path, output_path)
@@ -107,6 +110,7 @@ class WorkshopC:
 
 		ai_meta: dict[str, Any] = {
 			'ai_summary': parsed.ai_summary,
+			'ai_content_summary': parsed.ai_content_summary,
 			'ai_keywords': parsed.ai_keywords,
 			'ai_scenario': parsed.ai_scenario,
 			'ai_color_scheme': parsed.ai_color_scheme,
@@ -130,11 +134,12 @@ def run_ai_enrich(
 	*,
 	source_batch_id: str,
 	etl_out: EtlOutput,
+	clean_out: CleanOutput | None = None,
 	workshop: WorkshopC,
 ) -> dict[str, Any]:
 	started_at = datetime.now(timezone.utc)
 	try:
-		result = workshop.run(etl_out)
+		result = workshop.run(etl_out, clean_out)
 		ai_meta = result.get('ai_meta')
 		fields: dict[str, Any] = {}
 		if isinstance(ai_meta, dict):

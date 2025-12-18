@@ -4,7 +4,7 @@ LanguageDetector 模块单元测试
 
 import pytest
 
-from src.factory.ai.language_detector import LanguageDetector, LanguageDetectionResult
+from factory.ai.language_detector import LanguageDetector, LanguageDetectionResult
 
 
 def test_detect_chinese() -> None:

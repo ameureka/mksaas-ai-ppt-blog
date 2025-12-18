@@ -11,12 +11,14 @@ from PIL import Image
 
 from ..db.dao import record_stage, upsert_processed_asset
 from ..stages import StageName, StageStatus
-from ..types import CleanOutput, StageRecord
+from ..types import CleanOutput, CoverOutput, StageRecord
 
 
 LIBREOFFICE_PATH = (
 	shutil.which('soffice')
-	or '/Applications/LibreOffice.app/Contents/MacOS/soffice'
+	or shutil.which('libreoffice')
+	or '/Applications/LibreOffice.app/Contents/MacOS/soffice'  # macOS
+	or '/usr/bin/soffice'  # Linux
 )
 
 
@@ -151,17 +153,23 @@ def run_cover(
 	source_batch_id: str,
 	clean_out: CleanOutput,
 	workshop: WorkshopCover,
-) -> dict[str, Path]:
+) -> CoverOutput:
 	started_at = datetime.now(timezone.utc)
 	try:
 		result = workshop.generate(clean_out)
+		cover_output = CoverOutput(
+			aid=clean_out.aid,
+			channel_id=clean_out.channel_id,
+			cover_path=result['cover_path'],
+			preview_path=result['preview_path'],
+		)
 		# Persist as latest local cover (used by publish step).
 		upsert_processed_asset(
 			conn,
 			aid=clean_out.aid,
 			source_batch_id=source_batch_id,
 			fields={
-				'local_cover_path': result.get('cover_path'),
+				'local_cover_path': cover_output.cover_path,
 			},
 		)
 		status = StageStatus.success
@@ -169,8 +177,8 @@ def run_cover(
 		error_message = None
 		warnings: list[str] = []
 		artifacts = {
-			'cover_path': str(result.get('cover_path')) if result.get('cover_path') else None,
-			'preview_path': str(result.get('preview_path')) if result.get('preview_path') else None,
+			'cover_path': str(cover_output.cover_path),
+			'preview_path': str(cover_output.preview_path),
 		}
 	except CoverError as exc:
 		status = StageStatus.failed
@@ -203,5 +211,5 @@ def run_cover(
 			),
 		)
 
-	return result
+	return cover_output
 

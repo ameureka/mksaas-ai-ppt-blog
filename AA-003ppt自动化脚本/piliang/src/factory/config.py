@@ -7,8 +7,8 @@ from typing import Any
 
 
 def _project_root() -> Path:
-	# .../piliang/src/factory/config.py -> parents[3] == .../piliang
-	return Path(__file__).resolve().parents[3]
+	# .../piliang/src/factory/config.py -> parents[2] == .../piliang
+	return Path(__file__).resolve().parents[2]
 
 
 def _split_keywords(raw: str) -> list[str]:
@@ -80,6 +80,8 @@ def _load_brand_replacements(path: Path) -> list[tuple[str, str]]:
 @dataclass(frozen=True)
 class FactoryConfig:
 	project_root: Path = field(default_factory=_project_root)
+	data_root: Path = field(default_factory=lambda: _project_root() / 'data')
+	templates_dir: Path = field(default_factory=lambda: _project_root() / 'templates')
 	storage_public_url: str | None = None
 	category_mapping_path: Path = field(
 		default_factory=lambda: _project_root() / 'configs' / 'category-mapping.yaml'
@@ -88,6 +90,7 @@ class FactoryConfig:
 	brand_replacements: list[tuple[str, str]] = field(default_factory=list)
 	concurrency: int = 4
 	category_mapping_raw: dict[str, Any] | None = None
+	head_prune_max: int = 2
 
 
 def load_factory_config(
@@ -127,10 +130,13 @@ def load_factory_config(
 
 	return FactoryConfig(
 		project_root=root,
+		data_root=root / 'data',
+		templates_dir=root / 'templates',
 		storage_public_url=storage_public_url,
 		category_mapping_path=category_mapping_path,
 		forbidden_keywords=forbidden_keywords,
 		brand_replacements=brand_replacements,
 		concurrency=concurrency,
 		category_mapping_raw=category_mapping_raw,
+		head_prune_max=2,
 	)

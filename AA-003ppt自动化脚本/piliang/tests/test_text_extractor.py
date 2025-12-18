@@ -8,7 +8,7 @@ import pytest
 from pptx import Presentation
 from pptx.util import Inches
 
-from src.factory.ai.text_extractor import TextExtractor
+from factory.ai.text_extractor import TextExtractor
 
 
 @pytest.fixture

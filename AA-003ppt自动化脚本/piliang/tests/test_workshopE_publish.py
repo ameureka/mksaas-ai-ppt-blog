@@ -19,10 +19,12 @@ def test_workshopE_publish_paths_and_urls(tmp_path: Path) -> None:
 		output_dir=tmp_path,
 		pptx_path=tmp_path / 'pptx.pptx',
 		cover_path=tmp_path / 'cover.jpg',
+		preview_path=tmp_path / 'preview.jpg',
 		ai_meta_path=None,
 	)
 	packed.pptx_path.write_bytes(b'123')
 	packed.cover_path.write_bytes(b'456')
+	packed.preview_path.write_bytes(b'789')
 
 	config = StorageConfig(
 		endpoint='',
@@ -44,6 +46,7 @@ def test_workshopE_publish_paths_and_urls(tmp_path: Path) -> None:
 		result = run_publish(conn, source_batch_id='b1', packed_out=packed, workshop=we, category='general')
 		assert result['file_url_remote'] == 'https://cdn.example.com/ppts/general/ppt_a1.pptx'
 		assert result['thumbnail_url_remote'] == 'https://cdn.example.com/thumbs/general/ppt_a1.jpg'
+		assert result['preview_url_remote'] == 'https://cdn.example.com/previews/general/ppt_a1.jpg'
 
 		stage = get_stage_status(conn, aid='a1', stage=StageName.E)
 		assert stage is not None
@@ -59,10 +62,12 @@ def test_workshopE_publish_with_webp_cover_uses_webp_remote_path(tmp_path: Path)
 		output_dir=tmp_path,
 		pptx_path=tmp_path / 'pptx.pptx',
 		cover_path=tmp_path / 'cover.webp',
+		preview_path=tmp_path / 'preview.webp',
 		ai_meta_path=None,
 	)
 	packed.pptx_path.write_bytes(b'123')
-	packed.cover_path.write_bytes(b'RIFF....WEBP')  # 内容不重要，dry-run 不会解析
+	packed.cover_path.write_bytes(b'RIFF....WEBP')
+	packed.preview_path.write_bytes(b'RIFF....WEBP')
 
 	config = StorageConfig(
 		endpoint='',
@@ -84,6 +89,7 @@ def test_workshopE_publish_with_webp_cover_uses_webp_remote_path(tmp_path: Path)
 		result = run_publish(conn, source_batch_id='b1', packed_out=packed, workshop=we, category='general')
 		assert result['file_url_remote'] == 'https://cdn.example.com/ppts/general/ppt_a1w.pptx'
 		assert result['thumbnail_url_remote'] == 'https://cdn.example.com/thumbs/general/ppt_a1w.webp'
+		assert result['preview_url_remote'] == 'https://cdn.example.com/previews/general/ppt_a1w.webp'
 
 		stage = get_stage_status(conn, aid='a1w', stage=StageName.E)
 		assert stage is not None
@@ -99,6 +105,7 @@ def test_workshopE_publish_without_cover(tmp_path: Path) -> None:
 		output_dir=tmp_path,
 		pptx_path=tmp_path / 'pptx.pptx',
 		cover_path=None,
+		preview_path=None,
 		ai_meta_path=None,
 	)
 	packed.pptx_path.write_bytes(b'123')
@@ -123,6 +130,7 @@ def test_workshopE_publish_without_cover(tmp_path: Path) -> None:
 		result = run_publish(conn, source_batch_id='b1', packed_out=packed, workshop=we, category='general')
 		assert result['file_url_remote'] == 'https://cdn.example.com/ppts/general/ppt_a2.pptx'
 		assert result['thumbnail_url_remote'] is None
+		assert result['preview_url_remote'] is None
 
 		stage = get_stage_status(conn, aid='a2', stage=StageName.E)
 		assert stage is not None

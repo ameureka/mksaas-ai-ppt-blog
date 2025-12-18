@@ -4,7 +4,7 @@ TagsNormalizer 模块单元测试
 
 import pytest
 
-from src.factory.ai.tags_normalizer import TagsNormalizer
+from factory.ai.tags_normalizer import TagsNormalizer
 
 
 def test_normalize_basic() -> None:

@@ -15,7 +15,7 @@ import pytest
 from pptx import Presentation
 from pptx.util import Inches
 
-from src.factory.ai import (
+from factory.ai import (
 	AIEnrichmentService,
 	AiEnrichmentOutput,
 	BatchProcessReport,
@@ -24,7 +24,7 @@ from src.factory.ai import (
 	EtlOutput,
 	create_etl_output,
 )
-from src.factory.ai.config_loader import AIEnrichmentConfig
+from factory.ai.config_loader import AIEnrichmentConfig
 
 
 @pytest.fixture
@@ -156,7 +156,7 @@ def mock_ai_response() -> dict[str, Any]:
 class TestAIEnrichmentE2E:
 	"""AI Enrichment 端到端测试"""
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_single_asset_skip_ai(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -165,7 +165,7 @@ class TestAIEnrichmentE2E:
 	) -> None:
 		"""测试单个 Asset 处理（跳过 AI）"""
 		# Mock TextExtractor
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		mock_extractor = MagicMock()
 		mock_extractor.extract.return_value = ExtractedText(
@@ -191,7 +191,7 @@ class TestAIEnrichmentE2E:
 		assert result.output.ppthub_category == 'general'  # fallback
 		assert len(result.output.tags_final) >= 3
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_single_asset_with_rule_match(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -199,7 +199,7 @@ class TestAIEnrichmentE2E:
 		sample_etl_output: EtlOutput,
 	) -> None:
 		"""测试单个 Asset 处理（规则命中）"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		mock_extractor = MagicMock()
 		mock_extractor.extract.return_value = ExtractedText(
@@ -232,7 +232,7 @@ class TestAIEnrichmentE2E:
 		assert result.output.ppthub_category == 'business'
 		assert result.output.category_source == 'rule'
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_batch_processing(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -240,7 +240,7 @@ class TestAIEnrichmentE2E:
 		tmp_path: Path,
 	) -> None:
 		"""测试批量处理"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		mock_extractor = MagicMock()
 		mock_extractor.extract.return_value = ExtractedText(
@@ -282,7 +282,7 @@ class TestAIEnrichmentE2E:
 		assert report.failed == 0
 		assert report.success_rate == 1.0
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_batch_with_failures(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -290,7 +290,7 @@ class TestAIEnrichmentE2E:
 		tmp_path: Path,
 	) -> None:
 		"""测试批量处理包含失败（错误隔离）"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		call_count = {'count': 0}
 
@@ -340,7 +340,7 @@ class TestAIEnrichmentE2E:
 		assert report.failed == 1
 		assert 'batch-002' in report.failed_aids
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_forbidden_keyword_filtering(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -348,7 +348,7 @@ class TestAIEnrichmentE2E:
 		sample_etl_output: EtlOutput,
 	) -> None:
 		"""测试敏感词过滤"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		mock_extractor = MagicMock()
 		mock_extractor.extract.return_value = ExtractedText(
@@ -385,7 +385,7 @@ class TestAIEnrichmentE2E:
 			assert '第一PPT' not in tag
 			assert 'BAD_WORD' not in tag
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_language_detection(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -393,7 +393,7 @@ class TestAIEnrichmentE2E:
 		tmp_path: Path,
 	) -> None:
 		"""测试语言检测"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		# 测试中文内容 - 使用纯中文文本确保中文比例 > 30%
 		mock_extractor = MagicMock()
@@ -446,7 +446,7 @@ class TestAIEnrichmentE2E:
 		assert result_en.output is not None
 		assert result_en.output.language == 'English'
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_tags_normalization(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -454,7 +454,7 @@ class TestAIEnrichmentE2E:
 		tmp_path: Path,
 	) -> None:
 		"""测试标签标准化"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		mock_extractor = MagicMock()
 		mock_extractor.extract.return_value = ExtractedText(
@@ -488,7 +488,7 @@ class TestAIEnrichmentE2E:
 		# 标签应该被收敛到 3-8 个
 		assert 3 <= len(result.output.tags_final) <= 8
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_e2e_description_building(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -496,7 +496,7 @@ class TestAIEnrichmentE2E:
 		sample_etl_output: EtlOutput,
 	) -> None:
 		"""测试描述构建"""
-		from src.factory.ai.text_extractor import ExtractedText
+		from factory.ai.text_extractor import ExtractedText
 
 		mock_extractor = MagicMock()
 		mock_extractor.extract.return_value = ExtractedText(

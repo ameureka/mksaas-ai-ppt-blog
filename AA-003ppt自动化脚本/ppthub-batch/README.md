@@ -28,6 +28,8 @@ pnpm tsx scripts/setup-vector-db.ts
 - ✅ Embedding 触发与 Repair Cron 说明
 - ✅ 导入后校验报告
 - ✅ 一致性校验
+- ✅ 跨平台支持（macOS + Ubuntu）
+- ✅ 测试覆盖（118 tests passed）
 
 ## 安装
 

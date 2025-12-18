@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.factory.ai.ai_adapter import AIAdapter, AIAdapterConfig, AICallResult
+from factory.ai.ai_adapter import AIAdapter, AIAdapterConfig, AICallResult
 
 
 @pytest.fixture

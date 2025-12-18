@@ -13,28 +13,45 @@ class WorkshopE:
 		self._storage = storage
 
 	@staticmethod
-	def _thumb_path_for_cover(base_thumb_path: str, cover_path) -> str:
-		ext = (getattr(cover_path, 'suffix', '') or '').lower()
+	def _path_with_ext(base_path: str, local_path) -> str:
+		"""Replace extension in base_path with actual file extension."""
+		ext = (getattr(local_path, 'suffix', '') or '').lower()
 		if ext not in {'.webp', '.jpg', '.jpeg', '.png'}:
 			ext = '.webp'
-		if base_thumb_path.lower().endswith('.webp'):
-			return base_thumb_path[:-5] + ext
-		return base_thumb_path + ext
+		# Remove existing extension and add new one
+		for old_ext in ['.webp', '.jpg', '.jpeg', '.png']:
+			if base_path.lower().endswith(old_ext):
+				return base_path[:-len(old_ext)] + ext
+		return base_path + ext
 
 	def publish(self, packed_out: PackedOutput, *, category: str) -> dict[str, str | None]:
 		paths = self._storage.compute_paths(category=category, aid=packed_out.aid)
+
+		# Upload PPTX
 		pptx_url = self._storage.upload(packed_out.pptx_path, paths['pptx'])
+
+		# Upload cover (thumbnail)
 		thumb_url = None
 		remote_thumb_path = None
-		if packed_out.cover_path is not None:
-			remote_thumb_path = self._thumb_path_for_cover(paths['thumb'], packed_out.cover_path)
+		if packed_out.cover_path is not None and packed_out.cover_path.exists():
+			remote_thumb_path = self._path_with_ext(paths['thumb'], packed_out.cover_path)
 			thumb_url = self._storage.upload(packed_out.cover_path, remote_thumb_path)
+
+		# Upload preview
+		preview_url = None
+		remote_preview_path = None
+		if packed_out.preview_path is not None and packed_out.preview_path.exists():
+			remote_preview_path = self._path_with_ext(paths['preview'], packed_out.preview_path)
+			preview_url = self._storage.upload(packed_out.preview_path, remote_preview_path)
+
 		return {
 			'remote_pptx_path': paths['pptx'],
 			'remote_thumb_path': remote_thumb_path,
+			'remote_preview_path': remote_preview_path,
 			'file_url_remote': pptx_url,
 			'thumbnail_url_remote': thumb_url,
 			'cover_url_remote': thumb_url,
+			'preview_url_remote': preview_url,
 		}
 
 
@@ -58,6 +75,7 @@ def run_publish(
 				'file_url_remote': result['file_url_remote'],
 				'thumbnail_url_remote': result['thumbnail_url_remote'],
 				'cover_url_remote': result['cover_url_remote'],
+				'preview_url_remote': result['preview_url_remote'],
 				'publish_status': 'success',
 			},
 		)
@@ -68,6 +86,7 @@ def run_publish(
 		artifacts = {
 			'remote_pptx_path': result['remote_pptx_path'],
 			'remote_thumb_path': result['remote_thumb_path'],
+			'remote_preview_path': result['remote_preview_path'],
 		}
 	except Exception as exc:  # noqa: BLE001
 		status = StageStatus.failed

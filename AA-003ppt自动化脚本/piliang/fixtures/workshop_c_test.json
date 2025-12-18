@@ -1,0 +1,10 @@
+{
+  "batch_id": "workshop-c-test",
+  "notes": "Workshop C AI 测试样本",
+  "aids": [
+    {"aid": "100", "channel_id": "ppt_xiazai"},
+    {"aid": "1174", "channel_id": "ppt_moban"},
+    {"aid": "1203", "channel_id": "ppt_hangye"},
+    {"aid": "1784", "channel_id": "ppt_jieri"}
+  ]
+}

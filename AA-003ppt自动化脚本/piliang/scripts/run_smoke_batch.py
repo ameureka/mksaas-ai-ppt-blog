@@ -31,26 +31,43 @@ from factory.gates import FinalGateValidator
 from factory.gates.final_gate import apply_final_gate
 from factory.gates.preflight import run_preflight
 from factory.stages import StageName, StageStatus
-from factory.types import PpthubInitItem, StageRecord, StandardInputPackage, CoverOutput
-from factory.types import PackedOutput
-from factory.storage.storage_adapter import StorageAdapter, StorageConfig, load_storage_config_from_env
+from factory.types import PpthubInitItem, StageRecord, StandardInputPackage, PackedOutput, CoverOutput
+from factory.storage.storage_adapter import StorageAdapter, StorageConfig
 from factory.workshops import (
 	WorkshopA,
 	WorkshopAConfig,
 	WorkshopB,
 	WorkshopBConfig,
+	WorkshopC,
+	WorkshopCConfig,
 	WorkshopD,
 	WorkshopDConfig,
 	WorkshopE,
 	WorkshopF,
 	WorkshopFConfig,
+	WorkshopCover,
+	WorkshopCoverConfig,
+	CoverError,
 	run_clean,
 	run_etl,
 	run_pack,
 	run_publish,
+	run_ai_enrich,
+	run_cover,
 )
-from factory.workshops.workshopC import WorkshopC, WorkshopCConfig, run_ai_enrich
-from factory.workshops.workshop_cover import WorkshopCover, WorkshopCoverConfig, run_cover, CoverError
+
+
+def load_storage_config_from_env() -> StorageConfig:
+	"""从环境变量加载存储配置，默认 dry_run=True"""
+	return StorageConfig(
+		endpoint=os.environ.get('STORAGE_ENDPOINT', ''),
+		bucket=os.environ.get('STORAGE_BUCKET_NAME', ''),
+		access_key_id=os.environ.get('STORAGE_ACCESS_KEY_ID', ''),
+		secret_access_key=os.environ.get('STORAGE_SECRET_ACCESS_KEY', ''),
+		region=os.environ.get('STORAGE_REGION', 'auto'),
+		public_base_url=os.environ.get('STORAGE_PUBLIC_URL', ''),
+		dry_run=os.environ.get('STORAGE_DRY_RUN', 'true').lower() in ('true', '1', 'yes'),
+	)
 
 
 def setup_logging() -> None:
@@ -165,7 +182,6 @@ def main() -> None:
 				forbidden_keywords=cfg.forbidden_keywords,
 				brand_replacements=cfg.brand_replacements,
 				brand_end_slide_path=brand_path if brand_path.exists() else None,
-				head_prune_max=cfg.head_prune_max,
 			)
 		)
 		wc = (
@@ -194,7 +210,6 @@ def main() -> None:
 				region=storage_config.region,
 				public_base_url=args.public_base_url,
 				dry_run=storage_config.dry_run,
-				path_templates=storage_config.path_templates,
 			)
 		storage = StorageAdapter(storage_config)
 		we = WorkshopE(storage)
@@ -206,12 +221,17 @@ def main() -> None:
 		for entry in manifest.get('aids', []):
 			aid = entry['aid']
 			channel_id = entry['channel_id']
-			raw_input_dir = Path(entry['input_dir'])
-			if raw_input_dir.is_absolute() or raw_input_dir.exists():
-				input_dir = raw_input_dir
+			# 自动推断 input_dir: data/input_raw/{channel_id}/{aid}
+			raw_input_dir = entry.get('input_dir')
+			if raw_input_dir:
+				raw_input_dir = Path(raw_input_dir)
+				if raw_input_dir.is_absolute() or raw_input_dir.exists():
+					input_dir = raw_input_dir
+				else:
+					candidate = data_root / raw_input_dir
+					input_dir = candidate if candidate.exists() else (manifest_path.parent / raw_input_dir)
 			else:
-				candidate = data_root / raw_input_dir
-				input_dir = candidate if candidate.exists() else (manifest_path.parent / raw_input_dir)
+				input_dir = data_root / 'input_raw' / channel_id / aid
 			main = input_dir / 'main.pptx'
 			meta_path = input_dir / 'meta.json'
 			cover = input_dir / 'cover.jpg'
@@ -274,7 +294,7 @@ def main() -> None:
 				if wc is None:
 					logger.info(f'aid={aid} Stage C (AI) skipped (use --enable-ai to run)')
 				else:
-					ai_res = run_ai_enrich(conn, source_batch_id=batch_id, etl_out=etl_out, workshop=wc)
+					ai_res = run_ai_enrich(conn, source_batch_id=batch_id, etl_out=etl_out, clean_out=clean_out, workshop=wc)
 					category_source = ai_res.get('category_source', 'rule')
 					logger.info(f"aid={aid} AI category={ai_res.get('ppthub_category')} source={category_source}")
 
@@ -297,20 +317,11 @@ def main() -> None:
 							artifacts={'fallback_source': str(pkg.cover_path)},
 						))
 
-			pack_out_dict = run_pack(conn, source_batch_id=batch_id, etl_out=etl_out, clean_out=clean_out, workshop=wd, cover_out=cover_out) if stage_enabled(StageName.D) else None
-			if pack_out_dict is None:
+			pack_out = run_pack(conn, source_batch_id=batch_id, etl_out=etl_out, clean_out=clean_out, workshop=wd, cover_out=cover_out) if stage_enabled(StageName.D) else None
+			if pack_out is None:
 				continue
 
-			packed_out = PackedOutput(
-				aid=aid,
-				channel_id=channel_id,
-				output_dir=pack_out_dict['pptx_path'].parent,
-				pptx_path=pack_out_dict['pptx_path'],
-				cover_path=pack_out_dict['cover_path'],
-				ai_meta_path=None,
-			)
-
-			publish_out = run_publish(conn, source_batch_id=batch_id, packed_out=packed_out, workshop=we, category=ai_res.get('ppthub_category', 'general') if ai_res else 'general') if stage_enabled(StageName.E) else None
+			publish_out = run_publish(conn, source_batch_id=batch_id, packed_out=pack_out, workshop=we, category=ai_res.get('ppthub_category', 'general') if ai_res else 'general') if stage_enabled(StageName.E) else None
 
 			file_url = publish_out['file_url_remote'] if publish_out else ''
 			thumb_url = publish_out['thumbnail_url_remote'] if publish_out else ''
@@ -322,7 +333,7 @@ def main() -> None:
 				title=meta.get('title', ''),
 				category=ai_res.get('ppthub_category', 'general') if ai_res else meta.get('category', 'general'),
 				tags=ai_res.get('tags_final', meta.get('original_tags', [])) if ai_res else meta.get('original_tags', []),
-				description=ai_res.get('description_final', '') if ai_res else '',
+				description=ai_meta.get('ai_summary', '') if ai_meta else '',
 				language=ai_res.get('language', '中文') if ai_res else '中文',
 				slides_count=etl_out.pages_count if hasattr(etl_out, 'pages_count') else 0,
 				file_url=file_url,
@@ -330,13 +341,13 @@ def main() -> None:
 				cover_image_url=thumb_url or None,
 				file_size=(etl_out.file_size_kb * 1024) if hasattr(etl_out, 'file_size_kb') and etl_out.file_size_kb else None,
 				# AI 丰富字段（用于向量化）
-				ai_summary=ai_meta.ai_summary if ai_meta else None,
-				ai_content_summary=ai_meta.ai_content_summary if ai_meta else None,
-				ai_keywords=ai_meta.ai_keywords if ai_meta else None,
-				ai_scenario=ai_meta.ai_scenario if ai_meta else None,
-				ai_color_scheme=ai_meta.ai_color_scheme if ai_meta else None,
-				ai_structure_features=ai_meta.ai_structure_features if ai_meta else None,
-				ai_template_features=ai_meta.ai_template_features if ai_meta else None,
+				ai_summary=ai_meta.get('ai_summary') if ai_meta else None,
+				ai_content_summary=ai_meta.get('ai_content_summary') if ai_meta else None,
+				ai_keywords=ai_meta.get('ai_keywords') if ai_meta else None,
+				ai_scenario=ai_meta.get('ai_scenario') if ai_meta else None,
+				ai_color_scheme=ai_meta.get('ai_color_scheme') if ai_meta else None,
+				ai_structure_features=ai_meta.get('ai_structure_features') if ai_meta else None,
+				ai_template_features=ai_meta.get('ai_template_features') if ai_meta else None,
 			)
 			results.append(item)
 

@@ -10,22 +10,23 @@ from typing import Literal
 
 import pytest
 
-from src.factory.ai.ai_parser import ParsedAiMeta
-from src.factory.ai.description_builder import BuiltDescription
-from src.factory.ai.field_merger import (
+from factory.ai.ai_parser import ParsedAiMeta
+from factory.ai.description_builder import BuiltDescription
+from factory.ai.field_merger import (
 	AiEnrichmentOutput,
 	FieldMerger,
 	FieldMergerConfig,
 	MergeInput,
 	create_merge_input,
 )
-from src.factory.ai.language_detector import LanguageDetectionResult
-from src.factory.ai.tags_normalizer import NormalizedTags
+from factory.ai.language_detector import LanguageDetectionResult
+from factory.ai.tags_normalizer import NormalizedTags
 
 
 def _make_ai_meta(
 	*,
 	ai_summary: str = '测试摘要',
+	ai_content_summary: str = '详细的SEO优化描述，包含更多内容用于搜索引擎优化',
 	ai_keywords: list[str] | None = None,
 	ai_scenario: str = '测试场景',
 	ai_color_scheme: str = '蓝色',
@@ -38,6 +39,7 @@ def _make_ai_meta(
 	"""创建测试用 ParsedAiMeta"""
 	return ParsedAiMeta(
 		ai_summary=ai_summary,
+		ai_content_summary=ai_content_summary,
 		ai_keywords=ai_keywords or ['关键词1', '关键词2'],
 		ai_scenario=ai_scenario,
 		ai_color_scheme=ai_color_scheme,

@@ -51,9 +51,8 @@ def test_property14_output_directory_structure(tmp_path: Path) -> None:
 	result = wd.pack(etl_out, clean_out)
 
 	# Verify directory structure
-	assert result['pptx_path'].parent.name == 'business'
-	assert 'output' in str(result['pptx_path'].parent.parent)
-
+	assert result.pptx_path.parent.name == 'business'
+	assert 'output' in str(result.pptx_path.parent.parent)
 
 def test_property14_filename_contains_aid(tmp_path: Path) -> None:
 	"""Verify filename contains aid."""
@@ -83,8 +82,7 @@ def test_property14_filename_contains_aid(tmp_path: Path) -> None:
 			clean_pptx_path=pptx_path,
 		)
 		result = wd.pack(etl_out, clean_out)
-		assert aid in result['pptx_path'].name, f'aid {aid} not in {result["pptx_path"].name}'
-
+		assert aid in result.pptx_path.name, f'aid {aid} not in {result.pptx_path.name}'
 
 def test_property14_pptx_path_exists(tmp_path: Path) -> None:
 	"""Verify pptx_path exists after pack."""
@@ -113,5 +111,5 @@ def test_property14_pptx_path_exists(tmp_path: Path) -> None:
 
 	result = wd.pack(etl_out, clean_out)
 
-	assert result['pptx_path'] is not None
-	assert result['pptx_path'].exists()
+	assert result.pptx_path is not None
+	assert result.pptx_path.exists()

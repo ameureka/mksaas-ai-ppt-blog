@@ -4,7 +4,7 @@ DescriptionBuilder 模块单元测试
 
 import pytest
 
-from src.factory.ai.description_builder import DescriptionBuilder
+from factory.ai.description_builder import DescriptionBuilder
 
 
 def test_build_with_valid_summary() -> None:

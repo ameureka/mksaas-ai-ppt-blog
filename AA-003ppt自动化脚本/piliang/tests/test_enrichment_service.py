@@ -10,15 +10,15 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.factory.ai.config_loader import AIEnrichmentConfig
-from src.factory.ai.enrichment_service import (
+from factory.ai.config_loader import AIEnrichmentConfig
+from factory.ai.enrichment_service import (
 	AIEnrichmentService,
 	EnrichmentResult,
 	EnrichmentServiceConfig,
 	EtlOutput,
 	create_etl_output,
 )
-from src.factory.ai.text_extractor import ExtractedText
+from factory.ai.text_extractor import ExtractedText
 
 
 @pytest.fixture
@@ -71,7 +71,7 @@ class TestAIEnrichmentService:
 
 		assert service._config == mock_config
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_enrich_single_success(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -100,7 +100,7 @@ class TestAIEnrichmentService:
 		assert result.output.ppthub_category == 'general'  # fallback
 		assert result.output.language == '中文'
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_enrich_single_with_rule_match(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -137,7 +137,7 @@ class TestAIEnrichmentService:
 		assert result.output.ppthub_category == 'business'
 		assert result.output.category_source == 'rule'
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_enrich_single_error_handling(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -158,7 +158,7 @@ class TestAIEnrichmentService:
 		assert result.error_code == 'ENRICHMENT_ERROR'
 		assert 'Extract failed' in result.error_message
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_enrich_batch(
 		self,
 		mock_text_extractor_class: MagicMock,
@@ -201,7 +201,7 @@ class TestAIEnrichmentService:
 		assert report.success == 3
 		assert report.failed == 0
 
-	@patch('src.factory.ai.enrichment_service.TextExtractor')
+	@patch('factory.ai.enrichment_service.TextExtractor')
 	def test_enrich_batch_with_failures(
 		self,
 		mock_text_extractor_class: MagicMock,

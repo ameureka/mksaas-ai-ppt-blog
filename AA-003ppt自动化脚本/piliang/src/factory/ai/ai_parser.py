@@ -14,6 +14,7 @@ class ParsedAiMeta:
 	"""解析后的 AI 元数据"""
 
 	ai_summary: str
+	ai_content_summary: str
 	ai_keywords: list[str]
 	ai_scenario: str
 	ai_color_scheme: str
@@ -127,6 +128,16 @@ class AiParser:
 			ai_summary = ai_summary[:200]
 			warnings.append('ai_summary truncated to 200 chars')
 
+		# 解析 ai_content_summary
+		ai_content_summary = str(payload.get('ai_content_summary', '')).strip()
+		if len(ai_content_summary) == 0:
+			# 如果没有 ai_content_summary，使用 ai_summary 作为回退
+			ai_content_summary = ai_summary
+			warnings.append('ai_content_summary missing, using ai_summary as fallback')
+		if len(ai_content_summary) > 1000:
+			ai_content_summary = ai_content_summary[:1000]
+			warnings.append('ai_content_summary truncated to 1000 chars')
+
 		# 解析 ai_keywords
 		ai_keywords = self._normalize_list(payload['ai_keywords'])
 		if len(ai_keywords) == 0:
@@ -156,6 +167,7 @@ class AiParser:
 		# 检测敏感词
 		forbidden_hits = self._detect_all_forbidden([
 			ai_summary,
+			ai_content_summary,
 			ai_scenario,
 			ai_color_scheme,
 			ai_structure_features,
@@ -174,6 +186,7 @@ class AiParser:
 
 		meta = ParsedAiMeta(
 			ai_summary=ai_summary,
+			ai_content_summary=ai_content_summary,
 			ai_keywords=ai_keywords,
 			ai_scenario=ai_scenario,
 			ai_color_scheme=ai_color_scheme,

@@ -49,7 +49,7 @@ def test_workshopD_packs_outputs_and_writes_stage(tmp_path: Path) -> None:
 	conn.row_factory = sqlite3.Row
 	try:
 		result = run_pack(conn, source_batch_id='b1', etl_out=etl_out, clean_out=clean_out, workshop=wd)
-		assert result['pptx_path'].exists()
+		assert result.pptx_path.exists()
 
 		stage = get_stage_status(conn, aid='a1', stage=StageName.D)
 		assert stage is not None

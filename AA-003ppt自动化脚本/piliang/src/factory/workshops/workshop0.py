@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 import sqlite3
+import subprocess
 import zipfile
 from dataclasses import dataclass
 from datetime import datetime
@@ -13,6 +14,21 @@ from ..db.dao import ensure_batch, record_stage, upsert_raw_asset
 from ..stages import StageName, StageStatus
 from ..types import CandidateAsset, StageRecord, StandardInputPackage
 from ..utils.pptx_selector import select_main_pptx
+
+
+# LibreOffice 路径 (跨平台)
+LIBREOFFICE_PATH = (
+	shutil.which('soffice')
+	or shutil.which('libreoffice')
+	or '/Applications/LibreOffice.app/Contents/MacOS/soffice'  # macOS
+	or '/usr/bin/soffice'  # Linux
+)
+# unar 路径 (跨平台)
+UNAR_PATH = (
+	shutil.which('unar')
+	or '/opt/homebrew/bin/unar'  # macOS Homebrew
+	or '/usr/bin/unar'  # Linux
+)
 
 
 @dataclass(frozen=True)
@@ -33,6 +49,55 @@ class MergedAsset:
 	file_path: Path | None
 	cover_path: Path | None
 	meta: dict[str, Any]
+
+
+def _extract_archive(archive_path: Path, output_dir: Path) -> bool:
+	"""
+	解压 RAR/7z/ZIP 文件到指定目录。
+	使用 unar 命令行工具（支持 RAR/7z/ZIP）。
+	返回 True 表示成功，False 表示失败。
+	"""
+	if not archive_path.exists():
+		return False
+	if not UNAR_PATH or not Path(UNAR_PATH).exists():
+		return False
+	
+	try:
+		subprocess.run(
+			[UNAR_PATH, '-o', str(output_dir.parent), str(archive_path)],
+			check=True,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			timeout=120,
+		)
+		return True
+	except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+		return False
+
+
+def _convert_ppt_to_pptx(ppt_path: Path) -> Path | None:
+	"""
+	将 .ppt 文件转换为 .pptx 格式。
+	使用 LibreOffice 命令行工具。
+	返回转换后的 .pptx 路径，失败返回 None。
+	"""
+	if not ppt_path.exists():
+		return None
+	if not LIBREOFFICE_PATH or not Path(LIBREOFFICE_PATH).exists():
+		return None
+	
+	try:
+		subprocess.run(
+			[LIBREOFFICE_PATH, '--headless', '--convert-to', 'pptx', '--outdir', str(ppt_path.parent), str(ppt_path)],
+			check=True,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			timeout=120,
+		)
+		pptx_path = ppt_path.with_suffix('.pptx')
+		return pptx_path if pptx_path.exists() else None
+	except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+		return None
 
 
 def _safe_parse_json(raw: str | None) -> dict[str, Any] | None:
@@ -492,13 +557,36 @@ class Workshop0:
 					selected_warnings: list[str] = []
 				else:
 					file_path = asset.file_path
+					
+					# 自动解压 RAR/7z 文件
+					if file_path is not None and file_path.suffix.lower() in {'.rar', '.7z'}:
+						expected_dir = file_path.with_suffix('')
+						if not expected_dir.exists():
+							if _extract_archive(file_path, expected_dir):
+								warnings.append('AUTO_EXTRACTED_RAR')
+							else:
+								warnings.append('WARN_RAR_EXTRACT_FAILED')
+					
 					extracted_dir = _find_extracted_dir(self._paths.downloads_root, channel_id, asset.aid, file_path)
 
 					if extracted_dir is not None:
+						# 先检查是否有 .pptx 文件
 						pptx_files = _iter_pptx_files(extracted_dir)
+						
+						# 如果没有 .pptx，尝试转换 .ppt 文件
+						if not pptx_files:
+							ppt_files = list(extracted_dir.rglob('*.ppt'))
+							ppt_files = [p for p in ppt_files if '__MACOSX' not in p.parts and not p.name.endswith('.pptx')]
+							for ppt_file in ppt_files:
+								converted = _convert_ppt_to_pptx(ppt_file)
+								if converted:
+									warnings.append('AUTO_CONVERTED_PPT')
+							# 重新扫描 .pptx 文件
+							pptx_files = _iter_pptx_files(extracted_dir)
+						
 						selection = select_main_pptx(pptx_files, aid=asset.aid, title=title)
 						if selection is None:
-							raise InvalidInputError('解压目录内未找到 .pptx 文件')
+							raise InvalidInputError('解压目录内未找到 .pptx 文件（已尝试转换 .ppt）')
 						selected_warnings = selection.warnings
 						_copy_if_missing(selection.selected, main_pptx_path, overwrite=True)
 						artifacts['selected_pptx_source'] = str(selection.selected)
@@ -511,6 +599,15 @@ class Workshop0:
 					elif file_path.suffix.lower() == '.zip':
 						selected_warnings = _write_main_pptx_from_zip(file_path, main_pptx_path, aid=asset.aid, title=title)
 						artifacts['selected_pptx_source'] = f'zip:{file_path}'
+					elif file_path.suffix.lower() == '.ppt':
+						# 直接转换单个 .ppt 文件
+						converted = _convert_ppt_to_pptx(file_path)
+						if converted:
+							selected_warnings = ['AUTO_CONVERTED_PPT']
+							_copy_if_missing(converted, main_pptx_path, overwrite=True)
+							artifacts['selected_pptx_source'] = str(converted)
+						else:
+							raise InvalidInputError('PPT 转换失败，请确保 LibreOffice 已安装')
 					else:
 						raise InvalidInputError(f'不支持的文件类型: {file_path.suffix}')
 

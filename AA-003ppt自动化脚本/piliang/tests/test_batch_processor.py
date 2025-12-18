@@ -9,7 +9,7 @@ from typing import Any
 
 import pytest
 
-from src.factory.ai.batch_processor import (
+from factory.ai.batch_processor import (
 	AssetInput,
 	AssetProcessResult,
 	BatchProcessorConfig,
