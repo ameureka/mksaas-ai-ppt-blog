@@ -1,0 +1,12 @@
+{
+  "batch_id": "test-new-6",
+  "notes": "6 new RAR files for testing",
+  "aids": [
+    { "aid": "1203", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1203" },
+    { "aid": "1247", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1247" },
+    { "aid": "1278", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1278" },
+    { "aid": "1295", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1295" },
+    { "aid": "1400", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1400" },
+    { "aid": "1774", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1774" }
+  ]
+}

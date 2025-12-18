@@ -1,0 +1,16 @@
+{
+  "batch_id": "smoke-b10",
+  "notes": "10-sample aids from pachong downloads; ensure input_raw/{channel}/{aid}/main.pptx is prepared via Workshop0→A→B→C→D before运行。",
+  "aids": [
+    { "aid": "139646", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139646" },
+    { "aid": "139649", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139649" },
+    { "aid": "139650", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139650" },
+    { "aid": "139651", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139651" },
+    { "aid": "139652", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139652" },
+    { "aid": "139653", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139653" },
+    { "aid": "139657", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139657" },
+    { "aid": "139658", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139658" },
+    { "aid": "139659", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139659" },
+    { "aid": "139660", "channel_id": "ppt_moban", "input_dir": "input_raw/ppt_moban/139660" }
+  ]
+}

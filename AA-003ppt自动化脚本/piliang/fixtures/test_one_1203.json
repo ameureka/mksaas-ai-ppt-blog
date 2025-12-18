@@ -1,0 +1,7 @@
+{
+  "batch_id": "test-one-1203",
+  "notes": "single aid for cover check",
+  "aids": [
+    { "aid": "1203", "channel_id": "ppt_hangye", "input_dir": "input_raw/ppt_hangye/1203" }
+  ]
+}

@@ -103,9 +103,25 @@ vo-ui-code-pro/
 *.temp
 
 # ============================================
-# PPT 自动化脚本（独立项目，不推送到主仓库）
+# PPT 自动化脚本 - 只忽略大数据和构建产物
 # ============================================
-AA-003ppt自动化脚本/
+# 忽略 downloads 下的压缩包和数据文件
+AA-003ppt自动化脚本/piliang/data/downloads/
+# 忽略 Python 虚拟环境
+AA-003ppt自动化脚本/**/venv/
+AA-003ppt自动化脚本/**/.venv/
+# 忽略 Python 缓存
+AA-003ppt自动化脚本/**/__pycache__/
+AA-003ppt自动化脚本/**/*.pyc
+# 忽略 Node.js 依赖和构建产物
+AA-003ppt自动化脚本/**/node_modules/
+AA-003ppt自动化脚本/**/dist/
+AA-003ppt自动化脚本/**/logs/
+AA-003ppt自动化脚本/**/*.log
+# 忽略数据库文件
+AA-003ppt自动化脚本/**/*.db
+AA-003ppt自动化脚本/**/*.sqlite
+# 忽略优化 piliang 目录
 优化piliang
 
 # ============================================

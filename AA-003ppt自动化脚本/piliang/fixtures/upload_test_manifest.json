@@ -1,0 +1,11 @@
+{
+  "batch_id": "upload-test-001",
+  "notes": "单文件上传测试",
+  "aids": [
+    {
+      "aid": "1203",
+      "channel_id": "ppt_hangye",
+      "input_dir": "input_raw/ppt_hangye/1203"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "schema_version": "ppt-import-v2",
+    "exported_at": "",
+    "natural_key": "file_url",
+    "source": "piliang",
+    "source_batch_id": "smoke_test_001"
+  },
+  "items": [
+    {
+      "id": "ppt_136600",
+      "title": "灰色雾中森林背景的欧美商务汇报PPT模板",
+      "category": "business",
+      "tags": [
+        "商务",
+        "汇报"
+      ],
+      "description": "专业的商务汇报PPT模板",
+      "language": "中文",
+      "slides_count": 20,
+      "file_url": "https://example.com/136600.pptx",
+      "thumbnail_url": "https://example.com/136600.webp",
+      "cover_image_url": "https://example.com/136600.webp",
+      "file_size": 2097152,
+      "file_format": "pptx",
+      "author": null,
+      "status": "published",
+      "visibility": "public",
+      "download_count": 0,
+      "view_count": 0,
+      "created_at": null,
+      "updated_at": null,
+      "ai_summary": null,
+      "ai_content_summary": null,
+      "ai_keywords": null,
+      "ai_scenario": null,
+      "ai_color_scheme": null,
+      "ai_structure_features": null,
+      "ai_template_features": null
+    },
+    {
+      "id": "ppt_65011",
+      "title": "绿色方形组合通用商务PPT模板",
+      "category": "business",
+      "tags": [
+        "商务",
+        "通用"
+      ],
+      "description": "绿色方形组合设计的商务PPT模板",
+      "language": "中文",
+      "slides_count": 18,
+      "file_url": "https://example.com/65011.pptx",
+      "thumbnail_url": "https://example.com/65011.webp",
+      "cover_image_url": "https://example.com/65011.webp",
+      "file_size": 1572864,
+      "file_format": "pptx",
+      "author": null,
+      "status": "published",
+      "visibility": "public",
+      "download_count": 0,
+      "view_count": 0,
+      "created_at": null,
+      "updated_at": null,
+      "ai_summary": null,
+      "ai_content_summary": null,
+      "ai_keywords": null,
+      "ai_scenario": null,
+      "ai_color_scheme": null,
+      "ai_structure_features": null,
+      "ai_template_features": null
+    }
+  ]
+}
