@@ -1,0 +1,16 @@
+﻿一级菜单,二级菜单,落地URL(占位),from参数,版本号,是否季节位,排序,上线文案
+PPT模板下载,热门TOP100,{URL_热门TOP100},from=menu_tpl_hot,202511-Menu.V2,否,1,模板全类直达｜已收录X期｜每周二更新
+PPT模板下载,年终总结/述职（季节位）,{URL_年终述职},from=menu_tpl_annual,202511-Menu.V2,是,2,年终/述职整包｜含SOP与母版
+PPT模板下载,工作汇报·方案·科技风,{URL_工作商务科技},from=menu_tpl_biz,202511-Menu.V2,否,3,工作/方案/科技风模板
+PPT模板下载,答辩·求职·竞聘,{URL_答辩求职竞聘},from=menu_tpl_career,202511-Menu.V2,否,4,学生/职场必备：答辩/竞聘/简历
+PPT模板下载,党政/教师/节日课件,{URL_党政教师节日},from=menu_tpl_edu_gov,202511-Menu.V2,否,5,党政/教师/节日课件合集
+PPT模板下载,国风清新·文艺·卡通,{URL_国风清新文艺卡通},from=menu_tpl_style_cn,202511-Menu.V2,否,6,风格化模板专栏
+AI效率,AI 生成 PPT 工作流,{URL_AI生成PPT工作流},from=menu_ai_flow,202511-Menu.V2,否,1,一键生成PPT｜含SOP与案例
+AI效率,Prompt 模板合集,{URL_Prompt模板合集},from=menu_ai_prompt,202511-Menu.V2,否,2,DeepSeek/GPT 提示词与案例
+AI效率,周报自动化,{URL_周报自动化},from=menu_ai_weekly,202511-Menu.V2,否,3,AI 做周报｜可复制流程
+AI效率,一键做方案/信息图表,{URL_一键方案信息图表},from=menu_ai_chart,202511-Menu.V2,否,4,方案/图表快速生成
+AI效率,AI 工具箱（含软件目录）,{URL_AI工具箱},from=menu_ai_toolkit,202511-Menu.V2,否,5,Windows/Mac 工具与下载入口
+福利丨社区,领取整包（回复【模板】）,{URL_模板大全页},from=menu_benefit_pack,202511-Menu.V2,否,1,关注后回复【模板】领取整包
+福利丨社区,加入交流群,{URL_加入交流群},from=menu_benefit_group,202511-Menu.V2,否,2,与作者/同好交流，获取更新
+福利丨社区,新手三步,{URL_新手三步},from=menu_benefit_steps,202511-Menu.V2,否,3,从这里开始：模板/AI/进阶
+福利丨社区,关于/合作,{URL_关于合作},from=menu_benefit_about,202511-Menu.V2,否,4,商务合作/授权/发票指引
